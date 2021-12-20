@@ -1,0 +1,967 @@
+<!DOCTYPE html
+   PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <title>Market Place :: Freelancer</title>
+   <!-- core js -->
+   <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/jquery-min.js"></script>
+   <!-- bootstrap js -->
+   <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/moment.min.js"></script>
+   <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/bootstrap.min.js"></script>
+   <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/bootstrap-datetimepicker.min.js"></script>
+   <!-- bootbox js -->
+   <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/bootbox.min.js"></script>
+   <link href="https://bootstrap.arcadier.com/spacetime/css/importFonts.css" rel="stylesheet" type="text/css">
+   <link href="https://bootstrap.arcadier.com/spacetime/css/style.css" rel="stylesheet" type="text/css">
+   <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/jquery.nicescroll.min.js"></script>
+   <!-- flying element js -->
+   <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/codex-fly.js"></script>
+   <!-- mobile-menu js -->
+   <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/mobile-menu.js"></script>
+
+   <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/pagination.min.js"></script>
+   <!-- custom js -->
+   <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/custom.js"></script>
+   <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/jquery.ddslick.js"></script>
+   <!-- bootstrap style -->
+   <link href="https://bootstrap.arcadier.com/spacetime/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+   <link href="https://bootstrap.arcadier.com/spacetime/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
+   <link href="https://bootstrap.arcadier.com/spacetime/css/fancy-radio.css" rel="stylesheet" type="text/css">
+   <link href="https://bootstrap.arcadier.com/spacetime/css/pagination.css" rel="stylesheet" type="text/css">
+
+   <!-- custom style-->
+   <link href="https://bootstrap.arcadier.com/spacetime/css/style.css" rel="stylesheet" type="text/css">
+   <!-- responsive style-->
+   <link href="https://bootstrap.arcadier.com/spacetime/css/responsive.css" rel="stylesheet" type="text/css">
+   <link href="css/custom.css" rel="stylesheet" type="text/css">
+   <!-- modal style-->
+   <link href="https://bootstrap.arcadier.com/spacetime/css/modal.css" rel="stylesheet" type="text/css">
+</head>
+
+<body class="seller-items">
+   <!-- header -->
+   <div class="header user-login" data-offset-top="0" data-spy="affix">
+      <div class="container">
+        <div class="row">
+          <div class="pull-left">
+            <div class="logo">
+              <button id="menu-toggle" class="visible-xs-inline-block"><i class="icon icon-menu"></i></button>
+              <a href="https://bootstrap.arcadier.com/spacetime/index.html"><img src="https://bootstrap.arcadier.com/spacetime/images/logo.svg" alt="Logo"></a> </div>
+  
+  
+              <div class="search-bar">
+               <form action="search.html">
+                  <input type="text" placeholder="Service you are looking for" class="form-control">
+                  <input type="submit" class="btn-find" value="">
+               </form>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="pull-right">
+            <div class="main-nav">
+              <ul class="navigation">
+                  <li class="lodgejob-menu"><a href="lodge.html">Lodge a Job</a></li>
+                <li><a href="https://bootstrap.arcadier.com/spacetime/seller-dashboard2.html" class="hidden-xs">Be a Seller</a> <a id="mobi-search" href="javascript:void(0);"
+                    class="visible-xs"><i class="icon icon-search"></i></a></li>
+                <li class="dropdown more-menu"> <a href="#" class="hidden-xs">More <span class="dd-pointer dd-pointer-down"></span></a>
+                  <ul class="seller-nav dropdown-menu">
+                    <li><a href="#">Link 1</a></li>
+                    <li><a href="#">Link 2</a></li>
+                    <li><a href="#">Link 3</a></li>
+                    <li><a href="#">Link 4</a></li>
+                  </ul>
+                </li>
+                <!-- <li class="cart-menu"> <a href="https://bootstrap.arcadier.com/spacetime/cart.html" class="hidden-xs cart_anchor"><i class="icon icon-cart"></i> MY CART (<span class="cart-item">0</span>)</a> <a class="visible-xs" href="https://bootstrap.arcadier.com/spacetime/cart.html"><i class="icon icon-cart"></i></a> -->
+                <!--<li class="inbox-menu"><a href="https://bootstrap.arcadier.com/spacetime/inbox.html"><i class="icon inbox-icon"></i><sub>2</sub></a></li>-->
+                <li class="language-menu">
+                  <div id="SelectLanguage" class="language-list"></div>
+                </li>
+                <li class="register-link"><a class="hidden-xs" href="javascript:void(0);" id="register-modal">Register /
+                    Sign In</a> <a class="visible-xs" onclick="toggleMobiNav(this)" href="javascript:void(0);"><i class="icon icon-user"></i></a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+      <div id="mobile-menu">
+        <ul>
+          <li><a href="https://bootstrap.arcadier.com/spacetime/seller_sales.html">SELL</a>
+            <ul>
+              <li><a href="https://bootstrap.arcadier.com/spacetime/seller-dashboard2.html">Dashboard</a></li>
+              <li><a href="https://bootstrap.arcadier.com/spacetime/seller_items.html">Your Items</a></li>
+              <li><a href="https://bootstrap.arcadier.com/spacetime/seller_item_upload2.html">Upload</a></li>
+              <li><a href="https://bootstrap.arcadier.com/spacetime/order-list.html">Orders</a></li>
+              <li><a href="https://bootstrap.arcadier.com/spacetime/seller_sales.html">Sales</a></li>
+            </ul>
+          </li>
+          <li><a href="https://bootstrap.arcadier.com/spacetime/buyer-settings.html">MORE</a>
+            <ul>
+              <li><a href="#">Link 1</a></li>
+              <li><a href="#">Link 2</a></li>
+              <li><a href="#">Link 3</a></li>
+              <li><a href="#">Link 4</a></li>
+            </ul>
+          </li>
+          <li><a href="https://bootstrap.arcadier.com/spacetime/buyer-settings.html">PROFILE</a>
+            <ul>
+              <li><a href="https://bootstrap.arcadier.com/spacetime/purchase-history.html">Purchases</a></li>
+              <li><a href="https://bootstrap.arcadier.com/spacetime/buyer-settings.html">Settings</a></li>
+              <li><a href="#">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+   <!-- header -->
+   <div class="main">
+      <div class="section home-banner banner-slider reverse-slider">
+         <!-- If slider enable-->
+         <div id="" class="carousel slide" data-ride="carousel">
+                 <div class="carousel-inner" role="listbox">
+                      <div class="item active">
+                         <img src="https://bootstrap.arcadier.com/spacetime/images/slider_1.jpg" alt="Slide 1">
+                         <div class="banner-inner">    
+                             <div class="container">
+                                 <div class="row">
+                                     <div class="banner-quote">
+                                         <h1>AN ONLINE SERVICE MARKETPLACE</h1>
+                                         <p>Find and schedule a service suited to get your task done fast.</p>
+                                         <div class="btnjob">
+                                            <a href="lodge.html" class="btn btn-lodge">Lodge a Job</a>
+                                            <a href="freelancer-create-account.html" class="btn btn-freelancer">I am a Freelancer</a>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>  
+                     </div>
+                     
+                 </div>
+                 <!-- Left and right controls -->
+                 <a class="carousel-control" href="#HomeCarousel" role="button" data-slide="prev">
+                   <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                   <span class="sr-only">Previous</span>
+                 </a>
+                 <a class="right carousel-control" href="#HomeCarousel" role="button" data-slide="next">
+                   <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                   <span class="sr-only">Next</span>
+                 </a>
+             </div>
+       </div>
+      <div class="content-pages">
+         <div class="freelancer-content-main">
+
+            <div class="container">
+               <!--
+               <div class="page-reverse-title">
+                  <h1>Welcome, Freelancer1</h1>
+               </div>
+              --> 
+
+               <div class="blue-tabdesign">
+                     <div class="navtab-flex">
+                     <div class="navtab-design">
+                        <ul class="nav nav-tabs">
+                              <li class="active"><a data-toggle="tab" href="#tab-all" aria-expanded="true">All</a></li>
+                              <li class=""><a data-toggle="tab" href="#tab-interested" aria-expanded="false">Interested</a></li>
+                              <li class=""><a data-toggle="tab" href="#tab-quoted" aria-expanded="false">Quoted</a></li>
+                              <li class=""><a data-toggle="tab" href="#tab-accepted" aria-expanded="false">Accepted</a></li>
+                              <li class=""><a data-toggle="tab" href="#tab-completed" aria-expanded="false">Completed</a></li>
+                        </ul>
+                     </div>
+                     <div class="navtab-filter">
+                        <label>Results per Page:</label><select class="form-control"><option>10</option><option>20</option><option>30</option><option>40</option></select>
+                     </div>
+                     </div>
+               <div class="tab-content">
+                  <div id="tab-all" class="tab-pane fade active in">
+                  <div class="scroll-table-container">
+                     <table class="table table-freelancer scroll-table">
+                        <thead>
+                           <tr>
+                              <td>Status</td>
+                              <td>Date</td>
+                              <td>Email</td>
+                              <td>Contact No.</td>
+                              <td>Location</td>
+                              <td>No. of Images</td>
+                              <td>No. of Quotes</td>
+                              <td>Accepted</td>
+                              <td>Quoted Date</td>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td><select class="form-control">
+                              	 <option selected disabled value="Available">Available</option>
+                                 <option value="Interested">Interested</option>
+                              </select></td>
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>Yes</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr>
+                              <td><select class="form-control">
+                                 <option disabled value="Available">Available</option>
+                                 <option selected value="Interested">Interested</option>
+                              </select></td>
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>Yes</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr>
+                              <td><select class="form-control">
+                                 <option selected disabled value="Available">Available</option>
+                                 <option value="Interested">Interested</option>
+                              </select></td>
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>Yes</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr>
+                              <td>Quoted</td>
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>Yes</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr>
+                              <td><select class="form-control">
+                                 <option selected disabled value="Available">Available</option>
+                                 <option value="Interested">Interested</option>
+                              </select></td>
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>Yes</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr>
+                              <td><select class="form-control">
+                                 <option disabled value="Available">Available</option>
+                                 <option selected value="Interested">Interested</option>
+                              </select></td>
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>Yes</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr>
+                              <td><select class="form-control">
+                                 <option selected disabled value="Available">Available</option>
+                                 <option value="Interested">Interested</option>
+                              </select></td>
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>Yes</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr>
+                              <td>Quoted</td>
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>Yes</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr>
+                              <td><select class="form-control">
+                                 <option selected disabled value="Available">Available</option>
+                                 <option value="Interested">Interested</option>
+                              </select></td>
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>Yes</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr>
+                              <td><select class="form-control">
+                                 <option selected disabled value="Available">Available</option>
+                                 <option value="Interested">Interested</option>
+                              </select></td>
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>Yes</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           
+                        </tbody>
+                     </table>
+
+                  </div>
+                  </div>
+                  <div id="tab-interested" class="tab-pane fade">
+                     <div class="scroll-table-container">
+                        <table class="table table-freelancer scroll-table">
+                           <thead>
+                              <tr>
+                                 <td>Date</td>
+                                 <td>Email</td>
+                                 <td>Contact No.</td>
+                                 <td>Location</td>
+                                 <td>No. of Images</td>
+                                 <td>No. of Quotes</td>
+                                 <td>Accepted</td>
+                                 <td>Quoted Date</td>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr onclick="window.location ='freelancer_quote.html'">
+                                 <td>DD/MM/YYYY</td>
+                                 <td>sample@gemail.com</td>
+                                 <td>89100122</td>
+                                 <td class="width-location">Location Location Location 123</td>
+                                 <td>1</td>
+                                 <td>1</td>
+                                 <td>Yes</td>
+                                 <td>DD/MM/YYYY</td>
+                              </tr>
+                              <tr onclick="window.location ='freelancer_quote.html'">
+                                 <td>DD/MM/YYYY</td>
+                                 <td>sample@gemail.com</td>
+                                 <td>89100122</td>
+                                 <td class="width-location">Location Location Location 123</td>
+                                 <td>1</td>
+                                 <td>1</td>
+                                 <td>No</td>
+                                 <td>DD/MM/YYYY</td>
+                              </tr>
+                              <tr onclick="window.location ='freelancer_quote.html'">
+                                 <td>DD/MM/YYYY</td>
+                                 <td>sample@gemail.com</td>
+                                 <td>89100122</td>
+                                 <td class="width-location">Location Location Location 123</td>
+                                 <td>1</td>
+                                 <td>1</td>
+                                 <td>No</td>
+                                 <td>DD/MM/YYYY</td>
+                              </tr>
+                              <tr onclick="window.location ='freelancer_quote.html'">
+                                 <td>DD/MM/YYYY</td>
+                                 <td>sample@gemail.com</td>
+                                 <td>89100122</td>
+                                 <td class="width-location">Location Location Location 123</td>
+                                 <td>1</td>
+                                 <td>1</td>
+                                 <td>No</td>
+                                 <td>DD/MM/YYYY</td>
+                              </tr>
+                              <tr onclick="window.location ='freelancer_quote.html'">
+                                 <td>DD/MM/YYYY</td>
+                                 <td>sample@gemail.com</td>
+                                 <td>89100122</td>
+                                 <td class="width-location">Location Location Location 123</td>
+                                 <td>1</td>
+                                 <td>1</td>
+                                 <td>No</td>
+                                 <td>DD/MM/YYYY</td>
+                              </tr>
+                              <tr onclick="window.location ='freelancer_quote.html'">
+                                 <td>DD/MM/YYYY</td>
+                                 <td>sample@gemail.com</td>
+                                 <td>89100122</td>
+                                 <td class="width-location">Location Location Location 123</td>
+                                 <td>1</td>
+                                 <td>1</td>
+                                 <td>No</td>
+                                 <td>DD/MM/YYYY</td>
+                              </tr>
+                              <tr onclick="window.location ='freelancer_quote.html'">
+                                 <td>DD/MM/YYYY</td>
+                                 <td>sample@gemail.com</td>
+                                 <td>89100122</td>
+                                 <td class="width-location">Location Location Location 123</td>
+                                 <td>1</td>
+                                 <td>1</td>
+                                 <td>No</td>
+                                 <td>DD/MM/YYYY</td>
+                              </tr>
+                              <tr onclick="window.location ='freelancer_quote.html'">
+                                 <td>DD/MM/YYYY</td>
+                                 <td>sample@gemail.com</td>
+                                 <td>89100122</td>
+                                 <td class="width-location">Location Location Location 123</td>
+                                 <td>1</td>
+                                 <td>1</td>
+                                 <td>No</td>
+                                 <td>DD/MM/YYYY</td>
+                              </tr>
+                              <tr onclick="window.location ='freelancer_quote.html'">
+                                 <td>DD/MM/YYYY</td>
+                                 <td>sample@gemail.com</td>
+                                 <td>89100122</td>
+                                 <td class="width-location">Location Location Location 123</td>
+                                 <td>1</td>
+                                 <td>1</td>
+                                 <td>No</td>
+                                 <td>DD/MM/YYYY</td>
+                              </tr>
+                              <tr onclick="window.location ='freelancer_quote.html'">
+                                 <td>DD/MM/YYYY</td>
+                                 <td>sample@gemail.com</td>
+                                 <td>89100122</td>
+                                 <td class="width-location">Location Location Location 123</td>
+                                 <td>1</td>
+                                 <td>1</td>
+                                 <td>No</td>
+                                 <td>DD/MM/YYYY</td>
+                              </tr>
+                              
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+                  <div id="tab-quoted" class="tab-pane fade">
+                     <div class="scroll-table-container">
+                        <table class="table table-freelancer scroll-table">
+                        <thead>
+                           <tr onclick="window.location ='freelancer_quote.html'">
+                              <td>Date</td>
+                              <td>Email</td>
+                              <td>Contact No.</td>
+                              <td>Location</td>
+                              <td>No. of Images</td>
+                              <td>No. of Quotes</td>
+                              <td>Accepted</td>
+                              <td>Quoted Date</td>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr onclick="window.location ='freelancer_quote.html'">
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>Yes</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr onclick="window.location ='freelancer_quote.html'">
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>No</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr onclick="window.location ='freelancer_quote.html'">
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>No</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr onclick="window.location ='freelancer_quote.html'">
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>No</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr onclick="window.location ='freelancer_quote.html'">
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>No</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr onclick="window.location ='freelancer_quote.html'">
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>No</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr onclick="window.location ='freelancer_quote.html'">
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>No</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr onclick="window.location ='freelancer_quote.html'">
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>No</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr onclick="window.location ='freelancer_quote.html'">
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>No</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr onclick="window.location ='freelancer_quote.html'">
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>No</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           
+                        </tbody>
+                     </table>
+                  </div>
+                  </div>
+
+                  <div id="tab-accepted" class="tab-pane fade">
+                     <div class="scroll-table-container">
+                        <table class="table table-freelancer scroll-table">
+                        <thead>
+                           <tr>
+                              <td>Date</td>
+                              <td>Email</td>
+                              <td>Contact No.</td>
+                              <td>Location</td>
+                              <td>No. of Images</td>
+                              <td>No. of Quotes</td>
+                              <td>Accepted</td>
+                              <td>Quoted Date</td>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>No</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr>
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>No</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr>
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>No</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr>
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>No</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr>
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>No</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr>
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>No</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr>
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>No</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr>
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>No</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr>
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>No</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr>
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>No</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           
+                        </tbody>
+                     </table>
+                  </div>
+                  </div>
+
+                  <div id="tab-completed" class="tab-pane fade">
+                     <div class="scroll-table-container">
+                        <table class="table table-freelancer scroll-table">
+                        <thead>
+                           <tr>
+                              <td>Date</td>
+                              <td>Email</td>
+                              <td>Contact No.</td>
+                              <td>Location</td>
+                              <td>No. of Images</td>
+                              <td>No. of Quotes</td>
+                              <td>Accepted</td>
+                              <td>Quoted Date</td>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>No</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr>
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>No</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr>
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>No</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr>
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>No</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr>
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>No</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr>
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>No</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr>
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>No</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr>
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>No</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr>
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>No</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           <tr>
+                              <td>DD/MM/YYYY</td>
+                              <td>sample@gemail.com</td>
+                              <td>89100122</td>
+                              <td class="width-location">Location Location Location 123</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>No</td>
+                              <td>DD/MM/YYYY</td>
+                           </tr>
+                           
+                        </tbody>
+                     </table>
+                  </div>
+                  </div>
+                  <div class="pagination-center"><nav class="text-center" id="pagination-container" aria-label="Page navigation"></nav></div>
+                  </div>
+               </div>
+                  <!----22222 --> 
+
+
+
+
+
+           </div>
+
+         </div>
+      </div>
+   </div>
+   <!-- End Item form-->
+   </div>
+   </div>
+   <!-- footer -->
+   <div class="footer">
+      <div class="container">
+         <div class="row">
+            <div class="footer-wrapper">
+               <div class="footer-navigation">
+                  <ul>
+                     <li><a href="https://bootstrap.arcadier.com/spacetime/about-us.html">ABOUT</a></li>
+                     <li><a href="https://bootstrap.arcadier.com/spacetime/return-policy.html">SERVICE TERMS</a></li>
+                     <li><a href="https://bootstrap.arcadier.com/spacetime/privacy-policy.html">PRIVACY</a></li>
+                     <li><a href="https://bootstrap.arcadier.com/spacetime/terms-of-service.html">RETURNS</a></li>
+                     <li><a href="https://bootstrap.arcadier.com/spacetime/contact.html">CONTACT</a></li>
+                     <li><a href="https://bootstrap.arcadier.com/spacetime/faq.html">FAQ</a></li>
+                  </ul>
+                  <div class="clearfix"></div>
+               </div>
+               <div class="footer-bottom">
+                  <h6>MARKETPLACENAMELIMIT30CHARSTOO</h6>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="backTop"><a href="javascript:void(0);" onclick="ScrollTop();"><img
+            src="https://bootstrap.arcadier.com/spacetime/images/mobile_top.svg"></a></div>
+   <div class="modal fade model-img-crop" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-body">
+               <div id="modaldialog" class="html5imageupload" data-download="true" data-save="false" data-resize="true"
+                  data-width="150" data-height="150" data-url="canvas.php" style="width: 100%;">
+                  <input type="file" name="thumb" />
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- footer -->
+   <!--modal register-->
+   <div class="modal-frame model-register">
+      <div class="mymodal">
+         <div class="modal-inset">
+            <div class="modal-body">
+               <div class="modal-wrapper">
+                  <div class="modal-logo text-center"><img
+                        src="https://bootstrap.arcadier.com/spacetime/images/logo.png">
+                  </div>
+                  <div class="modal-head">Register / Sign in</div>
+                  <div class="modal-main">
+                     <ul>
+                        <li><a href="#"><img src="https://bootstrap.arcadier.com/spacetime/images/fb_login.svg"></a>
+                        </li>
+                        <li><a href="#"><img src="https://bootstrap.arcadier.com/spacetime/images/goo_login.svg"></a>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <button class="modal-close close"></button>
+      </div>
+   </div>
+   <!--modal register-->
+   <div class="modal-overlay"></div>
+   <script type="text/javascript">
+      $(function () { var ddlData = [{ text: "EN", value: 1, imageSrc: "images/gb.svg" }, { text: "CN", value: 2, imageSrc: "images/cn.svg" }, { text: "FR", value: 3, imageSrc: "images/fr.svg" }]; $('.language-list').ddslick({ data: ddlData, width: 100, imagePosition: "left", onSelected: function (selectedData) { } }); });
+
+      jQuery(document).ready(function () {
+
+         $('#pagination-container').pagination({
+                dataSource: [1,2,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,2,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+    //            totalNumber: 5,
+    //            pageSize: 10,
+    //            locator: 'items',
+                callback: function(data, pagination) {
+                    $('#list-html').html($('#list-html').html());
+                }
+            });
+
+         jQuery("#mobi-search").click(function () {
+            jQuery(".search-bar").slideToggle();
+            if (jQuery("#mobile-menu").is(":visible")) {
+               jQuery("#mobile-menu").hide();
+            }
+            if (jQuery(".category-menu").is(":visible")) {
+               jQuery(".category-menu").hide();
+            }
+         });
+
+         /*nice scroll */
+         jQuery("#mobile-menu > ul").niceScroll({ cursorcolor: "#000", cursorwidth: "6px", cursorborderradius: "5px", cursorborder: "1px solid transparent", touchbehavior: true });
+
+         jQuery("#menu-toggle").click(function () {
+            var target = jQuery(".category-items");
+            var parent = jQuery(".category-menu");
+            jQuery(parent).show();
+            jQuery(target).slideToggle();
+            if (jQuery("#mobile-menu").is(":visible")) {
+               jQuery("#mobile-menu").hide();
+            }
+         });
+
+         jQuerymodal = jQuery('.modal-frame');
+         jQueryoverlay = jQuery('.modal-overlay');
+         jQuerymodal.bind('webkitAnimationEnd oanimationend msAnimationEnd animationend', function (e) {
+            if (jQuerymodal.hasClass('state-leave')) {
+               jQuerymodal.removeClass('state-leave');
+            }
+         });
+         jQuery('.close').on('click', function () {
+            jQueryoverlay.removeClass('state-show');
+            jQuerymodal.removeClass('state-appear').addClass('state-leave');
+            jQuery('body').removeClass('modal-open')
+         });
+         jQuery('#register-modal').on('click', function () {
+            jQueryoverlay.addClass('state-show');
+            jQuerymodal.removeClass('state-leave').addClass('state-appear');
+            jQuery('html, body').animate({ scrollTop: 0 }, 0);
+            jQuery('body').addClass('modal-open');
+
+         });
+      });
+   </script>
+</body>
+
+</html>

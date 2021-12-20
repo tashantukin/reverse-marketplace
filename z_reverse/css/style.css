@@ -41,7 +41,7 @@
 .jobform-form select.form-control {background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='h-6 w-6' fill='none' viewBox='0 0 24 24' stroke='currentColor'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7' /%3E%3C/svg%3E");
 background-repeat: no-repeat;-webkit-appearance: none;moz-appearance: none;appearance: none;padding-right: 30px;background-size: 18px;background-position: calc( 100% - 8px ) center;}
 .jobform-form .form-control+.form-control {margin-top: 10px;}
-.jobform-form .form-group {margin-bottom: 20px;position: relative;}
+.jobform-form .form-group {margin-bottom: 20px;}
 .jobform-note p {margin-bottom: 5px;line-height: normal;padding: 0;color: #3c4441;}
 .jobform-note {text-align: center;padding: 40px 0px;}
 .register-btn {display: flex;flex-direction: column;align-items: center;justify-content: center;}
@@ -64,19 +64,6 @@ background-repeat: no-repeat;-webkit-appearance: none;moz-appearance: none;appea
 .custom-fancyjb .fancy-checkbox.checkbox-sm input[type="checkbox"].error-con + label:after{border: 1px solid #ff0000;}
 
 .custom-fancyjb .fancy-checkbox.checkbox-sm input[type="checkbox"]:checked + label:after{content: '';background-size: 50px;background-color: #00c8b2;border: 1px solid #00c8b2;background-image: url(../images/checkbox_selected.svg);}
-
-.fancy-checkbox.checkbox-sm > input[type="radio"] {
-    display: none;
-}
-
-.custom-fancyjb .fancy-checkbox.checkbox-sm input[type="radio"]:checked + label{background-image: url(../images/checkbox_selected.svg);background-image: none;}
-.custom-fancyjb .fancy-checkbox.checkbox-sm input[type="radio"] + label {background-image: url(../images/checkbox_unselected.svg);background-image: none;position: relative;}
-.custom-fancyjb .fancy-checkbox.checkbox-sm input[type="radio"] + label:after{content: '';background-repeat: no-repeat;background-position: center center;height: 25px;width: 25px;position: absolute;left: 0;background-size: cover;background-color: #fff;border: 1px solid #d2d2d2;border-radius: 5px;}
-
-.custom-fancyjb .fancy-checkbox.checkbox-sm input[type="radio"].error-con + label:after{border: 1px solid #ff0000;}
-
-.custom-fancyjb .fancy-checkbox.checkbox-sm input[type="radio"]:checked + label:after{content: '';background-size: 50px;background-color: #00c8b2;border: 1px solid #00c8b2;background-image: url(../images/checkbox_selected.svg);}
-
 
 .search-abn button {position: absolute;top: 0;bottom: 0;background-color: transparent;border: none;box-shadow: none;left: 0;padding-left: 10px;}
 .search-abn svg {height: 20px;}
@@ -108,18 +95,6 @@ background-repeat: no-repeat;-webkit-appearance: none;moz-appearance: none;appea
 .table-freelancer.table>tbody>tr:hover {background-color: #edfbfa;}
 .table-freelancer.table>tbody>tr {cursor: pointer;height: 55px;}
 
-.nav-tabs-dropdown {
-    color: var(--user-color);
-    font-weight: 600;
-    border: 1px solid #ccc !important;
-    border-radius: 5px;
-    padding: 5px 15px;
-    margin-right: 10px;
-    margin-left: 10px;
-    width: 100%;
-    display: none;
-}
-
 
 .blue-tabdesign .paginationjs .paginationjs-pages li.active>a{background: var(--user-color);}
 .blue-tabdesign .paginationjs .paginationjs-pages li:first-child,
@@ -141,19 +116,16 @@ background-repeat: no-repeat;-webkit-appearance: none;moz-appearance: none;appea
 .navtab-filter .form-control {width: 90px;}
 .navtab-filter label {color: #999;font-weight: 500;margin-right: 10px;margin-bottom: 0px;}
 
-.btn-quote-cancel {background-color: transparent;border: 1px solid #00c8b2;padding: 5px 15px;font-weight: 600;color: #00c8b2;outline: none !important;box-shadow: none !important;}
+.btn-quote-cancel {background-color: transparent;border: 1px solid #00c8b2;padding: 5px 15px;font-weight: 600;color: #00c8b2;margin-right: 10px;outline: none !important;box-shadow: none !important;}
 .btn-quote-cancel.btn.focus, .btn-quote-cancel.btn:focus, .btn-quote-cancel.btn:hover {background-color: #00c8b2;color: #fff;}
 
 
 .btn-quote-reject{background-color: #d25302;border: 1px solid #d25302;padding: 5px 15px;font-weight: 600;color: #fff;margin-right: 10px;outline: none !important;box-shadow: none !important;}
 .btn-quote-reject.btn.focus, .btn-quote-reject.btn:focus, .btn-quote-reject.btn:hover{background-color: transparent;color: #d25302;}
 
-.btn-quote-submit {background-color: #00c8b2;border: 1px solid #00c8b2;padding: 5px 15px;font-weight: 600;color: #fff;margin-right: 0px;outline: none !important;box-shadow: none !important;margin-right: 10px;}
+.btn-quote-submit {background-color: #00c8b2;border: 1px solid #00c8b2;padding: 5px 15px;font-weight: 600;color: #fff;margin-right: 0px;outline: none !important;box-shadow: none !important;}
 .btn-quote-submit.btn.focus, .btn-quote-submit.btn:focus, .btn-quote-submit.btn:hover{background-color: transparent;color: #00c8b2;}
 .quote-title-design {font-size: 18px;font-weight: 600;color: #00c8b2;}
-
-
-.btn-margin .btn-quote-submit{margin-right: 0px;margin-left: 10px;}
 
 .quote-question-main {background-color: #fff;padding: 15px;border-radius: 8px;margin-bottom: 10px;}
 .quote-question-main hr{border-top: 2px solid #f0f0f0;}
@@ -177,7 +149,7 @@ background-repeat: no-repeat;-webkit-appearance: none;moz-appearance: none;appea
 .qq-option span {color: #999;margin-right: 10px;font-size: 16px;}
 .qq-option span b{font-weight: 400;}
 .qq-option input[type="text"] {height: 20px;box-sizing: content-box;font-size: 16px;border-radius: 6px;border: 1px solid #ddd;padding: 5px 10px;color: #999;outline: none;margin-right: 5px;width: 150px;}
-.custom-fancyjb .fancy-checkbox.checkbox-sm label span{padding-left: 10px !important;}
+.custom-fancyjb .fancy-checkbox.checkbox-sm label span{padding-left: 10px;}
 
 .question-requester-design {color: #999;}
 .question-requester-design a{color: #3399d9;}
@@ -246,34 +218,7 @@ background-repeat: no-repeat;-webkit-appearance: none;moz-appearance: none;appea
 .custom-fancyjb .fancy-radio.radio-sm input[type="radio"]:checked + label{background-image: url(../images/radio_selected.svg);background-image: none;}
 .custom-fancyjb .fancy-radio.radio-sm input[type="radio"] + label {background-image: url(../images/radio_unselected.svg);background-image: none;position: relative;height: auto;padding-left: 35px;}
 .custom-fancyjb .fancy-radio.radio-sm input[type="radio"] + label:after{content: '';background-repeat: no-repeat;background-position: center center;height: 25px;width: 25px;position: absolute;left: 0;background-size: cover;background-color: #fff;border: 1px solid #d2d2d2;border-radius: 25px;}
-.custom-fancyjb .fancy-radio.radio-sm input[type="radio"]:checked + label:after{
-    border: 1px solid var(--user-color);
-    border-radius: 50%;
-    content: '';
-    display: inline-block;
-    height: 24px;
-    position: absolute;
-    transition: border-color .1s ease-out,
-                transform .1s ease-out;
-}
-
-.custom-fancyjb .fancy-radio.radio-sm input[type="radio"]:checked + label:before {
-    content: '';
-    border-radius: 50%;
-    cursor: pointer;
-    display: block;
-    height: 16px;
-    left: 4px;
-    position: absolute;
-    top: 4px;
-    transition: background-color .1s ease-out;
-    vertical-align: middle;
-    width: 16px;
-    background: var(--user-color);
-    border-color: var(--user-color);
-    z-index: 2;
-}
-
+.custom-fancyjb .fancy-radio.radio-sm input[type="radio"]:checked + label:after{content: '';background-size: 35px;background-color: #00c8b2;border: 1px solid #00c8b2;background-image: url(../images/radio_selected.svg);}
 .custom-fancyjb .fancy-radio {margin-bottom: 10px;}
 
 .home-banner.banner-slider.reverse-slider .banner-inner{display: flex;align-items: center;justify-content: center;height: 100%;padding: 0;top: 0px;}
@@ -328,66 +273,39 @@ background-repeat: no-repeat;-webkit-appearance: none;moz-appearance: none;appea
     .jobform-tab .nav-tabs>li.check>a:after, .jobform-tab .nav-tabs>li.active>a:after {width: 96px;}
     .lodge-tab-design .jobform-tab .nav-tabs>li.check>a:after, .lodge-tab-design .jobform-tab .nav-tabs>li.active>a:after{width: 120px;}
     .lodge-tab-design .jobform-tab .nav-tabs>li>a:before{width: 120px;}
-    .nav-tabs-dropdown {display: block;}
-    .blue-tabdesign .nav-tabs {display: none; }
-    .qq-option{width: calc(100% - 280px);}
-    .qq-option span{width: 100%; text-align: right; display: inline-block;}
 }
 @media only screen and (max-width: 767px) {
-    /* .jobform-tab .nav-tabs>li>a:before{width: 2px;height: 40px;top: -40px;left: 9px;} */
-    /* .jobform-tab .nav-tabs>li.check>a:after,
-    .jobform-tab .nav-tabs>li.active>a:after {width: 2px;height: 40px;top: -40px;left: 9px;} */
-    .jobform-tab ul.nav{align-items: center;}
-    .jobform-tab .nav-tabs>li>a span{font-size: 12px;background-color: #fff;z-index: 1; display: none; }
-    /* .jobform-tab .nav-tabs>li>a{margin-bottom: 40px;} */
+    .jobform-tab .nav-tabs>li>a:before{width: 2px;height: 40px;top: -40px;left: 9px;}
+    .jobform-tab .nav-tabs>li.check>a:after, .jobform-tab .nav-tabs>li.active>a:after {width: 2px;height: 40px;top: -40px;left: 9px;}
+    .jobform-tab ul.nav{flex-direction: column;align-items: center;}
+    .jobform-tab .nav-tabs>li>a span{font-size: 12px;background-color: #fff;z-index: 1;}
+    .jobform-tab .nav-tabs>li>a{margin-bottom: 40px;}
     .jobform-tab{padding: 30px 0px;}
-    /* .lodge-tab-design .jobform-tab .nav-tabs>li.check>a:after,
-    .lodge-tab-design .jobform-tab .nav-tabs>li.active>a:after{width: 2px;} */
-    /* .lodge-tab-design .jobform-tab .nav-tabs>li>a:before{width: 2px;} */
-    /* .jobform-tab .nav-tabs>li>a:after{top: -40px;left: 9px;} */
+    .lodge-tab-design .jobform-tab .nav-tabs>li.check>a:after, .lodge-tab-design .jobform-tab .nav-tabs>li.active>a:after{width: 2px;}
+    .lodge-tab-design .jobform-tab .nav-tabs>li>a:before{width: 2px;}
+    .jobform-tab .nav-tabs>li>a:after{top: -40px;left: 9px;}
 
-    /* .jobform-tab .nav-tabs>li:last-child a {margin-bottom: 15px !important;} */
+    .jobform-tab .nav-tabs>li:last-child a {margin-bottom: 15px !important;}
     .jobmap-transform{transform: scale(0.5);top: -150px;}
     .jobform-map {min-height: 295px;}
     .jobform-form {max-width: 480px;}
     .info-box{max-width: 100%;margin-top: 20px;}
-    .qq-title:not(.saved) { flex-wrap: wrap; }
-    .qq-title span.title { width: 100%; margin-bottom: 5px; }
-    .qq-option  { width: 100%; margin-left: 0; display: flex; align-items: center;     flex-wrap: wrap; }
-    .qq-title.saved .qq-option { flex-wrap: nowrap; }
-    .qq-option input[type="text"] { width: auto; flex: 1; margin-right: 0; padding-right: 0; max-width: 200px; }
-    .qq-title span.dash { display: none; }
-    .qq-title.saved span.title { width: 110px; }
-    .qq-option span { white-space: nowrap; }
-    .checkbox-row-flex .qq-option span { width: auto; }
 }
 @media only screen and (max-width: 600px) {
     .jobmap-transform {transform: scale(0.35);top: -190px;}
     .jobform-map {min-height: 220px;}
     .checkbox-width,.qq-title span.title{min-width: 160px;}
-    .jobform-tab .nav-tabs>li>a:before { width: 78px; }
-    .jobform-tab .nav-tabs>li.check>a:after, .jobform-tab .nav-tabs>li.active>a:after { width: 39px; }
-    .lodge-tab-design .jobform-tab .nav-tabs>li>a:before { width: 97px; }
-    /* .qq-option input[type="text"]{width: 100px;} */
+    .qq-option input[type="text"]{width: 100px;}
 }
 @media only screen and (max-width: 480px) {
     .navtab-flex{flex-direction: column;}
     .question-requester-design,.quote-title-design{margin-bottom: 15px;}
-    .checkbox-row-flex { flex-wrap: wrap; margin-bottom: 10px; }
-    .qq-title span.title{min-width: 120px;}
-    .jobform-tab .nav-tabs>li>a:before { width: 58px; }
-    .lodge-tab-design .jobform-tab .nav-tabs>li>a:before { width: 74px; }
-    /* .qq-option input[type="text"]{width: 80px;} */
+
+    .checkbox-width,.qq-title span.title{min-width: 120px;}
+    .qq-option input[type="text"]{width: 80px;}
 
 }
 @media only screen and (max-width: 420px) {
     .jobmap-transform {transform: scale(0.25);top: -220px;}
     .jobform-map {min-height: 150px;}
-    .lodgejob-menu{display: none;}
-    .qq-option input[type="text"] { width: 130px; }
 }
-@media only screen and (max-width: 380px) {
-    .jobform-tab .nav-tabs>li>a:before { width: 38px; }
-    .lodge-tab-design .jobform-tab .nav-tabs>li>a:before {  width: 52px; }
-}
-

@@ -207,6 +207,18 @@
                         <label>Field Name</label>
                         <input type="text" class="form-control required" name="onbrd_field_name" id="onbrd_field_name">
                     </div>
+
+                    <div class="form-group">
+                        <label>Field Text</label>
+                        <input type="text" class="form-control required" name="onbrd_field_text" id="onbrd_field_text">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Placeholder</label>
+                        <input type="text" class="form-control required" name="onbrd_field_placeholder" id="onbrd_field_placeholder">
+                    </div>
+
+
                     <div class="form-group">
                         <label>Field Type</label>
                         <select class="form-control required" name="onbrd_field_type" id="onbrd_field_type">
@@ -214,6 +226,7 @@
                             <option value="number">Number</option>
                             <option value="checkbox">Checkbox</option>
                             <option value="dropdown">Dropdown</option>
+                            <option value="search">Search</option>
                         </select>
                     </div>
 

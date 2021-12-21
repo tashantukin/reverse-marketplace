@@ -217,7 +217,7 @@
     //MAIN CRUD
     function saveCustomField(customCode, action, customName, type, steps, options, referenceTable, conf_message)
     {
-        var data = { 'action': action, 'custom_name': customName, 'type': type, 'options': options, 'reference_table': referenceTable, 'code': customCode, 'classification' : steps};
+        var data = { 'action': action, 'custom_name': customName, 'type': type, 'options': options, 'reference_table': referenceTable, 'code': customCode, 'classification' : steps, 'text': $('#onbrd_field_text').val(), 'placeholder' : $('#onbrd_field_placeholder').val()  };
         console.log(data);
         var apiUrl = packagePath + '/save_customfields.php';
         $.ajax({

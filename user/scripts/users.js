@@ -27,7 +27,7 @@ const sellerFields = new Vue({
             allSellerFields: [],
             fieldDetails: [],
             taskOption: [],
-            url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/freelancer_form/`
+            url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/freelancer_form?sort=ModifiedDateTime`
 
         }
     },

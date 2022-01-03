@@ -109,19 +109,19 @@
                         <div class="jobform-form">
                            <h3>Verification Details</h3>
 
-						         <div v-for="field in fieldDetails" class="form-group custom-details">
+						         <div v-for="field in fieldDetails" class="form-group custom-details" :field-type="field.type_of_field">
                               <label :for="field.name">{{ field.text }}</label>
 
                               <!-- for search fields -->
                               <div v-if="field.type_of_field ==='search'" class="search-abn">
-                                 <input type="text" class="form-control required" :name="field.name | hypenate"  :placeholder="field.placeholder">
+                                 <input type="search" class="form-control required" :name="field.name | hypenate"  :placeholder="field.placeholder" >
                                  <button><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg></button>
                               </div>
 
                               <input v-if="field.type_of_field ==='search'" type="text" class="form-control required" :name="field.name | hypenate" :id="field.name | hypenate" :placeholder="field.placeholder">
 
                                <!-- for dropdown fields -->
-                              <select v-else-if="field.type_of_field ==='dropdown'" class="form-control required" :name="field.name | hypenate" :id="field.name | hypenate">
+                              <select v-else-if="field.type_of_field ==='dropdown'" class="form-control required" :name="field.name | hypenate" :id="field.name | hypenate" type="dropdown">
                                  <option v-for="option in JSON.parse(field.values)" >{{option}}</option>
                               </select>
 
@@ -141,33 +141,8 @@
                            
                            </div>
 
-                           <!-- <div class="form-group">
-                              <label for="address">Address</label>
-                              <input type="text" class="form-control required" name="address" id="address" placeholder="">
-                           </div>
-                           <div class="form-group">
-                              <label for="country">Country</label>
-                              <select class="form-control required" name="country" id="country">
-                                 <option selected value="australia">Australia</option>
-                              </select>
-                           </div>
-                           <div class="form-group">
-                              <label for="state">State</label>
-                              <input type="text" class="form-control required" name="state" id="state" placeholder="">
-                           </div>
-                           <div class="form-group">
-                              <label for="city">City</label>
-                              <input type="text" class="form-control required" name="city" id="city" placeholder="">
-                           </div>
-                           <div class="form-group">
-                              <label for="postal_code">Postal Code</label>
-                              <input type="text" class="form-control required" name="postal_code" id="postal_code" placeholder="">
-                           </div>
-                           <div class="form-group">
-                              <label for="telephone">Telephone <span>( We shall be calling this number as we verify you.)</span></label>
-                              <input type="text" class="form-control required" name="telephone" id="telephone" placeholder="">
-                           </div> -->
-                           <div class="form-group">
+                            
+                           <div class="form-group"> 
                               <label for="servicing_area">Servicing Area</label>
                             <div class="btn-hbox custom-fancyjb cdflex btn-hrmmargin">
                                 <div class="fancy-checkbox checkbox-sm">
@@ -189,56 +164,24 @@
                            
                            <div class="form-group custom-fancyjb">
                               <label>Select verification method of upload</label>
-                                 <div>
+                                 <!-- <div>
                                     <div class="fancy-checkbox checkbox-sm">
                                        <input type="checkbox" checked="checked" name="certificate_currency" id="certificate_currency">
                                        <label for="certificate_currency"><span>Certificate of Currency</span></label>
                                     </div>
-                              </div>
+                              </div> -->
                            </div>
-                           <div class="certificate_currency_input">
-                           <div class="form-group">
-                              <label>Upload Documents</label>
-                              <div class="browse-control">
-                                 <a class="model-btn">
-                                       <input type="text" class="form-control" value="">
-                                       <div class="browse-btn">
-                                          <input type="file" value="Browse..." onchange="readURL(this);">
-                                          <span id="logo_add">Upload</span>
-                                       </div>
-                                    </a>
-                              </div>
-                           </div>
-                           <div class="form-group">
-                           <table class="table table-document">
-                              <tbody>
-                                 <tr>
-                                       <td class="action-icondelete"><a class="delete-cat" href="javascript:void(0)"><i class="icon icon-delete"></i></a></td>
-                                       <td>file1.pdf</td>
-                                       <td><div class="text-right document-action"><a href="javascript:void(0);">View</a>|<a href="javascript:void(0);">Download</a></div></td>
-                                 </tr>
-                                 <tr>
-                                       <td class="action-icondelete"><a class="delete-cat" href="javascript:void(0)"><i class="icon icon-delete"></i></a></td>
-                                       <td>file2.pdf</td>
-                                       <td><div class="text-right document-action"><a href="javascript:void(0);">View</a>|<a href="javascript:void(0);">Download</a></div></td>
-                                 </tr>
-                                 <tr>
-                                       <td class="action-icondelete"><a class="delete-cat" href="javascript:void(0)"><i class="icon icon-delete"></i></a></td>
-                                       <td>file3.pdf</td>
-                                       <td><div class="text-right document-action"><a href="javascript:void(0);">View</a>|<a href="javascript:void(0);">Download</a></div></td>
-                                 </tr>
-                              </tbody>
-                        </table>
-                           </div>
-                        </div>
-                           <div class="form-group">
+
+                          <!-- dynamic upload custom fields start-->
+
+                          <div v-for="field in uploadCustomFields" class="form-group" :id="field.Id"> 
                                  <div class="custom-fancyjb">
                                     <div class="fancy-checkbox checkbox-sm">
-                                       <input type="checkbox" checked="checked" name="driver_license_director" id="driver_license_director">
-                                       <label for="driver_license_director"><span>Driver's License of Director</span></label>
+                                       <input type="checkbox" checked="checked" :name="field.name" :id="field.name | hypenate" >
+                                       <label :for="field.name | hypenate"><span>{{ field.text }} </span></label>
                                     </div>
                               </div>
-                           </div>
+                          
                         <div class="driver_license_director_input">
                            <div class="form-group">
                               <label>Upload Documents</label>
@@ -246,7 +189,7 @@
                                  <a class="model-btn">
                                        <input type="text" class="form-control" value="">
                                        <div class="browse-btn">
-                                          <input type="file" value="Browse..." onchange="readURL(this);">
+                                          <input type="file" value="Browse..." onchange="readURL(this);" id="uploads"  :upload-name="field.name">
                                           <span id="logo_add2">Upload</span>
                                        </div>
                                     </a>
@@ -255,25 +198,25 @@
                            <div class="form-group">
                            <table class="table table-document">
                               <tbody>
-                                 <tr>
-                                       <td class="action-icondelete"><a class="delete-cat" href="javascript:void(0)"><i class="icon icon-delete"></i></a></td>
-                                       <td>file1.pdf</td>
-                                       <td><div class="text-right document-action"><a href="javascript:void(0);">View</a>|<a href="javascript:void(0);">Download</a></div></td>
-                                 </tr>
-                                 <tr>
-                                       <td class="action-icondelete"><a class="delete-cat" href="javascript:void(0)"><i class="icon icon-delete"></i></a></td>
-                                       <td>file2.pdf</td>
-                                       <td><div class="text-right document-action"><a href="javascript:void(0);">View</a>|<a href="javascript:void(0);">Download</a></div></td>
-                                 </tr>
-                                 <tr>
-                                       <td class="action-icondelete"><a class="delete-cat" href="javascript:void(0)"><i class="icon icon-delete"></i></a></td>
-                                       <td>file3.pdf</td>
-                                       <td><div class="text-right document-action"><a href="javascript:void(0);">View</a>|<a href="javascript:void(0);">Download</a></div></td>
-                                 </tr>
+                               
+                                
                               </tbody>
                         </table>
                            </div>
-                           </div>
+                     </div>
+                     </div>
+
+
+
+
+                          <!-- dynamic upload custom fields end-->
+
+
+                        
+
+
+
+
                            <div class="form-group custom-fancyjb">
                            
                               <div>
@@ -1261,4 +1204,4 @@
 <!-- end footer --> 
 </body>
 
-</html>
+</html> 

@@ -8,7 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Custom Fields</title>
     <link href="css/onboarding.css" rel="stylesheet" type="text/css">
-    
+    <style>
+
+        #is-required {
+            visibility: visible;
+        }
     </style>
 </head>
 <!-- end header -->
@@ -214,12 +218,6 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Placeholder</label>
-                        <input type="text" class="form-control required" name="onbrd_field_placeholder" id="onbrd_field_placeholder">
-                    </div>
-
-
-                    <div class="form-group">
                         <label>Field Type</label>
                         <select class="form-control required" name="onbrd_field_type" id="onbrd_field_type">
                             <option value="textfield">Textfield</option>
@@ -227,6 +225,7 @@
                             <option value="checkbox">Checkbox</option>
                             <option value="dropdown">Dropdown</option>
                             <option value="search">Search</option>
+                            <option value="file">File Upload</option>
                         </select>
                     </div>
 
@@ -247,6 +246,10 @@
                         <span class="addOpt"><i class="fa fa-plus"></i>Add Option</span>
                     </div>
 
+                    <div class="form-group">
+                        <label>Placeholder</label>
+                        <input type="text" class="form-control required" name="onbrd_field_placeholder" id="onbrd_field_placeholder">
+                    </div>
 
                     <div class="form-group">
                         <label>Steps</label>
@@ -255,6 +258,14 @@
                             <option value="2. Verification Details">2. Verification Details</option>
                         </select>
                     </div>
+
+                    <div class="form-group">
+                        <input type="checkbox" id="is-required" name="required"
+                                checked>
+                        <label for="is-required">Required field</label>
+                    </div>
+                    
+                    
                 </div>
                 <div class="popup-footer">
                     <a class="mybtn btn-grey" data-dismiss="modal" href="javascript:void(0);">Cancel</a>

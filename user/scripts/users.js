@@ -4,7 +4,9 @@ const protocol = window.location.protocol;
 const token = getCookie('webapitoken');
 const baseURL = window.location.hostname;
 var packageId = re.exec(scriptSrc.toLowerCase())[1];
-var userId = $("#userGuid").val();
+var userId;
+var taskFiles = [];
+
 var packagePath = scriptSrc.replace("/scripts/users.js", "").trim();
 
 function getCookie(name){
@@ -80,17 +82,12 @@ const sellerFields = new Vue({
 
 })
 
-
-
-
-
 var usersData = (function ()
   {
     var instance;
-    var taskFiles = [];
+   
     var userToken, userId;
 
-    
 
     function init()
     {
@@ -135,6 +132,8 @@ var usersData = (function ()
                         console.log(result);
                        
                         console.log(result['access_token']);
+                        userId = result['UserId'];
+                       
 
                         if (typeof successCallback === "function") {
                         if (result && result.length > 0) {
@@ -164,68 +163,91 @@ var usersData = (function ()
         
         }
 
-        async function saveFiles(action, jobID)
+        function saveUser(cf,location,files)
         {
-        try {
             
-            const defaultURL = `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_custom_task_cache/rows`
-            
-            url =  defaultURL;
-            
-            uploadData = { 'all_tasks': JSON.stringify(allTasks), 'jobID' : jobID}
-            
-            const response = await axios({
+            var user_details = {
 
-                method: action,
-                url: url,
-                data:  uploadData,
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-            const uploadedData = await response
+                "user_id": userId,
+                "custom_fields": cf,
+                "servicing_area": location,
+                "status": "Pending",
+                'files': files,
+                'full_address': `${$('#address').val()} ${$('#city').val()}  ${$('#country').val()} ${$('#state').val()} ${$('#postal-code').val()}`,
+                'email': $('#email').val(),
+                'company_name': $('#company-name').val(),
+                'country':  $('#country').val(),
+                'state' :$('#state').val(),
+                'city' : $('#city').val(),
+                'postal-code' : $('#postal-code').val()
+            };
         
-
-            console.log({ uploadedData  });
-            
-
-        } catch (error) {
-            console.log("error", error);
+            console.log(user_details);
+            var settings = {
+                "url": packagePath + "/save_user.php",
+                "method": "POST",
+                "data": JSON.stringify(user_details)
+            }
+            $.ajax(settings).done(function(response){
+                
+               // var allresponse = $.parseJSON(response)
+                console.log($.parseJSON(response));
+               // localStorage.setItem("jobID", allresponse.Id);
+        
+        
+             
+            });
+        
         }
-        
-        }
-        
-        function saveTask()
+
+
+
+        function getCustomFieldValues()
         {
-            allTasks.push({ 'task_name': $('#job_name').val(), 'address': $('#work_done').val(), 'remote': $('.modal-content #remote')[0].checked, 'in_person': $('.modal-content #in-person')[0].checked, 'files': taskFiles })
-            console.log({ allTasks });
-            $("#file-doc[type='file']").val('');
+            //get all the textfields and dropdowns
+            customfield_data = [];
+            checkbox_data = [];
+           
+            $('.custom-details').find(':input').not('.search').each(function ()
+            {
+                textfield_data = [];
+     
+                        if ($(this).attr('type') != "search" && $(this).attr('type') != "checkbox" && $(this).attr('type') != "hidden" ) {
+                        // if ($(this).attr('type') != 'checkbox') {
+                                let custom_code = $(this).attr('name');
+                                let custom_value = $(this).val();
+                                textfield_data.push(custom_value);
 
-            taskFiles = [];
-
-            var last = allTasks[allTasks.length - 1];
-            var index = allTasks.indexOf(last);
-            console.log({ index })
+                                customfield_data.push({ 'code': custom_code, 'Values': textfield_data })
+                        //  }
+                        }
+            });
             
+           
+            //for checkboxes
+            $('.customcheckbox').each(function ()
+            {
+            let chkoptions = [];
+            $(this).find(':checkbox:checked').each(function ()
+            {
+                console.log($(this).attr('data-name'));
+                chkoptions.push($(this).attr('data-name'));
+            });
+            customfield_data.push({ 'code': $(this).attr('id'), 'Values': chkoptions });
+            });
+
             
-            console.log({ last });
-            console.log(last['task_name']);
-            var filec = last['files']
-            var fileCount =  filec.length
-          //  console.log(fileCount.length);
-
-            //append task details below
-            var jobBox =  `<div class="job-main-box"><a href="javascript:void(0);" class="action"><i class="icon icon-ndelete"></i></a> <div class="job-desc"><p>${last['task_name']}</p> <p class="text-gray">${last['address']}</p></div> <a href="javascript:void(0);" class="no-off-file">No. of File: ${fileCount}</a></div> `
-
-            $('.job-list-box').append(jobBox);
-
+            console.log(customfield_data);
+            saveUser(customfield_data, $('#location').val(), taskFiles);
+           // saveCustomFiedldValues(customfield_data);
         }
 
+      
       return {
-        createUser: createUser
-      //  getFile: getFile,
-     //   saveFiles: saveFiles,
-     //   saveTask :saveTask
+          createUser: createUser,
+          saveUser: saveUser,
+          getCustomFieldValues : getCustomFieldValues
+     
       }
     }
       return {
@@ -243,15 +265,10 @@ var usersData = (function ()
 
 })()
 
-
-
-
-
-
 var documentData = (function ()
   {
     var instance;
-    var taskFiles = [];
+  //  var taskFiles = [];
     function init()
     {
 
@@ -445,6 +462,8 @@ var documentData = (function ()
 $(document).ready(function ()
 {
    
+
+    $('body').append('<input type ="hidden" id="location">');
     
     $('body').on('click', '.btn-register', function ()
     {
@@ -452,15 +471,24 @@ $(document).ready(function ()
         users.createUser($('#email').val(), $('#password').val(), $('#retype_password').val());
     })
 
-
     $('body').on('change', '#uploads', function (){
         var documents = documentData.getInstance();
         documents.getFile($(this).attr('upload-name'));
         
     })
 
+    $('body').on('click', '.jobform-form .next-tab-area .my-btn', function ()
+    {
+        //validation here
+
+        //validation passed
+        var users = usersData.getInstance();
+        users.getCustomFieldValues();
+        
+
+    })
 
 
-    
+
 
 })

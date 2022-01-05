@@ -108,13 +108,42 @@
                         <button onclick="j_prevTab();" class="btn btn-jobform-outline">Back</button>
                         <div class="jobform-form">
                            <h3>Verification Details</h3>
+                           
+
+                           <!-- default fields -->
+
+                           <div field-type="search" class="form-group"><label for="ABN lookup">ABN lookup</label> <div class="search-abn">
+                              <input type="search" name="abn-lookup" placeholder="Enter ABN Number" class="form-control search"> <button><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg></button>
+                           </div> <input type="text" name="abn-lookup" id="company-name" placeholder="" class="form-control required"></div>
+
+                           <div field-type="textfield" class="form-group"><label for="Address">Address</label> 
+                           <input type="text" name="Address" id="address" placeholder="" class="form-control required"></div>
+                           
+
+                           <div field-type="dropdown" class="form-group"><label for="Country">Country</label> 
+                           <select name="country" id="country" type="dropdown" class="form-control required"><option>Australia</option></select></div>
+
+                           <div field-type="textfield" class="form-group"><label for="State">State</label> <!----> 
+                           <input type="text" name="State" id="state" placeholder="" class="form-control required"></div>
+
+                           <div field-type="textfield" class="form-group"><label for="City">City</label> <!---->
+                           <input type="text" name="City" id="city" placeholder="" class="form-control required"></div>
+
+                           <div field-type="textfield" class="form-group"><label for="Postal Code ">Postal Code </label> <!----> 
+                           <input type="text" name="Postal Code " id="postal-code" placeholder="" class="form-control required"></div>  
+
+                           <div field-type="textfield" class="form-group"><label for="Telephone">Telephone ( We shall be calling this number as we verify you.)</label>
+                           <input type="text" name="phone" id="phone" placeholder="" class="form-control required"></div>
+
+                           <!-- end default fields -->
+
 
 						         <div v-for="field in fieldDetails" class="form-group custom-details" :field-type="field.type_of_field">
-                              <label :for="field.name">{{ field.text }}</label>
+                              <label v-if="field.type_of_field !=='file'" :for="field.name">{{ field.text }}</label>
 
                               <!-- for search fields -->
                               <div v-if="field.type_of_field ==='search'" class="search-abn">
-                                 <input type="search" class="form-control required" :name="field.name | hypenate"  :placeholder="field.placeholder" >
+                                 <input type="search" class="form-control search" :name="field.name | hypenate"  :placeholder="field.placeholder" >
                                  <button><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg></button>
                               </div>
 
@@ -126,7 +155,7 @@
                               </select>
 
                                 <!-- for checkbox fields -->
-                              <div v-else-if="field.type_of_field ==='checkbox'" class="btn-hbox custom-fancyjb cdflex btn-hrmmargin" :id="field.name | hypenate">
+                              <div v-else-if="field.type_of_field ==='checkbox'" class="btn-hbox custom-fancyjb cdflex btn-hrmmargin customcheckbox" :id="field.name | hypenate">
 
                               <div v-for="option in JSON.parse(field.values)" class="fancy-checkbox checkbox-sm" >
                                  <input type="checkbox" :id="option | hypenate" :name="option | hypenate">
@@ -134,6 +163,9 @@
                               </div>
 
                              </div>
+
+                             <!-- to hide the type of field = file -->
+                             <input v-else-if="field.type_of_field ==='file'" type="hidden">
 
                               
                              <input v-else  type="text" class="form-control required" :name="field.name" :id="field.name | hypenate" :placeholder="field.placeholder">
@@ -717,6 +749,9 @@
                                };
                            }
                            $(".mapcontainer").trigger('update', [{mapOptions: newData}]);
+                           console.log(newData['areas']);
+                           console.log(Object.keys(newData['areas'])[0]);
+                           $('#location').val(Object.keys(newData['areas'])[0]);
                        }
                    }
                }

@@ -19,7 +19,8 @@
         'country' => $content['country'] ,
         'state' => $content['state'],
         'city' => $content['city'],
-        'postal_code' => $content['postal-code']
+        'postal_code' => $content['postal-code'],
+        'contact_number' => $content['contact-number']
         
     ];
 

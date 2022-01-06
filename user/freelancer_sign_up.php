@@ -221,7 +221,7 @@
                                  <a class="model-btn">
                                        <input type="text" class="form-control" value="">
                                        <div class="browse-btn">
-                                          <input type="file" value="Browse..." onchange="readURL(this);" id="uploads"  :upload-name="field.name">
+                                          <input type="file" value="Browse..." multiple onchange="readURL(this);" id="uploads"  :upload-name="field.name">
                                           <span id="logo_add2">Upload</span>
                                        </div>
                                     </a>

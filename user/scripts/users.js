@@ -6,6 +6,7 @@ const baseURL = window.location.hostname;
 var packageId = re.exec(scriptSrc.toLowerCase())[1];
 var userId;
 var taskFiles = [];
+var allFiles = [];
 
 var packagePath = scriptSrc.replace("/scripts/users.js", "").trim();
 
@@ -179,7 +180,8 @@ var usersData = (function ()
                 'country':  $('#country').val(),
                 'state' :$('#state').val(),
                 'city' : $('#city').val(),
-                'postal-code' : $('#postal-code').val()
+                'postal-code': $('#postal-code').val(),
+                'contact-number' : $('#phone').val()
             };
         
             console.log(user_details);
@@ -238,7 +240,9 @@ var usersData = (function ()
 
             
             console.log(customfield_data);
-            saveUser(customfield_data, $('#location').val(), taskFiles);
+            allFiles[0]['files'] = taskFiles;
+            console.log({ allFiles });
+            saveUser(customfield_data, $('#location').val(), allFiles);
            // saveCustomFiedldValues(customfield_data);
         }
 
@@ -292,6 +296,8 @@ var documentData = (function ()
                     console.log({ i });
                 
                 })
+                allFiles.push({ "name": category, "files": ''})
+ 
 
             } 
         }
@@ -335,7 +341,7 @@ var documentData = (function ()
                     success: function success(result)
                     {
                         console.log(result);
-                        taskFiles.push({ 'URL': result[0]['SourceUrl'], 'name': result[0]['Filename'], 'upload_category': category });
+                        taskFiles.push({ 'URL': result[0]['SourceUrl'], 'name': result[0]['Filename'] });
                         console.log({ taskFiles });
 
                         // allFiles.forEach(function (filename, i)
@@ -473,6 +479,7 @@ $(document).ready(function ()
 
     $('body').on('change', '#uploads', function (){
         var documents = documentData.getInstance();
+        taskFiles = [];
         documents.getFile($(this).attr('upload-name'));
         
     })

@@ -259,24 +259,28 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr v-for="field in allFreelancers" class="border-hover" :data-id="field.Id">
+                                                <tr v-for="field in allFreelancers" class="border-hover" >
 
-                                                    <td data-th="Email" nowrap><a href="freelancer-details.html">{{field.email}}</a></td>
+                                                    <td data-th="Email" nowrap><a :href="'freelancer_details.php?customid=' + field.Id">{{field.email}}</a></td>
                                                     
-                                                    <td data-th="Company Name" nowrap><a href="freelancer-details.html">{{field.company_name}}</a></td> 
-                                                    <td data-th="Address" nowrap><a href="freelancer-details.html">{{field.full_address}}</a></td>
+                                                    <td data-th="Company Name" nowrap><a :href="'freelancer_details.php?customid=' + field.Id">{{field.company_name}}</a></td> 
+                                                    <td data-th="Address" nowrap><a :href="'freelancer_details.php?customid=' + field.Id">{{field.full_address}}</a></td>
                                                     
                                                  
-                                                    <td data-th="Servicing Area" nowrap><a href="freelancer-details.html">{{field.servicing_area}} <span data-toggle="tooltip" title="AA, BB, CC" class="txt-green">3 More</span></td> 
+                                                    <td data-th="Servicing Area" nowrap><a :href="'freelancer_details.php?customid=' + field.Id">{{field.servicing_area}} <span data-toggle="tooltip" title="AA, BB, CC" class="txt-green">3 More</span></td> 
                                                    
-                                                    <td v-for="fields in uploadCustomFields" :data-th="fields.name"><a href="freelancer-details.html"><span class="txt-green">1 File(s)</span></a></td>
+                                                    <td v-for="fields in uploadCustomFields" :data-th="fields.name"><a :href="'freelancer_details.php?customid=' + field.Id"><span class="txt-green">1 File(s)</span></a></td>
                                                    
                                                 
-                                                    <td data-th="Approval Status"><a href="freelancer-details.html"><span class="status-approve">{{field.status}}</span></a></td>
+                                                    <td v-if="field.status=='Approved'" data-th="Approval Status"><a :href="'freelancer_details.php?customid=' + field.Id"><span class="status-approve" id="status">{{field.status}}</span></a></td>
+                                                    <td v-if="field.status=='Rejected'" data-th="Approval Status"><a :href="'freelancer_details.php?customid=' + field.Id"><span class="status-rejected" id="status">{{field.status}}</span></a></td>
+                                                    <td v-if="field.status=='Pending'" data-th="Approval Status"><a :href="'freelancer_details.php?customid=' + field.Id"><span class="status-rejected" id="status">{{field.status}}</span></a></td>
+                                                   
+                                                   
                                                     <td data-th="Action">
                                                         <div class="btn-accept-reject" v-if="field.status=='Pending'">
-                                                            <button class="btn blue-btn" id="accept-button">Accept</button>
-                                                            <button class="btn gre-btn"id="reject-button">Reject</button>
+                                                            <button class="btn blue-btn" id="accept-button" :data-id="field.Id" v-on:click="updateStatus('Approved', $event)">Accept</button>
+                                                            <button class="btn gre-btn"id="reject-button" :data-id="field.Id" v-on:click="updateStatus('Rejected', $event)">Reject</button>
                                                         </div>
                                                     </td>
                                                 </tr>

@@ -108,6 +108,33 @@
                 return JSON.parse(cf).filter((field) => field.code == header)
                // return field.code == header;
              // })
+            },
+
+
+
+            updateStatus(action, e)
+            {
+                
+                var user_details = {
+
+                    "Id": e.currentTarget.getAttribute('data-id'),
+                    'status' : action
+                };
+            
+                console.log({ user_details });
+                var settings = {
+                    "url": packagePath + "/update_status.php",
+                    "method": "POST",
+                    "data": JSON.stringify(user_details)
+                }
+                $.ajax(settings).done(function(response){
+                    
+                    e.currentTarget.parentElement().hide();
+
+                    console.log($.parseJSON(response));
+               
+                });
+            
             }
 
 

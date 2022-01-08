@@ -185,7 +185,7 @@ class API
 
     public function editRowEntry($packageId, $tableName, $rowId, $data)
     {
-        $url         = $this->baseUrl . '/api/v2/plugins/' . $packageId . '/custom-tables/' . $tableName . '/rows/' . $rowId;
+        $url =   'https://' .   $this->baseUrl . '/api/v2/plugins/' . $packageId . '/custom-tables/' . $tableName . '/rows/' . $rowId;
         $response = $this->callAPI("PUT", null, $url, $data);
         return $response;
     }

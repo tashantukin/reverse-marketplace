@@ -32,7 +32,9 @@
         'buyer_name' => $content['buyer_name'],
         'buyer_contact_no' => $content['buyer_contact_no'], 
         'provide_personal_details_to_merchant' => $content['provide_personal_details_to_merchant'],
-        'task_type_list' => $content['task_type_list']
+        'task_type_list' => $content['task_type_list'],
+        'status' => 'Available',
+        'no_of_quotes' => 0
     ];
 
     $response = $API->createRowEntry($packageId, 'job_cache', $location_details);

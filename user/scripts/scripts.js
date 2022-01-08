@@ -134,140 +134,8 @@
                                     </tr>
                                  </thead>
                                  <tbody>
-                                    <tr>
-                                       <td><select class="form-control">
-                                          <option selected="" disabled="" value="Available">Available</option>
-                                          <option value="Interested">Interested</option>
-                                       </select></td>
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>Yes</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr>
-                                       <td><select class="form-control">
-                                          <option disabled="" value="Available">Available</option>
-                                          <option selected="" value="Interested">Interested</option>
-                                       </select></td>
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>Yes</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr>
-                                       <td><select class="form-control">
-                                          <option selected="" disabled="" value="Available">Available</option>
-                                          <option value="Interested">Interested</option>
-                                       </select></td>
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>Yes</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr>
-                                       <td>Quoted</td>
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>Yes</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr>
-                                       <td><select class="form-control">
-                                          <option selected="" disabled="" value="Available">Available</option>
-                                          <option value="Interested">Interested</option>
-                                       </select></td>
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>Yes</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr>
-                                       <td><select class="form-control">
-                                          <option disabled="" value="Available">Available</option>
-                                          <option selected="" value="Interested">Interested</option>
-                                       </select></td>
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>Yes</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr>
-                                       <td><select class="form-control">
-                                          <option selected="" disabled="" value="Available">Available</option>
-                                          <option value="Interested">Interested</option>
-                                       </select></td>
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>Yes</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr>
-                                       <td>Quoted</td>
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>Yes</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr>
-                                       <td><select class="form-control">
-                                          <option selected="" disabled="" value="Available">Available</option>
-                                          <option value="Interested">Interested</option>
-                                       </select></td>
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>Yes</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr>
-                                       <td><select class="form-control">
-                                          <option selected="" disabled="" value="Available">Available</option>
-                                          <option value="Interested">Interested</option>
-                                       </select></td>
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>Yes</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
+                                   
+                                    
                                     
                                  </tbody>
                               </table>
@@ -290,106 +158,6 @@
                                        </tr>
                                     </thead>
                                     <tbody>
-                                       <tr onclick="window.location ='freelancer_quote.html'">
-                                          <td>DD/MM/YYYY</td>
-                                          <td>sample@gemail.com</td>
-                                          <td>89100122</td>
-                                          <td class="width-location">Location Location Location 123</td>
-                                          <td>1</td>
-                                          <td>1</td>
-                                          <td>Yes</td>
-                                          <td>DD/MM/YYYY</td>
-                                       </tr>
-                                       <tr onclick="window.location ='freelancer_quote.html'">
-                                          <td>DD/MM/YYYY</td>
-                                          <td>sample@gemail.com</td>
-                                          <td>89100122</td>
-                                          <td class="width-location">Location Location Location 123</td>
-                                          <td>1</td>
-                                          <td>1</td>
-                                          <td>No</td>
-                                          <td>DD/MM/YYYY</td>
-                                       </tr>
-                                       <tr onclick="window.location ='freelancer_quote.html'">
-                                          <td>DD/MM/YYYY</td>
-                                          <td>sample@gemail.com</td>
-                                          <td>89100122</td>
-                                          <td class="width-location">Location Location Location 123</td>
-                                          <td>1</td>
-                                          <td>1</td>
-                                          <td>No</td>
-                                          <td>DD/MM/YYYY</td>
-                                       </tr>
-                                       <tr onclick="window.location ='freelancer_quote.html'">
-                                          <td>DD/MM/YYYY</td>
-                                          <td>sample@gemail.com</td>
-                                          <td>89100122</td>
-                                          <td class="width-location">Location Location Location 123</td>
-                                          <td>1</td>
-                                          <td>1</td>
-                                          <td>No</td>
-                                          <td>DD/MM/YYYY</td>
-                                       </tr>
-                                       <tr onclick="window.location ='freelancer_quote.html'">
-                                          <td>DD/MM/YYYY</td>
-                                          <td>sample@gemail.com</td>
-                                          <td>89100122</td>
-                                          <td class="width-location">Location Location Location 123</td>
-                                          <td>1</td>
-                                          <td>1</td>
-                                          <td>No</td>
-                                          <td>DD/MM/YYYY</td>
-                                       </tr>
-                                       <tr onclick="window.location ='freelancer_quote.html'">
-                                          <td>DD/MM/YYYY</td>
-                                          <td>sample@gemail.com</td>
-                                          <td>89100122</td>
-                                          <td class="width-location">Location Location Location 123</td>
-                                          <td>1</td>
-                                          <td>1</td>
-                                          <td>No</td>
-                                          <td>DD/MM/YYYY</td>
-                                       </tr>
-                                       <tr onclick="window.location ='freelancer_quote.html'">
-                                          <td>DD/MM/YYYY</td>
-                                          <td>sample@gemail.com</td>
-                                          <td>89100122</td>
-                                          <td class="width-location">Location Location Location 123</td>
-                                          <td>1</td>
-                                          <td>1</td>
-                                          <td>No</td>
-                                          <td>DD/MM/YYYY</td>
-                                       </tr>
-                                       <tr onclick="window.location ='freelancer_quote.html'">
-                                          <td>DD/MM/YYYY</td>
-                                          <td>sample@gemail.com</td>
-                                          <td>89100122</td>
-                                          <td class="width-location">Location Location Location 123</td>
-                                          <td>1</td>
-                                          <td>1</td>
-                                          <td>No</td>
-                                          <td>DD/MM/YYYY</td>
-                                       </tr>
-                                       <tr onclick="window.location ='freelancer_quote.html'">
-                                          <td>DD/MM/YYYY</td>
-                                          <td>sample@gemail.com</td>
-                                          <td>89100122</td>
-                                          <td class="width-location">Location Location Location 123</td>
-                                          <td>1</td>
-                                          <td>1</td>
-                                          <td>No</td>
-                                          <td>DD/MM/YYYY</td>
-                                       </tr>
-                                       <tr onclick="window.location ='freelancer_quote.html'">
-                                          <td>DD/MM/YYYY</td>
-                                          <td>sample@gemail.com</td>
-                                          <td>89100122</td>
-                                          <td class="width-location">Location Location Location 123</td>
-                                          <td>1</td>
-                                          <td>1</td>
-                                          <td>No</td>
-                                          <td>DD/MM/YYYY</td>
-                                       </tr>
                                        
                                     </tbody>
                                  </table>
@@ -974,13 +742,61 @@
                 console.log({ response })
               
                 const jobs = response
-                const jobDetails = jobs.Records[0]
+                const jobDetails = jobs.Records
+                console.log({ jobDetails });
                 //if existing user, verify the status
-                if (jobDetails) {
+                if (jobDetails.length != 0) {
+
+                  jobDetails.forEach(function (job, i)
+                  {
+                    var status;
+                    
+                    if (job['status'] == 'Available') {
+                      status = ` <td><select class="form-control"id ="status">
+                      <option selected="" disabled="" value="Available">Available</option>
+                      <option value="Interested">Interested</option>
+                      </select></td>`
+                    } else if (job['status'] == 'Interested') {
+                      status = ` <td><select class="form-control">
+                      <option selected="" disabled="" value="Available">Available</option>
+                      <option selected="" value="Interested">Interested</option>
+                      </select></td>`
+                    } else if (job['status'] == 'Quoted') {
+                      status =`<td>Quoted</td>`
+
+                     }else if (job['status'] == 'Accepted') {
+                      status =`<td>Accepted</td>`
+
+                     }else if (job['status'] == 'Completed') {
+                      status =`<td>Completed</td>`
+
+                    } else {
+                      status =`<td>--</td>`
+                    }
+                    
+                    let allJobs = `<tr data-id="${job['Id']}">
+
+                  ${status}
+                  <td>${job['job_availability']}</td>
+                  <td>${job['buyer_email']}</td>
+                  <td>${job['buyer_contact_no']}</td>
+                  <td class="width-location">${job['buyer_contact_no']}</td>
+                  <td>1</td>
+                  <td>${job['no_of_quotes']}</td>
+                  <td>${job['is_accepted'] == 1 ? 'Yes' : 'No'} </td>
+                  <td>-</td>
+                 </tr>`;
+                  
+                    $('#tab-all table tbody').append(allJobs);
+                    
+
+                  })
                   
                  
                   
                 }
+                  
+                
             
               
           
@@ -990,9 +806,88 @@
             })
           }
 
+
+          // get all available jobs
+          async function getInterestedJobs(){
+            var data = [{ 'Name': 'status', 'Operator': "in", "Value": 'Interested' }]
+            
+            $.ajax({
+              method: "POST",
+              url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_cache/`,
+              headers: {
+                "Content-Type": "application/json"
+              },
+            
+              data: JSON.stringify(data),
+         
+              success: function (response)
+              {
+                console.log({ response })
+              
+                const jobs = response
+                const jobDetails = jobs.Records
+                //if existing user, verify the status
+                if (jobDetails.length != 0) {
+
+                  jobDetails.forEach(function (job, i)
+                  {
+                   
+                    
+                    let allJobs = `<tr data-id="${job['Id']}">
+
+                  <td>${job['job_availability']}</td>
+                  <td>${job['buyer_email']}</td>
+                  <td>${job['buyer_contact_no']}</td>
+                  <td class="width-location">${job['buyer_contact_no']}</td>
+                  <td>1</td>
+                  <td>${job['no_of_quotes']}</td>
+                  <td>${job['is_accepted'] == 1 ? 'Yes' : 'No'} </td>
+                  <td>-</td>
+                 </tr>`;
+                  
+                    $('#tab-interested table tbody').append(allJobs);
+                    
+
+                  })
+                  
+                 
+                  
+                }
+               
+        
+              }
+            })
+          }
+          
+          function  saveStatus(el)
+          {
+              
+              var status_details = {
+      
+                  "Id": el.parents('tr').attr('data-id'),
+                  'status' : el.val()
+              };
+          
+              console.log({ status_details });
+              var settings = {
+                  "url": packagePath + "/update_job_status.php",
+                  "method": "POST",
+                  "data": JSON.stringify(status_details )
+              }
+              $.ajax(settings).done(function(response){
+                  
+                 
+              
+              });
+      
+          
+          }
+
           return {
             getAllJobs :getAllJobs,
-            getJobDetail :getJobDetail
+            getJobDetail: getJobDetail,
+            saveStatus: saveStatus,
+            getInterestedJobs:getInterestedJobs
         
           }
           
@@ -1014,15 +909,6 @@
       })()
   
   
-  
-  
-  
-
-
-
-    
-
-  
     $(document).ready(function () {
       getMarketplaceCustomFields(function (result) {
         $.each(result, function (index, cf) {
@@ -1038,7 +924,9 @@
         var user = userData.getInstance();
         var jobs = jobData.getInstance();
         jobs.getAllJobs()
+        jobs.getInterestedJobs()
         user.getUserDetails(userId);
+
 
 
             var buttons = `
@@ -1056,6 +944,17 @@
 
             $('.section-shop').hide();
         
+
+
+        //changing status on ALL tabs available to interested
+
+        $(document).on('change', '#status', function ()
+        
+        {
+          var jobs = jobData.getInstance();
+          var $this = $(this);
+          jobs.saveStatus($this);
+        });
 
 
 

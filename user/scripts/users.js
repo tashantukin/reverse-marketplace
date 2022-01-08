@@ -7,6 +7,7 @@ const baseURL = window.location.hostname;
 var packageId = re.exec(scriptSrc.toLowerCase())[1];
 
 var userId;
+var userguid = $('#userGuid').val()
 var taskFiles = [];
 var allFiles = [];
 
@@ -46,8 +47,16 @@ const sellerFields = new Vue({
             uploadCustomFields: [],
             url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/freelancer_form?sort=ModifiedDateTime`,
             registrationStatus: 'Pending',
-            adminComment: ''
-        
+            adminComment: '',
+            companyName: '',
+            address: '',
+            country: '',
+            state: '',
+            city: '',
+            postalCode: '',
+            telephone: '',
+            isEdit: 0
+
         }
     },
     methods: {
@@ -67,7 +76,8 @@ const sellerFields = new Vue({
                 vm.allJobDetails = details.data
                 vm.fieldDetails = vm.allJobDetails.Records
                 vm.uploadCustomFields = vm.allJobDetails.Records.filter((field) => field.type_of_field === 'file')
-                console.log( vm.uploadCustomFields)
+                console.log(vm.uploadCustomFields)
+                vm.getUserDetails();
                 
                // vm.taskOption = $.parseJSON(vm.jobDetails[0].values);
                 
@@ -76,8 +86,73 @@ const sellerFields = new Vue({
             }
 
             
-        }
+        },
 
+        async getUserDetails()
+        {
+            vm = this;
+            var data = [{ 'Name': 'user_id', 'Operator': "in", "Value": $('#userGuid').val() }]
+                
+            $.ajax({
+                method: "POST",
+                url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/freelancer_details/`,
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                
+                data: JSON.stringify(data),
+                //  })
+                success: function (response)
+                {
+                    console.log({ response })
+                
+                    const users = response
+                    const userDetails = users.Records[0]
+
+                    if (userDetails) {
+                        vm.isEdit = 1;
+
+                        $('.nav-tabs li:nth-child(1)').removeClass('active');
+                        $('.nav-tabs li:nth-child(3)').addClass('active');
+                        $('#registration').removeClass('active in');
+                        $('#verification').addClass('active in');
+
+                        //hide the back to registration button
+                        $('#verification-details .btn-jobform-outline').hide();
+
+                        $('#company-name').val(userDetails['company_name'])
+                        $('#address').val(userDetails['full_address']);
+                        $('#city').val( userDetails['city']);
+                        $('#state').val( userDetails['state']);
+                        $('#country').val(userDetails['country']);
+                        $('#postal-code').val( userDetails['postal_code']);
+                        $('#phone').val(userDetails['contact_number']);
+
+                        //files 
+                        var files = JSON.parse(userDetails['attached_files']);
+                        console.log({ files });
+
+                        files.forEach(function (file, i)
+                        {
+                            file['files'].forEach(function (filename, i)
+                            {
+                                $('.table-document tbody').append(`<tr>
+                                <td class="action-icondelete"><a class="delete-cat" href="javascript:void(0)"><i class="icon icon-ndelete"></i></a></td>
+                                <td>${filename['name']}</td>
+                                <td><div class="text-right document-action"><a href="${filename['URL']}">View</a>|<a href="${filename['URL']}">Download</a></div></td>
+                                </tr>`);
+                            })
+                        })
+                    }
+            
+                
+            
+                }
+            
+            
+            })
+ 
+        }
 
     },
 
@@ -101,6 +176,7 @@ const sellerFields = new Vue({
     
         this.$nextTick(() => {
             this.getAllSellerFields()
+           // this.getUserDetails();
         });
       }
 

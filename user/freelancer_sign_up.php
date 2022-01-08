@@ -3,6 +3,8 @@
    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
+
+<!-- begin headerr --> 
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
    <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,18 +30,24 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"
             charset="utf-8"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js" charset="utf-8"></script>
-   <script src="scripts/jquery.mapael.js" charset="utf-8"></script>
-   <script src="scripts/france_departments.js" charset="utf-8"></script>
-   <script src="scripts/world_countries.js" charset="utf-8"></script>
-   <script src="scripts/usa_states.js" charset="utf-8"></script>
+   
+
 
    <!-- custom js -->
    <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/custom.js"></script>
    <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/jquery.ddslick.js"></script>
+
+  
+   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
+
+   <script type="text/javascript" src="subscribe/8e94739d-b260-41ec-9496-dfa98bb8cdc0/scripts/users.js"></script>
+
+
    
 
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
-   <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
+   <script src="https://unpkg.com/vue/dist/vue.min.js"></script> -->
 
    <!-- bootstrap style -->
    <link href="https://bootstrap.arcadier.com/spacetime/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -55,6 +63,8 @@
    <!-- modal style-->
    <link href="https://bootstrap.arcadier.com/spacetime/css/modal.css" rel="stylesheet" type="text/css">
 </head>
+
+<!-- end headerr --> 
 
 <body class="seller-items">
    <!-- header -->
@@ -312,7 +322,6 @@
                            </div>
                            </div>
                         <hr>
-
                            <div class="next-tab-area"><span class="seller-btn"> <a onclick="j_nextTab();" class="my-btn btn-red" href="javascript:void(0);">Next</a> </span></div>
                         </div>
                      </div>
@@ -322,12 +331,12 @@
                            <h3>Verification</h3>
 
                            <div class="verification-box"><p>Waiting for verification.<br>We are currently assessing the data you have filled in.</p></div>
-                           <div class="form-group">
+                           <div v-if="adminComment != ''" class="form-group">
                               <label for="comments">Additional admin comments:</label>
-                              <div class="comment-desc">Patilibunti, sintere crente constiu muscivi denamqu itastrum publiis, ne conloctum, nihilius eo etilinam manunum tum inat poerem nem, us bons re, Cas alicae conte, vitifere que nonsus, cononvenditi, ocae inirtil icaur, virtius aperus, te publistraed re confex manducontisEdicauci ondicae, quostastati, quitiamernum tum inatuset potius. Quam re tum se ina L. Fora tum atis estatis neque arideff rehenditea quam ina, P. Huc faccibus Catraed eesigna, omplicemPatilibunti, sintere crente constiu muscivi denamqu itastrum publiis, ne conloctum, nihilius eo etilinam manunum tum inat poerem nem, us bons re, Cas alicae conte, vitifere que nonsus, cononvenditi, ocae inirtil icaur, virtius aperus, te publistraed re confex manducontisEdicauci ondicae, quostastati, quitiamernum tum inatuset potius. Quam re tum se ina L. Fora tum atis estatis neque arideff rehenditea quam ina, P. Huc faccibus Catraed eesigna, omplicem</div>
+                              <div class="comment-desc"></div>
                            </div>
                            <hr>
-                            <div class="next-tab-area"><span class="seller-btn"> <a onclick="j_nextTab();" class="my-btn btn-red" href="javascript:void(0);">Next</a> </span></div>
+                            <div   v-if="registrationStatus != 'Pending'" class="next-tab-area"><span class="seller-btn"> <a onclick="j_nextTab();" class="my-btn btn-red" href="javascript:void(0);">Next</a> </span></div>
                         </div>
                      </div>
                     <div id="approval" class="tab-pane fade">
@@ -336,7 +345,7 @@
                            <h3>Approval</h3>
                            <div class="form-group">
                               <label for="approval">Description</label>
-                              <textarea class="form-control required" rows="5" name="approval" id="approval" placeholder=""></textarea>
+                              <textarea class="form-control required" rows="5" name="approval" id="approval" placeholder=""> </textarea>
                            </div>
                            <hr>
                            <div class="next-tab-area"><span class="seller-btn"> <a onclick="j_nextTab();" class="my-btn btn-red" href="javascript:void(0);">Next</a> </span></div>
@@ -1229,13 +1238,19 @@
       }
       
    </script>
+                
 
 
 
-<script type="text/javascript" src="scripts/users.js"></script>
-<script type="text/javascript" src="scripts/jquery.mapael.js"></script>
-<script type="text/javascript" src="scripts/usa_states.js"></script>
-<script type="text/javascript" src="scripts/maps/world_countries.js"></script>
+
+<script type="text/javascript" src="subscribe/8e94739d-b260-41ec-9496-dfa98bb8cdc0/scripts/jquery.mapael.js"></script>
+<script type="text/javascript" src="subscribe/8e94739d-b260-41ec-9496-dfa98bb8cdc0/scripts/usa_states.js"></script>
+   
+
+
+
+
+<!-- <script type="text/javascript" src="subscribe/scripts/maps/world_countries.js"></script> -->
 <!-- end footer --> 
 </body>
 

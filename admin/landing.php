@@ -112,127 +112,38 @@
                                             <thead>
                                                 <tr>
                                                     <th>Job ID</th>
-                                                    <th>Quoted by</th>
-                                                    <th>Date</th>
-                                                    <th>Amount</th>
-                                                    <th>Availability</th>
-                                                    <th>Status</th>
-                                                    <th>Company Name</th>
-                                                    <th>Company Email</th>
+                                                    <th>Lodged by</th>
+                                                    <th>Job Location</th>
+                                                    <th>Job Type</th>
+                                                    <th>Payment Type</th>
                                                     <th>Job to be completed by</th>
+                                                    <th>Availability</th>
+                                                    <th>No.of Quote</th>
+                                                    <th>Status</th>
+                                                   
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr class="border-hover">
-                                                    <td data-th="Job ID"><a href="freelancer.html">Job #123</a></td>
-                                                    <td data-th="Quoted by"><a href="freelancer.html">Grace (Undergraduate)</a></td>
-                                                    <td data-th="Date"><a href="freelancer.html">DD/MM/YYYY</a></td>
-                                                    <td data-th="Amount"><a href="freelancer.html">$1500</a></td>
-                                                    <td data-th="Availability"><a href="freelancer.html">DD/MM/YYYY</a></td>
-                                                    <td data-th="Status"><a href="freelancer.html">Valid to DD/MM/YYYY</a></td>
-                                                    <td data-th="Company Name"><a href="freelancer.html">Sample Company Name One</a></td>
-                                                    <td data-th="Company Email"><a href="freelancer.html">Company@gmail.com</a></td>
-                                                    <td data-th="Job to be completed by"><a href="freelancer.html">DD/MM/YYYY</a></td>
+                                                <tr v-for="job in allJobs" class="border-hover">
+                                                    <td data-th="Job ID"><a href="freelancer.html">{{ job.Id }}</a></td>
+                                                    <td data-th="Lodged by"><a href="freelancer.html">{{job.buyer_email}}</a></td>
+                                                    <td data-th="Job Location"><a href="freelancer.html">{{job.inperson_work_address}}</a></td>
+                                                   
+                                                    <td data-th="Job Type" v-if="job.job_type_contract=='True' &&  job.job_type_full_time=='True'"><a href="freelancer.html">Contract,Full Time</a></td>
+                                                    <td data-th="Job Type" v-else-if="job.job_type_contract=='True'"><a href="freelancer.html">Contract</a></td>
+                                                    <td data-th="Job Type" v-else-if="job.job_type_full_time=='True'"><a href="freelancer.html">Full Time</a></td>
+                                                    <td data-th="Job Type" v-else="job.job_type_full_time=='False' && job.job_type_contract=='False' "><a href="freelancer.html">--</a></td>
+                                                   
+                                                    <!-- <td data-th="Payment Type" v-if="job.payment_hourly=='True' && job.payment_fixed=='True" ><a href="freelancer.html">Fixed,Hourly</a></td> -->
+                                                    <td data-th="Payment Type" v-if="job.payment_fixed=='True'"><a href="freelancer.html">Fixed</a></td>
+                                                    <td data-th="Payment Type" v-if="job.payment_hourly=='True'" ><a href="freelancer.html">Hourly</a></td>
+                                                  
+                                                    <td data-th="Job to be completed by"><a href="freelancer.html"><span class="text-danger">{{ job.time_frame_timestamp }}</span></a></td>
+                                                    <td data-th="Availability"><a href="freelancer.html"><span class="text-danger">{{ job.job_availability}}</span></a></td>
+                                                    <td data-th="No.of Quote"><a href="freelancer.html">---</a></td>
+                                                    <td data-th="Status"><a href="freelancer.html">----</a></td>
                                                 </tr>
-                                                <tr class="border-hover">
-                                                    <td data-th="Job ID"><a href="freelancer.html">Job #123</a></td>
-                                                    <td data-th="Quoted by"><a href="freelancer.html">Grace (Undergraduate)</a></td>
-                                                    <td data-th="Date"><a href="freelancer.html">DD/MM/YYYY</a></td>
-                                                    <td data-th="Amount"><a href="freelancer.html">$1500</a></td>
-                                                    <td data-th="Availability"><a href="freelancer.html">DD/MM/YYYY</a></td>
-                                                    <td data-th="Status"><a href="freelancer.html"><span class="text-accepted">Accepted</span></a></td>
-                                                    <td data-th="Company Name"><a href="freelancer.html">Sample Company Name One</a></td>
-                                                    <td data-th="Company Email"><a href="freelancer.html">Company@gmail.com</a></td>
-                                                    <td data-th="Job to be completed by"><a href="freelancer.html"><span class="text-danger">Urgent</span></a></td>
-                                                </tr>
-                                                <tr class="border-hover">
-                                                    <td data-th="Job ID"><a href="freelancer.html">Job #123</a></td>
-                                                    <td data-th="Quoted by"><a href="freelancer.html">Grace (Undergraduate)</a></td>
-                                                    <td data-th="Date"><a href="freelancer.html">DD/MM/YYYY</a></td>
-                                                    <td data-th="Amount"><a href="freelancer.html">$1500</a></td>
-                                                    <td data-th="Availability"><a href="freelancer.html">DD/MM/YYYY</a></td>
-                                                    <td data-th="Status"><a href="freelancer.html"><span class="text-danger">Rejected</span></a></td>
-                                                    <td data-th="Company Name"><a href="freelancer.html">Sample Company Name One</a></td>
-                                                    <td data-th="Company Email"><a href="freelancer.html">Company@gmail.com</a></td>
-                                                    <td data-th="Job to be completed by"><a href="freelancer.html">DD/MM/YYYY</a></td>
-                                                </tr>
-                                                <tr class="border-hover">
-                                                    <td data-th="Job ID"><a href="freelancer.html">Job #123</a></td>
-                                                    <td data-th="Quoted by"><a href="freelancer.html">Grace (Undergraduate)</a></td>
-                                                    <td data-th="Date"><a href="freelancer.html">DD/MM/YYYY</a></td>
-                                                    <td data-th="Amount"><a href="freelancer.html">$1500</a></td>
-                                                    <td data-th="Availability"><a href="freelancer.html">DD/MM/YYYY</a></td>
-                                                    <td data-th="Status"><a href="freelancer.html">Valid to DD/MM/YYYY</a></td>
-                                                    <td data-th="Company Name"><a href="freelancer.html">Sample Company Name One</a></td>
-                                                    <td data-th="Company Email"><a href="freelancer.html">Company@gmail.com</a></td>
-                                                    <td data-th="Job to be completed by"><a href="freelancer.html">DD/MM/YYYY</a></td>
-                                                </tr>
-                                                <tr class="border-hover">
-                                                    <td data-th="Job ID"><a href="freelancer.html">Job #123</a></td>
-                                                    <td data-th="Quoted by"><a href="freelancer.html">Grace (Undergraduate)</a></td>
-                                                    <td data-th="Date"><a href="freelancer.html">DD/MM/YYYY</a></td>
-                                                    <td data-th="Amount"><a href="freelancer.html">$1500</a></td>
-                                                    <td data-th="Availability"><a href="freelancer.html">DD/MM/YYYY</a></td>
-                                                    <td data-th="Status"><a href="freelancer.html"><span class="text-accepted">Accepted</span></a></td>
-                                                    <td data-th="Company Name"><a href="freelancer.html">Sample Company Name One</a></td>
-                                                    <td data-th="Company Email"><a href="freelancer.html">Company@gmail.com</a></td>
-                                                    <td data-th="Job to be completed by"><a href="freelancer.html"><span class="text-danger">Urgent</span></a></td>
-                                                </tr>
-                                                <tr class="border-hover">
-                                                    <td data-th="Job ID"><a href="freelancer.html">Job #123</a></td>
-                                                    <td data-th="Quoted by"><a href="freelancer.html">Grace (Undergraduate)</a></td>
-                                                    <td data-th="Date"><a href="freelancer.html">DD/MM/YYYY</a></td>
-                                                    <td data-th="Amount"><a href="freelancer.html">$1500</a></td>
-                                                    <td data-th="Availability"><a href="freelancer.html">DD/MM/YYYY</a></td>
-                                                    <td data-th="Status"><a href="freelancer.html"><span class="text-danger">Rejected</span></a></td>
-                                                    <td data-th="Company Name"><a href="freelancer.html">Sample Company Name One</a></td>
-                                                    <td data-th="Company Email"><a href="freelancer.html">Company@gmail.com</a></td>
-                                                    <td data-th="Job to be completed by"><a href="freelancer.html">DD/MM/YYYY</a></td>
-                                                </tr>
-                                                <tr class="border-hover">
-                                                    <td data-th="Job ID"><a href="freelancer.html">Job #123</a></td>
-                                                    <td data-th="Quoted by"><a href="freelancer.html">Grace (Undergraduate)</a></td>
-                                                    <td data-th="Date"><a href="freelancer.html">DD/MM/YYYY</a></td>
-                                                    <td data-th="Amount"><a href="freelancer.html">$1500</a></td>
-                                                    <td data-th="Availability"><a href="freelancer.html">DD/MM/YYYY</a></td>
-                                                    <td data-th="Status"><a href="freelancer.html">Valid to DD/MM/YYYY</a></td>
-                                                    <td data-th="Company Name"><a href="freelancer.html">Sample Company Name One</a></td>
-                                                    <td data-th="Company Email"><a href="freelancer.html">Company@gmail.com</a></td>
-                                                    <td data-th="Job to be completed by"><a href="freelancer.html">DD/MM/YYYY</a></td>
-                                                </tr>
-                                                <tr class="border-hover">
-                                                    <td data-th="Job ID"><a href="freelancer.html">Job #123</a></td>
-                                                    <td data-th="Quoted by"><a href="freelancer.html">Grace (Undergraduate)</a></td>
-                                                    <td data-th="Date"><a href="freelancer.html">DD/MM/YYYY</a></td>
-                                                    <td data-th="Amount"><a href="freelancer.html">$1500</a></td>
-                                                    <td data-th="Availability"><a href="freelancer.html">DD/MM/YYYY</a></td>
-                                                    <td data-th="Status"><a href="freelancer.html"><span class="text-accepted">Accepted</span></a></td>
-                                                    <td data-th="Company Name"><a href="freelancer.html">Sample Company Name One</a></td>
-                                                    <td data-th="Company Email"><a href="freelancer.html">Company@gmail.com</a></td>
-                                                    <td data-th="Job to be completed by"><a href="freelancer.html"><span class="text-danger">Urgent</span></a></td>
-                                                </tr>
-                                                <tr class="border-hover">
-                                                    <td data-th="Job ID"><a href="freelancer.html">Job #123</a></td>
-                                                    <td data-th="Quoted by"><a href="freelancer.html">Grace (Undergraduate)</a></td>
-                                                    <td data-th="Date"><a href="freelancer.html">DD/MM/YYYY</a></td>
-                                                    <td data-th="Amount"><a href="freelancer.html">$1500</a></td>
-                                                    <td data-th="Availability"><a href="freelancer.html">DD/MM/YYYY</a></td>
-                                                    <td data-th="Status"><a href="freelancer.html"><span class="text-danger">Rejected</span></a></td>
-                                                    <td data-th="Company Name"><a href="freelancer.html">Sample Company Name One</a></td>
-                                                    <td data-th="Company Email"><a href="freelancer.html">Company@gmail.com</a></td>
-                                                    <td data-th="Job to be completed by"><a href="freelancer.html">DD/MM/YYYY</a></td>
-                                                </tr>
-                                                <tr class="border-hover">
-                                                    <td data-th="Job ID"><a href="freelancer.html">Job #123</a></td>
-                                                    <td data-th="Quoted by"><a href="freelancer.html">Grace (Undergraduate)</a></td>
-                                                    <td data-th="Date"><a href="freelancer.html">DD/MM/YYYY</a></td>
-                                                    <td data-th="Amount"><a href="freelancer.html">$1500</a></td>
-                                                    <td data-th="Availability"><a href="freelancer.html">DD/MM/YYYY</a></td>
-                                                    <td data-th="Status"><a href="freelancer.html">Valid to DD/MM/YYYY</a></td>
-                                                    <td data-th="Company Name"><a href="freelancer.html">Sample Company Name One</a></td>
-                                                    <td data-th="Company Email"><a href="freelancer.html">Company@gmail.com</a></td>
-                                                    <td data-th="Job to be completed by"><a href="freelancer.html">DD/MM/YYYY</a></td>
-                                                </tr>
+                                                
                                             </tbody>
                                         </table>
                                     </div>

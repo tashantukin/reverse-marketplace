@@ -12,6 +12,7 @@
         'inperson_work_address' => $content['inperson_work_address'],
         'job_type_full_time' => $content['job_type_full_time'],
         'job_type_contract' =>  $content['job_type_contract'],
+        'job_availability' => $content['job_availability'],
         'payment_fixed' => $content['payment_fixed'],
         'payment_fixed_value' => $content['payment_fixed_value'],
         'payment_hourly' => $content['payment_hourly'],

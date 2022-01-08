@@ -4,6 +4,7 @@
     const re = /([a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12})/i;
     const packageId = re.exec(scriptSrc.toLowerCase())[1];
     const packagePath = scriptSrc.replace('/scripts/scripts3.js', '').trim();
+    var accessToken = 'Bearer ' + getCookie('webapitoken');
     let optionList = [];
     let selectedValue = '';
     let conf_message = '';
@@ -11,6 +12,11 @@
 
     $(document).ready(function ()
     {
+        saveURL();
+        savePluginId(packageId);
+
+
+
         $('#onbrd_field_type').on('change', function ()
         {
             jQuery('.cstm-fieldpop-optarea').hide();
@@ -212,6 +218,17 @@
             $('#cover').hide();
         });
 
+
+
+
+        $('#comment-button').click(function ()
+        {
+            
+            saveComment();
+
+            
+        });
+
     });
 
     //MAIN CRUD
@@ -305,5 +322,74 @@
             }
         });
     }
+
+    function saveURL() {
+        var apiUrl = packagePath + '/save_custom_url.php';
+       $.ajax({
+           url: apiUrl,          
+           headers: {
+               'Authorization':  accessToken,
+           },
+           method: 'POST',
+           contentType: 'application/json',
+         //  data: JSON.stringify(data),
+           success: function(response) {
+               console.log({ response })
+             
+           },
+           error: function (jqXHR, status, err) {
+                 toastr.error('---');
+           }
+       });
+     
+    }
+    function getCookie (name) {
+        var value = '; ' + document.cookie;
+        var parts = value.split('; ' + name + '=');
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    function savePluginId(id) {
+        var data = { 'userId': userId, 'id': id };
+         var apiUrl = packagePath + '/save_plugin_id.php';
+        $.ajax({
+            url: apiUrl,          
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function(response) {
+              
+              
+            },
+            error: function (jqXHR, status, err) {
+                  toastr.error('---');
+            }
+        });
+    }
+    function  saveComment()
+    {
+        
+        var comment_details = {
+
+            "Id": $('#comment').attr('data-id'),
+            'comment' : $('#comment').val()
+        };
+    
+        console.log({ comment_details });
+        var settings = {
+            "url": packagePath + "/update_comment.php",
+            "method": "POST",
+            "data": JSON.stringify(comment_details)
+        }
+        $.ajax(settings).done(function(response){
+            
+           
+        
+        });
+
+    
+    }
+   
+
 
 })();

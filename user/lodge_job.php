@@ -287,7 +287,7 @@
                 </div>
                 <div class="fancy-radio radio-sm">
                               <input type="radio" name="urgent" id="completed_date">
-                              <label for="completed_date"><span><input type="text" disabled name="completed_datetime" placeholder="DD/MM/YYYY" class="datepicker form--control"></span></label>
+                              <label for="completed_date"><span><input type="text" disabled name="completed_datetime" placeholder="DD/MM/YYYY" class="datepicker form--control" id="date-valid"></span></label>
                 </div>
             </div>
 
@@ -296,7 +296,7 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="job_valid">When is the job valid until?</label>
-                        <input type="text" class="form-control datepicker" name="job_valid" id="job_valid" placeholder="DD/MM/YYYY">
+                        <input type="text" class="form-control datepicker" name="job_valid" id="job_valid" placeholder="DD/MM/YYYY" >
                     </div>
                 </div>
             </div>

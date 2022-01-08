@@ -178,7 +178,7 @@
     margin-bottom: 0px !important;
 }
 .w-panel-box.panel-height-auto{
-    min-height: auto;
+    min-height: auto!important;
 }
 .text-scroll .text-area{
     height: 100px;

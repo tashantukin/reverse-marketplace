@@ -53,13 +53,20 @@ $customContent = getContent($custom_id);
 <link href="https://bootstrap.arcadier.com/adminportal/css/responsive.css" rel="stylesheet" type="text/css">
 <link href="css/onboarding-fields.css" rel="stylesheet" type="text/css">
 
+
 </meta>
+
+<style>
+.w-panel-box.panel-height-auto{
+    min-height: auto!important;
+}
+
+</style>
 </head>
 <body class="page-freelancer-detail">
 <div class="mobi-header visible-xs">
 
 </div>
-<div class="main template-sidebar dashboard-admin-pg">
 
     <div class="page-content">
         <div class="row wrap-panel">
@@ -71,15 +78,15 @@ $customContent = getContent($custom_id);
                         <div>
                             <p><?php echo $customContent['Records'][0]['company_name']; ?></p>
                             <p><?php echo $customContent['Records'][0]['email']; ?></p>
-                            <p><?php echo $customContent['Records'][0]['company_name']; ?></p>
+                            <p><?php echo $customContent['Records'][0]['contact_number']; ?></p>
                         </div>
                     </li>
                 </ul>
                </div>
             </div>
-    </div> 
 
-        <div class="page-content">
+
+            <div class="page-content">
             <div class="row wrap-panel">
                 <div class="col-sm-12 col-md-12">
                     <div class="w-panel-box panel-height-auto">
@@ -98,48 +105,42 @@ $customContent = getContent($custom_id);
                                   }
                                    
 
-
                                  }
 
 
-                                 
                                  ?>
 
-
-
-                                <!-- <li v-for="file in ">
-                                    <p>Certificate of Currency</p>
-                                    <p><a href="javascript:void(0);"><img src="images/pdf-icon.svg"> Download sample.pdf</a></p>
-                                    <p><a href="javascript:void(0);"><img src="images/pdf-icon.svg"> Download sample.pdf</a></p>
-                                    <p><a href="javascript:void(0);"><img src="images/pdf-icon.svg"> Download sample.pdf</a></p>
-                                    <p><a href="javascript:void(0);"><img src="images/pdf-icon.svg"> Download sample.pdf</a></p>
-                                </li>
-
-
-
-                                <li>
-                                    <p>Driver's License of Directory</p>
-                                    <p><a href="javascript:void(0);"><img src="images/pdf-icon.svg"> Download sample.pdf</a></p>
-                                    <p><a href="javascript:void(0);"><img src="images/pdf-icon.svg"> Download sample.pdf</a></p>
-                                    <p><a href="javascript:void(0);"><img src="images/pdf-icon.svg"> Download sample.pdf</a></p>
-                                    <p><a href="javascript:void(0);"><img src="images/pdf-icon.svg"> Download sample.pdf</a></p>
-                                </li> -->
                             </ul>
-                            
+                            <div class="form-group">
+                              <label for="comments">Additional admin comments:</label>
+                              <div class="comment-desc"><textarea id="comment" data-id="<?php echo $customContent['Records'][0]['Id']; ?>"><?php echo $customContent['Records'][0]['admin_comment']; ?> </textarea></div>
+                           </div>
+
+
+                           <div class="btn-accept-reject">
+                             <button class="btn blue-btn" id="comment-button">Save</button>
+                          </div>
+
+
                         </div>
+
+
                    </div>
                 </div>
                 <div class="clearfix"></div>
             </div>
+    <div>
+    </div> 
 
-   
-</div>
+ 
+
+
 <div class="clearfix">
 </div>
 </div>
 
 <div id="cover"></div>
-
+<!-- begin footer -->
 <script type="text/javascript">
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip({
@@ -177,6 +178,12 @@ jQuery('body').on('click', '.icon.icon-toggle.arrow-down', function () {
     });
 </script>
 <script src="https://bootstrap.arcadier.com/adminportal_pre/js/custom-nicescroll.js" type="text/javascript">
+
+
+
+
 </script>
+<script type="text/javascript" src="scripts/scripts3.js"></script>
+<!-- end footer -->
 </body>
 </html>

@@ -75,6 +75,29 @@
             },
 
 
+            async getAllJobs(action) {
+                try {
+                    vm = this;
+                    const response = await axios({
+                        method: action,
+                        url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_cache`,
+                        // data: data,
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    })
+                    const jobs = await response
+                    vm.allJobs = jobs.data.Records
+
+                    console.log( vm.allJobs);
+                    
+                    // return templates
+
+                } catch (error) {
+                    console.log("error", error);
+                }
+            },
+
             async getAllCustomFields(action) {
                 try {
                     vm = this;
@@ -134,8 +157,12 @@
                     console.log($.parseJSON(response));
                
                 });
+
             
             }
+
+
+
 
 
 
@@ -147,12 +174,10 @@
           },
 
  
-
-
-
         beforeMount() {
             this.getAllFreelancers('GET')
             this.getAllCustomFields('GET')
+            this.getAllJobs('GET')
         },
 
 
@@ -276,6 +301,9 @@
         });
     }
 
+
+    
+
     $(document).ready(function() {
 
         $('.paging').css('margin', 'auto');
@@ -334,6 +362,10 @@
 
             
         });
+
+
+       
+
 
 
         

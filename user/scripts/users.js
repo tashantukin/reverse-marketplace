@@ -1,9 +1,11 @@
 const scriptSrc = document.currentScript.src;
+console.log({ scriptSrc });
 var re = /([a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12})/i;
 const protocol = window.location.protocol;
 const token = getCookie('webapitoken');
 const baseURL = window.location.hostname;
 var packageId = re.exec(scriptSrc.toLowerCase())[1];
+
 var userId;
 var taskFiles = [];
 var allFiles = [];
@@ -17,12 +19,23 @@ function getCookie(name){
         return parts.pop().split(';').shift();
     }
 }  
- 
+function waitForElement(elementPath, callBack)
+{
+  window.setTimeout(function ()
+  {
+    if ($(elementPath).length) {
+      callBack(elementPath, $(elementPath));
+    } else {
+      waitForElement(elementPath, callBack);
+    }
+  }, 500);
+}
 
 //retrieve dynamic fields
-
+waitForElement('.tab-content', function ()
+{
 const sellerFields = new Vue({
-    el: "#verification-details .jobform-form",
+    el: ".tab-content",
 
     data()
     {
@@ -31,8 +44,10 @@ const sellerFields = new Vue({
             fieldDetails: [],
             taskOption: [],
             uploadCustomFields: [],
-            url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/freelancer_form?sort=ModifiedDateTime`
-
+            url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/freelancer_form?sort=ModifiedDateTime`,
+            registrationStatus: 'Pending',
+            adminComment: ''
+        
         }
     },
     methods: {
@@ -77,11 +92,88 @@ const sellerFields = new Vue({
           return str.replace(" ","-").toLowerCase();
         },
       },
-    beforeMount() {
-        this.getAllSellerFields()
-    }
+    // beforeMount() {
+    //    this.getAllSellerFields()
+    // },
+
+    mounted() {
+       // this.currentTime = 3;
+    
+        this.$nextTick(() => {
+            this.getAllSellerFields()
+        });
+      }
+
+
+
+    
 
 })
+
+})
+
+//home page buyer
+window.onload = function ()
+{
+    const jobDetails = new Vue({
+        el: ".freelancer-content-main",
+
+        data()
+        {
+            return {
+                allJobs: [],
+                url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/freelancer_form?sort=ModifiedDateTime`
+
+            }
+        },
+        methods: {
+
+            async getAllJobs(action)
+            {
+                try {
+                    vm = this;
+                    const response = await axios({
+                        method: action,
+                        url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_cache`,
+                        // data: data,
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    })
+                    const jobs = await response
+                    vm.allJobs = jobs.data.Records
+
+                    console.log(vm.allJobs);
+                
+                    // return templates
+
+                } catch (error) {
+                    console.log("error", error);
+                }
+            },
+
+
+        },
+
+        filters: {
+            capitalize: function (str)
+            {
+                return str.charAt(0).toUpperCase() + str.slice(1);
+            },
+
+            hypenate: function (str)
+            {
+                return str.replace(" ", "-").toLowerCase();
+            },
+        },
+        beforeMount()
+        {
+            this.getAllJobs('GET')
+        }
+
+    })
+    
+}
 
 var usersData = (function ()
   {
@@ -468,7 +560,7 @@ var documentData = (function ()
 $(document).ready(function ()
 {
    
-
+    $(".my-btn").css({ padding: "0px" });
     $('body').append('<input type ="hidden" id="location">');
     
     $('body').on('click', '.btn-register', function ()

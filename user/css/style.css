@@ -1,3 +1,41 @@
+
+
+.home-banner.banner-slider {
+	position: relative;
+	margin-top: -60px;
+}
+
+
+.home-banner .banner-quote > h1 {
+    color: #fff;
+    font-size: 47px !important;
+    font-weight: 300 !important;
+    margin: 0 auto 20px;
+    letter-spacing: 0.2em;
+    max-width: 890px;
+    width: 100%;
+    line-height: 65px;
+}
+
+.home-banner .banner-quote > p {
+    padding: 0 5%;
+    text-align: center;
+    font-size: 16px !important;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+}
+
+.btnjob {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+
+
+
+
 @media only screen and (min-width: 1500px) {
 	.align-center-div{
         height: 100vh;

@@ -111,12 +111,18 @@ const sellerFields = new Vue({
 
                     if (userDetails) {
                         vm.isEdit = 1;
+                        vm.adminComment = userDetails['admin_comment']
+                        vm.registrationStatus = userDetails['status']
 
                         $('.nav-tabs li:nth-child(1)').removeClass('active');
                         $('.nav-tabs li:nth-child(3)').addClass('active');
                         $('#registration').removeClass('active in');
-                        $('#verification').addClass('active in');
-
+                        if (vm.registrationStatus == 'Approved') {
+                            $('#approval').addClass('active in'); 
+                        } else {
+                            $('#verification').addClass('active in');
+                        }
+                       
                         //hide the back to registration button
                         $('#verification-details .btn-jobform-outline').hide();
 
@@ -414,11 +420,35 @@ var usersData = (function ()
            // saveCustomFiedldValues(customfield_data);
         }
 
+
+        function confirmRegistration()
+        {
+            var details = {
+
+                "Id": $('#userGuid').val()
+                
+            };
+        
+          
+            var settings = {
+                "url": packagePath + "/update_confirmation.php",
+                "method": "POST",
+                "data": JSON.stringify(details)
+            }
+            $.ajax(settings).done(function(response){
+                
+               
+            
+            });
+    
+        }
+
       
       return {
           createUser: createUser,
           saveUser: saveUser,
-          getCustomFieldValues : getCustomFieldValues
+          getCustomFieldValues: getCustomFieldValues,
+          confirmRegistration : confirmRegistration
      
       }
     }
@@ -652,7 +682,7 @@ $(document).ready(function ()
         
     })
 
-    $('body').on('click', '.jobform-form .next-tab-area .my-btn', function ()
+    $('body').on('click', '#verification-details .jobform-form .next-tab-area .my-btn', function ()
     {
         //validation here
 
@@ -663,7 +693,13 @@ $(document).ready(function ()
 
     })
 
+    $('body').on('click', '#start .seller-btn .my-btn', function ()
+    {
+        var users = usersData.getInstance();
+        users.confirmRegistration();
+    })
 
+    
 
 
 })

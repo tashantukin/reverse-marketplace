@@ -336,7 +336,7 @@
                               <div class="comment-desc"></div>
                            </div>
                            <hr>
-                            <div   v-if="registrationStatus != 'Pending'" class="next-tab-area"><span class="seller-btn"> <a onclick="j_nextTab();" class="my-btn btn-red" href="javascript:void(0);">Next</a> </span></div>
+                            <div   v-if="registrationStatus != 'Pending' || registrationStatus != 'Rejected' " class="next-tab-area"><span class="seller-btn"> <a onclick="j_nextTab();" class="my-btn btn-red" href="javascript:void(0);">Next</a> </span></div>
                         </div>
                      </div>
                     <div id="approval" class="tab-pane fade">
@@ -345,7 +345,7 @@
                            <h3>Approval</h3>
                            <div class="form-group">
                               <label for="approval">Description</label>
-                              <textarea class="form-control required" rows="5" name="approval" id="approval" placeholder=""> </textarea>
+                              <textarea class="form-control required" rows="5" name="approval" id="approval" placeholder="">Your registration has been approved. </textarea>
                            </div>
                            <hr>
                            <div class="next-tab-area"><span class="seller-btn"> <a onclick="j_nextTab();" class="my-btn btn-red" href="javascript:void(0);">Next</a> </span></div>
@@ -463,7 +463,7 @@
       
       function j_finishedTab() {
         setTimeout(function(){ 
-           window.location.href = "registration-completed.html";
+          window.location.href = "registration-done";
         },1000);
       }
 

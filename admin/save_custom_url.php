@@ -165,4 +165,26 @@ $result = callAPI("POST", $admin_token['access_token'], $url, $script11);
 
 
 
+$script12 = [
+    'Key' => '/registration-done',
+    'Value' => '/' .  'user' .'/' . $host2 . '/' . $host3 . '/registration-completed.php',
+
+];
+
+$url = $baseUrl . '/api/v2/rewrite-rules';
+$result = callAPI("POST", $admin_token['access_token'], $url, $script12);
+
+
+
+
+$script13 = [
+    'Key' => '/subscribe/'. $plugin_id .'/update_confirmation.php',
+    'Value' => '/' .  'user' .'/' . $host2 . '/' . $host3 . '/update_confirmation.php',
+
+];
+
+$url = $baseUrl . '/api/v2/rewrite-rules';
+$result = callAPI("POST", $admin_token['access_token'], $url, $script13);
+
+
 ?>

@@ -47,7 +47,10 @@
       
         async function getUserDetails(userId)
         {
-          var data = [{ 'Name': 'user_id', 'Operator': "in", "Value": userId }]
+           var data = [{ 'Name': 'user_id', 'Operator': "equal", "Value": userId },
+           { 'Name': 'status', 'Operator': "equal", "Value": 'Approved' },
+           { 'Name': 'approved_confirmed', 'Operator': "equal", "Value": 1 },
+           ]
           
           $.ajax({
             method: "POST",
@@ -179,107 +182,7 @@
                                     </tr>
                                  </thead>
                                  <tbody>
-                                    <tr onclick="window.location ='freelancer_quote.html'">
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>Yes</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr onclick="window.location ='freelancer_quote.html'">
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>No</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr onclick="window.location ='freelancer_quote.html'">
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>No</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr onclick="window.location ='freelancer_quote.html'">
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>No</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr onclick="window.location ='freelancer_quote.html'">
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>No</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr onclick="window.location ='freelancer_quote.html'">
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>No</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr onclick="window.location ='freelancer_quote.html'">
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>No</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr onclick="window.location ='freelancer_quote.html'">
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>No</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr onclick="window.location ='freelancer_quote.html'">
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>No</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr onclick="window.location ='freelancer_quote.html'">
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>No</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    
+                                   
                                  </tbody>
                               </table>
                            </div>
@@ -651,20 +554,66 @@
               //window.location.href = urls;
             //  }
                 
-              }
+               }
+               
           
-            
-        
+      
             }
          })
-        }
+         }
+
+         async function getUserStatus(userId)
+        {
+           var data = [{ 'Name': 'user_id', 'Operator': "equal", "Value": userId }
+           ]
+          
+          $.ajax({
+            method: "POST",
+            url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/freelancer_details/`,
+            headers: {
+              "Content-Type": "application/json"
+            },
+          
+            data: JSON.stringify(data),
+       
+            success: function (response)
+            {
+              console.log({ response })
+            
+              const users = response
+              const userDetails = users.Records[0]
+              //if existing user, verify the status
+              if (userDetails) {
+
+                
+                
+               if (userDetails['status'] == 'Approved' && userDetails['approved_confirmed'] == 1) { 
+                
+
+                 
+               } else {
+                  
+                  urls = `${protocol}//${baseURL}/subscribe`;
+                  window.location.href = urls;
+             }
+                
+               }
+               
+          
+      
+            }
+         })
+         }
+         
+
 
 
         
 
       
           return {
-          getUserDetails :getUserDetails
+             getUserDetails: getUserDetails,
+             getUserStatus: getUserStatus
         
           }
           
@@ -858,7 +807,64 @@
         
               }
             })
-          }
+           }
+
+           async function getQuotedJobs(){
+              var data = [{ 'Name': 'status', 'Operator': "in", "Value": 'Quoted' }
+                         
+              ]
+            
+            $.ajax({
+              method: "POST",
+              url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_cache/`,
+              headers: {
+                "Content-Type": "application/json"
+              },
+            
+              data: JSON.stringify(data),
+         
+              success: function (response)
+              {
+                console.log({ response })
+              
+                const jobs = response
+                const jobDetails = jobs.Records
+                //if existing user, verify the status
+                if (jobDetails.length != 0) {
+
+                  jobDetails.forEach(function (job, i)
+                  {
+                   
+                  let allJobs = `<tr data-id="${job['Id'] }" user-id="${userId}"> </td>
+                  <td> <a href="user/plugins/8e94739d-b260-41ec-9496-dfa98bb8cdc0/freelancer_quote.php?jobId=${job['Id'] }&userId=${userId}">${job['job_availability']}</a></td>
+                  <td>${job['buyer_email']}</td>
+                
+                  <td>${job['buyer_contact_no']}</td>
+                  <td class="width-location">${job['buyer_contact_no']}</td>
+                  <td>1</td>
+                  <td>${job['no_of_quotes']}</td>
+                  <td>${job['is_accepted'] == 1 ? 'Yes' : 'No'} </td>
+                  <td>-</td>
+                 </tr>`;
+                     waitForElement('#tab-quoted', function ()
+                     {
+                        $('#tab-quoted table tbody').append(allJobs);
+                    
+                     })
+                  })
+                  
+                 
+                  
+                }
+               
+        
+              }
+            })
+           }
+           
+
+
+
           
           function  saveStatus(el)
           {
@@ -888,7 +894,9 @@
             getAllJobs :getAllJobs,
             getJobDetail: getJobDetail,
             saveStatus: saveStatus,
-            getInterestedJobs:getInterestedJobs
+            getInterestedJobs: getInterestedJobs,
+             getQuotedJobs: getQuotedJobs
+             
         
           }
           
@@ -907,7 +915,107 @@
           }
         }
  
-      })()
+   })()
+   
+
+     var quoteData =  (function () {
+      var instance;
+      
+       function init()
+       {
+       
+         // save the quoted job 
+        
+      
+         function quoteJob()
+         {
+
+            var jobTasks = new Array();
+            $(".qq-total-sum .saved").each(function ()
+            {
+                var title = $(this).find('.title').text();
+                var price = $(this).find('.qq-option span b').text();
+                console.log({ title })
+               
+               jobTasks.push({ title, price });
+               
+            });
+
+            console.log({ jobTasks })
+             
+            var quote_details = {
+
+               "job_id": $('#job-id').val(),
+               "freelancer_id": $('#user-id').val(),
+               "job_summary": jobTasks,
+               "total": $(".qq-total").find('span b').text(),
+               "all_discount": $(".qq-discount .qq-option").find('span b').text(),
+               "all_total": $(".qq-subtotal").find('span b').text(),
+
+               
+               "job_completion": $("#completion").text(),
+               "availability_date": $("#availability").val(),
+               "validity_date": $("#validity").val(),
+               
+               
+               "deposit_required": $("#deposit_required")[0].checked,
+               "for_7_days": $("#7_days")[0].checked,
+               "for_30_days" : $("#30_days")[0].checked, 
+               "deposit_amount": $("#deposit_required").parents('.checkbox-row-flex').find('.qq-option span b').text(),
+               "comments_on_terms": $("#payment_comments").val(),
+
+
+               "payment_cod": $("#COD")[0].checked,
+               "payment_credit_card": $("#credit_card")[0].checked,
+               "payment_paypal": $("#paypal")[0].checked,
+               
+            };
+
+            console.log(quote_details);
+            var settings = {
+                "url": packagePath + "/save_quote.php",
+                "method": "POST",
+                "data": JSON.stringify(quote_details)
+            }
+            $.ajax(settings).done(function(response){
+                
+                var allresponse = $.parseJSON(response)
+                console.log(allresponse);
+               
+        
+      
+            });
+            
+
+
+     
+         
+         }
+
+         return {
+      
+            quoteJob : quoteJob
+          
+       
+         }
+         
+       }
+
+       return {
+         getInstance: function ()
+         {
+           if (!instance) {
+           
+               instance = init()
+           
+           }
+           
+           return instance
+         }
+       }
+
+  })()
+  
   
   
     $(document).ready(function () {
@@ -926,9 +1034,9 @@
         var jobs = jobData.getInstance();
         jobs.getAllJobs()
         jobs.getInterestedJobs()
-        user.getUserDetails(userId);
-
-
+        jobs.getQuotedJobs()
+        user.getUserDetails(userId)
+        user.getUserStatus(userId)
 
             var buttons = `
             <div class="btnjob"><a href="lodge.html" class="btn btn-lodge">Lodge a Job</a>
@@ -957,12 +1065,28 @@
           jobs.saveStatus($this);
         });
 
+       }
+       
+       //quotation page
 
 
-    
+       $('#submit-top').on('click', function (event)
+       {
+         event.stopPropagation();
+         event.stopImmediatePropagation();
+         var quote = quoteData.getInstance();
+          quote.quoteJob();
+       })
 
-        }
-  
+       $('#submit-bottom').on('click', function (event)
+       {
+         event.stopPropagation();
+         event.stopImmediatePropagation();
+          var quote = quoteData.getInstance();
+          quote.quoteJob();
+       })
+      
+       
     
     });
   })();

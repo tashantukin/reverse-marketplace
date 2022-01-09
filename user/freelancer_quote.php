@@ -90,6 +90,8 @@ else {
       <div class="content-pages">
       <div class="freelancer-content-main">
 
+         <input type = "hidden" id="job-id" value="<?php echo $job_id ?>">
+         <input type = "hidden" id="user-id" value="<?php echo $user_id ?>">
 
             <div class="container">
                <div class="page-reverse-title">
@@ -100,7 +102,7 @@ else {
                      <div class="quote-title-design"> <?php echo $userDetails['Records'][0]['company_name'] ?></div>
                      <div class="navtab-filter btn-margin">
                         <a href="homepage.html" class="btn btn-quote-cancel">Cancel</a>
-                        <button type="button" class="btn btn-quote-submit">Submit Quote</button>
+                        <button type="button" class="btn btn-quote-submit" id="submit-top">Submit Quote</button>
                      </div>
                      </div>
                <div class="quote-question-main">
@@ -129,7 +131,7 @@ else {
                                try {
                                 foreach(json_decode($jobFiles['Records'][0]['all_tasks'],true) as $custom_task) {
                                     //   echo "<div class='qq-title'><span class='dash'></span><span class='title'>$task</span><div class='qq-option'><input type='text' class='numbersOnlyD' placeholder='AUD 0.00' value=''><a href='javascript:void(0);' class='save-link'>Save</a>|<a href='javascript:void(0);' class='cancel-link'>Cancel</a></div></div>";
-                                      echo "<div class='qq-title'><span class='dash'></span><span>" .  $custom_task['task_name'] . "  </span><p>".  substr($custom_task['files'][0]['name'], 36) . "  | <a href=" . $custom_task['files'][0]['URL'] . ">Download File</a></p> <div class='qq-option'><input type='text' class='numbersOnlyD' placeholder='AUD 0.00' value=''><a href='javascript:void(0);' class='save-link'>Save</a>|<a href='javascript:void(0);' class='cancel-link'>Cancel</a></div> </div>";
+                                      echo "<div class='qq-title'><span class='dash'></span><span class='title'>" .  $custom_task['task_name'] . "  </span><p>".  substr($custom_task['files'][0]['name'], 36) . "  | <a href=" . $custom_task['files'][0]['URL'] . ">Download File</a></p> <div class='qq-option'><input type='text' class='numbersOnlyD' placeholder='AUD 0.00' value=''><a href='javascript:void(0);' class='save-link'>Save</a>|<a href='javascript:void(0);' class='cancel-link'>Cancel</a></div> </div>";
                                    }
 
                                }catch(Exception $e) {
@@ -167,12 +169,12 @@ else {
                   <div class="row">
                      <div class="col-sm-6">
                         <div class="quote-question-section">
-                           <div class="qq-title">Job to be completed by: <span class="danger"> <?php echo $job_completion ?> </span></div>
-                           <div class="qq-title"><span class="dash"></span><span class="title">Availability</span><div class="qq-option"><input type="text" class="datepicker" placeholder="DD/MM/YYYY" value=""><a href="javascript:void(0);" class="save-linkdate">Save</a>|<a href="javascript:void(0);" class="cancel-linkdate">Cancel</a></div></div>
-                           <div class="qq-title"><span class="dash"></span><span class="title">Validity Date</span><div class="qq-option"><input type="text" class="datepicker" placeholder="DD/MM/YYYY" value=""><a href="javascript:void(0);" class="save-linkdate">Save</a>|<a href="javascript:void(0);" class="cancel-linkdate">Cancel</a></div></div>
+                           <div class="qq-title">Job to be completed by: <span class="danger"  id="completion"> <?php echo $job_completion ?> </span></div>
+                           <div class="qq-title"><span class="dash"></span><span class="title">Availability</span><div class="qq-option"><input type="text" id="availability"class="datepicker" placeholder="DD/MM/YYYY" value=""><a href="javascript:void(0);" class="save-linkdate">Save</a>|<a href="javascript:void(0);" class="cancel-linkdate">Cancel</a></div></div>
+                           <div class="qq-title"><span class="dash"></span><span class="title">Validity Date</span><div class="qq-option"><input type="text" id="validity" class="datepicker" placeholder="DD/MM/YYYY" value=""><a href="javascript:void(0);" class="save-linkdate">Save</a>|<a href="javascript:void(0);" class="cancel-linkdate">Cancel</a></div></div>
                             <?php echo $job_type; ?>
-                           <div class="qq-title"><span class="dash"></span><span class="title">Hourly</span><span> AUD <?php echo $jobDetails['Records'][0]['payment_hourly_value'] ?> </span> </div>
-                           <div class="qq-title"><span class="dash"></span><span class="title">Fixed Price</span><span>AUD <?php echo $jobDetails['Records'][0]['payment_fixed_value'] ?></span></div>
+                           <div class="qq-title"><span class="dash"></span><span class="title">Hourly</span><span id="hourly_price"> AUD <?php echo $jobDetails['Records'][0]['payment_hourly_value'] ?> </span> </div>
+                           <div class="qq-title"><span class="dash"></span><span class="title">Fixed Price</span><span id="fixed_price" >AUD <?php echo $jobDetails['Records'][0]['payment_fixed_value'] ?></span></div>
 
                            <div class="form-group">
                               <label for="comments">Comments to applicant:</label>
@@ -253,7 +255,7 @@ else {
                   <div class="question-requester-design">Have a question? Ask requester a question <a href="#">here</a></div>
                   <div class="navtab-filter btn-margin">
                      <a href="homepage.html" class="btn btn-quote-cancel">Cancel</a>
-                     <button type="button" class="btn btn-quote-submit">Submit Quote</button>
+                     <button type="button" class="btn btn-quote-submit" id="submit-bottom">Submit Quote</button>
                   </div>
                </div>
 
@@ -297,6 +299,7 @@ else {
    </div>
    <!--modal register-->
    <div class="modal-overlay"></div>
+   <!-- begin footer --> 
    <script type="text/javascript">
       $(function () { var ddlData = [{ text: "EN", value: 1, imageSrc: "images/gb.svg" }, { text: "CN", value: 2, imageSrc: "images/cn.svg" }, { text: "FR", value: 3, imageSrc: "images/fr.svg" }]; $('.language-list').ddslick({ data: ddlData, width: 100, imagePosition: "left", onSelected: function (selectedData) { } }); });
 
@@ -438,6 +441,13 @@ else {
          return str.join(dec_point?dec_point:'.');
       }
    </script>
+
+   <script type="text/javascript" src="scripts/scripts.js"></script>
+
+
+<!-- end footer --> 
+
+
 </body>
 
 </html>

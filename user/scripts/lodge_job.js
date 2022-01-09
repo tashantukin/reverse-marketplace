@@ -290,7 +290,7 @@ var documentData = (function ()
             console.log({ allTasks });
             $("#file-doc[type='file']").val('');
 
-            taskFiles = [];
+           // taskFiles = [];
 
             var last = allTasks[allTasks.length - 1];
             var index = allTasks.indexOf(last);

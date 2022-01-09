@@ -786,9 +786,10 @@
                   <td>${job['is_accepted'] == 1 ? 'Yes' : 'No'} </td>
                   <td>-</td>
                  </tr>`;
-                  
-                    $('#tab-all table tbody').append(allJobs);
-                    
+                     waitForElement('#tab-all', function ()
+                     {
+                        $('#tab-all table tbody').append(allJobs);
+                     })
 
                   })
                   
@@ -832,11 +833,10 @@
                   jobDetails.forEach(function (job, i)
                   {
                    
-                    
-                    let allJobs = `<tr data-id="${job['Id']}">
-
-                  <td>${job['job_availability']}</td>
+                  let allJobs = `<tr data-id="${job['Id'] }" user-id="${userId}"> </td>
+                  <td> <a href="user/plugins/8e94739d-b260-41ec-9496-dfa98bb8cdc0/freelancer_quote.php?jobId=${job['Id'] }&userId=${userId}">${job['job_availability']}</a></td>
                   <td>${job['buyer_email']}</td>
+                
                   <td>${job['buyer_contact_no']}</td>
                   <td class="width-location">${job['buyer_contact_no']}</td>
                   <td>1</td>
@@ -844,10 +844,11 @@
                   <td>${job['is_accepted'] == 1 ? 'Yes' : 'No'} </td>
                   <td>-</td>
                  </tr>`;
-                  
-                    $('#tab-interested table tbody').append(allJobs);
+                     waitForElement('#tab-interested', function ()
+                     {
+                        $('#tab-interested table tbody').append(allJobs);
                     
-
+                     })
                   })
                   
                  

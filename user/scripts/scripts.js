@@ -756,7 +756,6 @@
             })
           }
 
-
           // get all available jobs
           async function getInterestedJobs(){
             var data = [{ 'Name': 'status', 'Operator': "in", "Value": 'Interested' }]
@@ -861,11 +860,43 @@
               }
             })
            }
+
+           function getJobLodges()
+           {
+              var jobId = localStorage.getItem("jobID"); 
+              console.log({ jobId });
+              if (jobId != null) {
+                 //update the job cache
+                 updateBuyerID(jobId)
+                 
+              }
+           }
            
-
-
-
+           function  updateBuyerID(id)
+           {
+              
+              var status_details = {
+      
+                  "jobId": id,
+                  'userId': $('#userGuid').val()
+              };
           
+              console.log({ status_details });
+              var settings = {
+                  "url": packagePath + "/update_job_buyer_id.php",
+                  "method": "POST",
+                  "data": JSON.stringify(status_details )
+              }
+              $.ajax(settings).done(function(response){
+                  //remove the existing job id in localstorage after saving
+                 
+                  localStorage.removeItem("jobID"); 
+              
+              });
+      
+          
+          }
+
           function  saveStatus(el)
           {
               
@@ -888,16 +919,163 @@
               });
       
           
-          }
+           }
+           
+
+         // buyer render
+           
+           async function getUserJobList()
+           {
+              var jobListDiv = `<div class="content-pages">
+              <div class="freelancer-content-main">
+     
+                 <div class="container">
+                    <!--
+                    <div class="page-reverse-title">
+                       <h1>Welcome, Freelancer1</h1>
+                    </div>
+                   --> 
+     
+                    <div class="freelancer-panel">
+                   <div class="panel-group" id="accordion" role="lodgedJob">
+                       
+                       <div class="panel panel-default">
+                           <div class="panel-heading" role="tab" id="jobList">
+                               <h4 class="panel-title">
+                                   <a class="collapsed" role="button" data-toggle="collapse" href="#jobListTwo" aria-expanded="false" aria-controls="jobListTwo">
+                                       Job List
+                                   </a>
+                               </h4>
+                           </div>
+                           <div id="jobListTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="jobList">
+                               <div class="panel-body">
+                                   <div class="blue-tabdesign">
+                                     <div class="navtab-flex">
+                                        <div class="navtab-filter">
+                                           <label>View:</label><select class="form-control"><option>2019</option><option>2020</option><option selected="">2021</option></select>
+                                        </div>
+                                         <div class="navtab-filter">
+                                            <label>Results per Page:</label><select class="form-control"><option>10</option><option>20</option><option>30</option><option>40</option></select>
+                                            <div class="lodgejob-menu"><a href="lodge.html">Lodge a Job</a></div>
+                                         </div>
+                                    </div>
+                                  <div class="table-quoted-container">
+                                    
+     
+                                  <div class="pagination-center"><nav class="text-center" id="pagination-container" aria-label="Page navigation"></nav></div>
+                                  </div>
+                               </div>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+                   </div>
+                       <!----22222 --> 
+     
+   
+                </div>
+     
+              </div></div>
+           `
+              waitForElement('.reverse-slider', function ()
+              {
+                 $('.reverse-slider').after(jobListDiv);
+              })
+
+              var data = [{ 'Name': 'buyerID', 'Operator': "equal", "Value": $('#userGuid').val() }
+                         
+              ]
+            
+            $.ajax({
+              method: "POST",
+              url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_cache/`,
+              headers: {
+                "Content-Type": "application/json"
+              },
+            
+              data: JSON.stringify(data),
+         
+              success: function (response)
+              {
+                console.log({ response })
+              
+                const jobs = response
+                const jobDetails = jobs.Records
+                //if existing user, verify the status
+                if (jobDetails.length != 0) {
+
+                  jobDetails.forEach(function (job, i)
+                  {
+
+                     let jobTable = '';
+                     if (job['no_of_quotes'] == 0) {
+                        jobTable = `<table class="table table-freelancer">
+                        <thead>
+                           <tr data-id="${job['Id'] }">
+                              <th colspan="5">${job['Id']}</th>
+                              <th class="text-right"><a href="user/plugins/8e94739d-b260-41ec-9496-dfa98bb8cdc0/job-details.php?jobId=${job['Id'] }">Details &gt;&gt;</a></th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                           <td colspan="6"><div class="quoted-notfound">No one has quoted on this job yet.</div></td>
+                        </tr>
+                     </tbody>
+                     </table>`
+                    }
+
+
+
+
+
+
+
+
+                   
+               //    let allJobs = `<tr data-id="${job['Id'] }" user-id="${userId}"> </td>
+               //    <td> <a href="user/plugins/8e94739d-b260-41ec-9496-dfa98bb8cdc0/freelancer_quote.php?jobId=${job['Id'] }&userId=${userId}">${job['job_availability']}</a></td>
+               //    <td>${job['buyer_email']}</td>
+                
+               //    <td>${job['buyer_contact_no']}</td>
+               //    <td class="width-location">${job['buyer_contact_no']}</td>
+               //    <td>1</td>
+               //    <td>${job['no_of_quotes']}</td>
+               //    <td>${job['is_accepted'] == 1 ? 'Yes' : 'No'} </td>
+               //    <td>-</td>
+               //   </tr>`;
+                     waitForElement('.table-quoted-container', function ()
+                     {
+                        $('.table-quoted-container').append(jobTable);
+                    
+                     })
+                  })
+                  
+                 
+                  
+                }
+               
+        
+              }
+            })
+
+
+
+
+           }
+
+
+
 
           return {
             getAllJobs :getAllJobs,
             getJobDetail: getJobDetail,
             saveStatus: saveStatus,
             getInterestedJobs: getInterestedJobs,
-             getQuotedJobs: getQuotedJobs
-             
-        
+             getQuotedJobs: getQuotedJobs,
+             updateBuyerID: updateBuyerID,
+             getJobLodges: getJobLodges,
+             getUserJobList : getUserJobList
+            
           }
           
         }
@@ -1028,18 +1206,32 @@
         
         //home page
 
-      if (document.body.className.includes('page-home')) {
+       if (document.body.className.includes('page-home')) {
+         
+          
+          //for newly registered buyers after lodging a job
+
+          //check if there is an existing lodge job on local storage, if there is, update the job cache with the buyer id (user id)
+
+
 
         var user = userData.getInstance();
         var jobs = jobData.getInstance();
         jobs.getAllJobs()
         jobs.getInterestedJobs()
         jobs.getQuotedJobs()
-        user.getUserDetails(userId)
-        user.getUserStatus(userId)
+          jobs.getJobLodges()
+          jobs.getUserJobList()
+        
+         
+         if ($('#userGuid').length != 0) {
+            user.getUserStatus(userId)
+            user.getUserDetails(userId)
+         }
+       
 
             var buttons = `
-            <div class="btnjob"><a href="lodge.html" class="btn btn-lodge">Lodge a Job</a>
+            <div class="btnjob"><a href="user/plugins/8e94739d-b260-41ec-9496-dfa98bb8cdc0/lodge_job.php" class="btn btn-lodge">Lodge a Job</a>
             <a href="/subscribe" class="btn btn-freelancer">I am a Freelancer</a>
              </div>`
 

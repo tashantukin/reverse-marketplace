@@ -1,3 +1,43 @@
+<?php 
+include 'jobs.php';
+$job_id = $_GET['jobId'];
+$user_id = $_GET['userId'];
+
+$jobDetails = getContent($job_id);
+$jobFiles = getFiles($job_id);
+$userDetails = getFreelancerDetails($user_id);
+
+$quotedDetails = getQuoted($job_id, $user_id);
+
+$job_completion = '';
+$job_type = '';
+
+if ($jobDetails['Records'][0]['time_frame_nohurry'] == 'True') {
+    $job_completion = 'No hurry';
+}else if ($jobDetails['Records'][0]['time_frame_urgent'] == 'True') {
+    $job_completion = 'Urgent';
+}else {
+    $job_completion = $jobDetails['Records'][0]['time_frame_timestamp'];
+}
+
+
+if ($jobDetails['Records'][0]['job_type_contract'] == 'True' && $jobDetails['Records'][0]['job_type_full_time'] == 'True' ) {
+
+    $job_type = "<div class='qq-title'><span class='dash'></span><span class='title'>Full Time</span></div>
+    <div class='qq-title'><span class='dash'></span><span class='title'>Contract</span> </div>";
+
+}else if ($jobDetails['Records'][0]['job_type_contract'] == 'False' && $jobDetails['Records'][0]['job_type_full_time'] == 'True' )
+
+    $job_type  = "<div class='qq-title'><span class='dash'></span><span class='title'>Full Time</span></div>";
+else if  ($jobDetails['Records'][0]['job_type_contract'] == 'True' && $jobDetails['Records'][0]['job_type_full_time'] == 'False' )
+
+    $job_type  = "<div class='qq-title'><span class='dash'></span><span class='title'>Contract</span></div>";
+
+else {
+    $job_type = '';
+}
+?>
+
 <!DOCTYPE html
 PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -42,9 +82,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD
 </head>
 
 <body class="seller-items">
-<!-- header -->
-<
-                                <!-- header -->
+
                                 <div class="main">
                                     <div class="content-pages">
                                         <div class="freelancer-content-main">
@@ -54,18 +92,18 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD
                                                 </div>
                                                 <div class="quote-question-section">
                                                     <div class="navtab-flex">
-                                                        <div class="quote-title-design">Accounting Firm Name</div>
+                                                        <div class="quote-title-design"><?php echo $userDetails['Records'][0]['company_name'] ?></div>
                                                     </div>
                                                     
                                                     
                                                     <div class="quote-question-main rm-quote-bottom">
                                                         <h4>1. Applicant Details</h4>
                                                         <div class="quotedtitle-flex">
-                                                        <div class="job-quotedtitle"><span class="qtitle">Quoted by</span><span class="qdesc">Grace (Undergraduate)</span></div>
-                                                        <div class="job-quotedtitle"><span class="qtitle">Date</span><span class="qdesc">DD/MM/YYYY</span></div>
-                                                        <div class="job-quotedtitle"><span class="qtitle">Amount</span><span class="qdesc">$1500</span></div>
-                                                        <div class="job-quotedtitle"><span class="qtitle">Availability</span><span class="qdesc">DD/MM/YYYY</span></div>
-                                                        <div class="job-quotedtitle"><span class="qtitle">Status</span><span class="qdesc">Valid to DD/MM/YYYY</span></div>
+                                                        <div class="job-quotedtitle"><span class="qtitle">Quoted by</span><span class="qdesc"><?php echo $quotedDetails['Records'][0]['quote_by'] ?></span></div>
+                                                        <div class="job-quotedtitle"><span class="qtitle">Date</span><span class="qdesc"><?php echo $quotedDetails['Records'][0]['CreatedDateTime'] ?></span></div>
+                                                        <div class="job-quotedtitle"><span class="qtitle">Amount</span><span class="qdesc">$<?php echo $quotedDetails['Records'][0]['all_total'] ?></span></div>
+                                                        <div class="job-quotedtitle"><span class="qtitle">Availability</span><span class="qdesc"><?php echo $quotedDetails['Records'][0]['availability_date'] ?></span></div>
+                                                        <div class="job-quotedtitle"><span class="qtitle">Status</span><span class="qdesc"><?php echo $quotedDetails['Records'][0]['status'] ?></span></div>
                                                         </div>
                                                     </div>
                                                     <div class="quote-info-message-box">
@@ -89,7 +127,16 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD
                 <div class="col-sm-8">
                     <div class="quote-question-section">
                         <h4>2. Job Summary</h4>
-                        <div class="qq-title"><span class="dash"></span><span class="title">BAS Agent</span></div>
+
+
+                        <?php
+                               foreach(json_decode($quotedDetails['Records'][0]['job_summary'],true) as $task) {
+                                    echo "<div class='qq-title'><span class='dash'></span><span class='title'>" . $task['title'] . "</span><div class='qq-option'><span>AUD <b>" . $task['price'] ." </b></span></div></div>";
+
+
+                               }
+                            ?>
+                        <!-- <div class="qq-title"><span class="dash"></span><span class="title">BAS Agent</span></div>
                         <div class="qq-title"><span class="dash"></span><span class="title">Tax</span><div class="qq-option"><span>AUD <b>0.00</b></span></div></div>
                         <div class="qq-title"><span class="dash"></span><span class="title">Audit</span><div class="qq-option"><span>AUD <b>0.00</b></span></div></div>
                         <div class="qq-title"><span class="dash"></span><span class="title">Book-keeping</span><div class="qq-option"><span>AUD <b>10.00</b></span></div></div>
@@ -99,14 +146,14 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD
                             <p>  File 1 | <a href="#">Download File</a></p>
                         </div>
                         <div class="qq-title"><span class="dash"></span><span>Other Jobs 2</span><p>  File 2 | <a href="#">Download File</a></p>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="info-box">
-                        <p>Email: Company@gmail.com</p>
-                        <p>Name: Company Name</p>
-                        <p>Contact Number: 9999 9999</p>
+                            <p>Email: <?php echo $userDetails['Records'][0]['email'] ?></p>
+                           <p>Name: <?php echo $userDetails['Records'][0]['company_name'] ?></p>
+                           <p>Contact Number: <?php echo $userDetails['Records'][0]['contact_number'] ?></p>
                     </div>
                 </div>
             </div>
@@ -114,9 +161,9 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="quote-question-section">
-                            <div class="qq-title"><span class="dash"></span><span class="title">Total</span><div class="qq-option"><span>AUD <b>10.00</b></span></div></div>
-                            <div class="qq-title"><span class="dash"></span><span class="title">All at once - Discount</span><div class="qq-option"><span>AUD <b>10.00</b></span></div></div>
-                            <div class="qq-title"><span class="dash"></span><span class="title">All at once - Total</span><div class="qq-option"><span>AUD <b>10.00</b></span></div></div>
+                            <div class="qq-title"><span class="dash"></span><span class="title">Total</span><div class="qq-option"><span>AUD <b><?php echo $quotedDetails['Records'][0]['total'] ?></b></span></div></div>
+                            <div class="qq-title"><span class="dash"></span><span class="title">All at once - Discount</span><div class="qq-option"><span>AUD <b><?php echo $quotedDetails['Records'][0]['all_discount'] ?></b></span></div></div>
+                            <div class="qq-title"><span class="dash"></span><span class="title">All at once - Total</span><div class="qq-option"><span>AUD <b><?php echo $quotedDetails['Records'][0]['all_total'] ?></b></span></div></div>
                         </div>
                     </div>
                 </div>
@@ -124,16 +171,15 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="quote-question-section">
-                                <div class="qq-title">Job to be completed by: <span class="danger"> Urgent</span></div>
-                                <div class="qq-title"><span class="dash"></span><span class="title">Availability</span><span>DD/MM/YYYY</span></div>
-                                <div class="qq-title"><span class="dash"></span><span class="title">Full Time</span></div>
-                                <div class="qq-title"><span class="dash"></span><span class="title">Contract</span></div>
-                                <div class="qq-title"><span class="dash"></span><span class="title">Hourly</span></div>
-                                <div class="qq-title"><span class="dash"></span><span class="title">Fixed Price</span><span>AUD 10.00</span></div>
+                                <div class="qq-title">Job to be completed by: <span class="danger"> <?php echo $job_completion ?></span></div>
+                                <div class="qq-title"><span class="dash"></span><span class="title">Availability</span><span><?php echo $quotedDetails['Records'][0]['availability_date'] ?></span></div>
+                                <?php echo $job_type ?>
+                                <div class="qq-title"><span class="dash"></span><span class="title">Hourly</span><span>AUD <?php echo $jobDetails['Records'][0]['payment_hourly_value'] ?></span></div>
+                                <div class="qq-title"><span class="dash"></span><span class="title">Fixed Price</span><span>AUD <?php echo $jobDetails['Records'][0]['payment_fixed_value'] ?></span></div>
 
                                 <div class="form-group">
                                     <label for="comments">Comments to applicant:</label>
-                                    <div class="comment-desc">Patilibunti, sintere crente constiu muscivi denamqu itastrum publiis, ne conloctum, nihilius eo etilinam manunum tum inat poerem nem, us bons re, Cas alicae conte, vitifere que nonsus, cononvenditi, ocae inirtil icaur, virtius aperus, te publistraed re confex manducontisEdicauci ondicae, quostastati, quitiamernum tum inatuset potius. Quam re tum se ina L. Fora tum atis estatis neque arideff rehenditea quam ina, P. Huc faccibus Catraed eesigna, omplicemPatilibunti, sintere crente constiu muscivi denamqu itastrum publiis, ne conloctum, nihilius eo etilinam manunum tum inat poerem nem, us bons re, Cas alicae conte, vitifere que nonsus, cononvenditi, ocae inirtil icaur, virtius aperus, te publistraed re confex manducontisEdicauci ondicae, quostastati, quitiamernum tum inatuset potius. Quam re tum se ina L. Fora tum atis estatis neque arideff rehenditea quam ina, P. Huc faccibus Catraed eesigna, omplicem</div>
+                                    <div class="comment-desc"><?php echo $jobDetails['Records'][0]['comments'] ?></div>
                                 </div>
                             </div>
                         </div>
@@ -144,10 +190,10 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD
                             <div class="col-sm-6">
                                 <div class="quote-question-section">
                                     <h4>3. Payment</h4>
-                                    <div class="qq-title"><span class="title">Deposit Required <span class="black-color">(7 Days)</span></span><div class="qq-option"><span>AUD <b>0.00</b></span></div></div>
+                                    <div class="qq-title"><span class="title">Deposit Required <span class="black-color">(7days)</span></span><div class="qq-option"><span>AUD <b><?php echo $quotedDetails['Records'][0]['deposit_amount'] ?></b></span></div></div>
                                     <div class="form-group">
                                         <label for="comments">Comments on payment terms:</label>
-                                        <div class="comment-desc">Patilibunti, sintere crente constiu muscivi denamqu itastrum publiis, ne conloctum, nihilius eo etilinam manunum tum inat poerem nem, us bons re, Cas alicae conte, vitifere que nonsus, cononvenditi, ocae inirtil icaur, virtius aperus, te publistraed re confex manducontisEdicauci ondicae, quostastati, quitiamernum tum inatuset potius. Quam re tum se ina L. Fora tum atis estatis neque arideff rehenditea quam ina, P. Huc faccibus Catraed eesigna, omplicemPatilibunti, sintere crente constiu muscivi denamqu itastrum publiis, ne conloctum, nihilius eo etilinam manunum tum inat poerem nem, us bons re, Cas alicae conte, vitifere que nonsus, cononvenditi, ocae inirtil icaur, virtius aperus, te publistraed re confex manducontisEdicauci ondicae, quostastati, quitiamernum tum inatuset potius. Quam re tum se ina L. Fora tum atis estatis neque arideff rehenditea quam ina, P. Huc faccibus Catraed eesigna, omplicem</div>
+                                        <div class="comment-desc"><?php echo $quotedDetails['Records'][0]['comments_on_terms'] ?></div>
                                     </div>
                                 </div>
                             </div>
@@ -259,7 +305,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD
                         <p>After submission of choice, no changes can be <br>made after choosing to proceed.</p>
                      </div>
                      <div class="btn-hbox">
-                        <a class="btn btn-block btn-jobform-fill" href="freelancer_quote.html">Yes</a>
+                        <a class="btn btn-block btn-jobform-fill" href="/" id="accept-confirm" job-id="<?php echo $job_id ?>" user-id="<?php echo $user_id ?>" quote-id="<?php echo $quotedDetails['Records'][0]['Id'] ?>">Yes</a>
                         <button type="button" class="btn btn-block btn-jobform-outline" data-dismiss="modal">No</button>
                      </div>
                 </div>
@@ -282,7 +328,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD
                         <p>After submission of choice, no changes can be<br>made after choosing to proceed.</p>
                      </div>
                      <div class="btn-hbox">
-                        <a class="btn btn-block btn-jobform-fill" href="freelancer_quote.html">Yes</a>
+                        <a class="btn btn-block btn-jobform-fill" href="/" id="reject-confirm" job-id="<?php echo $job_id ?>" user-id="<?php echo $user_id ?>" quote-id="<?php echo $quotedDetails['Records'][0]['Id'] ?>">Yes</a>
                         <button type="button" class="btn btn-block btn-jobform-outline" data-dismiss="modal">No</button>
                      </div>
                 </div>

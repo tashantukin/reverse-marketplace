@@ -204,106 +204,7 @@
                                     </tr>
                                  </thead>
                                  <tbody>
-                                    <tr>
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>No</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr>
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>No</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr>
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>No</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr>
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>No</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr>
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>No</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr>
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>No</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr>
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>No</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr>
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>No</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr>
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>No</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr>
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>No</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
+                                   
                                     
                                  </tbody>
                               </table>
@@ -326,220 +227,19 @@
                                     </tr>
                                  </thead>
                                  <tbody>
-                                    <tr>
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>No</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr>
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>No</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr>
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>No</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr>
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>No</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr>
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>No</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr>
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>No</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr>
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>No</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr>
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>No</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr>
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>No</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
-                                    <tr>
-                                       <td>DD/MM/YYYY</td>
-                                       <td>sample@gemail.com</td>
-                                       <td>89100122</td>
-                                       <td class="width-location">Location Location Location 123</td>
-                                       <td>1</td>
-                                       <td>1</td>
-                                       <td>No</td>
-                                       <td>DD/MM/YYYY</td>
-                                    </tr>
+                                   
                                     
                                  </tbody>
                               </table>
                            </div>
                            </div>
-                           <div class="pagination-center"><nav class="text-center" id="pagination-container" aria-label="Page navigation"><div class="paginationjs"><div class="paginationjs-pages"><ul><li class="paginationjs-prev disabled"><a>«</a></li><li class="paginationjs-page J-paginationjs-page active" data-num="1"><a>1</a></li><li class="paginationjs-page J-paginationjs-page" data-num="2"><a href="">2</a></li><li class="paginationjs-page J-paginationjs-page" data-num="3"><a href="">3</a></li><li class="paginationjs-page J-paginationjs-page" data-num="4"><a href="">4</a></li><li class="paginationjs-page J-paginationjs-page" data-num="5"><a href="">5</a></li><li class="paginationjs-ellipsis disabled"><a>...</a></li><li class="paginationjs-page paginationjs-last J-paginationjs-page" data-num="14"><a href="">14</a></li><li class="paginationjs-next J-paginationjs-next" data-num="2" title="Next page"><a href="">»</a></li></ul></div></div></nav></div>
-                           </div>
+                         
                         </div>
                                    </div>
                                </div>
                            </div>
-                           <div class="panel panel-default">
-                               <div class="panel-heading" role="tab" id="jobList">
-                                   <h4 class="panel-title">
-                                       <a class="collapsed" role="button" data-toggle="collapse" href="#jobListTwo" aria-expanded="false" aria-controls="jobListTwo">
-                                           Job List
-                                       </a>
-                                   </h4>
-                               </div>
-                               <div id="jobListTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="jobList">
-                                   <div class="panel-body">
-                                       <div class="blue-tabdesign">
-                                         <div class="navtab-flex">
-                                            <div class="navtab-filter">
-                                               <label>View:</label><select class="form-control"><option>2019</option><option>2020</option><option selected="">2021</option></select>
-                                            </div>
-                                             <div class="navtab-filter">
-                                                <label>Results per Page:</label><select class="form-control"><option>10</option><option>20</option><option>30</option><option>40</option></select>
-                                                <div class="lodgejob-menu"><a href="lodge.html">Lodge a Job</a></div>
-                                             </div>
-                                        </div>
-                                      <div class="table-quoted-container">
-                                         <table class="table table-freelancer">
-                                            <thead>
-                                               <tr>
-                                                  <th colspan="5">Job #123</th>
-                                                  <th class="text-right"><a href="job-detail.html">Details &gt;&gt;</a></th>
-                                               </tr>
-                                            </thead>
-                                            <tbody>
-                                               <tr>
-                                                  <td><div class="job-quotedtitle"><span class="qtitle">Quoted by</span><span class="qdesc">Grace (Undergraduate)</span></div></td>
-                                                  <td><div class="job-quotedtitle"><span class="qtitle">Date</span><span class="qdesc">DD/MM/YYYY</span></div></td>
-                                                  <td><div class="job-quotedtitle"><span class="qtitle">Amount</span><span class="qdesc">$1500</span></div></td>
-                                                  <td><div class="job-quotedtitle"><span class="qtitle">Availability</span><span class="qdesc">DD/MM/YYYY</span></div></td>
-                                                  <td><div class="job-quotedtitle"><span class="qtitle">Status</span><span class="qdesc">Valid to DD/MM/YYYY</span></div></td>
-                                                  <td class="text-right"><a href="applicant-quote.html" class="btn btn-jobform-outline">View</a></td>
-                                               </tr>
-                                               <tr>
-                                                  <td><div class="job-quotedtitle"><span class="qtitle">Quoted by</span><span class="qdesc">Grace (Undergraduate)</span></div></td>
-                                                  <td><div class="job-quotedtitle"><span class="qtitle">Date</span><span class="qdesc">DD/MM/YYYY</span></div></td>
-                                                  <td><div class="job-quotedtitle"><span class="qtitle">Amount</span><span class="qdesc">$1500</span></div></td>
-                                                  <td><div class="job-quotedtitle"><span class="qtitle">Availability</span><span class="qdesc">DD/MM/YYYY</span></div></td>
-                                                  <td><div class="job-quotedtitle"><span class="qtitle">Status</span><span class="qdesc text-success">Accepted</span></div></td>
-                                                  <td class="text-right"><a href="applicant-quote.html" class="btn btn-jobform-outline">View</a></td>
-                                               </tr>
-                                            </tbody>
-                                         </table>
-                                         <table class="table table-freelancer">
-                                            <thead>
-                                               <tr>
-                                                  <th colspan="5">Job #123</th>
-                                                  <th class="text-right"><a href="job-detail.html">Details &gt;&gt;</a></th>
-                                               </tr>
-                                            </thead>
-                                            <tbody>
-                                               <tr>
-                                                  <td><div class="job-quotedtitle"><span class="qtitle">Quoted by</span><span class="qdesc">Grace (Undergraduate)</span></div></td>
-                                                  <td><div class="job-quotedtitle"><span class="qtitle">Date</span><span class="qdesc">DD/MM/YYYY</span></div></td>
-                                                  <td><div class="job-quotedtitle"><span class="qtitle">Amount</span><span class="qdesc">$1500</span></div></td>
-                                                  <td><div class="job-quotedtitle"><span class="qtitle">Availability</span><span class="qdesc">DD/MM/YYYY</span></div></td>
-                                                  <td><div class="job-quotedtitle"><span class="qtitle">Status</span><span class="qdesc">Valid to DD/MM/YYYY</span></div></td>
-                                                  <td class="text-right"><a href="applicant-quote.html" class="btn btn-jobform-outline">View</a></td>
-                                               </tr>
-                                               <tr>
-                                                  <td><div class="job-quotedtitle"><span class="qtitle">Quoted by</span><span class="qdesc">Grace (Undergraduate)</span></div></td>
-                                                  <td><div class="job-quotedtitle"><span class="qtitle">Date</span><span class="qdesc">DD/MM/YYYY</span></div></td>
-                                                  <td><div class="job-quotedtitle"><span class="qtitle">Amount</span><span class="qdesc">$1500</span></div></td>
-                                                  <td><div class="job-quotedtitle"><span class="qtitle">Availability</span><span class="qdesc">DD/MM/YYYY</span></div></td>
-                                                  <td><div class="job-quotedtitle"><span class="qtitle">Status</span><span class="qdesc text-success">Accepted</span></div></td>
-                                                  <td class="text-right"><a href="applicant-quote.html" class="btn btn-jobform-outline">View</a></td>
-                                               </tr>
-                                            </tbody>
-                                         </table>
-         
-                                         <table class="table table-freelancer">
-                                            <thead>
-                                               <tr>
-                                                  <th colspan="5">Job #123</th>
-                                                  <th class="text-right"><a href="job-detail.html">Details &gt;&gt;</a></th>
-                                               </tr>
-                                            </thead>
-                                            <tbody>
-                                               <tr>
-                                                  <td colspan="6"><div class="quoted-notfound">No one has quoted on this job yet.</div></td>
-                                               </tr>
-                                            </tbody>
-                                         </table>
-         
-                                      <div class="pagination-center"><nav class="text-center" id="pagination-container" aria-label="Page navigation"></nav></div>
-                                      </div>
-                                   </div>
-                                   </div>
-                               </div>
-                           </div>
-                       </div>
-                       </div>
-                           <!----22222 --> 
-         
-         
-         
-         
-         
-                    </div>
+                           
+                      
          
                   </div>
                    </div>`
@@ -556,8 +256,6 @@
                 
                }
                
-          
-      
             }
          })
          }
@@ -605,12 +303,6 @@
          })
          }
          
-
-
-
-        
-
-      
           return {
              getUserDetails: getUserDetails,
              getUserStatus: getUserStatus
@@ -690,7 +382,64 @@
           
           
               })
-          }
+           }
+           
+
+           async function getQuotedJobDetails(jobId, el, page)
+           {
+            var data = [{ 'Name': 'job_id', 'Operator': "in", "Value": jobId }]
+              
+            $.ajax({
+              method: "POST",
+              url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_quotes/`,
+              headers: {
+                "Content-Type": "application/json"
+              },
+            
+              data: JSON.stringify(data),
+         
+              success: function (response)
+              {
+                console.log({ response })
+              
+                const jobs = response
+                const job = jobs.Records
+                //if existing user, verify the status
+                 if (job) {
+
+                    job.forEach(function (quote, i)
+                    {
+                   
+                       let allJobs = `<tr>
+                       <td><div class="job-quotedtitle"><span class="qtitle">Quoted by</span><span class="qdesc">${quote['quote_by']}</span></div></td>
+                       <td><div class="job-quotedtitle"><span class="qtitle">Date</span><span class="qdesc">${quote['CreatedDateTime']}</span></div></td>
+                       <td><div class="job-quotedtitle"><span class="qtitle">Amount</span><span class="qdesc">$AUD${quote['all_total']}</span></div></td>
+                       <td><div class="job-quotedtitle"><span class="qtitle">Availability</span><span class="qdesc">${quote['availability_date']}</span></div></td>
+                       <td><div class="job-quotedtitle"><span class="qtitle">Status</span><span class="qdesc">Valid to ${quote['validity_date']} </span></div></td>
+                       <td class="text-right"><a href="user/plugins/8e94739d-b260-41ec-9496-dfa98bb8cdc0/${page}.php?jobId=${quote['job_id'] }&userId=${quote['freelancer_id']}" class="btn btn-jobform-outline">View</a></td>
+                    </tr>`;
+                       
+                       
+                       waitForElement(`${el}`, function ()
+                       {
+                          $(`${el} tbody`).append(allJobs);
+                     
+                       })
+                  
+                    })
+                  
+                }
+            
+              
+          
+              }
+        
+        
+            })
+              
+              
+              
+           }
           
 
           async function getAllJobs(){
@@ -850,6 +599,48 @@
             })
            }
 
+           async function getAcceptedJobs(){
+            var data = [{ 'Name': 'status', 'Operator': "equal", "Value": 'Accepted' }, { 'Name': 'freelancer_id', 'Operator': "equal", "Value": $('#userGuid').val() }]
+            
+            $.ajax({
+              method: "POST",
+              url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/freelancer_quotes/`,
+              headers: {
+                "Content-Type": "application/json"
+              },
+            
+              data: JSON.stringify(data),
+         
+              success: function (response)
+              {
+                console.log({ response })
+              
+                const jobs = response
+                const jobDetails = jobs.Records
+                //if existing user, verify the status
+                if (jobDetails.length != 0) {
+
+                  jobDetails.forEach(function (job, i)
+                  {
+
+                     getJobDetail(job['job_id'],'#tab-accepted','freelancer_quoted');
+                   
+                 
+                  })
+                  
+                 
+                  
+                }
+               
+        
+              }
+            })
+           }
+
+
+
+
+
            function getJobLodges()
            {
               var jobId = localStorage.getItem("jobID"); 
@@ -914,7 +705,6 @@
           
            }
            
-
          // buyer render
            
            async function getUserJobList()
@@ -1005,9 +795,9 @@
                              let jobTable = '';
                              if (job['no_of_quotes'] == 0) {
                                 jobTable = `<table class="table table-freelancer">
-                        <thead>
+                             <thead>
                            <tr data-id="${job['Id']}">
-                              <th colspan="5">${job['Id']}</th>
+                              <th colspan="5">Job #${job['Id']}</th>
                               <th class="text-right"><a href="user/plugins/8e94739d-b260-41ec-9496-dfa98bb8cdc0/job-details.php?jobId=${job['Id']}">Details &gt;&gt;</a></th>
                            </tr>
                         </thead>
@@ -1018,33 +808,33 @@
                      </tbody>
                      </table>`
                              } else {
-                              jobTable = ``
+                              jobTable = `<table class="table table-freelancer" id="quoted-table">
+                              <thead>
+                                 <tr>
+                                    <th colspan="5">Job #${job['Id']}</th>
+                                    <th class="text-right"><a href="user/plugins/8e94739d-b260-41ec-9496-dfa98bb8cdc0/job-details.php?jobId=${job['Id']}"">Details &gt;&gt;</a></th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                
+                              </tbody>
+                           </table> `
+                                
+                              
                              }
 
-
-
-
-
-
-
-
-                   
-                             //    let allJobs = `<tr data-id="${job['Id'] }" user-id="${userId}"> </td>
-                             //    <td> <a href="user/plugins/8e94739d-b260-41ec-9496-dfa98bb8cdc0/freelancer_quote.php?jobId=${job['Id'] }&userId=${userId}">${job['job_availability']}</a></td>
-                             //    <td>${job['buyer_email']}</td>
-                
-                             //    <td>${job['buyer_contact_no']}</td>
-                             //    <td class="width-location">${job['buyer_contact_no']}</td>
-                             //    <td>1</td>
-                             //    <td>${job['no_of_quotes']}</td>
-                             //    <td>${job['is_accepted'] == 1 ? 'Yes' : 'No'} </td>
-                             //    <td>-</td>
-                             //   </tr>`;
                              waitForElement('.table-quoted-container', function ()
                              {
                                 $('.table-quoted-container').append(jobTable);
+
+                                
                     
                              })
+                             waitForElement('#quoted-table', function ()
+                             {
+                             getQuotedJobDetails(job['Id'], '#quoted-table', 'applicant-quote')
+                             })
+                            
                           })
                   
                  
@@ -1060,9 +850,6 @@
 
            }
 
-
-
-
           return {
             getAllJobs :getAllJobs,
             getJobDetail: getJobDetail,
@@ -1071,7 +858,8 @@
              getQuotedJobs: getQuotedJobs,
              updateBuyerID: updateBuyerID,
              getJobLodges: getJobLodges,
-             getUserJobList : getUserJobList
+             getUserJobList: getUserJobList,
+             getAcceptedJobs : getAcceptedJobs
             
           }
           
@@ -1168,11 +956,39 @@
 
      
          
+          }
+          
+          function quoteAction(status, jobId, freelancerId, quoteId)
+          {
+            var quote_details = {
+      
+               jobId,
+               freelancerId,
+               quoteId,
+               status
+            };
+     
+            console.log({ quote_details });
+            
+         
+         var settings = {
+             "url": packagePath + "/update_quotation.php",
+             "method": "POST",
+             "data": JSON.stringify(quote_details )
          }
+         $.ajax(settings).done(function(response){
+             //remove the existing job id in localstorage after saving
+            
+             //localStorage.removeItem("jobID"); 
+         
+         });
+             
+          }
 
          return {
       
-            quoteJob : quoteJob
+            quoteJob: quoteJob,
+            quoteAction : quoteAction
           
        
          }
@@ -1219,7 +1035,8 @@
         var jobs = jobData.getInstance();
         jobs.getAllJobs()
         jobs.getInterestedJobs()
-        jobs.getQuotedJobs()
+          jobs.getQuotedJobs()
+          jobs.getAcceptedJobs()
           jobs.getJobLodges()
           jobs.getUserJobList()
         
@@ -1277,9 +1094,28 @@
           var quote = quoteData.getInstance();
           quote.quoteJob();
        })
-      
+
+
+
+       //accept button
+
+       $('#accept-confirm').on('click', function (event)
+       {
+         
+          var quote = quoteData.getInstance();
+          quote.quoteAction('Accepted', $(this).attr('job-id'),$(this).attr('user-id'),$(this).attr('quote-id'));
+       })
        
-    
+
+       //reject confirm
+       $('#reject-confirm').on('click', function (event)
+       {
+         
+          var quote = quoteData.getInstance();
+          quote.quoteAction('Rejected', $(this).attr('job-id'),$(this).attr('user-id'),$(this).attr('quote-id'));
+       })
+      
+      
     });
   })();
   

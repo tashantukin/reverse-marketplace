@@ -103,7 +103,7 @@ else {
                      <div class="navtab-flex">
                      <div class="quote-title-design"><?php echo $userDetails['Records'][0]['company_name'] ?></p></div>
                      <div class="navtab-filter btn-margin">
-                        <a href="homepage.html" class="btn btn-quote-cancel">Cancel</a>
+                        <a href="/" class="btn btn-quote-cancel">Cancel</a>
                         <button type="button" class="btn btn-quote-submit">Submit Quote</button>
                      </div>
                      </div>
@@ -249,7 +249,7 @@ else {
                <div class="navtab-flex">
                   <div class="question-requester-design">Have a question? Ask requester a question <a href="#">here</a></div>
                   <div class="navtab-filter btn-margin">
-                     <a href="homepage.html" class="btn btn-quote-cancel">Cancel</a>
+                     <a href="/" class="btn btn-quote-cancel">Cancel</a>
                      <button type="button" class="btn btn-quote-submit">Submit Quote</button>
                   </div>
                </div>

@@ -9,6 +9,20 @@
     let selectedValue = '';
     let conf_message = '';
     let custom_id = '';
+    var token = commonModule.getCookie('webapitoken');
+
+    const baseURL = window.location.hostname;
+    const protocol = window.location.protocol;
+
+ //run on creation page only
+ 
+
+
+
+
+
+
+
 
     $(document).ready(function ()
     {

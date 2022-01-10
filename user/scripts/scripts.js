@@ -49,7 +49,7 @@
         {
            var data = [{ 'Name': 'user_id', 'Operator': "equal", "Value": userId },
            { 'Name': 'status', 'Operator': "equal", "Value": 'Approved' },
-           { 'Name': 'approved_confirmed', 'Operator': "equal", "Value": 1 },
+           { 'Name': 'approved_confirmed', 'Operator': "equal", "Value": "1" },
            ]
           
           $.ajax({
@@ -642,7 +642,7 @@
         function init()
         {
         
-          async function getJobDetail(jobId){
+          async function getJobDetail(jobId,el,page){
               var data = [{ 'Name': 'Id', 'Operator': "in", "Value": jobId }]
               
               $.ajax({
@@ -659,11 +659,28 @@
                   console.log({ response })
                 
                   const jobs = response
-                  const jobDetails = jobs.Records[0]
+                  const job = jobs.Records[0]
                   //if existing user, verify the status
-                  if (jobDetails) {
-                    
+                   if (job) {
+                     
+                     let allJobs = `<tr data-id="${job['Id'] }" user-id="${userId}"> </td>
+                     <td> <a href="user/plugins/8e94739d-b260-41ec-9496-dfa98bb8cdc0/${page}.php?jobId=${job['Id'] }&userId=${userId}">${job['job_availability']}</a></td>
+                     <td>${job['buyer_email']}</td>
                    
+                     <td>${job['buyer_contact_no']}</td>
+                     <td class="width-location">${job['buyer_contact_no']}</td>
+                     <td>1</td>
+                     <td>${job['no_of_quotes']}</td>
+                     <td>${job['is_accepted'] == 1 ? 'Yes' : 'No'} </td>
+                     <td>-</td>
+                    </tr>`;
+                        waitForElement(`${el}`, function ()
+                        {
+                           $(`${el} table tbody`).append(allJobs);
+                       
+                        })
+                    
+                    
                     
                   }
               
@@ -758,11 +775,11 @@
 
           // get all available jobs
           async function getInterestedJobs(){
-            var data = [{ 'Name': 'status', 'Operator': "in", "Value": 'Interested' }]
+            var data = [{ 'Name': 'status', 'Operator': "equal", "Value": 'Interested' }, { 'Name': 'freelancer_id', 'Operator': "equal", "Value": $('#userGuid').val() }]
             
             $.ajax({
               method: "POST",
-              url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_cache/`,
+              url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/freelancer_quotes/`,
               headers: {
                 "Content-Type": "application/json"
               },
@@ -780,23 +797,10 @@
 
                   jobDetails.forEach(function (job, i)
                   {
+
+                     getJobDetail(job['job_id'],'#tab-interested','freelancer_quote');
                    
-                  let allJobs = `<tr data-id="${job['Id'] }" user-id="${userId}"> </td>
-                  <td> <a href="user/plugins/8e94739d-b260-41ec-9496-dfa98bb8cdc0/freelancer_quote.php?jobId=${job['Id'] }&userId=${userId}">${job['job_availability']}</a></td>
-                  <td>${job['buyer_email']}</td>
-                
-                  <td>${job['buyer_contact_no']}</td>
-                  <td class="width-location">${job['buyer_contact_no']}</td>
-                  <td>1</td>
-                  <td>${job['no_of_quotes']}</td>
-                  <td>${job['is_accepted'] == 1 ? 'Yes' : 'No'} </td>
-                  <td>-</td>
-                 </tr>`;
-                     waitForElement('#tab-interested', function ()
-                     {
-                        $('#tab-interested table tbody').append(allJobs);
-                    
-                     })
+                 
                   })
                   
                  
@@ -809,13 +813,11 @@
            }
 
            async function getQuotedJobs(){
-              var data = [{ 'Name': 'status', 'Operator': "in", "Value": 'Quoted' }
-                         
-              ]
+            var data = [{ 'Name': 'status', 'Operator': "equal", "Value": 'Quoted' }, { 'Name': 'freelancer_id', 'Operator': "equal", "Value": $('#userGuid').val() }]
             
             $.ajax({
               method: "POST",
-              url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_cache/`,
+              url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/freelancer_quotes/`,
               headers: {
                 "Content-Type": "application/json"
               },
@@ -833,23 +835,10 @@
 
                   jobDetails.forEach(function (job, i)
                   {
+
+                     getJobDetail(job['job_id'],'#tab-quoted','freelancer_quoted');
                    
-                  let allJobs = `<tr data-id="${job['Id'] }" user-id="${userId}"> </td>
-                  <td> <a href="user/plugins/8e94739d-b260-41ec-9496-dfa98bb8cdc0/freelancer_quote.php?jobId=${job['Id'] }&userId=${userId}">${job['job_availability']}</a></td>
-                  <td>${job['buyer_email']}</td>
-                
-                  <td>${job['buyer_contact_no']}</td>
-                  <td class="width-location">${job['buyer_contact_no']}</td>
-                  <td>1</td>
-                  <td>${job['no_of_quotes']}</td>
-                  <td>${job['is_accepted'] == 1 ? 'Yes' : 'No'} </td>
-                  <td>-</td>
-                 </tr>`;
-                     waitForElement('#tab-quoted', function ()
-                     {
-                        $('#tab-quoted table tbody').append(allJobs);
-                    
-                     })
+                 
                   })
                   
                  
@@ -874,14 +863,17 @@
            
            function  updateBuyerID(id)
            {
-              
-              var status_details = {
+              waitForElement('#userGuid', function ()
+              {
+                 var status_details = {
       
-                  "jobId": id,
-                  'userId': $('#userGuid').val()
-              };
+                    "jobId": id,
+                    'userId': $('#userGuid').val()
+                 };
           
-              console.log({ status_details });
+                 console.log({ status_details });
+                 
+              
               var settings = {
                   "url": packagePath + "/update_job_buyer_id.php",
                   "method": "POST",
@@ -893,7 +885,7 @@
                   localStorage.removeItem("jobID"); 
               
               });
-      
+            })
           
           }
 
@@ -902,8 +894,9 @@
               
               var status_details = {
       
-                  "Id": el.parents('tr').attr('data-id'),
-                  'status' : el.val()
+                 "Id": el.parents('tr').attr('data-id'),
+                 "userId" : $('#userGuid').val(),
+                 'status' : el.val()
               };
           
               console.log({ status_details });
@@ -926,7 +919,9 @@
            
            async function getUserJobList()
            {
-              var jobListDiv = `<div class="content-pages">
+              waitForElement('#userGuid', function ()
+              {
+                 var jobListDiv = `<div class="content-pages">
               <div class="freelancer-content-main">
      
                  <div class="container">
@@ -977,43 +972,43 @@
      
               </div></div>
            `
-              waitForElement('.reverse-slider', function ()
-              {
-                 $('.reverse-slider').after(jobListDiv);
-              })
+                 waitForElement('.reverse-slider', function ()
+                 {
+                    $('.reverse-slider').after(jobListDiv);
+                 })
 
-              var data = [{ 'Name': 'buyerID', 'Operator': "equal", "Value": $('#userGuid').val() }
+                 var data = [{ 'Name': 'buyerID', 'Operator': "in", "Value": $('#userGuid').val() }
                          
-              ]
+                 ]
             
-            $.ajax({
-              method: "POST",
-              url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_cache/`,
-              headers: {
-                "Content-Type": "application/json"
-              },
+                 $.ajax({
+                    method: "POST",
+                    url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_cache/`,
+                    headers: {
+                       "Content-Type": "application/json"
+                    },
             
-              data: JSON.stringify(data),
+                    data: JSON.stringify(data),
          
-              success: function (response)
-              {
-                console.log({ response })
+                    success: function (response)
+                    {
+                       console.log({ response })
               
-                const jobs = response
-                const jobDetails = jobs.Records
-                //if existing user, verify the status
-                if (jobDetails.length != 0) {
+                       const jobs = response
+                       const jobDetails = jobs.Records
+                       //if existing user, verify the status
+                       if (jobDetails.length != 0) {
 
-                  jobDetails.forEach(function (job, i)
-                  {
+                          jobDetails.forEach(function (job, i)
+                          {
 
-                     let jobTable = '';
-                     if (job['no_of_quotes'] == 0) {
-                        jobTable = `<table class="table table-freelancer">
+                             let jobTable = '';
+                             if (job['no_of_quotes'] == 0) {
+                                jobTable = `<table class="table table-freelancer">
                         <thead>
-                           <tr data-id="${job['Id'] }">
+                           <tr data-id="${job['Id']}">
                               <th colspan="5">${job['Id']}</th>
-                              <th class="text-right"><a href="user/plugins/8e94739d-b260-41ec-9496-dfa98bb8cdc0/job-details.php?jobId=${job['Id'] }">Details &gt;&gt;</a></th>
+                              <th class="text-right"><a href="user/plugins/8e94739d-b260-41ec-9496-dfa98bb8cdc0/job-details.php?jobId=${job['Id']}">Details &gt;&gt;</a></th>
                            </tr>
                         </thead>
                         <tbody>
@@ -1022,7 +1017,9 @@
                         </tr>
                      </tbody>
                      </table>`
-                    }
+                             } else {
+                              jobTable = ``
+                             }
 
 
 
@@ -1032,34 +1029,34 @@
 
 
                    
-               //    let allJobs = `<tr data-id="${job['Id'] }" user-id="${userId}"> </td>
-               //    <td> <a href="user/plugins/8e94739d-b260-41ec-9496-dfa98bb8cdc0/freelancer_quote.php?jobId=${job['Id'] }&userId=${userId}">${job['job_availability']}</a></td>
-               //    <td>${job['buyer_email']}</td>
+                             //    let allJobs = `<tr data-id="${job['Id'] }" user-id="${userId}"> </td>
+                             //    <td> <a href="user/plugins/8e94739d-b260-41ec-9496-dfa98bb8cdc0/freelancer_quote.php?jobId=${job['Id'] }&userId=${userId}">${job['job_availability']}</a></td>
+                             //    <td>${job['buyer_email']}</td>
                 
-               //    <td>${job['buyer_contact_no']}</td>
-               //    <td class="width-location">${job['buyer_contact_no']}</td>
-               //    <td>1</td>
-               //    <td>${job['no_of_quotes']}</td>
-               //    <td>${job['is_accepted'] == 1 ? 'Yes' : 'No'} </td>
-               //    <td>-</td>
-               //   </tr>`;
-                     waitForElement('.table-quoted-container', function ()
-                     {
-                        $('.table-quoted-container').append(jobTable);
+                             //    <td>${job['buyer_contact_no']}</td>
+                             //    <td class="width-location">${job['buyer_contact_no']}</td>
+                             //    <td>1</td>
+                             //    <td>${job['no_of_quotes']}</td>
+                             //    <td>${job['is_accepted'] == 1 ? 'Yes' : 'No'} </td>
+                             //    <td>-</td>
+                             //   </tr>`;
+                             waitForElement('.table-quoted-container', function ()
+                             {
+                                $('.table-quoted-container').append(jobTable);
                     
-                     })
-                  })
+                             })
+                          })
                   
                  
                   
-                }
+                       }
                
         
-              }
-            })
+                    }
+                 })
 
 
-
+              })
 
            }
 
@@ -1129,7 +1126,7 @@
                "total": $(".qq-total").find('span b').text(),
                "all_discount": $(".qq-discount .qq-option").find('span b').text(),
                "all_total": $(".qq-subtotal").find('span b').text(),
-
+               "quoted-by" : $("#quoted-by").text(),
                
                "job_completion": $("#completion").text(),
                "availability_date": $("#availability").val(),
@@ -1156,9 +1153,12 @@
                 "data": JSON.stringify(quote_details)
             }
             $.ajax(settings).done(function(response){
-                
+               toastr.success('Your quote has been submitted');
                 var allresponse = $.parseJSON(response)
-                console.log(allresponse);
+               console.log(allresponse);
+               urls = `${protocol}//${baseURL}/`;
+               window.location.href = urls;
+               
                
         
       

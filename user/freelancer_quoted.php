@@ -1,23 +1,5 @@
-<!DOCTYPE html
-   PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
 
-<head>
-   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <title>Market Place :: Quote</title>
-   <!-- core js -->
-   <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/jquery-min.js"></script>
-   <!-- bootstrap js -->
-   <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/moment.min.js"></script>
-   <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/bootstrap.min.js"></script>
-   <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/bootstrap-datetimepicker.min.js"></script>
-   <!-- bootbox js -->
-   <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/bootbox.min.js"></script>
-   <link href="https://bootstrap.arcadier.com/spacetime/css/importFonts.css" rel="stylesheet" type="text/css">
-   <link href="https://bootstrap.arcadier.com/spacetime/css/style.css" rel="stylesheet" type="text/css">
-   
-   <?php 
+ <?php 
 include 'jobs.php';
 $job_id = $_GET['jobId'];
 $user_id = $_GET['userId'];
@@ -25,6 +7,9 @@ $user_id = $_GET['userId'];
 $jobDetails = getContent($job_id);
 $jobFiles = getFiles($job_id);
 $userDetails = getFreelancerDetails($user_id);
+
+
+$quotedDetails = getQuoted($job_id, $user_id);
 
 $job_completion = '';
 $job_type = '';
@@ -54,9 +39,28 @@ else {
     $job_type = '';
 }
 ?>
-   
-   
-   
+
+
+
+
+<!DOCTYPE html
+   PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <title>Market Place :: Quote</title>
+   <!-- core js -->
+   <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/jquery-min.js"></script>
+   <!-- bootstrap js -->
+   <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/moment.min.js"></script>
+   <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/bootstrap.min.js"></script>
+   <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/bootstrap-datetimepicker.min.js"></script>
+   <!-- bootbox js -->
+   <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/bootbox.min.js"></script>
+   <link href="https://bootstrap.arcadier.com/spacetime/css/importFonts.css" rel="stylesheet" type="text/css">
+   <link href="https://bootstrap.arcadier.com/spacetime/css/style.css" rel="stylesheet" type="text/css">
    <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/jquery.nicescroll.min.js"></script>
    <!-- flying element js -->
    <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/codex-fly.js"></script>
@@ -84,14 +88,12 @@ else {
 
 <body class="seller-items">
    <!-- header -->
-   
+  
    <!-- header -->
    <div class="main">
-      <div class="content-pages">
+   <div class="content-pages">
       <div class="freelancer-content-main">
 
-         <input type = "hidden" id="job-id" value="<?php echo $job_id ?>">
-         <input type = "hidden" id="user-id" value="<?php echo $user_id ?>">
 
             <div class="container">
                <div class="page-reverse-title">
@@ -99,10 +101,10 @@ else {
                </div>
                <div class="blue-tabdesign">
                      <div class="navtab-flex">
-                     <div class="quote-title-design" id="quoted-by"> <?php echo $userDetails['Records'][0]['company_name'] ?></div>
+                     <div class="quote-title-design"><?php echo $userDetails['Records'][0]['company_name'] ?></p></div>
                      <div class="navtab-filter btn-margin">
-                        <a href="/" class="btn btn-quote-cancel">Cancel</a>
-                        <button type="button" class="btn btn-quote-submit" id="submit-top">Submit Quote</button>
+                        <a href="homepage.html" class="btn btn-quote-cancel">Cancel</a>
+                        <button type="button" class="btn btn-quote-submit">Submit Quote</button>
                      </div>
                      </div>
                <div class="quote-question-main">
@@ -111,45 +113,35 @@ else {
                         <div class="quote-question-section">
                             <div class="qq-total-sum">
                                <h4>1. Job Summary</h4>
-                                <?php
-                               foreach(json_decode($jobDetails['Records'][0]['task_type_list'],true) as $task) {
-                                     echo "<div class='qq-title'><span class='dash'></span><span class='title'>$task</span><div class='qq-option'><input type='text' class='numbersOnlyD' placeholder='AUD 0.00' value=''><a href='javascript:void(0);' class='save-link'>Save</a>|<a href='javascript:void(0);' class='cancel-link'>Cancel</a></div></div>";
-                                
-                                 }
+                            <?php
+                               foreach(json_decode($quotedDetails['Records'][0]['job_summary'],true) as $task) {
+                                    echo "<div class='qq-title saved'><span class='dash'></span><span class='title'>" . $task['title']. " . </span><div class='qq-option'><span>AUD <b>" . $task['price']. "</b></span><a href='javascript:void(0);' class='edit-link'>Edit</a></div></div>";
 
-                                 ?>
 
-                               <!-- <div class="qq-title"><span class="dash"></span><span class="title">BAS Agent</span><div class="qq-option"><input type="text" class="numbersOnlyD" placeholder="AUD 0.00" value=""><a href="javascript:void(0);" class="save-link">Save</a>|<a href="javascript:void(0);" class="cancel-link">Cancel</a></div></div>
-                               <div class="qq-title"><span class="dash"></span><span class="title">Tax</span><div class="qq-option"><input type="text" class="numbersOnlyD" placeholder="AUD 0.00" value=""><a href="javascript:void(0);" class="save-link">Save</a>|<a href="javascript:void(0);" class="cancel-link">Cancel</a></div></div>
-                               <div class="qq-title"><span class="dash"></span><span class="title">Audit</span><div class="qq-option"><input type="text" class="numbersOnlyD" placeholder="AUD 0.00" value=""><a href="javascript:void(0);" class="save-link">Save</a>|<a href="javascript:void(0);" class="cancel-link">Cancel</a></div></div>
-                               <div class="qq-title"><span class="dash"></span><span class="title">Book-keeping</span><div class="qq-option"><input type="text" class="numbersOnlyD" placeholder="AUD 0.00" value=""><a href="javascript:void(0);" class="save-link">Save</a>|<a href="javascript:void(0);" class="cancel-link">Cancel</a></div></div>
-                               <div class="qq-title"><span class="dash"></span><span class="title">Payroll</span><div class="qq-option"><input type="text" class="numbersOnlyD" placeholder="AUD 0.00" value=""><a href="javascript:void(0);" class="save-link">Save</a>|<a href="javascript:void(0);" class="cancel-link">Cancel</a></div></div>
-                               <div class="qq-title"><span class="dash"></span><span class="title">Finance</span><div class="qq-option"><input type="text" class="numbersOnlyD" placeholder="AUD 0.00" value=""><a href="javascript:void(0);" class="save-link">Save</a>|<a href="javascript:void(0);" class="cancel-link">Cancel</a></div></div>
-                               -->
-                              
-                               <?php
-                               try {
-                                foreach(json_decode($jobFiles['Records'][0]['all_tasks'],true) as $custom_task) {
-                                    //   echo "<div class='qq-title'><span class='dash'></span><span class='title'>$task</span><div class='qq-option'><input type='text' class='numbersOnlyD' placeholder='AUD 0.00' value=''><a href='javascript:void(0);' class='save-link'>Save</a>|<a href='javascript:void(0);' class='cancel-link'>Cancel</a></div></div>";
-                                      echo "<div class='qq-title'><span class='dash'></span><span class='title'>" .  $custom_task['task_name'] . "  </span><p>".  substr($custom_task['files'][0]['name'], 36) . "  | <a href=" . $custom_task['files'][0]['URL'] . ">Download File</a></p> <div class='qq-option'><input type='text' class='numbersOnlyD' placeholder='AUD 0.00' value=''><a href='javascript:void(0);' class='save-link'>Save</a>|<a href='javascript:void(0);' class='cancel-link'>Cancel</a></div> </div>";
-                                   }
+                               }
+                            ?>
 
-                               }catch(Exception $e) {
-                              //  echo 'Message: ' .$e->getMessage();
-                              }
-                               
-
-                                 ?>
+                               <!-- <div class="qq-title saved"><span class="dash"></span><span class="title">BAS Agent</span><div class="qq-option"><span>AUD <b>0.00</b></span><a href="javascript:void(0);" class="edit-link">Edit</a></div></div>
+                               <div class="qq-title saved"><span class="dash"></span><span class="title">Tax</span><div class="qq-option"><span>AUD <b>0.00</b></span><a href="javascript:void(0);" class="edit-link">Edit</a></div></div>
+                               <div class="qq-title saved"><span class="dash"></span><span class="title">Audit</span><div class="qq-option"><span>AUD <b>0.00</b></span><a href="javascript:void(0);" class="edit-link">Edit</a></div></div>
+                               <div class="qq-title saved"><span class="dash"></span><span class="title">Book-keeping</span><div class="qq-option"><span>AUD <b>0.00</b></span><a href="javascript:void(0);" class="edit-link">Edit</a></div></div>
+                               <div class="qq-title saved"><span class="dash"></span><span class="title">Payroll</span><div class="qq-option"><span>AUD <b>0.00</b></span><a href="javascript:void(0);" class="edit-link">Edit</a></div></div>
+                               <div class="qq-title saved"><span class="dash"></span><span class="title">Finance</span><div class="qq-option"><span>AUD <b>0.00</b></span><a href="javascript:void(0);" class="edit-link">Edit</a></div></div> -->
                               
                               
-                               
-                              
+                               <!-- <div class="qq-title saved"><span class="dash"></span><span>Other Jobs 1</span>
+                                  <p>  File 1 | <a href="#">Download File</a></p>
+                                  <div class="qq-option"><span>AUD <b>0.00</b></span><a href="javascript:void(0);" class="edit-link">Edit</a></div>
+                               </div>
+                               <div class="qq-title saved"><span class="dash"></span><span>Other Jobs 2</span><p>  File 2 | <a href="#">Download File</a></p>
+                                   <div class="qq-option"><span>AUD <b>0.00</b></span><a href="javascript:void(0);" class="edit-link">Edit</a></div>
+                               </div> -->
                             </div>
                         </div>
                      </div>
                      <div class="col-sm-4">
                         <div class="info-box">
-                           <p>Email: <?php echo $userDetails['Records'][0]['email'] ?></p>
+                            <p>Email: <?php echo $userDetails['Records'][0]['email'] ?></p>
                            <p>Name: <?php echo $userDetails['Records'][0]['company_name'] ?></p>
                            <p>Contact Number: <?php echo $userDetails['Records'][0]['contact_number'] ?></p>
                         </div>
@@ -159,9 +151,9 @@ else {
                   <div class="row">
                      <div class="col-sm-12">
                         <div class="quote-question-section">
-                           <div class="qq-title"><span class="dash"></span><span class="title">Total</span><div class="qq-option qq-total"><span class="">AUD <b>0.00</b></span></div></div>
-                           <div class="qq-title qq-discount"><span class="dash"></span><span class="title">All at once - Discount</span><div class="qq-option"><input type="text" class="numbersOnlyD" placeholder="AUD 0.00" value="0.00"><a href="javascript:void(0);" class="save-link">Save</a>|<a href="javascript:void(0);" class="cancel-link">Cancel</a></div></div>
-                           <div class="qq-title"><span class="dash"></span><span class="title">All at once - Total</span><div class="qq-option qq-subtotal"><span>AUD <b>0.00</b></span></div></div>
+                           <div class="qq-title"><span class="dash"></span><span class="title">Total</span><div class="qq-option qq-total"><span class="">AUD <b><?php echo $quotedDetails['Records'][0]['total'] ?></b></span></div></div>
+                           <div class="qq-title qq-discount saved"><span class="dash"></span><span class="title">All at once - Discount</span><div class="qq-option"><span>AUD <b><?php echo $quotedDetails['Records'][0]['all_discount'] ?></b></span><a href="javascript:void(0);" class="edit-link">Edit</a></div></div>
+                           <div class="qq-title"><span class="dash"></span><span class="title">All at once - Total</span><div class="qq-option qq-subtotal"><span>AUD <b><?php echo $quotedDetails['Records'][0]['all_total'] ?></b></span></div></div>
                         </div>
                      </div>
                   </div>
@@ -169,12 +161,15 @@ else {
                   <div class="row">
                      <div class="col-sm-6">
                         <div class="quote-question-section">
-                           <div class="qq-title">Job to be completed by: <span class="danger"  id="completion"> <?php echo $job_completion ?> </span></div>
-                           <div class="qq-title"><span class="dash"></span><span class="title">Availability</span><div class="qq-option"><input type="text" id="availability"class="datepicker" placeholder="DD/MM/YYYY" value=""><a href="javascript:void(0);" class="save-linkdate">Save</a>|<a href="javascript:void(0);" class="cancel-linkdate">Cancel</a></div></div>
-                           <div class="qq-title"><span class="dash"></span><span class="title">Validity Date</span><div class="qq-option"><input type="text" id="validity" class="datepicker" placeholder="DD/MM/YYYY" value=""><a href="javascript:void(0);" class="save-linkdate">Save</a>|<a href="javascript:void(0);" class="cancel-linkdate">Cancel</a></div></div>
-                            <?php echo $job_type; ?>
-                           <div class="qq-title"><span class="dash"></span><span class="title">Hourly</span><span id="hourly_price"> AUD <?php echo $jobDetails['Records'][0]['payment_hourly_value'] ?> </span> </div>
-                           <div class="qq-title"><span class="dash"></span><span class="title">Fixed Price</span><span id="fixed_price" >AUD <?php echo $jobDetails['Records'][0]['payment_fixed_value'] ?></span></div>
+                           <div class="qq-title">Job to be completed by: <span class="danger"> <?php echo  $job_completion?> </span></div>
+                           <div class="qq-title saved"><span class="dash"></span><span class="title">Availability</span><div class="qq-option"><span><b><?php echo $quotedDetails['Records'][0]['availability_date'] ?></b></span><a href="javascript:void(0);" class="edit-linkdate">Edit</a></div></div>
+                           <div class="qq-title saved"><span class="dash"></span><span class="title">Validity Date</span><div class="qq-option"><span><b><?php echo $quotedDetails['Records'][0]['validity_date'] ?></b></span><a href="javascript:void(0);" class="edit-linkdate">Edit</a></div></div>
+                           <!-- <div class="qq-title"><span class="dash"></span><span class="title">Full Time</span></div>
+                           <div class="qq-title"><span class="dash"></span><span class="title">Contract</span></div> -->
+                           <?php echo $job_type ?>
+                           
+                           <div class="qq-title"><span class="dash"></span><span class="title">Hourly</span><span>AUD <?php echo $jobDetails['Records'][0]['payment_hourly_value'] ?></span></div>
+                           <div class="qq-title"><span class="dash"></span><span class="title">Fixed Price</span><span>AUD <?php echo $jobDetails['Records'][0]['payment_fixed_value'] ?></span></div>
 
                            <div class="form-group">
                               <label for="comments">Comments to applicant:</label>
@@ -192,26 +187,26 @@ else {
                            <div class="checkbox-row-flex">
                               <div class="checkbox-width ">
                                  <div class="fancy-checkbox checkbox-sm">
-                                    <input checked type="checkbox" name="deposit_required" id="deposit_required">
+                                    <input checked="<?php echo $quotedDetails['Records'][0]['deposit_required'] ?>" type="checkbox" name="deposit_required" id="deposit_required">
                                     <label for="deposit_required"><span>Deposit Required</span></label>
                                  </div>
                               </div>
-                              <div class="qq-option"><input type="text" class="numbersOnlyD" placeholder="AUD 0.00" value=""><a class="save-link" href="javascript:void(0);">Save</a>|<a class="cancel-link" href="javascript:void(0);">Cancel</a></div>
+                              <div class="qq-option"><span>AUD <b><?php echo $quotedDetails['Records'][0]['deposit_amount'] ?></b></span><a href="javascript:void(0);" class="edit-link">Edit</a></div>
                            </div>
                            
                            <div class="fancy-checkbox checkbox-sm">
-                              <input checked type="checkbox" name="7_days" id="7_days">
+                              <input checked="<?php echo $quotedDetails['Records'][0]['for_7_days'] ?>" type="checkbox" name="7_days" id="7_days">
                               <label for="7_days"><span>For 7 days</span></label>
                            </div>
 
                            <div class="fancy-checkbox checkbox-sm">
-                               <input checked type="checkbox" name="30_days" id="30_days">
+                               <input checked="<?php echo $quotedDetails['Records'][0]['for_30_days'] ?>" type="checkbox" name="30_days" id="30_days">
                               <label for="30_days"><span>For 30 days</span></label>
                            </div>
 
                            <div class="form-group">
                               <label for="payment_comments">Comments on payment terms:</label>
-                              <textarea id="payment_comments" name="payment_comments" class="form-control" rows="5"></textarea>
+                              <textarea id="payment_comments" name="payment_comments" class="form-control" rows="5"><?php echo $quotedDetails['Records'][0]['comments_on_terms'] ?></textarea>
                            </div>
                         </div>
                      </div>
@@ -224,7 +219,7 @@ else {
                            <div class="checkbox-row-flex">
                               <div class="checkbox-width ">
                                  <div class="fancy-checkbox checkbox-sm">
-                                     <input checked type="checkbox" name="COD" id="COD">
+                                     <input checked="<?php echo $quotedDetails['Records'][0]['payment_cod'] ?>" type="checkbox" name="COD" id="COD">
                                     <label for="COD"><span>COD</span></label>
                                  </div>
                               </div>
@@ -232,7 +227,7 @@ else {
                            <div class="checkbox-row-flex">
                               <div class="checkbox-width ">
                                  <div class="fancy-checkbox checkbox-sm">
-                                    <input checked type="checkbox" name="credit_card" id="credit_card">
+                                    <input checked="<?php echo $quotedDetails['Records'][0]['payment_credit_card'] ?>" type="checkbox" name="credit_card" id="credit_card">
                                     <label for="credit_card"><span>Credit Card</span></label>
                                  </div>
                               </div>
@@ -240,7 +235,7 @@ else {
                            <div class="checkbox-row-flex">
                               <div class="checkbox-width ">
                                  <div class="fancy-checkbox checkbox-sm">
-                                    <input checked type="checkbox" name="paypal" id="paypal">
+                                    <input checked="<?php echo $quotedDetails['Records'][0]['payment_paypal'] ?>" type="checkbox" name="paypal" id="paypal">
                                     <label for="paypal"><span>PayPal</span></label>
                                  </div>
                               </div>
@@ -255,7 +250,7 @@ else {
                   <div class="question-requester-design">Have a question? Ask requester a question <a href="#">here</a></div>
                   <div class="navtab-filter btn-margin">
                      <a href="homepage.html" class="btn btn-quote-cancel">Cancel</a>
-                     <button type="button" class="btn btn-quote-submit" id="submit-bottom">Submit Quote</button>
+                     <button type="button" class="btn btn-quote-submit">Submit Quote</button>
                   </div>
                </div>
 
@@ -266,12 +261,6 @@ else {
 
 
       </div>
-   </div>
-   <!-- End Item form-->
-   </div>
-   </div>
-   <!-- footer -->
-   
    <!-- footer -->
    <!--modal register-->
    <div class="modal-frame model-register">
@@ -299,7 +288,6 @@ else {
    </div>
    <!--modal register-->
    <div class="modal-overlay"></div>
-   <!-- begin footer --> 
    <script type="text/javascript">
       $(function () { var ddlData = [{ text: "EN", value: 1, imageSrc: "images/gb.svg" }, { text: "CN", value: 2, imageSrc: "images/cn.svg" }, { text: "FR", value: 3, imageSrc: "images/fr.svg" }]; $('.language-list').ddslick({ data: ddlData, width: 100, imagePosition: "left", onSelected: function (selectedData) { } }); });
 
@@ -441,13 +429,6 @@ else {
          return str.join(dec_point?dec_point:'.');
       }
    </script>
-
-   <script type="text/javascript" src="scripts/scripts.js"></script>
-
-
-<!-- end footer --> 
-
-
 </body>
 
 </html>

@@ -7,7 +7,7 @@
     <meta https-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Custom Fields</title>
-    <link href="css/onboarding.css" rel="stylesheet" type="text/css">
+    <link href="css/onboarding-field.css" rel="stylesheet" type="text/css">
     <style>
 
         #is-required {
@@ -17,7 +17,7 @@
 </head>
 <!-- end header -->
 
-<div class="page-content">
+<div class="page-content" id="seller-fields">
                     <div class="gutter-wrapper">
                         <div class="onboarding-backbtnarea">
                             <a class="mybtn btn-grey" href="javascript:void(0);">
@@ -66,7 +66,7 @@
                             </div>
                             <div class="custom_list_wrapper">
                                 <ul class="custom-listing-table-onbrd row-height-50">
-                                    <li class="all-cat">
+                                    <li class="all-cat" v-for="fields in allFreelancerFields">
                                         <div class="custom-list-box-onbrd">
                                             <div class="cursor-sec cursor-repositioning-onbrd">
                                                 <div class="repositioning-icon-onbrd  ">
@@ -74,120 +74,38 @@
                                                 </div>
                                             </div>
                                             <div class="user-field-name-onbrd">
-                                                Email
+                                                {{fields.name}}
                                             </div>
                                             <div class="user-field-type-onbrd">
-                                                email
+                                                {{fields.type_of_field}}
                                             </div>
                                             <div class="user-field-consumer-onbrd">
-                                                1.Registration
+                                                {{fields.classification}}
                                             </div>
                                             <div class="user-field-action-onbrd">
+
+                                            <div class="user-field-action-onbrd">
+                                                <div class="row-action">
+                                                    <a href="javascript:void(0);" class="btn-edit-onbrdfields">
+                                                        <i class="icon icon-edit-2">
+                                                        </i>
+                                                    </a>
+                                                    <a class="delete-cat" href="javascript:void(0)" onclick="delete_opt(id,this)">
+                                                        <i class="icon icon-delete-btn-user">
+                                                        </i>
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                            
                                                 
                                             </div>
                                             <div class="clearfix">
                                             </div>
                                         </div>
                                     </li>
-                                    <li class="all-cat added-description">
-                                        <div class="custom-list-box-onbrd">
-                                            <div class="cursor-sec cursor-repositioning-onbrd">
-                                                <div class="repositioning-icon-onbrd  ">
-                                                    
-                                                </div>
-                                            </div>
-                                            <div class="user-field-name-onbrd">
-                                                Password
-                                            </div>
-                                            <div class="user-field-type-onbrd">
-                                                password
-                                            </div>
-                                            <div class="user-field-consumer-onbrd">
-                                                1.Registration
-                                            </div>
-                                            <div class="user-field-action-onbrd">
-                                                <div class="row-action">
-                                                    
-                                                </div>
-                                            </div>
-                                            <div class="clearfix">
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="all-cat added-description">
-                                        <div class="custom-list-box-onbrd">
-                                            <div class="cursor-sec cursor-repositioning-onbrd">
-                                                <div class="repositioning-icon-onbrd  ">
-                                                    <div class="pull-left">
-                                                        <a class="panel-toggle" href="javascript:void(0);">
-                                                            <i class="icon icon-toggle arrow-up">
-                                                            </i>
-                                                        </a>
-                                                    </div>
-                                                    <div class="pull-left">
-                                                        <a class="panel-toggle" href="javascript:void(0);">
-                                                            <i class="icon icon-toggle arrow-down">
-                                                            </i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="user-field-name-onbrd">Company Name</div>
-                                            <div class="user-field-type-onbrd">text field</div>
-                                            <div class="user-field-consumer-onbrd">2. Verification Details</div>
-                                            <div class="user-field-action-onbrd">
-                                                <div class="row-action">
-                                                    <a href="javascript:void(0);" class="btn-edit-onbrdfields">
-                                                        <i class="icon icon-edit-2">
-                                                        </i>
-                                                    </a>
-                                                    <a class="delete-cat" href="javascript:void(0)" onclick="delete_opt(id,this)">
-                                                        <i class="icon icon-delete-btn-user">
-                                                        </i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="clearfix">
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="all-cat added-description">
-                                        <div class="custom-list-box-onbrd">
-                                            <div class="cursor-sec cursor-repositioning-onbrd">
-                                                <div class="repositioning-icon-onbrd  ">
-                                                    <div class="pull-left">
-                                                        <a class="panel-toggle" href="javascript:void(0);">
-                                                            <i class="icon icon-toggle arrow-up">
-                                                            </i>
-                                                        </a>
-                                                    </div>
-                                                    <div class="pull-left">
-                                                        <a class="panel-toggle" href="javascript:void(0);">
-                                                            <i class="icon icon-toggle arrow-down">
-                                                            </i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="user-field-name-onbrd">Address</div>
-                                            <div class="user-field-type-onbrd">address box</div>
-                                            <div class="user-field-consumer-onbrd">2. Verification Details</div>
-                                            <div class="user-field-action-onbrd">
-                                                <div class="row-action">
-                                                    <a href="javascript:void(0);" class="btn-edit-onbrdfields">
-                                                        <i class="icon icon-edit-2">
-                                                        </i>
-                                                    </a>
-                                                    <a class="delete-cat" href="javascript:void(0)" onclick="delete_opt(id,this)">
-                                                        <i class="icon icon-delete-btn-user">
-                                                        </i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="clearfix">
-                                            </div>
-                                        </div>
-                                    </li>
+                                
+                                  
                                 </ul>
                             </div>
                         </div>
@@ -429,7 +347,9 @@ function delete_opt(id, ele) {
     });
 }
         </script>
-
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
 <script type="text/javascript" src="scripts/scripts3.js"></script>
+<script type="text/javascript" src="scripts/seller.js"></script>
 
          <!-- end footer -->

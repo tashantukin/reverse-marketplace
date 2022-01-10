@@ -1,340 +1,289 @@
-<?php
-include 'callAPI.php';
-include 'admin_token.php';
-?>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="https://www.w3.org/1999/xhtml">
-<!-- begin header -->
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <!-- begin header -->
 <head>
-
-    <meta https-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Custom Fields</title>
-    <link href="css/adminstyle.css" rel="stylesheet" type="text/css">
-    <link href="css/user-custom-fields.css" rel="stylesheet" type="text/css">
-    <link href="css/checkbox.css" rel="stylesheet" type="text/css">
-    <link href="css/tempo.css" rel="stylesheet" type="text/css">
-    <style type="text/css">
-        .consumer-box {
-            padding-top: 20px;
-            border-top: 1px solid #d9d9d9;
-            margin-top: 15px;
-        }
-    </style>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>Reverse Marketplace</title>
+    <!-- core js -->
+    <script src="https://bootstrap.arcadier.com/adminportal_pre/js/jquery-1.11.3.min.js" type="text/javascript">
+    </script>
+    <script src="https://bootstrap.arcadier.com/adminportal_pre/js/jquery.js" type="text/javascript">
+    </script>
+    <!-- bootstrap js -->
+    <script src="https://bootstrap.arcadier.com/adminportal_pre/js/bootstrap.min.js" type="text/javascript">
+    </script>
+    <!-- nicescroll js -->
+    <script src="https://bootstrap.arcadier.com/adminportal_pre/js/jquery.nicescroll.min.js" type="text/javascript">
+    </script>
+    <!-- bootbox js -->
+    <script src="https://bootstrap.arcadier.com/adminportal_pre/js/bootbox.min.js" type="text/javascript">
+    </script>
+    <!-- tablesorter js -->
+    <script src="https://bootstrap.arcadier.com/adminportal_pre/js/jquery.tablesorter.js" type="text/javascript">
+    </script>
+    <!-- html5upload js -->
+    <script src="https://bootstrap.arcadier.com/adminportal_pre/js/html5imageupload.min.js" type="text/javascript">
+    </script>
+    <!-- Pagination js -->
+    <script src="https://bootstrap.arcadier.com/adminportal/js/pagination.min.js" type="text/javascript">
+    </script>
+    <!-- custom js -->
+    <script src="https://bootstrap.arcadier.com/adminportal_pre/js/custom.js" type="text/javascript">
+    </script>
+    <!-- bootstrap style -->
+<link href="https://bootstrap.arcadier.com/adminportal_pre/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="https://bootstrap.arcadier.com/adminportal_pre/css/jquery-ui.min.css" rel="stylesheet" type="text/css">
+<link href="https://bootstrap.arcadier.com/adminportal_pre/css/html5imageupload.css" rel="stylesheet" type="text/css">
+<link href="https://bootstrap.arcadier.com/adminportal_pre/css/switch-btn.css" rel="stylesheet" type="text/css">
+<!-- Pagination style -->
+<link href="https://bootstrap.arcadier.com/adminportal/css/pagination.css" rel="stylesheet" type="text/css">
+<!-- custom style-->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://bootstrap.arcadier.com/adminportal/css/style.css" rel="stylesheet" type="text/css">
+<!-- responsive style-->
+<link href="https://bootstrap.arcadier.com/adminportal/css/responsive.css" rel="stylesheet" type="text/css">
+<link href="css/onboarding-fields.css" rel="stylesheet" type="text/css">
+<link href="css/style.css" rel="stylesheet" type="text/css">
+</meta>
 </head>
 <!-- end header -->
 
-<body>
-    <div class="page-merchant page-user-custom-fields">
-        <div class="mobi-header visible-xs">
-            <div class="container">
-                <div class="pull-left">
-                    <div class="brand-logo"><a href="#"><img alt="logo" src="https://bootstrap.arcadier.com/adminportal/images/brand-logo.png"></a></div>
-                </div>
-                <div class="pull-right">
-                    <button type="button" class="navbar-toggle"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
-                    </button>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-        </div>
-        <div class="main">
+   
+        <div class="page-content">
+            <div class="gutter-wrapper">
+                <div class="panel-box border-none">
+                    <div class="page-content-top">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4>Manage your jobs</h4>
+                                <h5>Monitor and keep track of the list of jobs available in your marketplace</h5>
 
-            <div class="col-sm main-content">
-
-                <div class="page-content page-layout">
-                    <div class="gutter-wrapper">
-                        <div class="page-topnav" style="height: 5px;">
-                            <div class="float">
-                                <a class="btn-info-plug-in" href="" target="_blank">How to use this Plug-In?</a>
+                                <div class="pull-right">
+                                    <a class="blue-btn" href="job_fields.php">Customise Job Fields</a>
+                                    <a class="blue-btn" href="seller_details.php">Customise On-boarding Fields</a>
+                                </div>
                             </div>
                         </div>
-                        <div class="panel-box ">
-                            <div class="page-content-top field-icon">
-                                <div><i class="icon icon-3x field-icon-big"></i></div>
-                                <div>
-                                    <p>Define the fields for Freelancer's registration.</p>
-                                </div>
+                    </div>
+                </div>
 
-                                <div class="form-element custom-code">
-                                    <a href="#" class="blue-btn al-middle" data-toggle="modal" data-target="#customfields">Add new field</a>
-                                </div>
+                <div class="page-content-tab-jobs" id="app">
 
-                            </div>
-                            <div class="panel-box ">
-                                <div class="custom-field-infos">
-                                    <!-- <h2>Custom field details<i class="icon icon-3x field-arrow-icon-big"></i></h2> -->
-                                    <h2>Input fields details<span class="up"><img src="./images/chevron_black_up.svg" alt="" title=""></span></h2>
-                                    <div class="custom-field-control">
-                                        <div class="custom-field-containers">
-                                            <label class="custom-field-title">Text:</label>
-                                            <span class="custom-field-description">Users will be able to enter free form
-                                                information
-                                            </span>
+
+                    <div class="panel-box tabular">
+                        <div class="top-search-menu">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li role="presentation" class="active"><a href="#jobs" aria-controls="jobs" role="tab" data-toggle="tab">Jobs</a></li>
+                                        <li role="presentation"><a href="#approvals" aria-controls="approvals" role="tab" data-toggle="tab">Approvals</a></li>
+                                    </ul>
+                                </div>
+                                <div class="topnav-right">
+                                    <div class="col-md-12">
+                                        <div class="left inline-controls">
+                                            <input class="left date-control form-control" placeholder="Search Name or Email" type="text" name="from-date" id="from-date">
                                         </div>
-                                        <div class="custom-field-containers">
-                                            <label class="custom-field-title">Number:</label>
-                                            <span class="custom-field-description">Users will be able to enter numbers
-                                            </span>
+                                        <div class="left inline-controls">
+                                            <select class="form-control">
+                                                <option>All</option>
+                                            </select>
                                         </div>
-                                        <div class="custom-field-containers">
-                                            <label class="custom-field-title">Checkbox:</label>
-                                            <span class="custom-field-description">User will be able to check this field
-                                                before continuing
-                                            </span>
+                                        <div class="left inline-controls">
+                                            <button class="blue-btn">Search</button>
                                         </div>
-                                        <div class="custom-field-containers">
-                                            <label class="custom-field-title">Dropdown:</label>
-                                            <span class="custom-field-description">User will be able to select a value
-                                                from a dropdown list. <br><br>
-                                            </span>
-                                        </div>
-                                        <div class="custom-field-containers">
-                                            <!-- <label class="custom-field-title" style="color:red;">Under
-                                                Enhancement:</label> -->
-                                            <!-- <span class="custom-field-description">Disable to remove a profile input
-                                                field. In the next update, a “delete” option will be available.</span> -->
+                                        <div class="left inline-controls">
+                                            <button class="clear-btn">Clear</button>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="clearfix"></div>
                             </div>
                         </div>
+                    </div>
+                        <!-- tab description -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="jobs">
+                                <div class="panel-box tabular">
 
-                        <div class="panel-box ">
-                            <div class="page-content-pagination-page">
-                                <table class="table" id="customfieldslist">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Type</th>
-                                            <th> </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="user-custom-field">
-                                        <tr>
-                                            <?php
-                                            $baseUrl = getMarketplaceBaseUrl();
-                                            $admin_token = getAdminToken();
-                                            $customFieldPrefix = getCustomFieldPrefix();
-
-                                            $url = $baseUrl . '/api/v2/users/';
-                                            $result = callAPI("GET", $admin_token['access_token'], $url, false);
-                                            $userId = $result['ID'];
-
-                                            $url = $baseUrl . '/api/v2/admins/' . $userId . '/custom-field-definitions';
-                                            $customfields = callAPI("GET", $admin_token['access_token'], $url, false);
-                                            foreach ($customfields['Records'] as $customfield) {
-                                                $customcode =  $customfield['Code'];
-                                                $customcode  =  explode("-", $customcode);
-                                                if ($customcode[7] == 'REV_INPUT') {
-
-                                                    $customfield_code = $customfield['Code'];
-                                                    $customfield_name =  $customfield['Name'];
-                                                    $customfield_type = $customfield['DataInputType'];
-
-                                                    echo  "<td>" .  $customfield_name  . "</td>";
-
-                                                    echo "<td>" .  ucfirst($customfield_type) . " </td>";
-                                                    echo "<td>";
-                                            ?>
-                                                    <a href="#" data-toggle="modal" dir="<?php echo $customfield_code; ?>" data-target="#customfields" id="edit"><i class="icon icon-edit"></i></a>
-                                                    <a href="#" dir="<?php echo $customfield_code; ?>" class="btn_delete_act" id="del"><i class="icon icon-delete"></i></a>
-                                                    </td>
-                                        </tr>
-                                <?php
-                                                }
-                                            }
-
-                                ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-
-                        <div class="popup  popup-area popup-delete-confirm " id="DeleteCustomMethod">
-
-                            <div class="wrapper"> <a href="javascript:;" class="close-popup"><img src="images/cross-icon.svg"></a>
-
-                                <div class="content-area">
-
-                                    <p>Are you sure you want to delete this?</p>
-
-                                </div>
-
-                                <div class="btn-area text-center smaller">
-
-                                    <input type="button" value="Cancel" class="btn-black-mdx " id="popup_btncancel">
-
-                                    <input id="popup_btnconfirm" type="button" value="Okay" class="my-btn btn-blue" onclick="deleteField()">
-
-                                    <div class="clearfix"></div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="customfields" id="customfields">
-
-                            <input type="hidden" class="custom_id" value="" dir="">
-
-
-                            <div class="modal-dialog modal-cm" role="document">
-                                <div class="modal-content">
-                                    <form class="needs-validation" id="createcampaign2" novalidate>
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="images/cross-icon.svg"></button>
-                                            <h4 class="modal-title" id="gridSystemModalLabel">Custom Field Details</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <div class="form-element">
-                                                        <label>Custom Field Name</label>
-                                                        <input type="text" name="" class="w-100 " id="custom_name" required="required" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-12" id="customtypediv">
-                                                    <div class="form-element">
-                                                        <label>Type</label>
-                                                        <div class="form-element">
-                                                            <select class='select-table-style' id='customType'>
-                                                                <option value='textfield'>Text</option>
-                                                                <option value='number'>Number</option>
-                                                                <option value='checkbox'>Checkbox</option>
-                                                                <option value='dropdown'>Dropdown</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <!-- classification of form details -->
-                                                <div class="col-sm-12" id="classificationdiv">
-                                                    <div class="form-element">
-                                                        <label>Form Details Classification</label>
-                                                        <div class="form-element">
-                                                            <select class='select-table-style' id='classification'>
-                                                                <option value='registration'>Registration</option>
-                                                                <option value='verification_details'>Verification Details</option>
-                                                                <option value='verification'>Verification</option>
-                                                                <option value='approval'>Approval</option>
-                                                                <option value='start'>Start</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
+                                <div class="job-tab-table">
+                                    <div class="scroll-table-container">
+                                        <table class="scroll-table table" id="job-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Job ID</th>
+                                                    <th>Lodged by</th>
+                                                    <th>Job Location</th>
+                                                    <th>Job Type</th>
+                                                    <th>Payment Type</th>
+                                                    <th>Job to be completed by</th>
+                                                    <th>Availability</th>
+                                                    <th>No.of Quote</th>
+                                                    <th>Status</th>
+                                                   
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="job in allJobs" class="border-hover">
+                                                    <td data-th="Job ID"><a href="freelancer.html">{{ job.Id }}</a></td>
+                                                    <td data-th="Lodged by"><a href="freelancer.html">{{job.buyer_email}}</a></td>
+                                                    <td data-th="Job Location"><a href="freelancer.html">{{job.inperson_work_address}}</a></td>
+                                                   
+                                                    <td data-th="Job Type" v-if="job.job_type_contract=='True' &&  job.job_type_full_time=='True'"><a href="freelancer.html">Contract,Full Time</a></td>
+                                                    <td data-th="Job Type" v-else-if="job.job_type_contract=='True'"><a href="freelancer.html">Contract</a></td>
+                                                    <td data-th="Job Type" v-else-if="job.job_type_full_time=='True'"><a href="freelancer.html">Full Time</a></td>
+                                                    <td data-th="Job Type" v-else="job.job_type_full_time=='False' && job.job_type_contract=='False' "><a href="freelancer.html">--</a></td>
+                                                   
+                                                    <!-- <td data-th="Payment Type" v-if="job.payment_hourly=='True' && job.payment_fixed=='True" ><a href="freelancer.html">Fixed,Hourly</a></td> -->
+                                                    <td data-th="Payment Type" v-if="job.payment_fixed=='True'"><a href="freelancer.html">Fixed</a></td>
+                                                    <td data-th="Payment Type" v-if="job.payment_hourly=='True'" ><a href="freelancer.html">Hourly</a></td>
+                                                  
+                                                    <td data-th="Job to be completed by"><a href="freelancer.html"><span class="text-danger">{{ job.time_frame_timestamp }}</span></a></td>
+                                                    <td data-th="Availability"><a href="freelancer.html"><span class="text-danger">{{ job.job_availability}}</span></a></td>
+                                                    <td data-th="No.of Quote"><a href="freelancer.html">---</a></td>
+                                                    <td data-th="Status"><a href="freelancer.html">----</a></td>
+                                                </tr>
                                                 
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="pagination-center pb-20"><nav class="text-center" id="pagination-container-job" aria-label="Page navigation"></nav></div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="approvals">
+                                <div class="panel-box tabular">
+                                <div class="job-tab-table">
+                                    <div class="scroll-table-container">
+                                        <table class="scroll-table table" id="approval-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Email</th>
+                                                    <th>Company Name</th>
+                                                    <th>Address</th>
+                                                    <th>Servicing Area</th>
+                                                     <!-- dynamic file upload headers -->
+                                                     <th v-for="field in uploadCustomFields"> {{  field['name'] }}</th>
 
-                                                <div class="form-element options cstm-fieldpop-optarea" style="display:none;">
-                                                    <label>Options</label>
-                                                    <ul class="ui-sortable" id="dropdown-opt-draggble">
-                                                        <li class="maindiv ui-sortable-handle">
-                                                            <div class="virtual-table">
-                                                                <div class="virtual-table-cell"><a href="#" class="cursor-move"><i class="icon icon-draggble"></i></a></div>
-                                                                <div class="virtual-table-cell"><input type="text" value="" name="checkbox-opt[]" id="optionName" class="required" class="txt"></div>
-                                                                <div class="virtual-table-cell"><a href="#" class="delete-opt" onclick="delete_opt(this)"><i class="icon icon-delete"></i></a></div>
-                                                            </div>
-                                                        </li>
+                                                    <th>Approval Status</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="field in allFreelancers" class="border-hover" >
 
-                                                    </ul>
-
-                                                    <span class="addOpt"><i class="fa fa-plus"></i>Add Option</span>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer text-left">
-                                            <input type="button" class="blue-btn" value="Save changes" id="saveCustomDetails">
-                                            <!-- data-dismiss="modal" -->
-                                        </div>
-                                    </form>
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal-dialog -->
-                        </div><!-- /.modal -->
-
-
-                        <div id="cover"></div>
-                        <div id="coverdark"></div>
+                                                    <td data-th="Email" nowrap><a :href="'freelancer_details.php?customid=' + field.Id">{{field.email}}</a></td>
+                                                    
+                                                    <td data-th="Company Name" nowrap><a :href="'freelancer_details.php?customid=' + field.Id">{{field.company_name}}</a></td> 
+                                                    <td data-th="Address" nowrap><a :href="'freelancer_details.php?customid=' + field.Id">{{field.full_address}}</a></td>
+                                                    
+                                                 
+                                                    <td data-th="Servicing Area" nowrap><a :href="'freelancer_details.php?customid=' + field.Id">{{field.servicing_area}} <span data-toggle="tooltip" title="AA, BB, CC" class="txt-green">3 More</span></td> 
+                                                   
+                                                    <td v-for="fields in uploadCustomFields" :data-th="fields.name"><a :href="'freelancer_details.php?customid=' + field.Id"><span class="txt-green">1 File(s)</span></a></td>
+                                                   
+                                                
+                                                    <td v-if="field.status=='Approved'" data-th="Approval Status"><a :href="'freelancer_details.php?customid=' + field.Id"><span class="status-approve" id="status">{{field.status}}</span></a></td>
+                                                    <td v-if="field.status=='Rejected'" data-th="Approval Status"><a :href="'freelancer_details.php?customid=' + field.Id"><span class="status-rejected" id="status">{{field.status}}</span></a></td>
+                                                    <td v-if="field.status=='Pending'" data-th="Approval Status"><a :href="'freelancer_details.php?customid=' + field.Id"><span class="status-rejected" id="status">{{field.status}}</span></a></td>
+                                                   
+                                                   
+                                                    <td data-th="Action">
+                                                        <div class="btn-accept-reject" v-if="field.status=='Pending'">
+                                                            <button class="btn blue-btn" id="accept-button" :data-id="field.Id" v-on:click="updateStatus('Approved', $event)">Accept</button>
+                                                            <button class="btn gre-btn"id="reject-button" :data-id="field.Id" v-on:click="updateStatus('Rejected', $event)">Reject</button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="pagination-center pb-20"><nav class="text-center" id="pagination-container-approvals" aria-label="Page navigation"></nav></div>
+                            </div>
+                        </div>
+                        <!-- tab description -->
                     </div>
 
                 </div>
             </div>
-            <!-- begin footer -->
+    
+   
+    <div class="clearfix">
+    </div>
+</div>
 
-            <script type="text/javascript"></script>
-            <script type="text/javascript">
-                $(window).load(function() {
-                    dynmic_align();
+<div id="cover"></div>
+ <!-- begin footer -->
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip({
+            template: '<div class="tooltip tooltip-custom-1" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
+        });
+    });
 
-                    $('.custom-field-infos h2').click(function(e) {
-                        $('.custom-field-infos h2 span').toggleClass('up');
-                        if (!$('.custom-field-infos h2 span').hasClass('up')) {
-                            $('.custom-field-infos h2 span').removeClass('up');
-                            $(".custom-field-infos h2 span img").attr("src", "./images/chevron_black_down.svg");
-                            $('.custom-field-control').css({
-                                display: "none"
-                            });
-                        } else {
-                            $('.custom-field-infos h2 span').addClass('up');
-                            $(".custom-field-infos h2 span img").attr("src", "./images/chevron_black_up.svg");
-                            $('.custom-field-control').css({
-                                display: "block"
-                            });
-                        };
-                        e.preventDefault();
-                    });
+    jQuery('body').on('click', '.btn-edit-onbrdfields', function () {
+
+        var fn = jQuery(this).closest('.added-description').find('.user-field-name-onbrd').text();
+        var ft = jQuery(this).closest('.added-description').find('.user-field-type-onbrd').text();
+        var st = jQuery(this).closest('.added-description').find('.user-field-consumer-onbrd').text();
+
+        jQuery('#onbrd_field_name').val(fn);
+        jQuery('#onbrd_field_type').val(ft);
+        jQuery('#onbrd_steps').val(st);
+
+        jQuery('#OnboardingFields').modal('show');
+
+        tr_row_update = jQuery(this).closest('.added-description');
+
+    });
+
+    $('#pagination-container-job').pagination({
+        dataSource: [1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        //            totalNumber: 5,
+        //            pageSize: 10,
+        //            locator: 'items',
+        callback: function (data, pagination) {
+            $('#job-table').html($('#job-table').html());
+        }
+    });
+    $('#pagination-container-approvals').pagination({
+        dataSource: [1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        //            totalNumber: 5,
+        //            pageSize: 10,
+        //            locator: 'items',
+        callback: function (data, pagination) {
+            $('#approvals-table').html($('#approvals-table').html());
+        }
+    });
+
+    jQuery('body').on('click', '.icon.icon-toggle.arrow-up', function () {
+        var current = $(this).closest(".custom-list-box-onbrd").parent('li');
+        current.prev(".added-description").before(current);
+    });
+    jQuery('body').on('click', '.icon.icon-toggle.arrow-down', function () {
+        var current = $(this).closest(".custom-list-box-onbrd").parent('li');
+        current.next(".added-description").after(current);
+    });
+
+        jQuery('body').on('click', '#job-table tbody tr', function () {
+            window.location ='freelancer.html';
+        });
+        jQuery('body').on('click', '#approval-table tbody tr', function () {
+            window.location ='freelancer.html';
+        });
+</script>
+<script src="https://bootstrap.arcadier.com/adminportal_pre/js/custom-nicescroll.js" type="text/javascript">
+</script>
 
 
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
+<script type="text/javascript" src="scripts/manage.js"></script>
+<script type="text/javascript" src="scripts/scripts3.js"></script>
 
-
-
-
-                    $('#popup_btncancel,.close-popup').click(function() {
-
-                        $('#DeleteCustomMethod').hide();
-
-                        $('#cover').hide();
-                        jQuery("#customField").fadeOut();
-                        jQuery('.option-list .option-box:gt(0)').remove();
-                        jQuery('.option-list .option-box').find('input[type="text"]').val('');
-                    });
-
-
-
-
-
-
-
-
-                    $(window).resize(function() {
-                        dynmic_align();
-                    });
-                });
-
-                function dynmic_align() {
-                    $(".list_row .added_range").each(function() {
-                        var reporting = $(this).height();
-                        var height = $(".delivery-options .boxed_layout .item-actions").height();
-                        var padAmount = (reporting / 2) - (height / 2);
-                        $(this).next(".delivery-options .boxed_layout .item-actions").css('padding-top', padAmount);
-                    });
-                }
-                $(function() {
-                    $("#dropdown-opt-draggble").sortable();
-                    $("#dropdown-opt-draggble").disableSelection();
-                });
-            </script>
-
-            <script type="text/javascript" src="scripts/scripts3.js"></script>
-            <!-- end footer -->
-        </div>
+         <!-- end footer -->
 </body>
-
 </html>

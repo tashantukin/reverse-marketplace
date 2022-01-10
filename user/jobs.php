@@ -33,7 +33,7 @@ function getFiles($customID) {
 
 
 function getFreelancerDetails($userId) {
-    
+
     $baseUrl = getMarketplaceBaseUrl();
     $admin_token = getAdminToken();
     $customFieldPrefix = getCustomFieldPrefix();
@@ -46,6 +46,31 @@ function getFreelancerDetails($userId) {
     
     return $userDetails;
 }
+
+
+
+function getQuoted($jobId, $freelancerId) {
+    $baseUrl = getMarketplaceBaseUrl();
+    $admin_token = getAdminToken();
+    $customFieldPrefix = getCustomFieldPrefix();
+ 
+    //$url = $baseUrl . '/api/v2/plugins/'.$packageId.'/custom-tables/Templates/'.$pageID; 
+
+    $templates = array(array('Name' => 'job_id', "Operator" => "equal",'Value' => $jobId), array('Name' => 'freelancer_id', "Operator" => "equal",'Value' => $freelancerId) );
+    $url =  $baseUrl . '/api/v2/plugins/'. getPackageID() .'/custom-tables/job_quotes';
+    $templateDetails =  callAPI("POST", $admin_token['access_token'], $url, $templates);
+    
+    return $templateDetails;
+}
+
+
+
+
+
+
+
+
+
 
 // function getPreview($page){
 //     $baseUrl = getMarketplaceBaseUrl();

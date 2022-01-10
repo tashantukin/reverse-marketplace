@@ -14,8 +14,8 @@
                "total" => $content['total'],
                "all_discount" => $content['all_discount'],
                "all_total" => $content['all_total'],
+               'quote_by' => $content['quoted-by'],
 
-               
                "job_completion" => $content['job_completion'],
                "availability_date" => $content['availability_date'],
                "validity_date" => $content['validity_date'],
@@ -30,7 +30,7 @@
 
                "payment_cod" => $content['payment_cod'],
                "payment_credit_card" => $content['payment_credit_card'],
-               "payment_paypal" => $content['payment_paypal'],
+               "payment_paypal" => $content['payment_paypal'] ,
     ];
 
     $response = $API->createRowEntry($packageId, 'job_quotes', $quote_details);
@@ -51,26 +51,34 @@
 
 
         $job_details = [
-            'status' => 'Quoted',
+            
             'no_of_quotes' => $number_of_quotes + 1
     
         ];
         
+
+
+
         //update the no of quotes and status of the job lodged
     
        // $packageId, $tableName, $rowId, $data)
         $response = $API->editRowEntry($packageId, 'job_cache', $content['job_id'], $job_details);
 
 
+     //update the freelancer_quotes table
 
-       
+     $templates = array(array('Name' => 'job_id', "Operator" => "equal",'Value' => $content['job_id']), array('Name' => 'freelancer_id', "Operator" => "equal",'Value' => $content['freelancer_id']) );
+     $url =  $baseUrl . '/api/v2/plugins/'. $packageId .'/custom-tables/freelancer_quotes';
+     $quoteDetails =  callAPI("POST", $admin_token, $url, $templates);
 
+     $quote_id = $quoteDetails['Records'][0]['Id'];
 
+     $quote_details = [
+            
+        'status' => 'Quoted'
 
-
-
-        
-        
+    ];
     
+    $response = $API->editRowEntry($packageId, 'freelancer_quotes', $quote_id, $quote_details);
 
 ?>

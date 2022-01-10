@@ -7,15 +7,21 @@
     $packageId = $API->getPackageID();
 
     $job_details = [
-        'status' => $content['status']
+        'job_id' => $content['Id'],
+        'status' => $content['status'],
+        'freelancer_id' => $content['userId']
 
     ];
    // error_log($freelancer_details);
     error_log($content['Id']);
 
    // $packageId, $tableName, $rowId, $data)
-    $response = $API->editRowEntry($packageId, 'job_cache', $content['Id'], $job_details);
+   // $response = $API->editRowEntry($packageId, 'job_cache', $content['Id'], $job_details);
+
+    $response = $API->createRowEntry($packageId, 'freelancer_quotes', $job_details);
 
     echo json_encode($response);
+
+
 
 ?>

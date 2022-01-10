@@ -183,7 +183,12 @@ jQuery('body').on('click', '.icon.icon-toggle.arrow-down', function () {
 
 
 </script>
+
+
+
+
 <script type="text/javascript" src="scripts/scripts3.js"></script>
+<script type="text/javascript" src="scripts/seller.js"></script>
 <!-- end footer -->
 </body>
 </html>

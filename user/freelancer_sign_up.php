@@ -336,7 +336,7 @@
                               <div class="comment-desc"></div>
                            </div>
                            <hr>
-                            <div   v-if="registrationStatus != 'Pending' || registrationStatus != 'Rejected' " class="next-tab-area"><span class="seller-btn"> <a onclick="j_nextTab();" class="my-btn btn-red" href="javascript:void(0);">Next</a> </span></div>
+                            <div v-if="registrationStatus != 'Pending' && registrationStatus != 'Rejected' " class="next-tab-area"><span class="seller-btn"> <a onclick="j_nextTab();" class="my-btn btn-red" href="javascript:void(0);">Next</a> </span></div>
                         </div>
                      </div>
                     <div id="approval" class="tab-pane fade">

@@ -8,15 +8,15 @@
     <meta https-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Custom Fields</title>
-    <link href="css/onboarding.css" rel="stylesheet" type="text/css">
-    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
+    <link href="css/onboarding-field.css" rel="stylesheet" type="text/css">
+    <!-- <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script> -->
     
     </style>
 </head>
 <!-- end header -->
 
-<div class="page-content">
+<div class="page-content" id= "job-fields">
                     <div class="gutter-wrapper">
                         <div class="onboarding-backbtnarea">
                             <a class="mybtn btn-grey" href="javascript:void(0);">
@@ -65,7 +65,7 @@
                             </div>
                             <div class="custom_list_wrapper">
                                 <ul class="custom-listing-table-onbrd row-height-50">
-                                    <li class="all-cat">
+                                    <!-- <li class="all-cat">
                                         <div class="custom-list-box-onbrd">
                                             <div class="cursor-sec cursor-repositioning-onbrd">
                                                 <div class="repositioning-icon-onbrd  ">
@@ -87,8 +87,8 @@
                                             <div class="clearfix">
                                             </div>
                                         </div>
-                                    </li>
-                                    <li class="all-cat added-description">
+                                    </li> -->
+                                    <!-- <li class="all-cat added-description">
                                         <div class="custom-list-box-onbrd">
                                             <div class="cursor-sec cursor-repositioning-onbrd">
                                                 <div class="repositioning-icon-onbrd  ">
@@ -112,10 +112,10 @@
                                             <div class="clearfix">
                                             </div>
                                         </div>
-                                    </li>
-                                    <li class="all-cat added-description">
-                                        <div class="custom-list-box-onbrd">
-                                            <div class="cursor-sec cursor-repositioning-onbrd">
+                                    </li> -->
+                                    <li class="all-cat added-description" v-for="fields in allJobFields">
+                                        <div class="custom-list-box-onbrd"> 
+                                           <div class="cursor-sec cursor-repositioning-onbrd">
                                                 <div class="repositioning-icon-onbrd  ">
                                                     <div class="pull-left">
                                                         <a class="panel-toggle" href="javascript:void(0);">
@@ -130,10 +130,10 @@
                                                         </a>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="user-field-name-onbrd">Company Name</div>
-                                            <div class="user-field-type-onbrd">text field</div>
-                                            <div class="user-field-consumer-onbrd">Verification Details</div>
+                                            </div> 
+                                            <div class="user-field-name-onbrd">{{fields.name}}</div>
+                                            <div class="user-field-type-onbrd">{{fields.type_of_field}}</div>
+                                            <div class="user-field-consumer-onbrd">{{fields.classification}}</div>
                                             <div class="user-field-action-onbrd">
                                                 <div class="row-action">
                                                     <a href="javascript:void(0);" class="btn-edit-onbrdfields">
@@ -148,9 +148,9 @@
                                             </div>
                                             <div class="clearfix">
                                             </div>
-                                        </div>
+                                        <!-- </div> -->
                                     </li>
-                                    <li class="all-cat added-description">
+                                    <!-- <li class="all-cat added-description">
                                         <div class="custom-list-box-onbrd">
                                             <div class="cursor-sec cursor-repositioning-onbrd">
                                                 <div class="repositioning-icon-onbrd  ">
@@ -186,7 +186,7 @@
                                             <div class="clearfix">
                                             </div>
                                         </div>
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </div>
                         </div>
@@ -408,7 +408,9 @@ function delete_opt(id, ele) {
     });
 }
         </script>
-
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
 <script type="text/javascript" src="scripts/scripts3.js"></script>
+<script type="text/javascript" src="scripts/fields.js"></script>
 
          <!-- end footer -->

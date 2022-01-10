@@ -22,15 +22,15 @@ if ($jobDetails['Records'][0]['time_frame_nohurry'] == 'True') {
 
 if ($jobDetails['Records'][0]['job_type_contract'] == 'True' && $jobDetails['Records'][0]['job_type_full_time'] == 'True' ) {
 
-    $job_type = "<div class='qq-title'><span class='dash'></span><span class='title'>Full Time</span></div>
-    <div class='qq-title'><span class='dash'></span><span class='title'>Contract</span> </div>";
+    $job_type = "<p>Full Time</span></p>
+    <p>Contract</span> </p>";
 
 }else if ($jobDetails['Records'][0]['job_type_contract'] == 'False' && $jobDetails['Records'][0]['job_type_full_time'] == 'True' )
 
-    $job_type  = "<div class='qq-title'><span class='dash'></span><span class='title'>Full Time</span></div>";
+    $job_type  = "<p>Full Time</span></p>";
 else if  ($jobDetails['Records'][0]['job_type_contract'] == 'True' && $jobDetails['Records'][0]['job_type_full_time'] == 'False' )
 
-    $job_type  = "<div class='qq-title'><span class='dash'></span><span class='title'>Contract</span></div>";
+    $job_type  = "<p></span><span class='title'>Contract</span><p>";
 
 else {
     $job_type = '';
@@ -127,11 +127,11 @@ else {
       
 <div class="row wrap-panel row-flex">
 <div class="col-sm-6 col-md-6">
-<div class="w-panel-box panel-height-auto">
+<!-- <div class="w-panel-box panel-height-auto">
   <ul class="w-list-items">
       <li>
           <label>Date</label>
-          <p>DD/MM/YYYY</p>
+          <p></p>
       </li>
       <li>
           <label>Amount</label>
@@ -146,7 +146,7 @@ else {
           <p>Valid to DD/MM/YYYY</p>
       </li>
   </ul>
-</div>
+</div> -->
 </div>
 <!--
 <div class="col-sm-6 col-md-6">
@@ -182,42 +182,53 @@ else {
               <ul class="w-list-items">
                   <li class="job-content-height">
                       <label>Job Summary</label>
-                      <p>- BAS Agent</p>
+                      <?php 
+                       foreach(json_decode($jobDetails['Records'][0]['task_type_list'],true) as $task) {
+                        echo "<p>-" .  $task . "</p>";
+                      //  <div class='qq-title'><span class='dash'></span><span class='title'>$task</span></div>";
+                   
+                     }
+
+                    ?>
+
+                      <!-- <p>- BAS Agent</p>
                       <p>- Tax</p>
                       <p>- Audit</p>
                       <p>- Book-keeping</p>
                       <p>- Payroll</p>
-                      <p>- Finance</p>
-                      <div class="other-main">
-                          <p>- Other Jobs1 (<a class="hide-show-other-file" href="javascript:void(0);">View Files</a>)</p>
-                          <div class="other-file" style="display: none;">
-                              <p><a href="javascript:void(0);"><img src="images/pdf-icon.svg">file1.pdf</a></p>
-                              <p><a href="javascript:void(0);"><img src="images/pdf-icon.svg">file2.pdf</a></p>
-                              <p><a href="javascript:void(0);"><img src="images/pdf-icon.svg">file3.pdf</a></p>
-                          </div>
-                      </div>
-                      <div class="other-main">
-                          <p>- Other Jobs2 (<a class="hide-show-other-file" href="javascript:void(0);">View Files</a>)</p>
-                          <div class="other-file" style="display: none;">
-                              <p><a href="javascript:void(0);"><img src="images/pdf-icon.svg">file1.pdf</a></p>
-                              <p><a href="javascript:void(0);"><img src="images/pdf-icon.svg">file2.pdf</a></p>
-                              <p><a href="javascript:void(0);"><img src="images/pdf-icon.svg">file3.pdf</a></p>
-                          </div>
-                      </div>
+                      <p>- Finance</p> -->
+
+
+                      <?php
+                               try {
+                                foreach(json_decode($jobFiles['Records'][0]['all_tasks'],true) as $custom_task) {
+                                    //   echo "<div class='qq-title'><span class='dash'></span><span class='title'>$task</span><div class='qq-option'><input type='text' class='numbersOnlyD' placeholder='AUD 0.00' value=''><a href='javascript:void(0);' class='save-link'>Save</a>|<a href='javascript:void(0);' class='cancel-link'>Cancel</a></div></div>";
+                                     
+                                    echo "<div class='other-main'>
+                                    <p>-" .  $custom_task['task_name'] . "(<a class='hide-show-other-file' href='". substr($custom_task['files'][0]['name'], 36) . "'>View Files</a>)</p> </div>";
+                                   
+                            
+                                    //echo "<div class='qq-title'><span class='dash'></span><span class='title'>" .  $custom_task['task_name'] . "  </span><p>".  substr($custom_task['files'][0]['name'], 36) . "  | <a href=" . $custom_task['files'][0]['URL'] . ">Download File</a></p>  </div>";
+                                   }
+
+                               }catch(Exception $e) {
+                              //  echo 'Message: ' .$e->getMessage();
+                               } ?>
+                    
+                      
                   </li>
                   <li class="job-content-height">
-                      <label>Job to be completed by: <span class="text-danger">Urgent</span></label>
-                      <p>- Availability: DD/MM/YYYY</p>
-                      <p>- Full Time</p>
-                      <p>- Contract</p>
-                      <p>- Hourly</p>
-                      <p>- Fixed Price: <span>AUD 10.00</span></p>
+                      <label>Job to be completed by: <span class="text-danger"><?php echo $job_completion ?></span></label>
+                      <p>- Availability: <?php echo $jobDetails['Records'][0]['job_availability'] ?></p>
+                      <?php echo $job_type; ?>
+                      <p>- Hourly:  <span>AUD <?php echo $jobDetails['Records'][0]['payment_hourly_value'] ?></span></p>
+                      <p>- Fixed Price: <span>AUD <?php echo $jobDetails['Records'][0]['payment_fixed_value'] ?></span></p>
                   </li>
                  
                   <li class="text-scroll">
                       <label>Comments on Applicant</label>
                       <div class="text-area">
-                          <p>Estore parum hitias cus quae nosamus esti dolorerum imporro in poremquam, imil ea por re voloreribus maio temqui nate se suntotatiis ut ma sequos nos volupta tatemporrum que aut et omnis voluptas millam aliquam, si dit eiumquid quisitatem exped es eaquas quatemp erestio reperem etus exera quiassite et quia eria non eatur restis eumenda vendant volor magnis re, nonsene vit que doles est aliquuntur audiaes ad quis necupta testestion enem quae il eum invelle catenditibus el molorro mo et eos et exerorum qui utem cus mi, offic tem duciend ellatiunt ex elic tem ium intem ut et andae soluptat</p>
+                          <p><?php echo $jobDetails['Records'][0]['comments'] ?></p>
                       </div>
                   </li>
               </ul>

@@ -119,7 +119,7 @@ const jobData = new Vue({
                 })
                 const details = await response
                 vm.allJobDetails = details.data
-                vm.jobDetails = vm.allJobDetails.Records.filter((data) => data.name === 'Task List')
+                vm.jobDetails = vm.allJobDetails.Records.filter((data) => data.name === 'Task Lists')
                 vm.taskOption = $.parseJSON(vm.jobDetails[0].values);
                 
             } catch (error) {

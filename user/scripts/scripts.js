@@ -412,7 +412,7 @@
                    
                        let allJobs = `<tr>
                        <td><div class="job-quotedtitle"><span class="qtitle">Quoted by</span><span class="qdesc">${quote['quote_by']}</span></div></td>
-                       <td><div class="job-quotedtitle"><span class="qtitle">Date</span><span class="qdesc">${quote['CreatedDateTime']}</span></div></td>
+                       <td><div class="job-quotedtitle"><span class="qtitle">Date</span><span class="qdesc">${new Date( quote['CreatedDateTime']* 1000).format("dd/mm/yyyy")}</span></div></td>
                        <td><div class="job-quotedtitle"><span class="qtitle">Amount</span><span class="qdesc">$AUD${quote['all_total']}</span></div></td>
                        <td><div class="job-quotedtitle"><span class="qtitle">Availability</span><span class="qdesc">${quote['availability_date']}</span></div></td>
                        <td><div class="job-quotedtitle"><span class="qtitle">Status</span><span class="qdesc">Valid to ${quote['validity_date']} </span></div></td>

@@ -100,7 +100,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD
                                                         <h4>1. Applicant Details</h4>
                                                         <div class="quotedtitle-flex">
                                                         <div class="job-quotedtitle"><span class="qtitle">Quoted by</span><span class="qdesc"><?php echo $quotedDetails['Records'][0]['quote_by'] ?></span></div>
-                                                        <div class="job-quotedtitle"><span class="qtitle">Date</span><span class="qdesc"><?php echo $quotedDetails['Records'][0]['CreatedDateTime'] ?></span></div>
+                                                        <div class="job-quotedtitle"><span class="qtitle">Date</span><span class="qdesc"><?php echo date('d/m/Y H:i', $quotedDetails['Records'][0]['CreatedDateTime']); ?></span></div>
                                                         <div class="job-quotedtitle"><span class="qtitle">Amount</span><span class="qdesc">$<?php echo $quotedDetails['Records'][0]['all_total'] ?></span></div>
                                                         <div class="job-quotedtitle"><span class="qtitle">Availability</span><span class="qdesc"><?php echo $quotedDetails['Records'][0]['availability_date'] ?></span></div>
                                                         <div class="job-quotedtitle"><span class="qtitle">Status</span><span class="qdesc"><?php echo $quotedDetails['Records'][0]['status'] ?></span></div>

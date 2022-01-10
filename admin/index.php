@@ -141,7 +141,7 @@
                                                     <td data-th="Job to be completed by"><a href=""><span class="text-danger">{{ job.time_frame_timestamp }}</span></a></td>
                                                     <td data-th="Availability"><a href=""><span class="text-danger">{{ job.job_availability}}</span></a></td>
                                                     <td data-th="No.of Quote"><a href="">{{ job.no_of_quotes}}</a></td>
-                                                    <td data-th="Status"><a href="">----</a></td>
+                                                    <td data-th="Status"><a href="">{{ job.status}}</a></td>
                                                 </tr>
                                                 
                                             </tbody>

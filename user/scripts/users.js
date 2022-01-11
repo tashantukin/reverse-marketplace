@@ -77,8 +77,9 @@ const sellerFields = new Vue({
                 vm.fieldDetails = vm.allJobDetails.Records
                 vm.uploadCustomFields = vm.allJobDetails.Records.filter((field) => field.type_of_field === 'file')
                 console.log(vm.uploadCustomFields)
-                vm.getUserDetails();
-                
+                if ($('#userGuid').length != 0) {
+                    vm.getUserDetails();
+                }
                // vm.taskOption = $.parseJSON(vm.jobDetails[0].values);
                 
             } catch (error) {
@@ -91,7 +92,7 @@ const sellerFields = new Vue({
         async getUserDetails()
         {
             vm = this;
-            var data = [{ 'Name': 'user_id', 'Operator': "in", "Value": $('#userGuid').val() }]
+            var data = [{ 'Name': 'user_id', 'Operator': "equal", "Value": $('#userGuid').val() }]
                 
             $.ajax({
                 method: "POST",
@@ -108,7 +109,7 @@ const sellerFields = new Vue({
                 
                     const users = response
                     const userDetails = users.Records[0]
-
+              
                     if (userDetails) {
                         vm.isEdit = 1;
                         vm.adminComment = userDetails['admin_comment']

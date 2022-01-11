@@ -40,7 +40,4 @@
   
   $response = $API->editRowEntry($packageId, 'job_quotes', $content['quoteId'], $quote_details);
 
-
-
-
 ?>

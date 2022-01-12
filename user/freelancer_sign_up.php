@@ -443,7 +443,6 @@
    <script type="text/javascript">
       $(function () { var ddlData = [{ text: "EN", value: 1, imageSrc: "images/gb.svg" }, { text: "CN", value: 2, imageSrc: "images/cn.svg" }, { text: "FR", value: 3, imageSrc: "images/fr.svg" }]; $('.language-list').ddslick({ data: ddlData, width: 100, imagePosition: "left", onSelected: function (selectedData) { } }); });
 
-
       function j_nextTab() {
          jQuery(".jobform-tab li.active").next('li').children('a').trigger('click');
          setTimeout(function() {
@@ -589,7 +588,8 @@
             }
          }).trigger('change');
 
-         
+       
+
          $('#certificate_currency').change(function() { 
             $('.certificate_currency_input input').removeClass("error-con");
             if ($(this).is(':checked')) {

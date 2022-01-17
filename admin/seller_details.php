@@ -20,7 +20,7 @@
 <div class="page-content" id="seller-fields">
                     <div class="gutter-wrapper">
                         <div class="onboarding-backbtnarea">
-                            <a class="mybtn btn-grey" href="javascript:void(0);">
+                            <a class="mybtn btn-grey" href="index.php">
                                 <img src="images/back.svg">
                                 Back
                             </a>
@@ -66,6 +66,222 @@
                             </div>
                             <div class="custom_list_wrapper">
                                 <ul class="custom-listing-table-onbrd row-height-50">
+
+                                
+
+                                <li class="all-cat">
+
+                                        <div class="custom-list-box-onbrd">
+
+                                            <div class="cursor-sec cursor-repositioning-onbrd">
+
+                                                <div class="repositioning-icon-onbrd  ">
+
+                                                    
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="user-field-name-onbrd">
+
+                                                Email
+
+                                            </div>
+
+                                            <div class="user-field-type-onbrd">
+
+                                                email
+
+                                            </div>
+
+                                            <div class="user-field-consumer-onbrd">
+
+                                                1.Registration
+
+                                            </div>
+
+                                            <div class="user-field-action-onbrd">
+
+                                                
+
+                                            </div>
+
+                                            <div class="clearfix">
+
+                                            </div>
+
+                                        </div>
+
+                                </li>
+
+                                <li class="all-cat added-description">
+
+                                        <div class="custom-list-box-onbrd">
+
+                                            <div class="cursor-sec cursor-repositioning-onbrd">
+
+                                                <div class="repositioning-icon-onbrd  ">
+
+                                                    
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="user-field-name-onbrd">
+
+                                                Password
+
+                                            </div>
+
+                                            <div class="user-field-type-onbrd">
+
+                                                password
+
+                                            </div>
+
+                                            <div class="user-field-consumer-onbrd">
+
+                                                1.Registration
+
+                                            </div>
+
+                                            <div class="user-field-action-onbrd">
+
+                                                <div class="row-action">
+
+                                                    
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="clearfix">
+
+                                            </div>
+
+                                        </div>
+
+                               </li>
+
+                               <li class="all-cat added-description">
+
+                                    <div class="custom-list-box-onbrd">
+
+                                        <div class="cursor-sec cursor-repositioning-onbrd">
+
+                                            <div class="repositioning-icon-onbrd  ">
+
+                                                <div class="pull-left">
+
+                                                    <a class="panel-toggle" href="javascript:void(0);">
+
+                                                        <i class="icon icon-toggle arrow-up">
+
+                                                        </i>
+
+                                                    </a>
+
+                                                </div>
+
+                                                <div class="pull-left">
+
+                                                    <a class="panel-toggle" href="javascript:void(0);">
+
+                                                        <i class="icon icon-toggle arrow-down">
+
+                                                        </i>
+
+                                                    </a>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="user-field-name-onbrd">Company Name</div>
+
+                                        <div class="user-field-type-onbrd">text field</div>
+
+                                        <div class="user-field-consumer-onbrd">2. Verification Details</div>
+
+                                        <div class="user-field-action-onbrd">
+
+                                            
+
+                                        </div>
+
+                                        <div class="clearfix">
+
+                                        </div>
+
+                                    </div>
+
+                                </li>
+
+
+
+
+                                <li class="all-cat added-description">
+
+                                        <div class="custom-list-box-onbrd">
+
+                                            <div class="cursor-sec cursor-repositioning-onbrd">
+
+                                                <div class="repositioning-icon-onbrd  ">
+
+                                                    <div class="pull-left">
+
+                                                        <a class="panel-toggle" href="javascript:void(0);">
+
+                                                            <i class="icon icon-toggle arrow-up">
+
+                                                            </i>
+
+                                                        </a>
+
+                                                    </div>
+
+                                                    <div class="pull-left">
+
+                                                        <a class="panel-toggle" href="javascript:void(0);">
+
+                                                            <i class="icon icon-toggle arrow-down">
+
+                                                            </i>
+
+                                                        </a>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="user-field-name-onbrd">Address</div>
+
+                                            <div class="user-field-type-onbrd">address box</div>
+
+                                            <div class="user-field-consumer-onbrd">2. Verification Details</div>
+
+                                            <div class="user-field-action-onbrd">
+
+                                                
+
+                                            </div>
+
+                                            <div class="clearfix">
+
+                                            </div>
+
+                                        </div>
+
+                                    </li>
+
+
+
                                     <li class="all-cat" v-for="fields in allFreelancerFields">
                                         <div class="custom-list-box-onbrd">
                                             <div class="cursor-sec cursor-repositioning-onbrd">
@@ -86,7 +302,7 @@
 
                                             <div class="user-field-action-onbrd">
                                                 <div class="row-action">
-                                                    <a href="javascript:void(0);" class="btn-edit-onbrdfields">
+                                                    <a href="javascript:void(0);" class="btn-edit-onbrdfields" :data-id="fields.Id" v-on:click="getFieldDetails('Edit', $event)">
                                                         <i class="icon icon-edit-2">
                                                         </i>
                                                     </a>
@@ -106,7 +322,25 @@
                                     </li>
                                 
                                   
+                               
+                               
+                               
+                               
+                               
+                               
                                 </ul>
+                          
+                          
+                          
+                          
+                          
+                          
+                          
+                          
+                          
+                          
+                          
+                          
                             </div>
                         </div>
                     </div>
@@ -126,18 +360,18 @@
                 </div>
                 <div class="popup-demo-content ">
                     <div class="form-group">
-                        <label>Field Name</label>
-                        <input type="text" class="form-control required" name="onbrd_field_name" id="onbrd_field_name">
+                        <label>Field Name*</label>
+                        <input :value="fieldName" type="text" class="form-control required" name="onbrd_field_name" id="onbrd_field_name">
                     </div>
 
                     <div class="form-group">
-                        <label>Field Text</label>
-                        <input type="text" class="form-control required" name="onbrd_field_text" id="onbrd_field_text">
+                        <label>Field Description*</label>
+                        <input :value="fieldDescription" type="text" class="form-control required" name="onbrd_field_text" id="onbrd_field_text">
                     </div>
 
                     <div class="form-group">
-                        <label>Field Type</label>
-                        <select class="form-control required" name="onbrd_field_type" id="onbrd_field_type">
+                        <label>Field Type*</label>
+                        <select class="form-control required" name="onbrd_field_type" id="onbrd_field_type" :value="fieldType">
                             <option value="textfield">Textfield</option>
                             <option value="number">Number</option>
                             <option value="checkbox">Checkbox</option>
@@ -166,21 +400,32 @@
 
                     <div class="form-group">
                         <label>Placeholder</label>
-                        <input type="text" class="form-control required" name="onbrd_field_placeholder" id="onbrd_field_placeholder">
+                        <input :value="placeholder" type="text" class="form-control required" name="onbrd_field_placeholder" id="onbrd_field_placeholder">
                     </div>
 
                     <div class="form-group">
                         <label>Steps</label>
-                        <select class="form-control required" name="onbrd_steps" id="onbrd_steps">
+                        <select class="form-control required" name="onbrd_steps" id="onbrd_steps" :value="classification">
                             <option value="1. Registration">1. Registration</option>
                             <option value="2. Verification Details">2. Verification Details</option>
                         </select>
                     </div>
 
+                
                     <div class="form-group">
-                        <input type="checkbox" id="is-required" name="required"
-                                checked>
-                        <label for="is-required">Required field</label>
+                        <div class="meta-item-checkbox">
+
+                            <div class="fancy-checkbox checkbox-sm">
+
+                                <input type="checkbox" value="blank_page" class="radio-ccheckbox" name="guest_user" id="is-required">
+
+                                <label for="is-required"><span>
+                                        <note>Require field</note>
+                                    </span></label>
+
+                            </div>
+
+                        </div>
                     </div>
                     
                     

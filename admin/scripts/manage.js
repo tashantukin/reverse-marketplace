@@ -21,7 +21,7 @@
 
     //run on creation page only
     new Vue({
-        el: "#app",
+        el: "#main",
         data() {
             return {
                 allJobs: [],
@@ -46,7 +46,7 @@
                     vm = this;
                     const response = await axios({
                         method: action,
-                        url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/freelancer_details`,
+                        url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/freelancer_details?sort=-CreatedDateTime`,
                         // data: data,
                         headers: {
                             'Authorization': `Bearer ${token}`
@@ -143,6 +143,8 @@
                     "Id": e.currentTarget.getAttribute('data-id'),
                     'status' : action
                 };
+
+                onboardingModalAccept(action)
             
                 console.log({ user_details });
                 var settings = {
@@ -152,21 +154,19 @@
                 }
                 $.ajax(settings).done(function(response){
                     
-                    e.currentTarget.parentElement().hide();
+                   // e.currentTarget.parentElement().hide();
 
                     console.log($.parseJSON(response));
+                   
                
                 });
 
             
-            }
+            },
 
 
 
-
-
-
-
+    
         },
 
         computed: {
@@ -301,6 +301,22 @@
         });
     }
 
+    function onboardingModalAccept(action){
+       
+
+        if (action == "Approved") {
+            $(".btn-accept-reject .btn.blue-btn.active").parents("tr").find(`td[data-th="Approval Status"] a`).remove();
+            $(".btn-accept-reject .btn.blue-btn.active").parents("tr").find(`td[data-th="Approval Status"]`).append(`<a href="freelancer-details.html"><span class="status-approve">Approved</span></a>`);
+        } else {
+            $(".btn-accept-reject .btn.gre-btn.active").parents("tr").find(`td[data-th="Approval Status"] a`).remove();
+            $(".btn-accept-reject .btn.gre-btn.active").parents("tr").find(`td[data-th="Approval Status"]`).append(`<a href="freelancer-details.html"><span class="status-rejected">Rejected</span></a>`);
+        }
+        
+    
+        $(".btn-accept-reject .btn.blue-btn.active").removeClass("active").parent().addClass("hide");
+        $(".btn-accept-reject .btn.gre-btn.active").removeClass("active").parent().addClass("hide");
+
+    }
 
     
 

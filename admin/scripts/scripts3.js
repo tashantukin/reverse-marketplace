@@ -352,7 +352,7 @@
              
            },
            error: function (jqXHR, status, err) {
-                 toastr.error('---');
+               //  toastr.error('---');
            }
        });
      
@@ -376,7 +376,7 @@
               
             },
             error: function (jqXHR, status, err) {
-                  toastr.error('---');
+                //  toastr.error('---');
             }
         });
     }

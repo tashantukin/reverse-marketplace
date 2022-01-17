@@ -21,10 +21,15 @@
 
     //run on creation page only
     new Vue({
-        el: "#seller-fields",
+        el: ".page-content",
         data() {
             return {
                 allFreelancerFields: [],
+                fieldName: '',
+                fieldDescription: '',
+                fieldType: '',
+                placeholder : ''
+
                 
              
             }
@@ -68,7 +73,41 @@
                     console.log("error", error);
                 }
             },
-    
+
+            async getFieldDetails(action, e){
+                vm = this;
+            var data = [{ 'Name': 'Id', 'Operator': "equal", "Value": e.currentTarget.getAttribute('data-id') }]
+                
+            $.ajax({
+                method: "POST",
+                url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/freelancer_form/`,
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                
+                data: JSON.stringify(data),
+                //  })
+                success: function (response)
+                {
+                    console.log({ response })
+                
+                    const fields = response
+                    const fieldDetails = fields.Records[0]
+
+                    vm.fieldName = fieldDetails.name;
+                    vm.fieldDescription = fieldDetails.text,
+                    vm.fieldType = fieldDetails.type_of_field,
+                    vm.placeholder =  fieldDetails.placeholder    
+
+                    
+                 
+               
+            
+                }
+            
+            
+            })
+            },
     
             async getAllJobs(action) {
                 try {

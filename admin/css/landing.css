@@ -680,3 +680,41 @@
 .modal-text-area.confirmation .modal-body {
     padding-top: 0px;
 }
+
+
+.page-content-top .subscription-title h4{font-size: 16px;}
+.subscription-form .form-area .form-element .txt{
+    padding: 0 10px;
+    width: 386px;
+    height: 40px;
+    border: 1px solid #979797;
+}
+.subscription-form .form-area .form-element textarea.txt{height: 80px;padding: 10px 10px;}
+.subscription-form .page-content-top{border: none;padding-bottom: 0px;}
+.subscription-form .form-area .form-element label{
+    font-weight: 400;
+    display: inline-block;
+    width: 100%;
+    font-size: 14px;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #494949;
+
+}
+.subscription-form .page-content-top h4{font-size: 14px;}
+
+.subscription-form .page-content-top .icon.info-blue-icon {
+    margin-right: 0px;
+}
+
+.subscription-form .form-area {
+    display: inline-block;
+    width: 100%;
+    padding: 25px;
+}
+
+.subscription-form .btn-area .btn-blue {
+    line-height: 40px !important;
+}

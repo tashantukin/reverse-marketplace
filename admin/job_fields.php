@@ -19,7 +19,7 @@
 <div class="page-content" id= "job-fields">
                     <div class="gutter-wrapper">
                         <div class="onboarding-backbtnarea">
-                            <a class="mybtn btn-grey" href="javascript:void(0);">
+                            <a class="mybtn btn-grey" href="index.php">
                                 <img src="images/back.svg">
                                 Back
                             </a>
@@ -65,7 +65,7 @@
                             </div>
                             <div class="custom_list_wrapper">
                                 <ul class="custom-listing-table-onbrd row-height-50">
-                                    <!-- <li class="all-cat">
+                                    <li class="all-cat">
                                         <div class="custom-list-box-onbrd">
                                             <div class="cursor-sec cursor-repositioning-onbrd">
                                                 <div class="repositioning-icon-onbrd  ">
@@ -87,8 +87,8 @@
                                             <div class="clearfix">
                                             </div>
                                         </div>
-                                    </li> -->
-                                    <!-- <li class="all-cat added-description">
+                                    </li>
+                                    <li class="all-cat added-description">
                                         <div class="custom-list-box-onbrd">
                                             <div class="cursor-sec cursor-repositioning-onbrd">
                                                 <div class="repositioning-icon-onbrd  ">
@@ -112,8 +112,8 @@
                                             <div class="clearfix">
                                             </div>
                                         </div>
-                                    </li> -->
-                                    <li class="all-cat added-description" v-for="fields in allJobFields">
+                                    </li>
+                                    <li class="all-cat added-description" v-for="fields in allJobFields" :data-id="fields.Id">
                                         <div class="custom-list-box-onbrd"> 
                                            <div class="cursor-sec cursor-repositioning-onbrd">
                                                 <div class="repositioning-icon-onbrd  ">
@@ -136,11 +136,11 @@
                                             <div class="user-field-consumer-onbrd">{{fields.classification}}</div>
                                             <div class="user-field-action-onbrd">
                                                 <div class="row-action">
-                                                    <a href="javascript:void(0);" class="btn-edit-onbrdfields">
+                                                    <a href="javascript:void(0);" class="btn-edit-onbrdfields" :data-id="fields.Id">
                                                         <i class="icon icon-edit-2">
                                                         </i>
                                                     </a>
-                                                    <a class="delete-cat" href="javascript:void(0)" onclick="delete_opt(id,this)">
+                                                    <a class="delete-cat" href="javascript:void(0)" onclick="delete_opt(id,this)" :data-id="fields.Id">
                                                         <i class="icon icon-delete-btn-user">
                                                         </i>
                                                     </a>
@@ -207,11 +207,11 @@
                 </div>
                 <div class="popup-demo-content ">
                     <div class="form-group">
-                        <label>Field Name</label>
+                        <label>Field Name*</label>
                         <input type="text" class="form-control required" name="onbrd_field_name" id="onbrd_field_name">
                     </div>
                     <div class="form-group">
-                        <label>Field Type</label>
+                        <label>Field Type*</label>
                         <select class="form-control required" name="onbrd_field_type" id="onbrd_field_type">
                             <option value="textfield">Textfield</option>
                             <option value="number">Number</option>
@@ -245,6 +245,25 @@
                             <option value="2. Verification Details">Verification Details</option>
                         </select>
                     </div>
+
+                    <div class="form-group">
+                        <div class="meta-item-checkbox">
+
+                            <div class="fancy-checkbox checkbox-sm">
+
+                                <input type="checkbox" value="blank_page" class="radio-ccheckbox" name="guest_user" id="guest_user_blank_page">
+
+                                <label for="guest_user_blank_page"><span>
+                                        <note>Require field</note>
+                                    </span></label>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
                 </div>
                 <div class="popup-footer">
                     <a class="mybtn btn-grey" data-dismiss="modal" href="javascript:void(0);">Cancel</a>

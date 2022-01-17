@@ -69,9 +69,6 @@
               const userDetails = users.Records[0]
               //if existing user, verify the status
               if (userDetails) {
-
-                
-                
                // if (userDetails['status'] == 'Approved' && userDetails['approved_confirmed'] == 1) { 
                   //show the table
 
@@ -104,6 +101,7 @@
                                    <option value="Interested">Interested</option>
                                    <option value="Quoted">Quoted</option>
                                    <option value="Accepted">Accepted</option>
+                                   <option value="Rejected">Accepted</option>
                                    <option value="Completed">Completed</option>
                                  </select>
          
@@ -112,6 +110,7 @@
                                        <li class=""><a data-toggle="tab" href="#tab-interested" aria-expanded="false">Interested</a></li>
                                        <li class=""><a data-toggle="tab" href="#tab-quoted" aria-expanded="false">Quoted</a></li>
                                        <li class=""><a data-toggle="tab" href="#tab-accepted" aria-expanded="false">Accepted</a></li>
+                                       <li class=""><a data-toggle="tab" href="#tab-rejected" aria-expanded="false">Rejected</a></li>
                                        <li class=""><a data-toggle="tab" href="#tab-completed" aria-expanded="false">Completed</a></li>
                                  </ul>
                               </div>
@@ -130,8 +129,6 @@
                                        <td>Email</td>
                                        <td>Contact No.</td>
                                        <td>Location</td>
-                                       <td>No. of Images</td>
-                                       <td>No. of Quotes</td>
                                        <td>Accepted</td>
                                        <td>Quoted Date</td>
                                     </tr>
@@ -154,8 +151,6 @@
                                           <td>Email</td>
                                           <td>Contact No.</td>
                                           <td>Location</td>
-                                          <td>No. of Images</td>
-                                          <td>No. of Quotes</td>
                                           <td>Accepted</td>
                                           <td>Quoted Date</td>
                                        </tr>
@@ -175,8 +170,6 @@
                                        <td>Email</td>
                                        <td>Contact No.</td>
                                        <td>Location</td>
-                                       <td>No. of Images</td>
-                                       <td>No. of Quotes</td>
                                        <td>Accepted</td>
                                        <td>Quoted Date</td>
                                     </tr>
@@ -197,9 +190,6 @@
                                        <td>Email</td>
                                        <td>Contact No.</td>
                                        <td>Location</td>
-                                       <td>No. of Images</td>
-                                       <td>No. of Quotes</td>
-                                       <td>Accepted</td>
                                        <td>Quoted Date</td>
                                     </tr>
                                  </thead>
@@ -210,7 +200,31 @@
                               </table>
                            </div>
                            </div>
-         
+
+
+                           <div id="tab-rejected" class="tab-pane fade active in">
+                           <div class="scroll-table-container">
+                              <table class="table table-freelancer scroll-table">
+                              <thead>
+                                 <tr>
+                                    <td>Job ID</td>
+                                    <td>Date</td>
+                                    <td>Email</td>
+                                    <td>Contact No.</td>
+                                    <td>Location</td>
+                                    <td>Quoted Date</td>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                              
+                                 
+                              </tbody>
+                           </table>
+                        </div>
+                        </div>
+
+
+
                            <div id="tab-completed" class="tab-pane fade">
                               <div class="scroll-table-container">
                                  <table class="table table-freelancer scroll-table">
@@ -220,14 +234,17 @@
                                        <td>Email</td>
                                        <td>Contact No.</td>
                                        <td>Location</td>
-                                       <td>No. of Images</td>
-                                       <td>No. of Quotes</td>
                                        <td>Accepted</td>
                                        <td>Quoted Date</td>
                                     </tr>
                                  </thead>
                                  <tbody>
-                                   
+                                 <tr>
+                                 <td></td>
+                                 <td></td>
+                                 <td></td>
+                                 <td><span class="no-lodge">No lodge job/quote here</span></td>
+                              </tr>
                                     
                                  </tbody>
                               </table>
@@ -354,18 +371,35 @@
                   const job = jobs.Records[0]
                   //if existing user, verify the status
                    if (job) {
-                     
-                     let allJobs = `<tr data-id="${job['Id'] }" user-id="${userId}"> </td>
-                     <td> <a href="user/plugins/8e94739d-b260-41ec-9496-dfa98bb8cdc0/${page}.php?jobId=${job['Id'] }&userId=${userId}">${job['job_availability']}</a></td>
-                     <td>${job['buyer_email']}</td>
-                   
-                     <td>${job['buyer_contact_no']}</td>
-                     <td class="width-location">${job['buyer_contact_no']}</td>
-                     <td>1</td>
-                     <td>${job['no_of_quotes']}</td>
-                     <td>${job['is_accepted'] == 1 ? 'Yes' : 'No'} </td>
-                     <td>-</td>
-                    </tr>`;
+                     let allJobs = ''
+                      if (page == '#tab-interested' || page == '#tab-quoted') {
+                         allJobs = `<tr data-id="${job['Id'] }" user-id="${userId}"> </td>
+                        <td> <a href="user/plugins/8e94739d-b260-41ec-9496-dfa98bb8cdc0/${page}.php?jobId=${job['Id'] }&userId=${userId}">${job['job_availability']}</a></td>
+                        <td>${job['buyer_email']}</td>
+                      
+                        <td>${job['buyer_contact_no']}</td>
+                        
+                        <td>${job['is_accepted'] == 1 ? 'Yes' : 'No'} </td>
+
+                        <td class="width-location">${job['buyer_contact_no']}</td>
+                        <td>-</td>
+                       </tr>`;
+                      } else {
+                        allJobs = `<tr data-id="${job['Id'] }" user-id="${userId}"> </td>
+                        <td> <a href="user/plugins/8e94739d-b260-41ec-9496-dfa98bb8cdc0/${page}.php?jobId=${job['Id'] }&userId=${userId}">${job['job_availability']}</a></td>
+                        <td>${job['buyer_email']}</td>
+                      
+                        <td>${job['buyer_contact_no']}</td>
+                        
+                        <td class="width-location">${job['buyer_contact_no']}</td>
+                        <td>-</td>
+                       </tr>`;
+                     }
+                    
+                      
+                      
+                      
+                      
                         waitForElement(`${el}`, function ()
                         {
                            $(`${el} table tbody`).append(allJobs);
@@ -496,8 +530,6 @@
                   <td>${job['buyer_email']}</td>
                   <td>${job['buyer_contact_no']}</td>
                   <td class="width-location">${job['buyer_contact_no']}</td>
-                  <td>1</td>
-                  <td>${job['no_of_quotes']}</td>
                   <td>${job['is_accepted'] == 1 ? 'Yes' : 'No'} </td>
                   <td>-</td>
                  </tr>`;
@@ -636,6 +668,53 @@
               }
             })
            }
+
+           //rejected
+
+           async function getRejectedJobs(){
+            var data = [{ 'Name': 'status', 'Operator': "equal", "Value": 'Rejected' }, { 'Name': 'freelancer_id', 'Operator': "equal", "Value": $('#userGuid').val() }]
+            
+            $.ajax({
+              method: "POST",
+              url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/freelancer_quotes/`,
+              headers: {
+                "Content-Type": "application/json"
+              },
+            
+              data: JSON.stringify(data),
+         
+              success: function (response)
+              {
+                console.log({ response })
+              
+                const jobs = response
+                const jobDetails = jobs.Records
+                //if existing user, verify the status
+                if (jobDetails.length != 0) {
+
+                  jobDetails.forEach(function (job, i)
+                  {
+
+                     getJobDetail(job['job_id'],'#tab-rejected','freelancer_quoted');
+                   
+                 
+                  })
+                  
+                 
+                  
+                }
+               
+        
+              }
+            })
+           }
+
+
+
+
+
+
+
 
 
 

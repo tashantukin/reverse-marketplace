@@ -136,8 +136,8 @@
                     }
                 });
 
-                let action = $('.custom_id').attr('dir');
-                if (action != 'update') {
+                let action = $('#field-action').val();
+                if (action != 'edit') {
                     const generateRandomString = (length = 6) => Math.random().toString(20).substr(2, length)
                     const cfCode = (`${packageId}-${generateRandomString(10)}-${customName.replace(/\s+/g, '')}-REV_INPUT`)
                     conf_message = 'Custom field successfully added.';
@@ -146,9 +146,10 @@
                     saveCustomField(cfCode, 'add', $('#onbrd_field_name').val(), selectedValue, selectedStep, JSON.stringify(optionList), 'Users', conf_message)
                 } else {
                     const custom_code = $('.custom_id').val();
-                    selectedValue = $("option:selected", $('#customType')).val();
+                    selectedValue = $("option:selected", $('#onbrd_field_type')).val();
+                    selectedStep = $("option:selected", $('#onbrd_steps')).val();
                     conf_message = 'Custom field successfully updated.';
-                    saveCustomField(custom_code, action, customName, selectedValue, selectedStep, JSON.stringify(optionList), 'Users', conf_message)
+                    saveCustomField(custom_code, action, $('#onbrd_field_name').val(), selectedValue, selectedStep, JSON.stringify(optionList), 'Users', conf_message)
                 }
 
 
@@ -203,13 +204,23 @@
 
         });
 
-        jQuery("#removecatok .btn-blue").click(function ()
+        jQuery("#removecatok #job-delete").click(function ()
         {
             
             deleteCustomField($('#field-id').val())
-            row.remove();
-            jQuery("#removecatok").fadeOut();
-            jQuery("#cover").fadeOut();
+            //row.remove();
+            //jQuery("#removecatok").fadeOut();
+            //jQuery("#cover").fadeOut();
+        });
+
+
+        jQuery("#removecatok #seller-delete").click(function ()
+        {
+            
+            deleteCustomFieldSeller($('#field-id').val())
+           // row.remove();
+            //jQuery("#removecatok").fadeOut();
+            //jQuery("#cover").fadeOut();
         });
 
 
@@ -354,6 +365,31 @@
             }
         });
     }
+
+    function deleteCustomFieldSeller(fieldId)
+    {
+        var data = { 'code': fieldId };
+        console.log(data);
+        var apiUrl = packagePath + '/delete_customfield_seller.php';
+        $.ajax({
+            url: apiUrl,
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (result)
+            {
+                toastr.success('Custom field successfully deleted.');
+                console.log(result);
+                location.reload(true);
+            },
+            error: function (jqXHR, status, err)
+            {
+
+            }
+        });
+    }
+
+
 
     function saveURL() {
         var apiUrl = packagePath + '/save_custom_url.php';

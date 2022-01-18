@@ -49,12 +49,12 @@ if ($action == 'add'){
     if ($refTable == 'Users') {
 
         $form_details = array('name' => $custom_name, 'type_of_field' => $type, 'classification' => $classification, 'text' => $custom_text, 'placeholder' => $placeholder, 'values' => $type !== 'textfield' || $type !== 'number' || $type !== 'search'? $options : null );
-        $url =  $baseUrl . '/api/v2/plugins/'. getPackageID() .'/custom-tables/freelancer_form/rows';
-        $result =  callAPI("POST",$admin_token['access_token'], $url, $form_details);
+        $url =  $baseUrl . '/api/v2/plugins/'. getPackageID() .'/custom-tables/freelancer_form/rows/' . $field_id;
+        $result =  callAPI("PUT",$admin_token['access_token'], $url, $form_details);
         
     }else {
         $form_details = array('name' => $custom_name, 'type_of_field' => $type, 'classification' => $classification, 'text' => $custom_text, 'placeholder' => $placeholder,  'values' => $type !== 'textfield' || $type !== 'number' || $type !== 'search' ? $options : null );
-        $url =  $baseUrl . '/api/v2/plugins/'. getPackageID() .'/custom-tables/job_form/rows/' . $field_id;;
+        $url =  $baseUrl . '/api/v2/plugins/'. getPackageID() .'/custom-tables/job_form/rows/' . $field_id;
         $result =  callAPI("PUT",$admin_token['access_token'], $url, $form_details);
     }
 

@@ -306,7 +306,7 @@
                                                         <i class="icon icon-edit-2">
                                                         </i>
                                                     </a>
-                                                    <a class="delete-cat" href="javascript:void(0)" onclick="delete_opt(id,this)">
+                                                    <a class="delete-cat" href="javascript:void(0)" onclick="delete_opt(id,this)" :data-id="fields.Id">
                                                         <i class="icon icon-delete-btn-user">
                                                         </i>
                                                     </a>
@@ -348,6 +348,8 @@
 
 
                 <div class="popup popup-onbrd-fields" id="OnboardingFields">
+                <input type="hidden" id="field-id">
+                <input type="hidden" id="field-action">
             <div class="popup-wrapper">
                 <div class="pull-right">
                     <a class="close-popup" data-dismiss="modal" href="javascript:void(0)">
@@ -400,7 +402,7 @@
 
                     <div class="form-group">
                         <label>Placeholder</label>
-                        <input :value="placeholder" type="text" class="form-control required" name="onbrd_field_placeholder" id="onbrd_field_placeholder">
+                        <input :value="placeholder" type="text" class="form-control" name="onbrd_field_placeholder" id="onbrd_field_placeholder">
                     </div>
 
                     <div class="form-group">
@@ -443,7 +445,7 @@
             <div class="popup-body">Are you sure you want to delete this?</div>
             <div class="popup-footer">
                 <input onclick="popup_close(this);" class="mybtn btn-grey" type="button" value="Cancel" name="cancel">
-                <input class="mybtn btn-blue" type="button" value="Okay" name="cancel">
+                <input class="mybtn btn-blue" type="button" value="Okay" name="cancel" id="seller-delete">
             </div>
             <a href="javascript:void(0)" class="close-popup" onclick="popup_close(this)"><i class="icon icon-close"></i> </a>
         </div>
@@ -583,6 +585,9 @@ function popup_close(ele) {
 function delete_opt(id, ele) {
     var that = jQuery(ele);
     var row = that.closest('li');
+    var id = that.attr('data-id');
+    $('#field-id').val(id);
+    console.log({id})
     jQuery("#removecatok").fadeIn();
     jQuery("#cover").fadeIn();
     jQuery("#removecatok .btn-blue").click(function() {

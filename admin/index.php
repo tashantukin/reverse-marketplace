@@ -140,7 +140,11 @@
                                                     <td data-th="Payment Type" v-if="job.payment_fixed=='True'"><a href="">Fixed</a></td>
                                                     <td data-th="Payment Type" v-if="job.payment_hourly=='True'" ><a href="">Hourly</a></td>
                                                   
-                                                    <td data-th="Job to be completed by"><a href=""><span class="text-danger">{{ job.time_frame_timestamp }}</span></a></td>
+                                                    <td data-th="Job to be completed by" v-if="job.time_frame_timestamp !=''"><a href=""><span class="text-danger">{{ job.time_frame_timestamp }}</span></a></td>
+                                                    <td data-th="Job to be completed by" v-if="job.time_frame_urgent =='True'"><a href=""><span class="text-danger">Urgent</span></a></td>
+                                                    <td data-th="Job to be completed by" v-if="job.time_frame_nohurry =='True'"><a href=""><span class="text-danger">No hurry</span></a></td>
+                                                    
+                                                    
                                                     <td data-th="Availability"><a href=""><span class="text-danger">{{ job.job_availability}}</span></a></td>
                                                     <td data-th="No.of Quote"><a href="">{{ job.no_of_quotes}}</a></td>
                                                     <td data-th="Status"><a href="">{{ job.status}}</a></td>

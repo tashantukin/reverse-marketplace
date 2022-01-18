@@ -106,7 +106,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD
                                                         <div class="job-quotedtitle"><span class="qtitle">Status</span><span class="qdesc"><?php echo $quotedDetails['Records'][0]['status'] ?></span></div>
                                                         </div>
                                                     </div>
-                                                    <div class="quote-info-message-box">
+                                                    <!-- <div class="quote-info-message-box">
                                                         <div class="infoflex-area">
                                                             <div class="quote-msg-box">
                                                             <svg version="1.2" baseProfile="tiny-ps" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 46 39" width="46" height="39"><title>Page 1</title>
@@ -119,7 +119,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD
                                                             </div>
                                                             <button type="button" class="btn btn-send-message">Send a Message</button>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                             
 
         <div class="quote-question-main">

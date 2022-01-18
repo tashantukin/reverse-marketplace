@@ -68,7 +68,8 @@
               const users = response
               const userDetails = users.Records[0]
               //if existing user, verify the status
-              if (userDetails) {
+               if (userDetails) {
+                  $('.navigation li').first().remove();
                // if (userDetails['status'] == 'Approved' && userDetails['approved_confirmed'] == 1) { 
                   //show the table
 
@@ -374,7 +375,7 @@
                      let allJobs = ''
                       if (page == '#tab-interested' || page == '#tab-quoted') {
                          allJobs = `<tr data-id="${job['Id'] }" user-id="${userId}"> </td>
-                        <td> <a href="user/plugins/8e94739d-b260-41ec-9496-dfa98bb8cdc0/${page}.php?jobId=${job['Id'] }&userId=${userId}">${job['job_availability']}</a></td>
+                        <td> <a href="user/plugins/${packageId}/${page}.php?jobId=${job['Id'] }&userId=${userId}">${job['job_availability']}</a></td>
                         <td>${job['buyer_email']}</td>
                       
                         <td>${job['buyer_contact_no']}</td>
@@ -386,12 +387,12 @@
                        </tr>`;
                       } else {
                         allJobs = `<tr data-id="${job['Id'] }" user-id="${userId}"> </td>
-                        <td> <a href="user/plugins/8e94739d-b260-41ec-9496-dfa98bb8cdc0/${page}.php?jobId=${job['Id'] }&userId=${userId}">${job['job_availability']}</a></td>
+                        <td> <a href="user/plugins/${packageId}/${page}.php?jobId=${job['Id'] }&userId=${userId}">${job['job_availability']}</a></td>
                         <td>${job['buyer_email']}</td>
                       
                         <td>${job['buyer_contact_no']}</td>
                         
-                        <td class="width-location">${job['buyer_contact_no']}</td>
+                        <td class="width-location">${job['inperson_work_address']}</td>
                         <td>-</td>
                        </tr>`;
                      }
@@ -450,7 +451,7 @@
                        <td><div class="job-quotedtitle"><span class="qtitle">Amount</span><span class="qdesc">$AUD${quote['all_total']}</span></div></td>
                        <td><div class="job-quotedtitle"><span class="qtitle">Availability</span><span class="qdesc">${quote['availability_date']}</span></div></td>
                        <td><div class="job-quotedtitle"><span class="qtitle">Status</span><span class="qdesc">Valid to ${quote['validity_date']} </span></div></td>
-                       <td class="text-right"><a href="user/plugins/8e94739d-b260-41ec-9496-dfa98bb8cdc0/${page}.php?jobId=${quote['job_id'] }&userId=${quote['freelancer_id']}" class="btn btn-jobform-outline">View</a></td>
+                       <td class="text-right"><a href="user/plugins/${packageId}/${page}.php?jobId=${quote['job_id'] }&userId=${quote['freelancer_id']}" class="btn btn-jobform-outline">View</a></td>
                     </tr>`;
                        
                        
@@ -529,7 +530,7 @@
                   <td>${job['job_availability']}</td>
                   <td>${job['buyer_email']}</td>
                   <td>${job['buyer_contact_no']}</td>
-                  <td class="width-location">${job['buyer_contact_no']}</td>
+                  <td class="width-location">${job['inperson_work_address']}</td>
                   <td>${job['is_accepted'] == 1 ? 'Yes' : 'No'} </td>
                   <td>-</td>
                  </tr>`;
@@ -711,15 +712,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
            function getJobLodges()
            {
               var jobId = localStorage.getItem("jobID"); 
@@ -790,16 +782,11 @@
            {
               waitForElement('#userGuid', function ()
               {
-                 var jobListDiv = `<div class="content-pages">
-              <div class="freelancer-content-main">
-     
-                 <div class="container">
-                    <!--
-                    <div class="page-reverse-title">
-                       <h1>Welcome, Freelancer1</h1>
-                    </div>
-                   --> 
-     
+                 var jobListDiv =  `<div class="content-pages">
+                 <div class="freelancer-content-main">
+        
+                    <div class="container">
+                 <div class="content-pages">
                     <div class="freelancer-panel">
                    <div class="panel-group" id="accordion" role="lodgedJob">
                        
@@ -841,11 +828,14 @@
      
               </div></div>
            `
-                 waitForElement('.reverse-slider', function ()
-                 {
-                    $('.reverse-slider').after(jobListDiv);
-                 })
-
+                 if (!$('.freelancer-panel').length > 0) {
+                  waitForElement('.reverse-slider', function ()
+                  {
+                     $('.reverse-slider').after(jobListDiv);
+                  })
+ 
+                 }
+                 
                  var data = [{ 'Name': 'buyerID', 'Operator': "in", "Value": $('#userGuid').val() }
                          
                  ]
@@ -877,7 +867,7 @@
                              <thead>
                            <tr data-id="${job['Id']}">
                               <th colspan="5">Job #${job['Id']}</th>
-                              <th class="text-right"><a href="user/plugins/8e94739d-b260-41ec-9496-dfa98bb8cdc0/job-details.php?jobId=${job['Id']}">Details &gt;&gt;</a></th>
+                              <th class="text-right"><a href="user/plugins/${packageId}/job-details.php?jobId=${job['Id']}">Details &gt;&gt;</a></th>
                            </tr>
                         </thead>
                         <tbody>
@@ -891,7 +881,7 @@
                               <thead>
                                  <tr>
                                     <th colspan="5">Job #${job['Id']}</th>
-                                    <th class="text-right"><a href="user/plugins/8e94739d-b260-41ec-9496-dfa98bb8cdc0/job-details.php?jobId=${job['Id']}"">Details &gt;&gt;</a></th>
+                                    <th class="text-right"><a href="user/plugins/${packageId}/job-details.php?jobId=${job['Id']}"">Details &gt;&gt;</a></th>
                                  </tr>
                               </thead>
                               <tbody>
@@ -938,7 +928,8 @@
              updateBuyerID: updateBuyerID,
              getJobLodges: getJobLodges,
              getUserJobList: getUserJobList,
-             getAcceptedJobs : getAcceptedJobs
+             getAcceptedJobs: getAcceptedJobs,
+             getRejectedJobs : getRejectedJobs
             
           }
           
@@ -1116,6 +1107,7 @@
         jobs.getInterestedJobs()
           jobs.getQuotedJobs()
           jobs.getAcceptedJobs()
+          jobs.getRejectedJobs()
           jobs.getJobLodges()
           jobs.getUserJobList()
         
@@ -1127,7 +1119,7 @@
        
 
             var buttons = `
-            <div class="btnjob"><a href="user/plugins/8e94739d-b260-41ec-9496-dfa98bb8cdc0/lodge_job.php" class="btn btn-lodge">Lodge a Job</a>
+            <div class="btnjob"><a href="user/plugins/${packageId}/lodge_job.php" class="btn btn-lodge">Lodge a Job</a>
             <a href="/subscribe" class="btn btn-freelancer">I am a Freelancer</a>
              </div>`
 

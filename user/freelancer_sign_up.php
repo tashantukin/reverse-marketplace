@@ -41,7 +41,7 @@
    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
 
-   <script type="text/javascript" src="subscribe/8e94739d-b260-41ec-9496-dfa98bb8cdc0/scripts/users.js"></script>
+   <script type="text/javascript" src="subscribe/50a1fe07-660f-4e47-85dc-86a242ff917d/scripts/users.js"></script>
 
 
    
@@ -1243,8 +1243,8 @@
 
 
 
-<script type="text/javascript" src="subscribe/8e94739d-b260-41ec-9496-dfa98bb8cdc0/scripts/jquery.mapael.js"></script>
-<script type="text/javascript" src="subscribe/8e94739d-b260-41ec-9496-dfa98bb8cdc0/scripts/usa_states.js"></script>
+<script type="text/javascript" src="subscribe/50a1fe07-660f-4e47-85dc-86a242ff917d/scripts/jquery.mapael.js"></script>
+<script type="text/javascript" src="subscribe/50a1fe07-660f-4e47-85dc-86a242ff917d/scripts/usa_states.js"></script>
    
 
 

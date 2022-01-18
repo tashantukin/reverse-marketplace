@@ -37,7 +37,7 @@
 
    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
-   <link href="/user/plugins/8e94739d-b260-41ec-9496-dfa98bb8cdc0/css/style.css" rel="stylesheet" type="text/css">
+   <link href="/user/plugins/50a1fe07-660f-4e47-85dc-86a242ff917d/css/style.css" rel="stylesheet" type="text/css">
    
     <!-- map js -->
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"
@@ -471,7 +471,7 @@
             jQuery('.jobform-tab .nav-tabs li').prevAll().addClass('check');
             jQuery('.jobform-tab .nav-tabs li').removeClass('active');
             setTimeout(function(){ 
-               window.location.href = "/user/plugins/8e94739d-b260-41ec-9496-dfa98bb8cdc0/lodged.html";
+               window.location.href = "/user/plugins/50a1fe07-660f-4e47-85dc-86a242ff917d/lodged.html";
             },1000);
         } else {
             return false

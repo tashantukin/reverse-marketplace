@@ -16,17 +16,23 @@
 
     const baseURL = window.location.hostname;
     const protocol = window.location.protocol;
+    var isEdit = false;
 
   
 
     //run on creation page only
     new Vue({
-        el: "#job-fields",
+        el: ".page-content",
         data() {
             return {
                 allJobFields: [],
+                fieldName: '',
+                fieldType: '',
+                fieldSteps: '',
+                values: '',
+                fieldId: ''
+         
                 
-             
             }
         },
     
@@ -67,6 +73,56 @@
                 } catch (error) {
                     console.log("error", error);
                 }
+            },
+
+
+            //for updating
+            async getFieldDetails(action, e)
+            {
+                
+                vm = this;
+                var data = [{ 'Name': 'Id', 'Operator': "equal", "Value": e.currentTarget.getAttribute('data-id') }]
+                
+                $('#field-id').val(e.currentTarget.getAttribute('data-id'));
+                $('#field-action').val('edit');
+                
+            $.ajax({
+                method: "POST",
+                url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_form/`,
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                
+                data: JSON.stringify(data),
+                //  })
+                success: function (response)
+                {
+                    console.log({ response })
+                
+                    const fields = response
+                    const fieldDetails = fields.Records[0]
+
+                    vm.fieldName = fieldDetails.name,
+                    vm.fieldSteps = fieldDetails.classification,
+                    vm.values =  JSON.parse(fieldDetails.values),   
+                    vm.fieldType = fieldDetails.type_of_field,
+                    vm.fieldId =  fieldDetails.Id
+                    
+                    if (vm.fieldType == "checkbox" || vm.fieldType == "dropdown") {
+                        $('.cstm-fieldpop-optarea').show();
+                        $('#dropdown-opt-draggble').remove();
+                        $.each(vm.values, function (index, option)
+                        {
+                         $('.cstm-fieldpop-optarea .addOpt').before(`<ul id="dropdown-opt-draggble" class="ui-sortable"><li class="maindiv ui-sortable-handle"><div class="virtual-table"><div class="virtual-table-cell"><a href="#" class="cursor-move"><i class="icon icon-draggble"></i></a></div> <div class="virtual-table-cell"><input type="text" value="${option}" name="checkbox-opt[]" id="optionName" class="required"></div> <div class="virtual-table-cell"><a href="#" onclick="delete_opt(this)" class="delete-opt"><i class="icon icon-delete"></i></a></div></div></li></ul>`)  
+                        })
+                        
+                    }
+                    
+
+                }
+            
+            
+            })
             },
     
     

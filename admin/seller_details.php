@@ -526,7 +526,7 @@
          row = `<li class="all-cat added-description">
                     <div class="custom-list-box-onbrd">
                         <div class="cursor-sec cursor-repositioning-onbrd">
-                            <div class="repositioning-icon-onbrd  ">
+                            <div class="repositioning-icon-onbrd">
                                 <div class="pull-left">
                                     <a class="panel-toggle" href="javascript:void(0);">
                                         <i class="icon icon-toggle arrow-up">

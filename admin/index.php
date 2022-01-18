@@ -189,7 +189,7 @@
                                                     <td v-for="fields in uploadCustomFields" :data-th="fields.name"><a :href="'freelancer_details.php?customid=' + field.Id"><span class="txt-green">1 File(s)</span></a></td>
                                                    
                                                     <td data-th="Comment">
-                                                        <a href="javascript:void(0);" onclick="openComment();" class="onboarding-comment">
+                                                        <a href="javascript:void(0);" onclick="openComment(this);" class="onboarding-comment" :data-id="field.Id">
                                                             <i class="icon icon-onboarding-comment"></i>
                                                         </a>
                                                         
@@ -262,6 +262,7 @@
     <div class="modal-dialog">
        <!-- Modal content-->
        <div class="modal-content">
+           <input type="hidden" id="comment-id">
           <!-- <div class="modal-header">
              <div class="pull-left">
                 <h5 class="modal-title"></h5>
@@ -277,7 +278,7 @@
                  <div class="col-md-12">
                      <div class="form-element">
                          <label>Send a comment to the user</label>
-                         <textarea class="form-control required"></textarea>
+                         <textarea class="form-control required" id="comment-content"></textarea>
                          <!-- <input type="text" name="url" id="url" class="form-control required" value=""> -->
                      </div>
                      <!-- <div class="form-element">
@@ -290,7 +291,7 @@
           </div>
           <div class="modal-footer btn-area">
              <div><a href="#" class="gre-btn"  data-dismiss="modal">Cancel</a></div>
-             <div><a data-dismiss="modal" href="javascript:void(0)" class="mybtn btn-blue">Send</a></div>
+             <div><a data-dismiss="modal" href="javascript:void(0)" class="mybtn btn-blue" id="save-comment-list">Send</a></div>
           </div>
        </div>
     </div>
@@ -383,8 +384,13 @@
 <script type="text/javascript">
 
 
-function openComment(){
+function openComment(x){
         jQuery("#onboardingComment").modal('show');	
+        var id = $(x).attr('data-id')
+        $('#comment-id').val(id);
+
+
+
     }
 
     function onboardingAccept(x){

@@ -136,7 +136,7 @@
                                             <div class="user-field-consumer-onbrd">{{fields.classification}}</div>
                                             <div class="user-field-action-onbrd">
                                                 <div class="row-action">
-                                                    <a href="javascript:void(0);" class="btn-edit-onbrdfields" :data-id="fields.Id">
+                                                    <a href="javascript:void(0);" class="btn-edit-onbrdfields" :data-id="fields.Id" v-on:click="getFieldDetails('Edit', $event)">
                                                         <i class="icon icon-edit-2">
                                                         </i>
                                                     </a>
@@ -195,7 +195,9 @@
 
 
                 <div class="popup popup-onbrd-fields" id="OnboardingFields">
-            <div class="popup-wrapper">
+                <input type="hidden" id="field-id">
+                <input type="hidden" id="field-action">
+             <div class="popup-wrapper">
                 <div class="pull-right">
                     <a class="close-popup" data-dismiss="modal" href="javascript:void(0)">
                         <i class="icon icon-close">
@@ -205,14 +207,14 @@
                 <div class="popup-header">
                     <h4>Add/edit field</h4>
                 </div>
-                <div class="popup-demo-content ">
+                <div class="popup-demo-content">
                     <div class="form-group">
                         <label>Field Name*</label>
-                        <input type="text" class="form-control required" name="onbrd_field_name" id="onbrd_field_name">
+                        <input type="text" :value="fieldName"  class="form-control required" name="onbrd_field_name" id="onbrd_field_name">
                     </div>
                     <div class="form-group">
                         <label>Field Type*</label>
-                        <select class="form-control required" name="onbrd_field_type" id="onbrd_field_type">
+                        <select class="form-control required" name="onbrd_field_type" id="onbrd_field_type" :value="fieldType">
                             <option value="textfield">Textfield</option>
                             <option value="number">Number</option>
                             <option value="checkbox">Checkbox</option>
@@ -221,7 +223,7 @@
                     </div>
 
 
-                    <div class="form-element options cstm-fieldpop-optarea" style="display:none;">
+                    <div  class="form-element options cstm-fieldpop-optarea" style="display:none;">
                         <label>Options</label>
                         <ul class="ui-sortable" id="dropdown-opt-draggble">
                             <li class="maindiv ui-sortable-handle">
@@ -240,7 +242,7 @@
 
                     <div class="form-group">
                         <label>Steps</label>
-                        <select class="form-control required" name="onbrd_steps" id="onbrd_steps">
+                        <select class="form-control required" name="onbrd_steps" id="onbrd_steps" :value="fieldSteps">
                             <option value="1. Registration">Registration</option>
                             <option value="2. Verification Details">Verification Details</option>
                         </select>

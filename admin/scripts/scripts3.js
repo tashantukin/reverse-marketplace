@@ -46,7 +46,7 @@
 
         })
         //add options
-        $('.cstm-fieldpop-optarea .addOpt').click(function ()
+        $('.cstm-fieldpop-optarea .addOpt').on('click', function ()
         {
             var xc = jQuery('.cstm-fieldpop-optarea .maindiv').eq(0).clone(true);
             jQuery('input[type="text"]', xc).val('');
@@ -179,8 +179,8 @@
                     }
                 });
 
-                let action = $('.custom_id').attr('dir');
-                if (action != 'update') {
+                let action = $('#field-action').val();
+                if (action != 'edit') {
                     const generateRandomString = (length = 6) => Math.random().toString(20).substr(2, length)
                     const cfCode = (`${packageId}-${generateRandomString(10)}-${customName.replace(/\s+/g, '')}-REV_INPUT`)
                     conf_message = 'Custom field successfully added.';
@@ -189,9 +189,10 @@
                     saveCustomField(cfCode, 'add', $('#onbrd_field_name').val(), selectedValue, selectedStep, optionList, 'Jobs', conf_message)
                 } else {
                     const custom_code = $('.custom_id').val();
-                    selectedValue = $("option:selected", $('#customType')).val();
+                    sselectedValue = $("option:selected", $('#onbrd_field_type')).val();
+                    selectedStep = $("option:selected", $('#onbrd_steps')).val();
                     conf_message = 'Custom field successfully updated.';
-                    saveCustomField(custom_code, action, customName, selectedValue, selectedStep, optionList, 'Jobs', conf_message)
+                    saveCustomField(custom_code, action, $('#onbrd_field_name').val(), selectedValue, selectedStep, optionList, 'Jobs', conf_message)
                 }
 
 
@@ -232,9 +233,6 @@
             $('#cover').hide();
         });
 
-
-
-
         $('#comment-button').click(function ()
         {
             
@@ -243,12 +241,22 @@
             
         });
 
+        $('#save-comment-list').click(function ()
+        {
+            
+            saveCommentList();
+
+            
+        });
+
+        
+
     });
 
     //MAIN CRUD
     function saveCustomField(customCode, action, customName, type, steps, options, referenceTable, conf_message)
     {
-        var data = { 'action': action, 'custom_name': customName, 'type': type, 'options': options, 'reference_table': referenceTable, 'code': customCode, 'classification' : steps, 'text': $('#onbrd_field_text').val(), 'placeholder' : $('#onbrd_field_placeholder').val()  };
+        var data = { 'action': action, 'custom_name': customName, 'type': type, 'options': options, 'reference_table': referenceTable, 'code': customCode, 'classification' : steps, 'text': $('#onbrd_field_text').val(), 'placeholder' : $('#onbrd_field_placeholder').val(), 'field-id':$('#field-id').val()  };
         console.log(data);
         var apiUrl = packagePath + '/save_customfields.php';
         $.ajax({
@@ -403,7 +411,30 @@
 
     
     }
-   
+
+    function  saveCommentList()
+    {
+        
+        var comment_details = {
+
+            "Id": $('#comment-id').val(),
+            'comment' : $('#comment-content').val()
+        };
+    
+        console.log({ comment_details });
+        var settings = {
+            "url": packagePath + "/update_comment.php",
+            "method": "POST",
+            "data": JSON.stringify(comment_details)
+        }
+        $.ajax(settings).done(function(response){
+            
+            console.log('list comment saved');
+        
+        });
+
+    
+    }
 
 
 })();

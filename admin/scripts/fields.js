@@ -113,7 +113,7 @@
                         $('#dropdown-opt-draggble').remove();
                         $.each(vm.values, function (index, option)
                         {
-                         $('.cstm-fieldpop-optarea .addOpt').before(`<ul id="dropdown-opt-draggble" class="ui-sortable"><li class="maindiv ui-sortable-handle"><div class="virtual-table"><div class="virtual-table-cell"><a href="#" class="cursor-move"><i class="icon icon-draggble"></i></a></div> <div class="virtual-table-cell"><input type="text" value="${option}" name="checkbox-opt[]" id="optionName" class="required"></div> <div class="virtual-table-cell"><a href="#" onclick="delete_opt(this)" class="delete-opt"><i class="icon icon-delete"></i></a></div></div></li></ul>`)  
+                         $('.cstm-fieldpop-optarea .addOpt').before(`<ul id="dropdown-opt-draggble" class="ui-sortable"><li class="maindiv ui-sortable-handle"><div class="virtual-table"><div class="virtual-table-cell"><a href="#" class="cursor-move"><i class="icon icon-draggble"></i></a></div> <div class="virtual-table-cell"><input type="text" value="${option}" name="checkbox-opt[]" id="optionName" class="required"></div> <div class="virtual-table-cell"><a href="#"  class="delete-opt"><i class="icon icon-delete"></i></a></div></div></li></ul>`)  
                         })
                         
                     }

@@ -230,7 +230,7 @@
                                 <div class="virtual-table">
                                     <div class="virtual-table-cell"><a href="#" class="cursor-move"><i class="icon icon-draggble"></i></a></div>
                                     <div class="virtual-table-cell"><input type="text" value="" name="checkbox-opt[]" id="optionName" class="required" class="txt"></div>
-                                    <div class="virtual-table-cell"><a href="#" class="delete-opt" onclick="delete_opt(this)"><i class="icon icon-delete"></i></a></div>
+                                    <div class="virtual-table-cell"><a href="#" class="delete-opt" ><i class="icon icon-delete"></i></a></div>
                                 </div>
                             </li>
 
@@ -406,6 +406,29 @@
         current.next(".added-description").after(current);
     });
 
+    jQuery('body').on('click', '.cstm-fieldpop-optarea .icon-delete', function() {
+   // $('.cstm-fieldpop-optarea .icon-delete').on('click', function ()
+           console.log('del option ')
+            if (jQuery('.cstm-fieldpop-optarea .maindiv').length == 1) {
+                jQuery(this).closest('.virtual-table').find('input[type="text"]').val('');
+                console.log('if')
+            }
+            else {
+                jQuery(this).parents('.maindiv').remove();
+                console.log('del else')
+            }
+     //   });
+
+
+
+
+    // jQuery('body').on('click','.cstm-fieldpop-optarea .delete-opt',function() {
+    //     delete_opt($(this))
+    //     console.log('del option');
+    });
+
+
+
 
 });
 
@@ -420,6 +443,10 @@ function popup_close(ele) {
 function delete_opt(id, ele) {
     var that = jQuery(ele);
     var row = that.closest('li');
+    var id = that.attr('data-id');
+    $('#field-id').val(id);
+    console.log({id})
+
     jQuery("#removecatok").fadeIn();
     jQuery("#cover").fadeIn();
     jQuery("#removecatok .btn-blue").click(function() {

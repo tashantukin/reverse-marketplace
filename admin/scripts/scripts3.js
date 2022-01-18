@@ -48,6 +48,7 @@
         //add options
         $('.cstm-fieldpop-optarea .addOpt').on('click', function ()
         {
+            console.log('del option');
             var xc = jQuery('.cstm-fieldpop-optarea .maindiv').eq(0).clone(true);
             jQuery('input[type="text"]', xc).val('');
             jQuery('.cstm-fieldpop-optarea #dropdown-opt-draggble').append(xc);
@@ -56,13 +57,15 @@
 
         });
         //delete options field
-        $('.cstm-fieldpop-optarea .icon-delete').click(function ()
-        {
+        $('.cstm-fieldpop-optarea .icon-delete').on('click', function ()
+        {   console.log('del option ')
             if (jQuery('.cstm-fieldpop-optarea .maindiv').length == 1) {
                 jQuery(this).closest('.virtual-table').find('input[type="text"]').val('');
+                console.log('if')
             }
             else {
                 jQuery(this).parents('.maindiv').remove();
+                console.log('del else')
             }
         });
         //save button
@@ -189,7 +192,7 @@
                     saveCustomField(cfCode, 'add', $('#onbrd_field_name').val(), selectedValue, selectedStep, optionList, 'Jobs', conf_message)
                 } else {
                     const custom_code = $('.custom_id').val();
-                    sselectedValue = $("option:selected", $('#onbrd_field_type')).val();
+                    selectedValue = $("option:selected", $('#onbrd_field_type')).val();
                     selectedStep = $("option:selected", $('#onbrd_steps')).val();
                     conf_message = 'Custom field successfully updated.';
                     saveCustomField(custom_code, action, $('#onbrd_field_name').val(), selectedValue, selectedStep, optionList, 'Jobs', conf_message)
@@ -200,7 +203,14 @@
 
         });
 
-
+        jQuery("#removecatok .btn-blue").click(function ()
+        {
+            
+            deleteCustomField($('#field-id').val())
+            row.remove();
+            jQuery("#removecatok").fadeOut();
+            jQuery("#cover").fadeOut();
+        });
 
 
 
@@ -322,9 +332,9 @@
             }
         });
     }
-    function deleteCustomField(customFieldCode)
+    function deleteCustomField(fieldId)
     {
-        var data = { 'code': customFieldCode };
+        var data = { 'code': fieldId };
         console.log(data);
         var apiUrl = packagePath + '/delete_customfield.php';
         $.ajax({

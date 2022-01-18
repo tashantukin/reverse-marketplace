@@ -280,7 +280,7 @@
             <div class="popup-body">Are you sure you want to delete this?</div>
             <div class="popup-footer">
                 <input onclick="popup_close(this);" class="mybtn btn-grey" type="button" value="Cancel" name="cancel">
-                <input class="mybtn btn-blue" type="button" value="Okay" name="cancel">
+                <input class="mybtn btn-blue" type="button" value="Okay" name="cancel" id="job-delete">
             </div>
             <a href="javascript:void(0)" class="close-popup" onclick="popup_close(this)"><i class="icon icon-close"></i> </a>
         </div>

@@ -101,7 +101,7 @@ else {
                      <div class="navtab-flex">
                      
                      <div class="navtab-filter">
-                        <a class="btn btn-quote-submit">Edit</a>
+                        <!-- <a class="btn btn-quote-submit">Edit</a> -->
                         
                      </div>
                      </div>

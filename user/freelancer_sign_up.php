@@ -122,28 +122,28 @@
 
                            <!-- default fields -->
 
-                           <div field-type="search" class="form-group"><label for="ABN lookup">ABN lookup</label> <div class="search-abn">
-                              <input type="search" name="abn-lookup" placeholder="Enter ABN Number" class="form-control search"> <button><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg></button>
-                           </div> <input type="text" v-model="companyName" name="abn-lookup" id="company-name" placeholder="" class="form-control required"></div>
+                           <div field-type="search" class="form-group"><label for="ABN lookup">Company lookup</label> <div class="search-abn">
+                              <input type="search" name="abn-lookup" placeholder="Enter Company name" class="form-control search"> <button><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg></button>
+                           </div> <input type="text"  name="abn-lookup" id="company-name" placeholder="" class="form-control required"></div>
 
                            <div field-type="textfield" class="form-group"><label for="Address">Address</label> 
-                           <input type="text" v-model="address" name="Address" id="address" placeholder="" class="form-control required"></div>
+                           <input type="text"  name="Address" id="address" placeholder="" class="form-control required"></div>
                            
 
                            <div field-type="dropdown" class="form-group"><label for="Country">Country</label> 
-                           <select v-model="country" name="country" id="country" type="dropdown" class="form-control required"><option>Australia</option></select></div>
+                           <select  name="country" id="country" type="dropdown" class="form-control required"><option>Australia</option></select></div>
 
                            <div field-type="textfield" class="form-group"><label for="State">State</label> <!----> 
-                           <input v-model="state" type="text" name="State" id="state" placeholder="" class="form-control required"></div>
+                           <input  type="text" name="State" id="state" placeholder="" class="form-control required"></div>
 
                            <div field-type="textfield" class="form-group"><label for="City">City</label> <!---->
-                           <input v-model="city" type="text" name="City" id="city" placeholder="" class="form-control required"></div>
+                           <input  type="text" name="City" id="city" placeholder="" class="form-control required"></div>
 
                            <div field-type="textfield" class="form-group"><label for="Postal Code ">Postal Code </label> <!----> 
-                           <input v-model="postalCode" type="text" name="Postal Code " id="postal-code" placeholder="" class="form-control required"></div>  
+                           <input  type="text" name="Postal Code " id="postal-code" placeholder="" class="form-control required"></div>  
 
                            <div field-type="textfield" class="form-group"><label for="Telephone">Telephone ( We shall be calling this number as we verify you.)</label>
-                           <input v-model="telephone" type="text" name="phone" id="phone" placeholder="" class="form-control required"></div>
+                           <input  type="text" name="phone" id="phone" placeholder="" class="form-control required"></div>
 
                            <!-- end default fields -->
 
@@ -333,7 +333,7 @@
                            <div class="verification-box"><p>Waiting for verification.<br>We are currently assessing the data you have filled in.</p></div>
                            <div v-if="adminComment != ''" class="form-group">
                               <label for="comments">Additional admin comments:</label>
-                              <div class="comment-desc"></div>
+                              <div class="comment-desc">{{ adminComment }}</div>
                            </div>
                            <hr>
                             <div v-if="registrationStatus != 'Pending' && registrationStatus != 'Rejected' " class="next-tab-area"><span class="seller-btn"> <a onclick="j_nextTab();" class="my-btn btn-red" href="javascript:void(0);">Next</a> </span></div>

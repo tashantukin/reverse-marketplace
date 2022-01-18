@@ -85,7 +85,7 @@
                                 <div class="topnav-right">
                                     <div class="col-md-12">
                                         <div class="left inline-controls">
-                                            <input class="left date-control form-control" placeholder="Search Name or Email" type="text" name="from-date" id="from-date">
+                                            <input class="left date-control form-control" placeholder="Search Name or Email" type="text" name="from-date" id="from-date" >
                                         </div>
                                         <div class="left inline-controls">
                                             <select class="form-control">
@@ -93,10 +93,10 @@
                                             </select>
                                         </div>
                                         <div class="left inline-controls">
-                                            <button class="blue-btn">Search</button>
+                                            <button class="blue-btn" onclick="tableSearch(this)">Search</button>
                                         </div>
                                         <div class="left inline-controls">
-                                            <button class="clear-btn">Clear</button>
+                                            <button class="clear-btn" onclick="clearTableSearch(this)">Clear</button>
                                         </div>
                                     </div>
                                 </div>
@@ -184,7 +184,7 @@
                                                     <td data-th="Address" nowrap><a :href="'freelancer_details.php?customid=' + field.Id">{{field.full_address}}</a></td>
                                                     
                                                  
-                                                    <td data-th="Servicing Area" nowrap><a :href="'freelancer_details.php?customid=' + field.Id">{{field.servicing_area}} <span data-toggle="tooltip" title="AA, BB, CC" class="txt-green">3 More</span></td> 
+                                                    <td data-th="Servicing Area" nowrap><a :href="'freelancer_details.php?customid=' + field.Id">{{field.servicing_Area}} <span data-toggle="tooltip" title="AA, BB, CC" class="txt-green">3 More</span></td> 
                                                    
                                                     <td v-for="fields in uploadCustomFields" :data-th="fields.name"><a :href="'freelancer_details.php?customid=' + field.Id"><span class="txt-green">1 File(s)</span></a></td>
                                                    
@@ -423,9 +423,42 @@ function openComment(){
 
 
 
+function tableSearch(x)
+{
+ 
+    var value = $(x).parents(".top-search-menu").find('[placeholder="Search Name or Email"]').val().toLowerCase();
+    if($(x).parents(".top-search-menu").find('[role="presentation"] [href="#jobs"]').parent().hasClass("active")){
+        $("#jobs tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    }else if ($(x).parents(".top-search-menu").find('[role="presentation"] [href="#approvals"]').parent().hasClass("active")){
+        $("#approvals tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    }
+
+    
+  
+}
+
+function clearTableSearch(x)
+{
+
+    $(x).parents(".top-search-menu").find('[placeholder="Search Name or Email"]').val("");
+    $('[onclick="tableSearch(this)"]').click();
+
+}
 
     $(document).ready(function(){
 
+
+        $("#myInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function() {
+         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+        
 
     
 

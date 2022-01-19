@@ -26,8 +26,24 @@
 
     $(document).ready(function ()
     {
-        saveURL();
-        savePluginId(packageId);
+
+
+
+        getMarketplaceCustomFields(function (result)
+        {
+            
+            if (result.some(item => item.Name === 'is_installed')) {
+                console.log('saved already')
+               
+            } else {
+                console.log('not saved already')
+                updatePluginStatus()
+                saveURL();
+                savePluginId(packageId);
+            }
+            
+          });
+
 
 
 
@@ -434,6 +450,28 @@
             }
         });
     }
+
+    function updatePluginStatus() {
+        var data = { 'userId': userId };
+         var apiUrl = packagePath + '/update_plugin_status.php';
+        $.ajax({
+            url: apiUrl,          
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function(response) {
+              
+              
+            },
+            error: function (jqXHR, status, err) {
+                //  toastr.error('---');
+            }
+        });
+    }
+
+
+
+
     function  saveComment()
     {
         
@@ -482,5 +520,23 @@
     
     }
 
+
+    function getMarketplaceCustomFields(callback) {
+        var apiUrl = "/api/v2/marketplaces";
+        $.ajax({
+          url: apiUrl,
+          method: "GET",
+          contentType: "application/json",
+          success: function (result) {
+            if (result) {
+                callback(result.CustomFields);
+                console.log(result.CustomFields)
+
+                console.log(result.CustomFields.some(item => item.Name === 'plugin_id'));
+                console.log(result.CustomFields.some(item => item.Name === 'is_installed'));
+            }
+          },
+        });
+      }
 
 })();

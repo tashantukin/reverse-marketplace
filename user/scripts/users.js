@@ -281,10 +281,10 @@ var usersData = (function ()
                 {
                     var adminToken = $.parseJSON(response);
                     var atoken = adminToken['token']['access_token'];
-                    console.log({ atoken })
+                   // console.log({ atoken })
                     uploadData = { 'Email': email, 'Password' : password, 'ConfirmPassword' : confPassword } 
                     var id = adminToken['id'];
-                    console.log({ id })
+                   // console.log({ id })
                     
                     console.log('data' + JSON.stringify(uploadData));
                     var url = `${protocol}//${baseURL}/api/v2/accounts/register`;
@@ -305,9 +305,11 @@ var usersData = (function ()
                     },
                     success: function success(result)
                     {
-                        console.log(result);
+                        jQuery(".jobform-tab li.active").next('li').children('a').trigger('click');
+                        $('#verification-details .btn-jobform-outline').hide()
+                       // console.log(result);
                        
-                        console.log(result['access_token']);
+                      //  console.log(result['access_token']);
                         userId = result['UserId'];
                        
 
@@ -325,8 +327,25 @@ var usersData = (function ()
                         if (typeof failedCallback === "function") {
                         failedCallback(e);
                         }
+                        console.log(e.status)
+                        console.log(e.responseText);
+                        var res =  JSON.parse(e.responseText)
+                        console.log(JSON.parse(e.responseText));
+                        console.log(res['Message']);
 
-                        toastr.error('An error occurred when saving event, please try again.', 'Oops!Something went wrong.');
+                        if (res['Message'] == 'Username is already taken.') {
+                            $('#email').addClass('error-con');
+                            $('#email').after('<p>Email is already taken. </p>')
+                        }
+
+                        if (res['Message'] == 'The request is invalid.') {
+                            console.log(Object.keys(res['ModelState']))
+                        }
+                        
+
+
+                        //console.log(Object.values(e.responseText['ModelState']))
+                       // toastr.error('An error occurred when saving event, please try again.', 'Oops!Something went wrong.');
                         return;
                     }
                     });
@@ -672,8 +691,19 @@ $(document).ready(function ()
     
     $('body').on('click', '.btn-register', function ()
     {
-        var users = usersData.getInstance();
-        users.createUser($('#email').val(), $('#password').val(), $('#retype_password').val());
+        $('#email').removeClass('error-con');
+        $('#password').removeClass('error-con');
+        $('#retype_password').removeClass('error-con');
+
+        if ($('#email').val() == "" && $('#password').val() == "" && $('#retype_password').val() == "") {
+            $('#email').addClass('error-con');
+            $('#password').addClass('error-con');
+            $('#retype_password').addClass('error-con')
+        } else {
+            var users = usersData.getInstance();
+            users.createUser($('#email').val(), $('#password').val(), $('#retype_password').val());
+        }
+       
     })
 
     $('body').on('change', '#uploads', function (){

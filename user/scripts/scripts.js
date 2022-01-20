@@ -352,7 +352,7 @@
         function init()
         {
         
-          async function getJobDetail(jobId,el,page){
+          async function getJobDetail(jobId,el,page,date){
               var data = [{ 'Name': 'Id', 'Operator': "in", "Value": jobId }]
               
               $.ajax({
@@ -383,7 +383,7 @@
                         <td>${job['is_accepted'] == 1 ? 'Yes' : 'No'} </td>
 
                         <td class="width-location">${job['buyer_contact_no']}</td>
-                        <td>-</td>
+                        <td>${new Date( date* 1000).format("dd/mm/yyyy")}</td>
                        </tr>`;
                       } else {
                         allJobs = `<tr data-id="${job['Id'] }" user-id="${userId}"> </td>
@@ -393,20 +393,16 @@
                         <td>${job['buyer_contact_no']}</td>
                         
                         <td class="width-location">${job['inperson_work_address']}</td>
-                        <td>-</td>
+                        <td>${new Date( date* 1000).format("dd/mm/yyyy")}</td>
                        </tr>`;
                      }
                     
-                      
-                      
-                      
                       
                         waitForElement(`${el}`, function ()
                         {
                            $(`${el} table tbody`).append(allJobs);
                        
                         })
-                    
                     
                     
                   }
@@ -618,7 +614,7 @@
                   jobDetails.forEach(function (job, i)
                   {
 
-                     getJobDetail(job['job_id'],'#tab-quoted','freelancer_quoted');
+                     getJobDetail(job['job_id'],'#tab-quoted','freelancer_quoted', job['CreatedDateTime']);
                    
                  
                   })
@@ -656,7 +652,7 @@
                   jobDetails.forEach(function (job, i)
                   {
 
-                     getJobDetail(job['job_id'],'#tab-accepted','freelancer_quoted');
+                     getJobDetail(job['job_id'],'#tab-accepted','freelancer_quoted',job['CreatedDateTime']);
                    
                  
                   })
@@ -696,7 +692,7 @@
                   jobDetails.forEach(function (job, i)
                   {
 
-                     getJobDetail(job['job_id'],'#tab-rejected','freelancer_quoted');
+                     getJobDetail(job['job_id'],'#tab-rejected','freelancer_quoted', job['CreatedDateTime']);
                    
                  
                   })

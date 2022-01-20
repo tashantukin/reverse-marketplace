@@ -6,6 +6,18 @@
 }
 
 
+/* .home-banner .banner-quote > h1 {
+    color: #fff;
+    font-size: 47px !important;
+    font-weight: 300 !important;
+    margin: 0 auto 20px;
+    letter-spacing: 0.2em;
+    max-width: 890px;
+    width: 100%;
+    line-height: 65px;
+} */
+
+
 .home-banner .banner-quote > h1 {
     color: #fff;
     font-size: 47px !important;
@@ -15,7 +27,13 @@
     max-width: 890px;
     width: 100%;
     line-height: 65px;
+    margin-top: 20%;
 }
+
+
+
+
+
 
 .home-banner .banner-quote > p {
     padding: 0 5%;

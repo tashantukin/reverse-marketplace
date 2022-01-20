@@ -70,6 +70,7 @@
               //if existing user, verify the status
                if (userDetails) {
                   $('.navigation li').first().remove();
+                  $('.btnjob').hide();
                // if (userDetails['status'] == 'Approved' && userDetails['approved_confirmed'] == 1) { 
                   //show the table
 
@@ -1089,23 +1090,22 @@
         //home page
 
        if (document.body.className.includes('page-home')) {
-         
+         $('#register-modal-seller').hide();
+          $('.cart-menu').hide();
           
           //for newly registered buyers after lodging a job
 
           //check if there is an existing lodge job on local storage, if there is, update the job cache with the buyer id (user id)
 
-
-
         var user = userData.getInstance();
         var jobs = jobData.getInstance();
         jobs.getAllJobs()
         jobs.getInterestedJobs()
-          jobs.getQuotedJobs()
-          jobs.getAcceptedJobs()
-          jobs.getRejectedJobs()
-          jobs.getJobLodges()
-          jobs.getUserJobList()
+         jobs.getQuotedJobs()
+         jobs.getAcceptedJobs()
+         jobs.getRejectedJobs()
+         jobs.getJobLodges()
+         jobs.getUserJobList()
         
          
          if ($('#userGuid').length != 0) {
@@ -1115,8 +1115,8 @@
        
 
             var buttons = `
-            <div class="btnjob"><a href="user/plugins/${packageId}/lodge_job.php" class="btn btn-lodge">Lodge a Job</a>
-            <a href="/subscribe" class="btn btn-freelancer">I am a Freelancer</a>
+            <div class="btnjob"><a href="${baseURL}/user/plugins/${packageId}/lodge_job.php" class="btn btn-lodge">Lodge a Job</a>
+            <a href="${baseURL}/subscribe" class="btn btn-freelancer">I am a Freelancer</a>
              </div>`
 
             $('.home-banner').addClass('reverse-slider');

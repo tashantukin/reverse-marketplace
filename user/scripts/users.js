@@ -307,6 +307,9 @@ var usersData = (function ()
                     {
                         jQuery(".jobform-tab li.active").next('li').children('a').trigger('click');
                         $('#verification-details .btn-jobform-outline').hide()
+                        $('#register-modal-consumer').hide();
+                        $('#register-modal-seller').hide();
+                        $('.cart-menu').hide();
                        // console.log(result);
                        
                       //  console.log(result['access_token']);
@@ -335,7 +338,7 @@ var usersData = (function ()
 
                         if (res['Message'] == 'Username is already taken.') {
                             $('#email').addClass('error-con');
-                            $('#email').after('<p>Email is already taken. </p>')
+                            $('#email').after('<p class="warning-message">Email is already taken. </p>')
                         }
 
                         if (res['Message'] == 'The request is invalid.') {
@@ -685,7 +688,9 @@ var documentData = (function ()
 
 $(document).ready(function ()
 {
-   
+   // $('#register-modal-consumer').hide();
+    $('#register-modal-seller').hide();
+    $('.cart-menu').hide();
     $(".my-btn").css({ padding: "0px" });
     $('body').append('<input type ="hidden" id="location">');
     

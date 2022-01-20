@@ -30,9 +30,11 @@
     margin-top: 20%;
 }
 
-
-
-
+.warning-message {
+    font-size: 13px !important;
+    color: red !important;
+    padding: 5px 2px !important;
+}
 
 
 .home-banner .banner-quote > p {

@@ -64,9 +64,7 @@
                     console.log( addressfield );
 
 
-                   
-        
-            
+                
                     // return templates
 
                 } catch (error) {
@@ -80,7 +78,7 @@
                     vm = this;
                     const response = await axios({
                         method: action,
-                        url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_cache`,
+                        url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_cache?sort=-CreatedDateTime`,
                         // data: data,
                         headers: {
                             'Authorization': `Bearer ${token}`

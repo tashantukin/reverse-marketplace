@@ -184,7 +184,7 @@
                                                     <td data-th="Address" nowrap><a :href="'freelancer_details.php?customid=' + field.Id">{{field.full_address}}</a></td>
                                                     
                                                  
-                                                    <td data-th="Servicing Area" nowrap><a :href="'freelancer_details.php?customid=' + field.Id">{{field.servicing_Area}} <span data-toggle="tooltip" title="AA, BB, CC" class="txt-green">3 More</span></td> 
+                                                    <td data-th="Servicing Area" nowrap><a :href="'freelancer_details.php?customid=' + field.Id">{{field.servicing_area}} <span data-toggle="tooltip" title="AA, BB, CC" class="txt-green">3 More</span></td> 
                                                    
                                                     <td v-for="fields in uploadCustomFields" :data-th="fields.name"><a :href="'freelancer_details.php?customid=' + field.Id"><span class="txt-green">1 File(s)</span></a></td>
                                                    

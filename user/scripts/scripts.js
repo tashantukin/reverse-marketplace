@@ -577,7 +577,7 @@
                   jobDetails.forEach(function (job, i)
                   {
 
-                     getJobDetail(job['job_id'],'#tab-interested','freelancer_quote');
+                     getJobDetail(job['job_id'],'#tab-interested','freelancer_quote', job['CreatedDateTime']);
                    
                  
                   })
@@ -707,8 +707,6 @@
             })
            }
 
-
-
            function getJobLodges()
            {
               var jobId = localStorage.getItem("jobID"); 
@@ -779,6 +777,7 @@
            {
               waitForElement('#userGuid', function ()
               {
+               $('.btnjob').hide();
                  var jobListDiv =  `<div class="content-pages">
                  <div class="freelancer-content-main">
         
@@ -804,7 +803,7 @@
                                         </div>
                                          <div class="navtab-filter">
                                             <label>Results per Page:</label><select class="form-control"><option>10</option><option>20</option><option>30</option><option>40</option></select>
-                                            <div class="lodgejob-menu"><a href="lodge.html">Lodge a Job</a></div>
+                                            <div class="lodgejob-menu"><a href="/user/plugins/${packageId}/lodge_job.php">Lodge a Job</a></div>
                                          </div>
                                     </div>
                                   <div class="table-quoted-container">
@@ -1115,8 +1114,8 @@
        
 
             var buttons = `
-            <div class="btnjob"><a href="${baseURL}/user/plugins/${packageId}/lodge_job.php" class="btn btn-lodge">Lodge a Job</a>
-            <a href="${baseURL}/subscribe" class="btn btn-freelancer">I am a Freelancer</a>
+            <div class="btnjob"><a href="/user/plugins/${packageId}/lodge_job.php" class="btn btn-lodge">Lodge a Job</a>
+            <a href="/subscribe" class="btn btn-freelancer">I am a Freelancer</a>
              </div>`
 
             $('.home-banner').addClass('reverse-slider');

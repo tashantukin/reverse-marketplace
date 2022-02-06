@@ -100,6 +100,10 @@ const jobData = new Vue({
             allJobDetails: [],
             jobDetails: [],
             taskOption: [],
+            locationFields: [],
+            timeframeFields: [],
+            getquoteFields: [],
+            contactFields: [],
             url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_form/`
 
         }
@@ -127,12 +131,151 @@ const jobData = new Vue({
             }
 
             
-        }
+        },
+
+        async getFields(tabName, tabId)
+        {                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+            try {
+                vm = this;
+                const response = await axios({
+                    method: "GET",
+                    url: vm.url,
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                const details = await response
+                vm.allJobDetails = details.data
+                vm.jobDetails = vm.allJobDetails.Records.filter((data) => data.classification === tabName)
+                vm.taskOption = $.parseJSON(vm.jobDetails[0].values);
+
+
+                $("#task-list input[name='tasks']:checked").each(function ()
+                {
+                    
+                })
+                
+            } catch (error) {
+                console.log("error", error);
+            }
+        },
+
+        async getLocationFields()
+        {                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+            try {
+                vm = this;
+                const response = await axios({
+                    method: "GET",
+                    url: vm.url,
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                const details = await response
+                vm.allJobDetails = details.data
+                vm.locationFields = vm.allJobDetails.Records.filter((data) => data.classification === "Location")
+               // vm.taskOption = $.parseJSON(vm.jobDetails[0].values);
+
+
+    
+            } catch (error) {
+                console.log("error", error);
+            }
+        },
+
+        async getQuotationFields()
+        {                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+            try {
+                vm = this;
+                const response = await axios({
+                    method: "GET",
+                    url: vm.url,
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                const details = await response
+                vm.allJobDetails = details.data
+                vm.getquoteFields = vm.allJobDetails.Records.filter((data) => data.classification === "Get Quote")
+               // vm.taskOption = $.parseJSON(vm.jobDetails[0].values);
+
+
+    
+            } catch (error) {
+                console.log("error", error);
+            }
+        },
+
+
+        async getTimeFrameFields()
+        {                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+            try {
+                vm = this;
+                const response = await axios({
+                    method: "GET",
+                    url: vm.url,
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                const details = await response
+                vm.allJobDetails = details.data
+                vm.timeframeFields  = vm.allJobDetails.Records.filter((data) => data.classification === "Time Frame")
+              //  vm.taskOption = $.parseJSON(vm.jobDetails[0].values);
+
+
+    
+            } catch (error) {
+                console.log("error", error);
+            }
+        },
+
+
+        async getContactDetailsFields()
+        {                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+            try {
+                vm = this;
+                const response = await axios({
+                    method: "GET",
+                    url: vm.url,
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                const details = await response
+                vm.allJobDetails = details.data
+                vm.contactFields= vm.allJobDetails.Records.filter((data) => data.classification === "Contact Details")
+               // vm.taskOption = $.parseJSON(vm.jobDetails[0].values);
+
+
+    
+            } catch (error) {
+                console.log("error", error);
+            }
+        },
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
 
 
     },
     beforeMount() {
         this.getAllJobData()
+        this.getLocationFields()
+        this.getQuotationFields()
+        this.getTimeFrameFields()
+        this.getContactDetailsFields()
     }
 
 })

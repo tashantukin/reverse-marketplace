@@ -39,7 +39,7 @@
             {
                 
                 vm = this;
-                var data = { 'tab_name': $('#onbrd_tab_name').val(), 'sort_order' : 0 }
+                var data = { 'tab_name': $('#onbrd_tab_name').val(), 'sort_order' : -1 }
                 console.log({data})
                 $.ajax({
                     method: action,
@@ -54,7 +54,8 @@
                     {
                         console.log({ response })
 
-                        vm.getAllTabs();
+                        vm.getAllTabs("modal");
+                        vm.getAllTabs("list");
                     
 
                     }
@@ -63,14 +64,14 @@
                 })
             },
 
-            async getAllTabs()
+            async getAllTabs(page)
             {
                
                 try {
                     vm = this;
                     const response = await axios({
                         method: "GET",
-                        url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_fields_tabs`,
+                        url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_fields_tabs?sort=sort_order`,
                         // data: data,
                         headers: {
                             'Authorization': `Bearer ${token}`
@@ -80,37 +81,97 @@
                     vm.allTabs = tabs.data.Records
     
                     console.log(vm.allTabs);
-                    $('#OnboardingSteps .ui-sortable').empty()
-                    $.each(vm.allTabs, function (index, tab)
-                    { 
-                        $("#OnboardingSteps .ui-sortable").append(`
-                        <li data-parent="" class="has-subitems" steps-id = ${tab.Id} v-on:click="testdrag" >
-                                <div class="row-wrapper main-sub">
-                                    <div class="row-details pull-left">
-                                        <div>
-                                            <i class="icon icon-arrange-icon" ></i>
-                                        </div>
-                                        <div class="name-area">
-                                            <span class="item-name"> ${tab.tab_name} </span>
-                                            <input type="text" class="form-control hide" name="onbrd_tab_name" id="onbrd_tab_name" />
-                                        </div>
-                                        
-                                    </div>
-                                    <div class="row-action pull-right">
-                                        <div><a href="javascript:void(0)" onclick="editNameSteps(this)" id="cat_edit"><i class="icon icon-edit-2"></i></a></div>
-                                        <div>
-                                            <a class="delete-cat" href="javascript:void(0)" onclick="deleteSteps(this)" id="cat_delete"><i class="icon icon-delete-btn-user"></i></a>
-                                            <a href="javascript:void(0)" onclick="saveNameSteps(this)" class="blue-btn pull-right hide">Save</a>
-                                        </div>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                
-                         </li>
-        
-                         `);
 
+                    if (page == 'modal') {
+                        $('#OnboardingSteps .ui-sortable').empty()
+                        $.each(vm.allTabs, function (index, tab)
+                        { 
+                            $("#OnboardingSteps .ui-sortable").append(`
+                            <li data-parent="" class="has-subitems" steps-id = ${tab.Id} v-on:click="testdrag" >
+                                    <div class="row-wrapper main-sub">
+                                        <div class="row-details pull-left">
+                                            <div>
+                                                <i class="icon icon-arrange-icon" ></i>
+                                            </div>
+                                            <div class="name-area">
+                                                <span class="item-name"> ${tab.tab_name} </span>
+                                                <input type="text" class="form-control hide" name="onbrd_tab_name" id="onbrd_tab_name" />
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="row-action pull-right">
+                                            <div><a href="javascript:void(0)" onclick="editNameSteps(this)" id="cat_edit"><i class="icon icon-edit-2"></i></a></div>
+                                            <div>
+                                                <a class="delete-cat" href="javascript:void(0)" onclick="deleteSteps(this)" id="cat_delete"><i class="icon icon-delete-btn-user"></i></a>
+                                                <a href="javascript:void(0)" onclick="saveNameSteps(this)" class="blue-btn pull-right hide">Save</a>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    
+                            </li>
+            
+                            `);
+                    
+
+                        })
+                    }
+                    else {
+                        
+                          //index list
+                        $('[role="tablist"]').empty();
+                        $('.custom-listing-table-onbrd').empty();
+                        
+                    $.each(vm.allTabs, function (index, tab){ 
+                       
+                        $('[role="tablist"]').append(`<li role="presentation"><a href="#${tab.Id}" data-id="${tab.Id}"  aria-controls= ${tab.Id} role="tab" data-toggle="tab"> ${tab.tab_name} </a></li>`);
+                        
+                         $(".tab-content").append(`
+                             <div role="tabpanel" class="tab-pane" id="${tab.Id}">
+                                    <div class="panel-box tabular">
+                                        <div class="custom-list-box-heading-onbrd white">
+
+                                            <div class="cursor-sec cursor-repositioning-onbrd">
+            
+                                            </div>
+            
+                                            <div class="user-field-name-onbrd">
+            
+                                                Field Name
+            
+                                            </div>
+            
+                                            <div class="user-field-type-onbrd">
+            
+                                                Field Type
+            
+                                            </div>
+            
+                                            <div class="user-field-consumer-onbrd">
+            
+                                                <!-- Steps in lodging process -->
+            
+                                            </div>
+            
+                                            <div class="user-field-action-onbrd">
+            
+                                            </div>
+            
+                                            <div class="clearfix">
+            
+                                            </div>
+            
+                                        </div>
+
+                                    </div>
+                                </div>`);
+                        
+                    
+                        vm.getAllFields(tab.Id);
                     })
+                   
+                    }
+                       
                     
     
                 } catch (error) {
@@ -136,14 +197,169 @@
                     success: function (response)
                     {
                         console.log({ response })
+                        vm.getAllTabs("list");
+                    }
+                
+                
+                })
+            },
 
+            async getAllFields(tabId)
+            {
+                vm = this;
+                var data = [{ 'Name': 'classification', 'Operator': "equal", "Value": tabId }]
+            
+                
+            $.ajax({
+                method: "POST",
+                url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_form/`,
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                
+                data: JSON.stringify(data),
+                //  })
+                success: function (response)
+                {
+                    console.log({ response })
+                
+                    const fields = response.Records
+
+                    if (fields.length > 0) {
+                        const fieldDetails = fields;
+                        
+                        $.each(fieldDetails, function (index, field)
+                        {
+                            fieldName = field.name,
+                            fieldType = field.type_of_field,
+                            fieldId = field.Id 
+                            
+                            $(`.tab-content #${tabId}`).append(`<div class="custom_list_wrapper">
+
+                                            <ul class="custom-listing-table-onbrd row-height-50">
+            
+                                                
+                                                <li class="all-cat added-description">
+            
+                                                    <div class="custom-list-box-onbrd">
+            
+                                                        <div class="cursor-sec cursor-repositioning-onbrd">
+            
+                                                            <div class="repositioning-icon-onbrd  ">
+            
+                                                                <div class="pull-left">
+            
+                                                                    <a class="panel-toggle" href="javascript:void(0);">
+            
+                                                                        <i class="icon icon-toggle arrow-up">
+            
+                                                                        </i>
+            
+                                                                    </a>
+            
+                                                                </div>
+            
+                                                                <div class="pull-left">
+            
+                                                                    <a class="panel-toggle" href="javascript:void(0);">
+            
+                                                                        <i class="icon icon-toggle arrow-down">
+            
+                                                                        </i>
+            
+                                                                    </a>
+            
+                                                                </div>
+            
+                                                            </div>
+            
+                                                        </div>
+            
+                                                        <div class="user-field-name-onbrd"> ${fieldName} </div>
+            
+                                                        <div class="user-field-type-onbrd"> ${fieldType} </div>
+            
+                                                        <div class="user-field-consumer-onbrd">
+                                                            <!-- 2. Verification Details -->
+            
+                                                        </div>
+            
+                                                        <div class="user-field-action-onbrd">
+            
+                                                            <div class="row-action">
+            
+                                                                <a href="javascript:void(0);" class="btn-edit-onbrdfields" data-id="${fieldId}">
+            
+                                                                    <i class="icon icon-edit-2">
+            
+                                                                    </i>
+            
+                                                                </a>
+            
+                                                                <a class="delete-cat" href="javascript:void(0)" onclick="delete_opt(id,this)" data-id="${fieldId}">
+            
+                                                                    <i class="icon icon-delete-btn-user">
+            
+                                                                    </i>
+            
+                                                                </a>
+            
+                                                            </div>
+            
+                                                        </div>
+            
+                                                        <div class="clearfix">
+            
+                                                        </div>
+            
+                                                    </div>
+            
+                                                </li>
+            
+                                            </ul>
+            
+                                        </div>
+
+
+                                    </div>
+                                </div>` )
+    
+                        })
+
+                        
+                        
+                    }
+                   
+
+                }
+            
+            
+            })
+            },
+
+            async deleteTab(tabId)
+            {
+                 vm = this;
+               // console.log({data})
+                $.ajax({
+                    method: "DELETE",
+                    url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_fields_tabs/rows/${tabId}`,
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    
+                   // data: JSON.stringify(data),
+                    //  })
+                    success: function (response)
+                    {
+                        console.log({ response })
+                        vm.getAllTabs("list");
                     }
                 
                 
                 })
             }
 
-    
         },
     
         computed: {
@@ -151,10 +367,12 @@
           },
     
     
-        beforeMount() {
-           
+      beforeMount()
+      {
             
-        },
+        this.getAllTabs("list");
+            
+      },
     
     
     })
@@ -166,12 +384,11 @@
 
     
 
-    $(document).ready(function() {
+$(document).ready(function() {
 
        
-
     $("#OnboardingSteps .sortable-list").sortable({
-        sort: function (e)
+        stop: function (e)
         {
             $(this).find('li').each(function ()
             {
@@ -182,7 +399,21 @@
      
         }
     });
+
+
+    $('body').on('click', '#btn-add-new-steps', function ()
+    {
+        tabs.getAllTabs('modal');
+    })
+
+
+     $('body').on('click', '#cat_delete', function ()
+    {    $(this).parents('li').remove();
+         tabs.deleteTab($(this).parents('li').attr('steps-id'));
+         
+    })
+
        
 
-    });
+});
 })();

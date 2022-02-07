@@ -64,12 +64,6 @@
 
                             <ul class="nav nav-tabs" role="tablist">
 
-                                <li role="presentation" class="active"><a href="#Registration"
-                                        aria-controls="Registration" role="tab" data-toggle="tab">Registration</a></li>
-
-                                <!-- <li role="presentation"><a href="#approvals" aria-controls="approvals" role="tab" data-toggle="tab">Approvals</a></li> -->
-
-
 
                             </ul>
 
@@ -119,304 +113,7 @@
             </div>
 
             <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="Registration">
-                    <div class="panel-box tabular">
-                        <div class="custom-list-box-heading-onbrd white">
 
-                            <div class="cursor-sec cursor-repositioning-onbrd">
-
-                            </div>
-
-                            <div class="user-field-name-onbrd">
-
-                                Field Name
-
-                            </div>
-
-                            <div class="user-field-type-onbrd">
-
-                                Field Type
-
-                            </div>
-
-                            <div class="user-field-consumer-onbrd">
-
-                                <!-- Steps in lodging process -->
-
-                            </div>
-
-                            <div class="user-field-action-onbrd">
-
-                            </div>
-
-                            <div class="clearfix">
-
-                            </div>
-
-                        </div>
-
-                        <div class="custom_list_wrapper">
-
-                            <ul class="custom-listing-table-onbrd row-height-50">
-
-                                <li class="all-cat">
-
-                                    <div class="custom-list-box-onbrd">
-
-                                        <div class="cursor-sec cursor-repositioning-onbrd">
-
-                                            <div class="repositioning-icon-onbrd  ">
-
-
-
-                                            </div>
-
-                                        </div>
-
-                                        <div class="user-field-name-onbrd">
-
-                                            Email
-
-                                        </div>
-
-                                        <div class="user-field-type-onbrd">
-
-                                            email
-
-                                        </div>
-
-                                        <div class="user-field-consumer-onbrd">
-
-                                            <!-- 1.Registration -->
-
-                                        </div>
-
-                                        <div class="user-field-action-onbrd">
-
-
-
-                                        </div>
-
-                                        <div class="clearfix">
-
-                                        </div>
-
-                                    </div>
-
-                                </li>
-
-                                <li class="all-cat added-description">
-
-                                    <div class="custom-list-box-onbrd">
-
-                                        <div class="cursor-sec cursor-repositioning-onbrd">
-
-                                            <div class="repositioning-icon-onbrd  ">
-
-
-
-                                            </div>
-
-                                        </div>
-
-                                        <div class="user-field-name-onbrd">
-
-                                            Password
-
-                                        </div>
-
-                                        <div class="user-field-type-onbrd">
-
-                                            password
-
-                                        </div>
-
-                                        <div class="user-field-consumer-onbrd">
-
-                                            <!-- 1.Registration -->
-
-                                        </div>
-
-                                        <div class="user-field-action-onbrd">
-
-                                            <div class="row-action">
-
-
-
-                                            </div>
-
-                                        </div>
-
-                                        <div class="clearfix">
-
-                                        </div>
-
-                                    </div>
-
-                                </li>
-
-                                <li class="all-cat added-description">
-
-                                    <div class="custom-list-box-onbrd">
-
-                                        <div class="cursor-sec cursor-repositioning-onbrd">
-
-                                            <div class="repositioning-icon-onbrd  ">
-
-                                                <div class="pull-left">
-
-                                                    <a class="panel-toggle" href="javascript:void(0);">
-
-                                                        <i class="icon icon-toggle arrow-up">
-
-                                                        </i>
-
-                                                    </a>
-
-                                                </div>
-
-                                                <div class="pull-left">
-
-                                                    <a class="panel-toggle" href="javascript:void(0);">
-
-                                                        <i class="icon icon-toggle arrow-down">
-
-                                                        </i>
-
-                                                    </a>
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-
-                                        <div class="user-field-name-onbrd">Company Name</div>
-
-                                        <div class="user-field-type-onbrd">text field</div>
-
-                                        <div class="user-field-consumer-onbrd">
-                                            <!-- 2. Verification Details -->
-
-                                        </div>
-
-                                        <div class="user-field-action-onbrd">
-
-                                            <div class="row-action">
-
-                                                <a href="javascript:void(0);" class="btn-edit-onbrdfields">
-
-                                                    <i class="icon icon-edit-2">
-
-                                                    </i>
-
-                                                </a>
-
-                                                <a class="delete-cat" href="javascript:void(0)"
-                                                    onclick="delete_opt(id,this)">
-
-                                                    <i class="icon icon-delete-btn-user">
-
-                                                    </i>
-
-                                                </a>
-
-                                            </div>
-
-                                        </div>
-
-                                        <div class="clearfix">
-
-                                        </div>
-
-                                    </div>
-
-                                </li>
-
-                                <li class="all-cat added-description">
-
-                                    <div class="custom-list-box-onbrd">
-
-                                        <div class="cursor-sec cursor-repositioning-onbrd">
-
-                                            <div class="repositioning-icon-onbrd  ">
-
-                                                <div class="pull-left">
-
-                                                    <a class="panel-toggle" href="javascript:void(0);">
-
-                                                        <i class="icon icon-toggle arrow-up">
-
-                                                        </i>
-
-                                                    </a>
-
-                                                </div>
-
-                                                <div class="pull-left">
-
-                                                    <a class="panel-toggle" href="javascript:void(0);">
-
-                                                        <i class="icon icon-toggle arrow-down">
-
-                                                        </i>
-
-                                                    </a>
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-
-                                        <div class="user-field-name-onbrd">Address</div>
-
-                                        <div class="user-field-type-onbrd">address box</div>
-
-                                        <div class="user-field-consumer-onbrd">
-                                            <!-- 2. Verification Details -->
-                                        </div>
-
-                                        <div class="user-field-action-onbrd">
-
-                                            <div class="row-action">
-
-                                                <a href="javascript:void(0);" class="btn-edit-onbrdfields">
-
-                                                    <i class="icon icon-edit-2">
-
-                                                    </i>
-
-                                                </a>
-
-                                                <a class="delete-cat" href="javascript:void(0)"
-                                                    onclick="delete_opt(id,this)">
-
-                                                    <i class="icon icon-delete-btn-user">
-
-                                                    </i>
-
-                                                </a>
-
-                                            </div>
-
-                                        </div>
-
-                                        <div class="clearfix">
-
-                                        </div>
-
-                                    </div>
-
-                                </li>
-
-                            </ul>
-
-                        </div>
-
-
-                    </div>
-                </div>
             </div>
 
 
@@ -648,10 +345,10 @@
             <div class="form-group">
                 <label>Steps</label>
                 <select class="form-control required" name="onbrd_steps" id="onbrd_steps" :value="fieldSteps">
-                    <option value="Location">Select Location</option>
-                    <option value="Get Quote">Get Quote</option>
+                    <option v-for="tab in allTabs" :value=tab.Id>{{tab.tab_name}}</option>
+                    <!-- <option value="Get Quote">Get Quote</option>
                     <option value="Time Frame">Time Frame</option>
-                    <option value="Contact Details">Contact Details</option>
+                    <option value="Contact Details">Contact Details</option> -->
                 </select>
             </div>
 
@@ -671,9 +368,6 @@
 
                 </div>
             </div>
-
-
-
         </div>
         <div class="popup-footer">
             <a class="mybtn btn-grey" data-dismiss="modal" href="javascript:void(0);">Cancel</a>
@@ -828,7 +522,8 @@ jQuery(document).ready(function() {
 
         var fn = jQuery(this).closest('.added-description').find('.user-field-name-onbrd').text();
         var ft = jQuery(this).closest('.added-description').find('.user-field-type-onbrd').text();
-        var st = jQuery(this).closest('.added-description').find('.user-field-consumer-onbrd').text();
+        var st = jQuery(this).closest('.added-description').find('.user-field-consumer-onbrd')
+            .text();
 
         jQuery('#onbrd_field_name').val(fn);
         jQuery('#onbrd_field_type').val(ft);
@@ -1411,6 +1106,6 @@ jQuery(function() {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
 <script type="text/javascript" src="scripts/scripts3.js"></script>
 <script type="text/javascript" src="scripts/tabs.js"></script>
-<script type="text/javascript" src="scripts/fields.js"></script>
+<!-- <script type="text/javascript" src="scripts/fields.js"></script> -->
 
 <!-- end footer -->

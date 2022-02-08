@@ -43,7 +43,7 @@
                 console.log({data})
                 $.ajax({
                     method: action,
-                    url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_fields_tabs/rows`,
+                    url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/onboard_fields_tabs/rows`,
                     headers: {
                         "Content-Type": "application/json"
                     },
@@ -71,7 +71,7 @@
                     vm = this;
                     const response = await axios({
                         method: "GET",
-                        url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_fields_tabs?sort=sort_order`,
+                        url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/onboard_fields_tabs?sort=sort_order`,
                         // data: data,
                         headers: {
                             'Authorization': `Bearer ${token}`
@@ -187,7 +187,7 @@
                 console.log({data})
                 $.ajax({
                     method: "PUT",
-                    url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_fields_tabs/rows/${tabId}`,
+                    url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/onboard_fields_tabs/rows/${tabId}`,
                     headers: {
                         "Content-Type": "application/json"
                     },
@@ -212,7 +212,7 @@
                 
             $.ajax({
                 method: "POST",
-                url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_form/`,
+                url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/freelancer_form/`,
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -343,7 +343,7 @@
                // console.log({data})
                 $.ajax({
                     method: "DELETE",
-                    url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_fields_tabs/rows/${tabId}`,
+                    url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/onboard_fields_tabs/rows/${tabId}`,
                     headers: {
                         "Content-Type": "application/json"
                     },
@@ -367,7 +367,7 @@
                 console.log({data})
                 $.ajax({
                     method: "PUT",
-                    url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_fields_tabs/rows/${tabId}`,
+                    url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/onboard_fields_tabs/rows/${tabId}`,
                     headers: {
                         "Content-Type": "application/json"
                     },
@@ -415,6 +415,7 @@
     })
     
    
+
 $(document).ready(function() {
 
        
@@ -451,6 +452,7 @@ $(document).ready(function() {
          
     })
 
-    
+       
+
 });
 })();

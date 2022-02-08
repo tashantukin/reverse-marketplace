@@ -1035,7 +1035,7 @@ function addSteps(x) {
 
 function editNameSteps(x) {
     var that = jQuery(x);
-    var stepsName = that.parents("li").find(".name-area .item-name").text();
+    var stepsName = that.parents("li").attr('steps-id');
     that.parents("body").find(`[aria-controls="` + stepsName + `"]`).addClass("step-name-edit");
     that.parents("body").find(`#` + stepsName).addClass("step-name-edit-tab");
     that.parents("li").find(".name-area .item-name").addClass("hide");

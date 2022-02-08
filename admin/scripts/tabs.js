@@ -103,7 +103,7 @@
                                             <div><a href="javascript:void(0)" onclick="editNameSteps(this)" id="cat_edit"><i class="icon icon-edit-2"></i></a></div>
                                             <div>
                                                 <a class="delete-cat" href="javascript:void(0)" onclick="deleteSteps(this)" id="cat_delete"><i class="icon icon-delete-btn-user"></i></a>
-                                                <a href="javascript:void(0)" onclick="saveNameSteps(this)" class="blue-btn pull-right hide">Save</a>
+                                                <a href="#" tab-id = ${tab.Id} class="blue-btn pull-right hide" id="save-edit-tab">Save</a>
                                             </div>
                                         </div>
                                         <div class="clearfix"></div>
@@ -358,6 +358,43 @@
                 
                 
                 })
+            },
+
+            async editTab(e,tabId)
+            {
+                vm = this;
+                var data = { 'tab_name': e.parents("li").find(".name-area input").val() }
+                console.log({data})
+                $.ajax({
+                    method: "PUT",
+                    url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_fields_tabs/rows/${tabId}`,
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    
+                    data: JSON.stringify(data),
+                    //  })
+                    success: function (response)
+                    {
+                        console.log({ response })
+
+                            e.parents("body").find(`.step-name-edit`).removeClass('step-name-edit');
+                            e.parents("body").find(`.step-name-edit-tab`).removeClass('step-name-edit-tab');
+                            e.parents("li").find(".name-area .item-name").text(e.parents("li").find(".name-area input").val());
+                            e.parents("li").find(".name-area .item-name").removeClass("hide");
+                            e.parents("li").find(".name-area input").addClass("hide");
+                            e.parents("li").find(".row-action #cat_edit").removeClass("hide");
+                            e.parents("li").find(".row-action .delete-cat").removeClass("hide");
+                            e.parents("li").find(".row-action .blue-btn").addClass("hide");
+
+                        vm.getAllTabs("modal");
+                        vm.getAllTabs("list");
+                    
+
+                    }
+                
+                
+                })
             }
 
         },
@@ -378,11 +415,7 @@
     })
     
    
-    
 
-    
-
-    
 
 $(document).ready(function() {
 
@@ -410,6 +443,13 @@ $(document).ready(function() {
      $('body').on('click', '#cat_delete', function ()
     {    $(this).parents('li').remove();
          tabs.deleteTab($(this).parents('li').attr('steps-id'));
+         
+     })
+    
+       $('body').on('click', '#save-edit-tab', function ()
+    {    
+           tabs.editTab($(this), $(this).attr('tab-id'));
+           
          
     })
 

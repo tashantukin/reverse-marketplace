@@ -36,7 +36,7 @@ function waitForElement(elementPath, callBack)
 waitForElement('.tab-content', function ()
 {
 const sellerFields = new Vue({
-    el: ".tab-content",
+    el: ".freelancer-content-main",
 
     data()
     {
@@ -55,7 +55,8 @@ const sellerFields = new Vue({
             city: '',
             postalCode: '',
             telephone: '',
-            isEdit: 0
+            isEdit: 0,
+            allTabs: []
 
         }
     },
@@ -159,7 +160,174 @@ const sellerFields = new Vue({
             
             })
  
-        }
+        },
+
+        
+        async getAllTabs()
+            {
+               
+                try {
+                    vm = this;
+                    const response = await axios({
+                        method: "GET",
+                        url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/onboard_fields_tabs?sort=sort_order`,
+                        // data: data,
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    })
+                    const tabs = await response
+                    vm.allTabs = tabs.data.Records
+                    var classes= "";
+                    console.log(vm.allTabs);
+                    
+                    $.each(vm.allTabs, function (index, tab)
+                    {  
+                        if (tab.sort_order == 0) {
+                            classes = "tab-pane fade in active";
+                        } else {
+                             classes = "tab-pane fade";
+                        }
+                        $(".tab-content").append(`
+                        
+                             <div id="${tab.Id}" class="${classes}"
+                             classification-name="${tab.tab_name}">
+                            <div class="jobform-form">
+
+                             <hr>
+                             <div class="next-tab-area"><span class="seller-btn"> <a onclick="j_nextTab();"
+                                class="my-btn btn-red" href="javascript:void(0);">Next</a> </span></div>
+                                </div>
+                            </div>
+
+                         `)
+                          $(".my-btn").css({ padding: "0px" });
+                          $(".fancy-checkbox label span").css({height: "0px"});
+                        
+                        vm.getAllFields(tab.Id, tab.tab_name)
+
+                    })
+
+    
+                } catch (error) {
+                    console.log("error", error);
+                }
+        },
+
+        async getAllFields(tabId,tabName)
+         {
+                vm = this;
+                var data = [{ 'Name': 'classification', 'Operator': "equal", "Value": tabId }]
+            
+                
+            $.ajax({
+                method: "POST",
+                url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/freelancer_form/`,
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                
+                data: JSON.stringify(data),
+                //  })
+                success: function (response)
+                {
+                    console.log({ response })
+                
+                    const fields = response.Records
+
+                    if (fields.length > 0) {
+                        const fieldDetails = fields;
+                        
+                        $.each(fieldDetails, function (index, field)
+                        {
+                            fieldName = field.name,
+                            fieldType = field.type_of_field,
+                            fieldId = field.Id 
+                            var customFieldInput = '';
+                            
+                            switch (fieldType) {
+                                case 'search':
+
+                                customFieldInput = `<div class="search-abn">
+                                <input type="search" class="form-control search" name="${fieldName}"
+                                    placeholder="${field.placeholder}">
+                                <button><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                    </svg></button>
+                                </div>`
+                                    break;
+                                
+                                case 'textfield':
+                            
+                                    customFieldInput = ` <input type="text" class="form-control" name="${fieldName}"id="${fieldName}" placeholder="${field.placeholder}">`
+                                    break;
+                               
+                                case 'dropdown':
+                                    let options;
+                                   
+                                    $.each(JSON.parse(field.values), function (index, option)
+                                    {
+                                        options += `<option name='${option}' value="${option}">${option}</option>`
+                                    });
+                                    customFieldInput = `<select id="${fieldId}" class="form-control"  name="${fieldName}" id="${fieldName}" type="dropdown">
+                                      ${options}
+                                    </select>`;
+                                    break;    
+                                       
+                                case 'checkbox': 
+
+                                    let chkoptions = '';
+                                    $.each(cf.values, function (index, option)
+                                    {
+                                        chkoptions += `<div class="fancy-checkbox checkbox-sm">
+                                        <input type="checkbox" id="${option}" name="${option}">
+                                        <label for="${option}"><span>${option}</span>
+                                        </label>  </div>`
+                                    });
+                                   customFieldInput = `<class="btn-hbox custom-fancyjb cdflex btn-hrmmargin customcheckbox" id="${fieldId}"> 
+                                    ${chkoptions}
+                                    </div>`;
+                                    break;
+
+                                case 'radiobutton': 
+                                    break;
+                                
+                                case 'number': 
+                            
+                                    customFieldInput = ` <input type="number" class="form-control" name="${fieldName}"id="${fieldName}" placeholder="${field.placeholder}">`
+                                    break;
+                                
+                                
+                                
+                            }
+                            
+                            var customField = `<h3>${tabName}</h3>
+                            
+                            <div class="form-group custom-details">
+                            
+                              <label for=${fieldName}>${fieldName}</label>       
+                                ${customFieldInput}
+                            </div>
+
+                            `
+                        
+                            $(`.tab-content #${tabId} .jobform-form`).prepend(customField)
+
+
+                        })
+
+                        
+                        
+                    }
+                   
+
+                }
+            
+            
+            })
+        },
 
     },
 
@@ -174,15 +342,16 @@ const sellerFields = new Vue({
           return str.replace(" ","-").toLowerCase();
         },
       },
-    // beforeMount() {
-    //    this.getAllSellerFields()
-    // },
+    beforeMount() {
+        this.getAllTabs()
+    },
 
     mounted() {
        // this.currentTime = 3;
     
         this.$nextTick(() => {
             this.getAllSellerFields()
+            
            // this.getUserDetails();
         });
       }
@@ -252,6 +421,7 @@ window.onload = function ()
         beforeMount()
         {
             this.getAllJobs('GET')
+          
         }
 
     })

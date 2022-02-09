@@ -10,7 +10,7 @@
     const protocol = window.location.protocol;
     var isEdit = false;
 
-       function waitForElement(elementPath, callBack) {
+    function waitForElement(elementPath, callBack) {
       window.setTimeout(function () {
         if ($(elementPath).length) {
           callBack(elementPath, $(elementPath));
@@ -19,6 +19,18 @@
         }
       }, 500);
     }
+
+
+    function GetSortOrder(prop) {    
+    return function(a, b) {    
+        if (a[prop] > b[prop]) {    
+            return 1;    
+        } else if (a[prop] < b[prop]) {    
+            return -1;    
+        }    
+        return 0;    
+        }    
+    } 
 
 
     //run on creation page only
@@ -242,7 +254,7 @@
                 
             $.ajax({
                 method: "POST",
-                url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_form/`,
+                url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_form?sort=sort_order`,
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -256,7 +268,7 @@
                     const fields = response.Records
 
                     if (fields.length > 0) {
-                        const fieldDetails = fields;
+                        const fieldDetails = fields.sort(GetSortOrder("sort_order"));;
                         
                         $.each(fieldDetails, function (index, field)
                         {

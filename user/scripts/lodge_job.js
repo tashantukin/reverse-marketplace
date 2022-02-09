@@ -286,6 +286,7 @@ const jobData = new Vue({
                              <div id="${tab.Id}" class="${classes}"
                              classification-name="${tab.tab_name}">
                             <div class="jobform-form">
+                            <h3>${tab.tab_name}</h3>
 
                              <hr>
                              <div class="next-tab-area"><span class="seller-btn"> <a onclick="j_nextTab();"
@@ -316,7 +317,7 @@ const jobData = new Vue({
                 
             $.ajax({
                 method: "POST",
-                url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_form/`,
+                url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_form?sort=-sort_order`,
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -397,7 +398,7 @@ const jobData = new Vue({
                                 
                             }
                             
-                            var customField = `<h3>${tabName}</h3>
+                            var customField = `
                             
                             <div class="form-group custom-details">
                             
@@ -407,7 +408,7 @@ const jobData = new Vue({
 
                             `
                         
-                            $(`.tab-content #${tabId} .jobform-form`).prepend(customField)
+                            $(`.tab-content #${tabId} .jobform-form .next-tab-area`).before(customField)
 
 
                         })

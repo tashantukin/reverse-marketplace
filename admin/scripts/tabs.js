@@ -10,37 +10,48 @@
     const protocol = window.location.protocol;
     var isEdit = false;
 
+       function waitForElement(elementPath, callBack) {
+      window.setTimeout(function () {
+        if ($(elementPath).length) {
+          callBack(elementPath, $(elementPath));
+        } else {
+          waitForElement(elementPath, callBack);
+        }
+      }, 500);
+    }
 
 
     //run on creation page only
-  var tabs =  new Vue({
+    var tabs = new Vue({
         el: "#main",
-        data() {
+        data()
+        {
             return {
-              allTabs : []
+                allTabs: []
          
                 
             }
         },
     
         filters: {
-            capitalize: function(str) {
+            capitalize: function (str)
+            {
                 return str.charAt(0).toUpperCase() + str.slice(1);
             },
     
         },
     
         methods: {
-        //save tabs/ steps
-        //Custom table name : job_fields_tabs
-        //tab_name, sort_order, Id
+            //save tabs/ steps
+            //Custom table name : job_fields_tabs
+            //tab_name, sort_order, Id
 
-           async saveNewTab(action, e)
+            async saveNewTab(action, e)
             {
                 
                 vm = this;
-                var data = { 'tab_name': $('#onbrd_tab_name').val(), 'sort_order' : -1 }
-                console.log({data})
+                var data = { 'tab_name': $('#onbrd_tab_name').val(), 'sort_order': -1 }
+                console.log({ data })
                 $.ajax({
                     method: action,
                     url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_fields_tabs/rows`,
@@ -85,7 +96,7 @@
                     if (page == 'modal') {
                         $('#OnboardingSteps .ui-sortable').empty()
                         $.each(vm.allTabs, function (index, tab)
-                        { 
+                        {
                             $("#OnboardingSteps .ui-sortable").append(`
                             <li data-parent="" class="has-subitems" steps-id = ${tab.Id} v-on:click="testdrag" >
                                     <div class="row-wrapper main-sub">
@@ -118,15 +129,16 @@
                     }
                     else {
                         
-                          //index list
+                        //index list
                         $('[role="tablist"]').empty();
                         $('.custom-listing-table-onbrd').empty();
                         
-                    $.each(vm.allTabs, function (index, tab){ 
+                        $.each(vm.allTabs, function (index, tab)
+                        {
                        
-                        $('[role="tablist"]').append(`<li role="presentation"><a href="#${tab.Id}" data-id="${tab.Id}"  aria-controls= ${tab.Id} role="tab" data-toggle="tab"> ${tab.tab_name} </a></li>`);
+                            $('[role="tablist"]').append(`<li role="presentation"><a href="#${tab.Id}" data-id="${tab.Id}"  aria-controls= ${tab.Id} role="tab" data-toggle="tab"> ${tab.tab_name} </a></li>`);
                         
-                         $(".tab-content").append(`
+                            $(".tab-content").append(`
                              <div role="tabpanel" class="tab-pane" id="${tab.Id}">
                                     <div class="panel-box tabular">
                                         <div class="custom-list-box-heading-onbrd white">
@@ -164,11 +176,25 @@
                                         </div>
 
                                     </div>
-                                </div>`);
+                                     <div class="custom_list_wrapper">
+
+                                
+                                    <ul class="custom-listing-table-onbrd row-height-50">
+
+                                    </ul>
+
+                                </div>
+                                </div>
+                               
+                                
+                                `);
                         
-                    
-                        vm.getAllFields(tab.Id);
-                    })
+                            waitForElement('.custom-listing-table-onbrd', function ()
+                            {
+                                vm.getAllFields(tab.Id);
+                            
+                            })
+                        })
                    
                     }
                        
@@ -179,15 +205,16 @@
                 }
             },
 
-            async sortTabs(tabId, indexPos)
+            async sortTabs(tabId, indexPos, table)
             {    
                 console.log('sort tabs vue')
-                 vm = this;
+                vm = this;
                 var data = { 'sort_order': indexPos }
+                url = table == 'jobs' ? `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_form/rows/${tabId}` : `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_fields_tabs/rows/${tabId}`
                 console.log({data})
                 $.ajax({
                     method: "PUT",
-                    url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_fields_tabs/rows/${tabId}`,
+                    url: url,
                     headers: {
                         "Content-Type": "application/json"
                     },
@@ -197,7 +224,10 @@
                     success: function (response)
                     {
                         console.log({ response })
-                        vm.getAllTabs("list");
+                        if (table == 'tabs') {
+                            vm.getAllTabs("list");
+                        }
+                       
                     }
                 
                 
@@ -234,12 +264,10 @@
                             fieldType = field.type_of_field,
                             fieldId = field.Id 
                             
-                            $(`.tab-content #${tabId}`).append(`<div class="custom_list_wrapper">
+                            $(`.tab-content #${tabId} .custom-listing-table-onbrd`).append(`
 
-                                            <ul class="custom-listing-table-onbrd row-height-50">
-            
-                                                
-                                                <li class="all-cat added-description">
+                                            
+                                                <li class="all-cat added-description" data-id="${fieldId}">
             
                                                     <div class="custom-list-box-onbrd">
             
@@ -316,13 +344,7 @@
             
                                                 </li>
             
-                                            </ul>
-            
-                                        </div>
-
-
-                                    </div>
-                                </div>` )
+                                        ` )
     
                         })
 
@@ -424,7 +446,7 @@ $(document).ready(function() {
             $(this).find('li').each(function ()
             {
                 
-                tabs.sortTabs($(this).attr('steps-id'), $(this).index())
+                tabs.sortTabs($(this).attr('steps-id',"tabs"), $(this).index())
             })
 
      
@@ -444,12 +466,38 @@ $(document).ready(function() {
          
      })
     
-       $('body').on('click', '#save-edit-tab', function ()
-    {    
-           tabs.editTab($(this), $(this).attr('tab-id'));
-           
-         
+    $('body').on('click', '#save-edit-tab', function ()
+{    
+        tabs.editTab($(this), $(this).attr('tab-id'));
+        
+        
     })
+    
+
+     jQuery('body').on('click', '.icon.icon-toggle.arrow-up', function() {
+        console.log('up')
+        var current = $(this).closest(".custom-list-box-onbrd").parent('li');
+         current.prev(".added-description").before(current);
+         
+         $(this).parents('ul').find('li').each(function ()
+         {
+              tabs.sortTabs($(this).attr('data-id'), $(this).index(),"jobs")
+         })
+            
+            
+        });
+
+
+        jQuery('body').on('click', '.icon.icon-toggle.arrow-down', function() {
+            console.log('down')
+            var current = $(this).closest(".custom-list-box-onbrd").parent('li');
+            current.next(".added-description").after(current);
+
+            $(this).parents('ul').find('li').each(function ()
+         {
+              tabs.sortTabs($(this).attr('data-id'), $(this).index(),"jobs")
+         })
+        });
 
     
 });

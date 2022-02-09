@@ -114,6 +114,8 @@
 
             <div class="tab-content">
 
+
+
             </div>
 
 
@@ -457,14 +459,7 @@ jQuery(document).ready(function() {
 
     });
 
-    jQuery('body').on('click', '.icon.icon-toggle.arrow-up', function() {
-        var current = $(this).closest(".custom-list-box-onbrd").parent('li');
-        current.prev(".added-description").before(current);
-    });
-    jQuery('body').on('click', '.icon.icon-toggle.arrow-down', function() {
-        var current = $(this).closest(".custom-list-box-onbrd").parent('li');
-        current.next(".added-description").after(current);
-    });
+
 
     jQuery('body').on('click', '.cstm-fieldpop-optarea .icon-delete', function() {
         // $('.cstm-fieldpop-optarea .icon-delete').on('click', function ()

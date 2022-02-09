@@ -385,19 +385,33 @@ const jobData = new Vue({
                                 case 'checkbox': 
 
                                     let chkoptions = '';
-                                    $.each(cf.values, function (index, option)
+                                    $.each(JSON.parse(field.values), function (index, option)
                                     {
                                         chkoptions += `<div class="fancy-checkbox checkbox-sm">
                                         <input type="checkbox" id="${option}" name="${option}">
                                         <label for="${option}"><span>${option}</span>
                                         </label>  </div>`
                                     });
-                                   customFieldInput = `<class="btn-hbox custom-fancyjb cdflex btn-hrmmargin customcheckbox" id="${fieldId}"> 
+                                    customFieldInput = `<div class="form-group custom-fancyjb custom-details" id="${fieldId}"> 
+                                    <label for=${fieldId}>${fieldName}</label>    
                                     ${chkoptions}
                                     </div>`;
                                     break;
 
                                 case 'radiobutton': 
+                                     let radioOptions = '';
+                                    $.each(JSON.parse(field.values), function (index, option)
+                                    {
+                                        radioOptions += `<div class="fancy-radio radio-sm">
+                                        <input type="radio" id="${option}" name="${option}">
+                                        <label for="${option}"><span>${option}</span>
+                                        </label>  </div>`
+                                    });
+                                    customFieldInput = `<div class="custom-fancyjb custom-details" id="${fieldId}"> 
+                                    <label for=${fieldId}>${fieldName}</label>    
+                                    ${radioOptions}
+                                    </div>`;
+
                                     break;
                                 
                                 case 'number': 
@@ -410,13 +424,7 @@ const jobData = new Vue({
                             }
                             
                             var customField = `
-                            
-                            <div class="form-group custom-details">
-                            
-                              <label for=${fieldName}>${fieldName}</label>       
                                 ${customFieldInput}
-                            </div>
-
                             `
                         
                             $(`.tab-content #${tabId} .jobform-form .next-tab-area`).before(customField)

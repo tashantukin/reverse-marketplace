@@ -11,6 +11,16 @@
     var isEdit = false;
 
 
+ function GetSortOrder(prop) {    
+    return function(a, b) {    
+        if (a[prop] > b[prop]) {    
+            return 1;    
+        } else if (a[prop] < b[prop]) {    
+            return -1;    
+        }    
+        return 0;    
+        }    
+    } 
 
     //run on creation page only
   var tabs =  new Vue({
@@ -164,6 +174,15 @@
                                         </div>
 
                                     </div>
+
+                                      <div class="custom_list_wrapper">
+
+                                
+                                    <ul class="custom-listing-table-onbrd row-height-50">
+
+                                    </ul>
+
+                                </div>
                                 </div>`);
                         
                     
@@ -179,15 +198,16 @@
                 }
             },
 
-            async sortTabs(tabId, indexPos)
+            async sortTabs(tabId, indexPos, table)
             {    
                 console.log('sort tabs vue')
-                 vm = this;
+                vm = this;
+                 url = table == 'freelancer' ? `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/freelancer_form/rows/${tabId}` : `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/onboard_fields_tabs/rows/${tabId}`
                 var data = { 'sort_order': indexPos }
                 console.log({data})
                 $.ajax({
                     method: "PUT",
-                    url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/onboard_fields_tabs/rows/${tabId}`,
+                    url: url,
                     headers: {
                         "Content-Type": "application/json"
                     },
@@ -197,7 +217,10 @@
                     success: function (response)
                     {
                         console.log({ response })
-                        vm.getAllTabs("list");
+                        if (table == 'tabs') {
+                            vm.getAllTabs("list");
+                             
+                        }
                     }
                 
                 
@@ -226,7 +249,7 @@
                     const fields = response.Records
 
                     if (fields.length > 0) {
-                        const fieldDetails = fields;
+                        const fieldDetails = fields.sort(GetSortOrder("sort_order"))
                         
                         $.each(fieldDetails, function (index, field)
                         {
@@ -234,12 +257,10 @@
                             fieldType = field.type_of_field,
                             fieldId = field.Id 
                             
-                            $(`.tab-content #${tabId}`).append(`<div class="custom_list_wrapper">
-
-                                            <ul class="custom-listing-table-onbrd row-height-50">
+                            $(`.tab-content #${tabId} .custom-listing-table-onbrd`).append(`
             
                                                 
-                                                <li class="all-cat added-description">
+                                                <li class="all-cat added-description" data-id="${fieldId}">
             
                                                     <div class="custom-list-box-onbrd">
             
@@ -316,13 +337,7 @@
             
                                                 </li>
             
-                                            </ul>
-            
-                                        </div>
-
-
-                                    </div>
-                                </div>` )
+                                          ` )
     
                         })
 
@@ -425,7 +440,7 @@ $(document).ready(function() {
             $(this).find('li').each(function ()
             {
                 
-                tabs.sortTabs($(this).attr('steps-id'), $(this).index())
+                tabs.sortTabs($(this).attr('steps-id'), $(this).index(),"tabs")
             })
 
      
@@ -450,7 +465,34 @@ $(document).ready(function() {
            tabs.editTab($(this), $(this).attr('tab-id'));
            
          
-    })
+       }) 
+    
+      jQuery('body').on('click', '.icon.icon-toggle.arrow-up', function() {
+        console.log('up')
+        var current = $(this).closest(".custom-list-box-onbrd").parent('li');
+         current.prev(".added-description").before(current);
+         
+         $(this).parents('ul').find('li').each(function ()
+         {
+              tabs.sortTabs($(this).attr('data-id'), $(this).index(),"freelancer")
+         })
+            
+            
+        });
+
+
+        jQuery('body').on('click', '.icon.icon-toggle.arrow-down', function() {
+            console.log('down')
+            var current = $(this).closest(".custom-list-box-onbrd").parent('li');
+            current.next(".added-description").after(current);
+
+            $(this).parents('ul').find('li').each(function ()
+         {
+              tabs.sortTabs($(this).attr('data-id'), $(this).index(),"freelancer")
+         })
+        });
+    
+
 
        
 

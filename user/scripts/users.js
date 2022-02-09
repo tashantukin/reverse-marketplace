@@ -32,6 +32,19 @@ function waitForElement(elementPath, callBack)
   }, 500);
 }
 
+
+ function GetSortOrder(prop) {    
+    return function(a, b) {    
+        if (a[prop] > b[prop]) {    
+            return 1;    
+        } else if (a[prop] < b[prop]) {    
+            return -1;    
+        }    
+        return 0;    
+        }    
+    } 
+
+
 //retrieve dynamic fields
 waitForElement('.tab-content', function ()
 {
@@ -193,7 +206,7 @@ const sellerFields = new Vue({
                              <div id="${tab.Id}" class="${classes}"
                              classification-name="${tab.tab_name}">
                             <div class="jobform-form">
-
+                            <h3>${tab.tab_name}</h3>
                              <hr>
                              <div class="next-tab-area"><span class="seller-btn"> <a onclick="j_nextTab();"
                                 class="my-btn btn-red" href="javascript:void(0);">Next</a> </span></div>
@@ -222,7 +235,7 @@ const sellerFields = new Vue({
                 
             $.ajax({
                 method: "POST",
-                url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/freelancer_form/`,
+                url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/freelancer_form?sort=-sort_order/`,
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -236,7 +249,7 @@ const sellerFields = new Vue({
                     const fields = response.Records
 
                     if (fields.length > 0) {
-                        const fieldDetails = fields;
+                        const fieldDetails = fields.sort(GetSortOrder("sort_order"));
                         
                         $.each(fieldDetails, function (index, field)
                         {
@@ -303,7 +316,7 @@ const sellerFields = new Vue({
                                 
                             }
                             
-                            var customField = `<h3>${tabName}</h3>
+                            var customField = `
                             
                             <div class="form-group custom-details">
                             
@@ -313,7 +326,7 @@ const sellerFields = new Vue({
 
                             `
                         
-                            $(`.tab-content #${tabId} .jobform-form`).prepend(customField)
+                            $(`.tab-content #${tabId} .jobform-form .next-tab-area`).before(customField)
 
 
                         })

@@ -54,7 +54,7 @@
             selectedValue = $("option:selected", $(this)).val();
             console.log(selectedValue);
 
-            if (selectedValue == 'checkbox' || selectedValue == 'dropdown') {
+            if (selectedValue == 'checkbox' || selectedValue == 'dropdown' || selectedValue == 'radiobutton' ) {
 
                 $('.cstm-fieldpop-optarea').show();
 

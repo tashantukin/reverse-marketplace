@@ -268,7 +268,7 @@
                     const fields = response.Records
 
                     if (fields.length > 0) {
-                        const fieldDetails = fields.sort(GetSortOrder("sort_order"));;
+                        const fieldDetails = fields.sort(GetSortOrder("sort_order"));
                         
                         $.each(fieldDetails, function (index, field)
                         {
@@ -458,7 +458,7 @@ $(document).ready(function() {
             $(this).find('li').each(function ()
             {
                 
-                tabs.sortTabs($(this).attr('steps-id',"tabs"), $(this).index())
+                tabs.sortTabs($(this).attr('steps-id',"tabs"), $(this).index(), "tabs")
             })
 
      

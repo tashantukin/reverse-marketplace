@@ -258,7 +258,7 @@ const sellerFields = new Vue({
                             fieldId = field.Id 
                             var customFieldInput = '';
                             
-                            switch (fieldType) {
+                               switch (fieldType) {
                                 case 'search':
 
                                 customFieldInput = `<div class="search-abn">
@@ -274,7 +274,7 @@ const sellerFields = new Vue({
                                 
                                 case 'textfield':
                             
-                                    customFieldInput = ` <input type="text" class="form-control" name="${fieldName}"id="${fieldName}" placeholder="${field.placeholder}">`
+                                    customFieldInput = `<div class="form-group"> <label for=${fieldId}>${fieldName}</label>  <input type="text" class="form-control" name="${fieldName}"id="${fieldName}" placeholder=""></div>`
                                     break;
                                
                                 case 'dropdown':
@@ -284,50 +284,120 @@ const sellerFields = new Vue({
                                     {
                                         options += `<option name='${option}' value="${option}">${option}</option>`
                                     });
-                                    customFieldInput = `<select id="${fieldId}" class="form-control"  name="${fieldName}" id="${fieldName}" type="dropdown">
+                                    customFieldInput = `<div class="form-group"> <label for=${fieldId}>${fieldName}</label> <select id="${fieldId}" class="form-control"  name="${fieldName}" id="${fieldName}" type="dropdown">
                                       ${options}
-                                    </select>`;
+                                    </select> </div>`;
                                     break;    
                                        
                                 case 'checkbox': 
 
                                     let chkoptions = '';
-                                    $.each(cf.values, function (index, option)
+                                    $.each(JSON.parse(field.values), function (index, option)
                                     {
                                         chkoptions += `<div class="fancy-checkbox checkbox-sm">
                                         <input type="checkbox" id="${option}" name="${option}">
                                         <label for="${option}"><span>${option}</span>
                                         </label>  </div>`
                                     });
-                                   customFieldInput = `<class="btn-hbox custom-fancyjb cdflex btn-hrmmargin customcheckbox" id="${fieldId}"> 
+                                    customFieldInput = `<div class="form-group custom-fancyjb custom-details" id="${fieldId}"> 
+                                    <label for=${fieldId}>${fieldName}</label>    
                                     ${chkoptions}
                                     </div>`;
                                     break;
 
                                 case 'radiobutton': 
+                                     let radioOptions = '';
+                                    $.each(JSON.parse(field.values), function (index, option)
+                                    {
+                                        radioOptions += `<div class="fancy-radio radio-sm">
+                                        <input type="radio" id="${option}" name="${option}">
+                                        <label for="${option}"><span>${option}</span>
+                                        </label>  </div>`
+                                    });
+                                    customFieldInput = `<div class="custom-fancyjb custom-details" id="${fieldId}"> 
+                                    <label for=${fieldId}>${fieldName}</label>    
+                                    ${radioOptions}
+                                    </div>`;
+
                                     break;
                                 
                                 case 'number': 
                             
-                                    customFieldInput = ` <input type="number" class="form-control" name="${fieldName}"id="${fieldName}" placeholder="${field.placeholder}">`
+                                    customFieldInput = `<div class="form-group"> <label for=${fieldId}>${fieldName}</label>  <input type="number" class="form-control" name="${fieldName}"id="${fieldName}" placeholder=""></div>`
+                                    break;
+                               
+                                case 'datepicker':
+
+                                    customFieldInput = `<div class="form-group"><label for=${fieldId}>${fieldName}</label><input type="text" class="form-control datepicker" name="${fieldName}" id="${fieldName}" placeholder="DD/MM/YYYY"> </div>`
+                                    jQuery('.datepicker').datetimepicker({
+                                    viewMode: 'days',
+                                    format: 'DD/MM/YYYY'
+                                    });
                                     break;
                                 
-                                
-                                
+                                case 'textarea':
+                                    
+                                    customFieldInput = `<div class="form-group">
+                                   <label for=${fieldId}>${fieldName}</label>
+                                    <textarea class="form-control" name="${fieldName}" id="${fieldName}" rows="5" placeholder=""></textarea>
+                                    </div>`
+                                    break;
+                               
+                                case 'checkconfirm':
+
+                                    customFieldInput = `<div class="form-group custom-fancyjb">
+                                    <div class="fancy-checkbox checkbox-sm">
+                                        <input type="checkbox" name="${fieldName}" id="${fieldName}">
+                                         <label for=${fieldId}>${fieldName}</label>
+                                    </div>
+                                    </div>`
+                                       break;
+                                   
+                                case 'file':
+
+                                    customFieldInput = `<div class="form-group" id="${fieldId}">
+                                        <div class="custom-fancyjb">
+                                            <div class="fancy-checkbox checkbox-sm">
+                                                <input type="checkbox" checked="checked" name="${fieldName}"
+                                                    id="${fieldId}">
+                                                <label for="${fieldId}"><span> ${fieldName}
+                                                    </span></label>
+                                            </div>
+                                        </div>
+
+                                        <div class="driver_license_director_input">
+                                            <div class="form-group">
+                                                <label>Upload Documents</label>
+                                                <div class="browse-control">
+                                                    <a class="model-btn">
+                                                        <input type="text" class="form-control" value="">
+                                                        <div class="browse-btn">
+                                                            <input type="file" value="Browse..." multiple
+                                                                onchange="readURL(this);" id="uploads"
+                                                                upload-name="${fieldName}">
+                                                            <span id="logo_add2">Upload</span>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <table class="table table-document">
+                                                    <tbody>
+
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>`
+                                    break;
                             }
                             
                             var customField = `
-                            
-                            <div class="form-group custom-details">
-                            
-                              <label for=${fieldName}>${fieldName}</label>       
                                 ${customFieldInput}
-                            </div>
-
                             `
                         
-                            $(`.tab-content #${tabId} .jobform-form .next-tab-area`).before(customField)
-
+                            $(`.tab-content #${tabId} .jobform-form hr`).before(customField)
 
                         })
 
@@ -917,6 +987,15 @@ $(document).ready(function ()
         var users = usersData.getInstance();
         users.confirmRegistration();
     })
+
+
+      
+    $('body').on('focus',".datepicker", function(){
+            $(this).datetimepicker({
+                viewMode: 'days',
+                format: 'DD/MM/YYYY'
+            })
+    });
 
     
 

@@ -171,8 +171,10 @@
                 <label>Field Type*</label>
                 <select class="form-control required" name="onbrd_field_type" id="onbrd_field_type" :value="fieldType">
                     <option value="textfield">Textfield</option>
+                    <option value="textarea">Textarea</option>
                     <option value="number">Number</option>
                     <option value="checkbox">Checkbox</option>
+                    <option value="checkconfirm">Checkbox Confirmation</option>
                     <option value="dropdown">Dropdown</option>
                     <option value="radiobutton">Radiobutton</option>
                     <option value="datepicker">Date Picker</option>
@@ -325,10 +327,6 @@
 
 <!-- End popup-->
 
-
-
-
-
 <div id="cover"></div>
 
 <div id="removecatok" class="popup popup-removecat">
@@ -341,16 +339,6 @@
         <a href="javascript:void(0)" class="close-popup" onclick="popup_close(this)"><i class="icon icon-close"></i>
         </a>
     </div>
-
-
-
-
-
-
-
-
-
-
 </div>
 
 <!-- begin footer -->

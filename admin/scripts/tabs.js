@@ -458,7 +458,7 @@ $(document).ready(function() {
             $(this).find('li').each(function ()
             {
                 
-                tabs.sortTabs($(this).attr('steps-id',"tabs"), $(this).index(), "tabs")
+                tabs.sortTabs($(this).attr('steps-id'), $(this).index(), "tabs")
             })
 
      

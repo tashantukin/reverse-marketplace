@@ -14,6 +14,7 @@ $classification = $content['classification'];
 $custom_text = $content['text'];
 $placeholder = $content['placeholder'];
 $field_id = $content['field-id'];
+$is_required = $content['is-required'];
 
 $baseUrl = getMarketplaceBaseUrl();
 $admin_token = getAdminToken();
@@ -35,12 +36,12 @@ if ($type == 'number') {
 if ($action == 'add'){
     if ($refTable == 'Users') {
 
-        $form_details = array('name' => $custom_name, 'type_of_field' => $type, 'classification' => $classification, 'text' => $custom_text, 'placeholder' => $placeholder, 'values' => $type !== 'textfield' || $type !== 'number' || $type !== 'search'? $options : null );
+        $form_details = array('name' => $custom_name, 'type_of_field' => $type, 'classification' => $classification, 'text' => $custom_text, 'placeholder' => $placeholder, 'values' => $type !== 'textfield' || $type !== 'number' || $type !== 'search'? $options : null, 'is_required' => $is_required );
         $url =  $baseUrl . '/api/v2/plugins/'. getPackageID() .'/custom-tables/freelancer_form/rows';
         $result =  callAPI("POST",$admin_token['access_token'], $url, $form_details);
         
         }else {
-            $form_details = array('name' => $custom_name, 'type_of_field' => $type, 'classification' => $classification, 'text' => $custom_text, 'placeholder' => $placeholder,  'values' => $type !== 'textfield' || $type !== 'number' || $type !== 'search' ? $options : null );
+            $form_details = array('name' => $custom_name, 'type_of_field' => $type, 'classification' => $classification, 'text' => $custom_text, 'placeholder' => $placeholder,  'values' => $type !== 'textfield' || $type !== 'number' || $type !== 'search' ? $options : null, 'is_required' => $is_required );
         $url =  $baseUrl . '/api/v2/plugins/'. getPackageID() .'/custom-tables/job_form/rows';
         $result =  callAPI("POST",$admin_token['access_token'], $url, $form_details);
         }
@@ -48,17 +49,14 @@ if ($action == 'add'){
     //edit
     if ($refTable == 'Users') {
 
-        $form_details = array('name' => $custom_name, 'type_of_field' => $type, 'classification' => $classification, 'text' => $custom_text, 'placeholder' => $placeholder, 'values' => $type !== 'textfield' || $type !== 'number' || $type !== 'search'? $options : null );
+        $form_details = array('name' => $custom_name, 'type_of_field' => $type, 'classification' => $classification, 'text' => $custom_text, 'placeholder' => $placeholder, 'values' => $type !== 'textfield' || $type !== 'number' || $type !== 'search'? $options : null, 'is_required' => $is_required );
         $url =  $baseUrl . '/api/v2/plugins/'. getPackageID() .'/custom-tables/freelancer_form/rows/' . $field_id;
         $result =  callAPI("PUT",$admin_token['access_token'], $url, $form_details);
         
     }else {
-        $form_details = array('name' => $custom_name, 'type_of_field' => $type, 'classification' => $classification, 'text' => $custom_text, 'placeholder' => $placeholder,  'values' => $type !== 'textfield' || $type !== 'number' || $type !== 'search' ? $options : null );
+        $form_details = array('name' => $custom_name, 'type_of_field' => $type, 'classification' => $classification, 'text' => $custom_text, 'placeholder' => $placeholder,  'values' => $type !== 'textfield' || $type !== 'number' || $type !== 'search' ? $options : null, 'is_required' => $is_required );
         $url =  $baseUrl . '/api/v2/plugins/'. getPackageID() .'/custom-tables/job_form/rows/' . $field_id;
         $result =  callAPI("PUT",$admin_token['access_token'], $url, $form_details);
     }
 
 }
-
-
-

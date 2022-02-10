@@ -137,16 +137,6 @@
 </div>
 
 
-
-
-
-
-
-
-
-
-
-
 <!-- Start popup-->
 <div class="popup popup-onbrd-fields" id="OnboardingFields">
     <input type="hidden" id="field-id">
@@ -175,6 +165,7 @@
                     <option value="number">Number</option>
                     <option value="checkbox">Checkbox</option>
                     <option value="checkconfirm">Checkbox Confirmation</option>
+                    <option value="note">Note</option>
                     <option value="dropdown">Dropdown</option>
                     <option value="radiobutton">Radiobutton</option>
                     <option value="datepicker">Date Picker</option>
@@ -218,9 +209,9 @@
                     <div class="fancy-checkbox checkbox-sm">
 
                         <input type="checkbox" value="blank_page" class="radio-ccheckbox" name="guest_user"
-                            id="guest_user_blank_page">
+                            id="is-required">
 
-                        <label for="guest_user_blank_page"><span>
+                        <label for="is-required"><span>
                                 <note>Require field</note>
                             </span></label>
 

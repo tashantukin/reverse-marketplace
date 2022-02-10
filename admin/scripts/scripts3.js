@@ -113,12 +113,12 @@
                     const cfCode = (`${packageId}-${generateRandomString(10)}-${customName.replace(/\s+/g, '')}-REV_INPUT`)
                     conf_message = 'Custom field successfully added.';
                     selectedValue = $("option:selected", $('#customType')).val();
-                    saveCustomField(cfCode, 'add', $('#custom_name').val(), selectedValue, optionList, 'Users', conf_message)
+                    saveCustomField(cfCode, 'add', $('#custom_name').val(), selectedValue, optionList, 'Users', conf_message, $('#is-required')[0].checked)
                 } else {
                     const custom_code = $('.custom_id').val();
                     selectedValue = $("option:selected", $('#customType')).val();
                     conf_message = 'Custom field successfully updated.';
-                    saveCustomField(custom_code, action, $('#custom_name').val(), selectedValue, optionList, 'Users', conf_message)
+                    saveCustomField(custom_code, action, $('#custom_name').val(), selectedValue, optionList, 'Users', conf_message, $('#is-required')[0].checked)
                 }
 
 
@@ -159,13 +159,13 @@
                     conf_message = 'Custom field successfully added.';
                     selectedValue = $("option:selected", $('#onbrd_field_type')).val();
                     selectedStep = $("option:selected", $('#onbrd_steps')).val();
-                    saveCustomField(cfCode, 'add', $('#onbrd_field_name').val(), selectedValue, selectedStep, JSON.stringify(optionList), 'Users', conf_message)
+                    saveCustomField(cfCode, 'add', $('#onbrd_field_name').val(), selectedValue, selectedStep, JSON.stringify(optionList), 'Users', conf_message,$('#is-required')[0].checked)
                 } else {
                     const custom_code = $('.custom_id').val();
                     selectedValue = $("option:selected", $('#onbrd_field_type')).val();
                     selectedStep = $("option:selected", $('#onbrd_steps')).val();
                     conf_message = 'Custom field successfully updated.';
-                    saveCustomField(custom_code, action, $('#onbrd_field_name').val(), selectedValue, selectedStep, JSON.stringify(optionList), 'Users', conf_message)
+                    saveCustomField(custom_code, action, $('#onbrd_field_name').val(), selectedValue, selectedStep, JSON.stringify(optionList), 'Users', conf_message,$('#is-required')[0].checked)
                 }
 
 
@@ -206,13 +206,13 @@
                     conf_message = 'Custom field successfully added.';
                     selectedValue = $("option:selected", $('#onbrd_field_type')).val();
                     selectedStep = $("option:selected", $('#onbrd_steps')).val();
-                    saveCustomField(cfCode, 'add', $('#onbrd_field_name').val(), selectedValue, selectedStep, optionList, 'Jobs', conf_message)
+                    saveCustomField(cfCode, 'add', $('#onbrd_field_name').val(), selectedValue, selectedStep, optionList, 'Jobs', conf_message, $('#is-required')[0].checked)
                 } else {
                     const custom_code = $('.custom_id').val();
                     selectedValue = $("option:selected", $('#onbrd_field_type')).val();
                     selectedStep = $("option:selected", $('#onbrd_steps')).val();
                     conf_message = 'Custom field successfully updated.';
-                    saveCustomField(custom_code, action, $('#onbrd_field_name').val(), selectedValue, selectedStep, optionList, 'Jobs', conf_message)
+                    saveCustomField(custom_code, action, $('#onbrd_field_name').val(), selectedValue, selectedStep, optionList, 'Jobs', conf_message, $('#is-required')[0].checked)
                 }
 
 
@@ -291,9 +291,9 @@
     });
 
     //MAIN CRUD
-    function saveCustomField(customCode, action, customName, type, steps, options, referenceTable, conf_message)
+    function saveCustomField(customCode, action, customName, type, steps, options, referenceTable, conf_message,required)
     {
-        var data = { 'action': action, 'custom_name': customName, 'type': type, 'options': options, 'reference_table': referenceTable, 'code': customCode, 'classification' : steps, 'text': $('#onbrd_field_text').val(), 'placeholder' : $('#onbrd_field_placeholder').val(), 'field-id':$('#field-id').val()  };
+        var data = { 'action': action, 'custom_name': customName, 'type': type, 'options': options, 'reference_table': referenceTable, 'code': customCode, 'classification' : steps, 'text': $('#onbrd_field_text').val(), 'placeholder' : $('#onbrd_field_placeholder').val(), 'field-id':$('#field-id').val(),'is-required' : required  };
         console.log(data);
         var apiUrl = packagePath + '/save_customfields.php';
         $.ajax({
@@ -405,8 +405,6 @@
         });
     }
 
-
-
     function saveURL() {
         var apiUrl = packagePath + '/save_custom_url.php';
        $.ajax({
@@ -468,9 +466,6 @@
             }
         });
     }
-
-
-
 
     function  saveComment()
     {

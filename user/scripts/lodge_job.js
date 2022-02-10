@@ -282,20 +282,26 @@ const jobData = new Vue({
                     })
                     const tabs = await response
                     vm.allTabs = tabs.data.Records
-                    var classes= "";
+                    var classes = "";
+                    var backbutton = "";
                     console.log(vm.allTabs);
                     
                     $.each(vm.allTabs, function (index, tab)
                     {  
                         if (tab.sort_order == 0) {
                             classes = "tab-pane fade in active";
+                           
+                            
                         } else {
-                             classes = "tab-pane fade";
+                            classes = "tab-pane fade";
+                             backbutton =  `<button onclick="j_prevTab();" class="btn btn-jobform-outline">Back</button>`
                         }
                         $(".tab-content").append(`
                         
                              <div id="${tab.Id}" class="${classes}"
                              classification-name="${tab.tab_name}">
+                                ${backbutton}
+
                             <div class="jobform-form">
                             <h3>${tab.tab_name}</h3>
 
@@ -484,7 +490,16 @@ const jobData = new Vue({
                                         </div>
                                     </div>`
                                     break;
+                                
+                                case 'note':
 
+                                    customFieldInput = `<div class="jobform-note">
+                                    <p><u>Note</u></p>
+                                    <p>${fieldName}</p> 
+                                    <p></p>
+                                </div>`
+                                    break;
+                        
                             }
                             
                             var customField = `

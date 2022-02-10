@@ -57,21 +57,25 @@
 
 </head>
 <!-- end header -->
-<div class="freelancer-content-main">
-    <div class="lodge-tab-design ">
-        <div class="jobform-tab">
-            <ul class="nav nav-tabs">
-                <li v-for="tab in allTabs" v-bind:class="{ active: tab.sort_order== 0 }"><a data-toggle="tab"
-                        :href="'#' + tab.Id"><span>{{ tab.tab_name }}</span></a></li>
+<div class="content-pages">
+    <div class="container ">
+        <div class="freelancer-content-main">
+            <div class="lodge-tab-design ">
+                <div class="jobform-tab">
+                    <ul class="nav nav-tabs">
+                        <li v-for="tab in allTabs" v-bind:class="{ active: tab.sort_order== 0 }"><a data-toggle="tab"
+                                :href="'#' + tab.Id"><span>{{ tab.tab_name }}</span></a></li>
 
-            </ul>
+                    </ul>
+                </div>
+                <div class="tab-content">
+
+
+
+                </div>
+
+            </div>
         </div>
-        <div class="tab-content">
-
-
-
-        </div>
-
     </div>
 </div>
 
@@ -309,10 +313,12 @@ function readURL(input) {
 }
 
 function jobTabTimeline() {
-    var width = ($('.jobform-tab .nav-tabs li:eq(1)').offset().left - $('.jobform-tab .nav-tabs li:eq(0)').offset()
+    var width = ($('.jobform-tab .nav-tabs li:eq(1)').offset().left - $('.jobform-tab .nav-tabs li:eq(0)')
+        .offset()
         .left) - $('.jobform-tab .nav-tabs li:eq(1)').width();
     $('style#job-timeline').remove();
-    $('head').append('<style id="job-timeline">.lodge-tab-design .jobform-tab .nav-tabs>li>a:before{ width: ' + width +
+    $('head').append('<style id="job-timeline">.lodge-tab-design .jobform-tab .nav-tabs>li>a:before{ width: ' +
+        width +
         'px !important;} .lodge-tab-design .jobform-tab .nav-tabs>li.active>a:after{width: ' + width +
         'px !important;} </style>');
 }

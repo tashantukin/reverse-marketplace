@@ -167,6 +167,7 @@
                     <option value="number">Number</option>
                     <option value="checkbox">Checkbox</option>
                     <option value="checkconfirm">Checkbox Confirmation</option>
+                    <option value="note">Note</option>
                     <option value="dropdown">Dropdown</option>
                     <option value="radiobutton">Radiobutton</option>
                     <option value="datepicker">Date Picker</option>

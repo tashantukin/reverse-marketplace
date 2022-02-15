@@ -109,6 +109,7 @@ const jobData = new Vue({
     {
         return {
             allJobDetails: [],
+            totalTabs: 0,
             jobDetails: [],
             taskOption: [],
             locationFields: [],
@@ -116,6 +117,7 @@ const jobData = new Vue({
             getquoteFields: [],
             contactFields: [],
             allTabs: [],
+            allJobCustomDetails: {},
             url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_form/`
 
         }
@@ -282,6 +284,7 @@ const jobData = new Vue({
                     })
                     const tabs = await response
                     vm.allTabs = tabs.data.Records
+                    vm.totalTabs = tabs.data.TotalRecords;
                     var classes = "";
                     var backbutton = "";
                     console.log(vm.allTabs);
@@ -296,6 +299,11 @@ const jobData = new Vue({
                             classes = "tab-pane fade";
                              backbutton =  `<button onclick="j_prevTab();" class="btn btn-jobform-outline">Back</button>`
                         }
+                        //if last tab, text is Save, else, Next
+                        var buttonText = vm.totalTabs == (index + 1) ? 'Save' : 'Next'
+                        var buttonId = vm.totalTabs == (index + 1) ? 'save' : ""
+                        console.log( `${vm.totalTabs}  ${(index + 1)}` )
+                    
                         $(".tab-content").append(`
                         
                              <div id="${tab.Id}" class="${classes}"
@@ -307,7 +315,7 @@ const jobData = new Vue({
 
                              <hr>
                              <div class="next-tab-area"><span class="seller-btn"> <a onclick="j_nextTab();"
-                                class="my-btn btn-red" href="javascript:void(0);">Next</a> </span></div>
+                                class="my-btn btn-red" href="javascript:void(0);" id="${buttonId}">${ buttonText }</a> </span></div>
                                 </div>
                             </div>
 
@@ -373,7 +381,7 @@ const jobData = new Vue({
                                 
                                 case 'textfield':
                             
-                                    customFieldInput = `<div class="form-group"> <label for=${fieldId}>${fieldName}</label>  <input type="text" class="form-control" name="${fieldName}"id="${fieldName}" placeholder=""></div>`
+                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label>  <input type="text" class="form-control" name="${fieldName}"id="${fieldName}" placeholder=""></div>`
                                     break;
                                
                                 case 'dropdown':
@@ -383,7 +391,7 @@ const jobData = new Vue({
                                     {
                                         options += `<option name='${option}' value="${option}">${option}</option>`
                                     });
-                                    customFieldInput = `<div class="form-group"> <label for=${fieldId}>${fieldName}</label> <select id="${fieldId}" class="form-control"  name="${fieldName}" id="${fieldName}" type="dropdown">
+                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label> <select id="${fieldId}" class="form-control"  name="${fieldName}" id="${fieldName}" type="dropdown">
                                       ${options}
                                     </select> </div>`;
                                     break;    
@@ -394,11 +402,11 @@ const jobData = new Vue({
                                     $.each(JSON.parse(field.values), function (index, option)
                                     {
                                         chkoptions += `<div class="fancy-checkbox checkbox-sm">
-                                        <input type="checkbox" id="${option}" name="${option}">
+                                        <input type="checkbox" id="${option}" name="${fieldId}">
                                         <label for="${option}"><span>${option}</span>
                                         </label>  </div>`
                                     });
-                                    customFieldInput = `<div class="form-group custom-fancyjb custom-details" id="${fieldId}"> 
+                                    customFieldInput = `<div class="form-group custom-fancyjb custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> 
                                     <label for=${fieldId}>${fieldName}</label>    
                                     ${chkoptions}
                                     </div>`;
@@ -413,7 +421,7 @@ const jobData = new Vue({
                                         <label for="${option}"><span>${option}</span>
                                         </label>  </div>`
                                     });
-                                    customFieldInput = `<div class="custom-fancyjb custom-details" id="${fieldId}"> 
+                                    customFieldInput = `<div class="custom-fancyjb custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> 
                                     <label for=${fieldId}>${fieldName}</label>    
                                     ${radioOptions}
                                     </div>`;
@@ -422,12 +430,12 @@ const jobData = new Vue({
                                 
                                 case 'number': 
                             
-                                    customFieldInput = `<div class="form-group"> <label for=${fieldId}>${fieldName}</label>  <input type="number" class="form-control" name="${fieldName}"id="${fieldName}" placeholder=""></div>`
+                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label>  <input type="number" class="form-control" name="${fieldName}"id="${fieldName}" placeholder=""></div>`
                                     break;
                                
                                 case 'datepicker':
 
-                                    customFieldInput = `<div class="form-group"><label for=${fieldId}>${fieldName}</label><input type="text" class="form-control datepicker" name="${fieldName}" id="${fieldName}" placeholder="DD/MM/YYYY"> </div>`
+                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}"  custom-type="${fieldType}"><label for=${fieldId}>${fieldName}</label><input type="text" class="form-control datepicker" name="${fieldName}" id="${fieldName}" placeholder="DD/MM/YYYY"> </div>`
                                     jQuery('.datepicker').datetimepicker({
                                     viewMode: 'days',
                                     format: 'DD/MM/YYYY'
@@ -436,7 +444,7 @@ const jobData = new Vue({
                                 
                                 case 'textarea':
                                     
-                                    customFieldInput = `<div class="form-group">
+                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}">
                                    <label for=${fieldId}>${fieldName}</label>
                                     <textarea class="form-control" name="${fieldName}" id="${fieldName}" rows="5" placeholder=""></textarea>
                                     </div>`
@@ -444,9 +452,9 @@ const jobData = new Vue({
                                
                                 case 'checkconfirm':
 
-                                    customFieldInput = `<div class="form-group custom-fancyjb">
+                                    customFieldInput = `<div class="form-group custom-fancyjb custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}">
                                     <div class="fancy-checkbox checkbox-sm">
-                                        <input type="checkbox" name="${fieldName}" id="${fieldName}">
+                                        <input type="checkbox" name="${fieldId}" id="${fieldName}">
                                          <label for=${fieldId}>${fieldName}</label>
                                     </div>
                                     </div>`
@@ -454,7 +462,7 @@ const jobData = new Vue({
                             
                                 case 'file':
 
-                                    customFieldInput = `<div class="form-group" id="${fieldId}">
+                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}">
                                         <div class="custom-fancyjb">
                                             <div class="fancy-checkbox checkbox-sm">
                                                 <input type="checkbox" checked="checked" name="${fieldName}"
@@ -521,15 +529,78 @@ const jobData = new Vue({
             
             })
         },
+
+        async getAllFieldData(el)
+        {
+            //
+             el.find('.tab-pane').each(function ()
+             {
+                 var tabData = [];
+                 var $this = $(this);
+                 var customValue;
+                 $(this).find('.custom-details').each(function ()
+                      
+                 {
+                     switch ($(this).attr('custom-type')) {
+                        
+                         case 'textfield':
+                             customValue = $(this).find('input').val();
+                             break;
+                         case 'number':
+                            customValue = $(this).find('input').val();
+                             break;
+                         case 'datepicker': 
+                            customValue = $(this).find('input').val();
+                             break;
+                         case 'textarea': 
+                            customValue = $(this).find('textarea').val();
+                             break;
+                         case 'dropdown': 
+                            customValue = $(this).find('select').val();
+                             break;
+                         case 'radiobutton': 
+                            customValue = $(this).find("input:checked").attr('name');
+                             break;
+                         case 'checkbox': 
+                            var checkvalues = [];
+                            $(this).find('input:checkbox').each(function() 
+                            {    
+                                if($(this).is(':checked'))
+                                checkvalues.push($(this).attr('id'));
+                            });
+                            customValue = checkvalues;
+                             break;
+                         
+                         case 'checkconfirm': 
+                            var checkvalues = [];
+                            $(this).find('input:checkbox').each(function() 
+                            {    
+                                if($(this).is(':checked'))
+                                checkvalues.push($(this).attr('id'));
+                            });
+                            customValue = checkvalues;
+                             break;
+
+                    }
+
+
+                     tabData.push({ 'tab_name': $this.attr('classification-name'), 'customfield_id': $(this).attr('id'), 'customfield_name' : $(this).attr('custom-name'), 'values' : customValue})
+                 })
+
+
+                 vm.allJobCustomDetails[$(this).attr('id')] = tabData;   
+            })
+            console.log( `${ JSON.stringify(vm.allJobCustomDetails) }`)
+        }
         
 
     },
     beforeMount() {
-        this.getAllJobData()
-        this.getLocationFields()
-        this.getQuotationFields()
-        this.getTimeFrameFields()
-        this.getContactDetailsFields()
+        // this.getAllJobData()
+        // this.getLocationFields()
+        // this.getQuotationFields()
+        // this.getTimeFrameFields()
+        // this.getContactDetailsFields()
         this.getAllTabs()
     }
 
@@ -755,6 +826,18 @@ $(document).ready(function ()
                 format: 'DD/MM/YYYY'
             })
     });
+
+
+
+ 
+    $('body').on('click', '#save', function ()
+    {
+        jobData.getAllFieldData($('.tab-content'));
+
+    })
+
+
+    
 
 
 })

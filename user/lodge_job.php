@@ -70,8 +70,6 @@
                 </div>
                 <div class="tab-content">
 
-
-
                 </div>
 
             </div>

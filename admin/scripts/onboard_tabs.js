@@ -27,7 +27,13 @@
         el: "#main",
         data() {
             return {
-              allTabs : []
+            allOnboardTabs : [],
+            fieldName: '',
+            fieldDescription: '',
+            fieldType: '',
+            placeholder: '',
+            values: '',
+            classification: ''
          
                 
             }
@@ -88,13 +94,13 @@
                         }
                     })
                     const tabs = await response
-                    vm.allTabs = tabs.data.Records
+                    vm.allOnboardTabs = tabs.data.Records
     
-                    console.log(vm.allTabs);
+                    console.log(vm.allOnboardTabs);
 
                     if (page == 'modal') {
                         $('#OnboardingSteps .ui-sortable').empty()
-                        $.each(vm.allTabs, function (index, tab)
+                        $.each(vm.allOnboardTabs, function (index, tab)
                         { 
                             $("#OnboardingSteps .ui-sortable").append(`
                             <li data-parent="" class="has-subitems" steps-id = ${tab.Id} v-on:click="testdrag" >
@@ -132,7 +138,7 @@
                         $('[role="tablist"]').empty();
                         $('.custom-listing-table-onbrd').empty();
                         
-                    $.each(vm.allTabs, function (index, tab){ 
+                    $.each(vm.allOnboardTabs, function (index, tab){ 
                        
                         $('[role="tablist"]').append(`<li role="presentation"><a href="#${tab.Id}" data-id="${tab.Id}"  aria-controls= ${tab.Id} role="tab" data-toggle="tab"> ${tab.tab_name} </a></li>`);
                         
@@ -410,7 +416,52 @@
                 
                 
                 })
-            }
+            },
+             async getFieldDetails(action, e){
+                vm = this;
+            var data = [{ 'Name': 'Id', 'Operator': "equal", "Value": e.attr('data-id') }]
+            
+            $('#field-id').val(e.attr('data-id'));
+            $('#field-action').val('edit');
+            $.ajax({
+                method: "POST",
+                url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/freelancer_form/`,
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                
+                data: JSON.stringify(data),
+                //  })
+                success: function (response)
+                {
+                    console.log({ response })
+                
+                    const fields = response
+                    const fieldDetails = fields.Records[0]
+
+                    vm.fieldName = fieldDetails.name;
+                    vm.fieldDescription = fieldDetails.text,
+                    vm.fieldType = fieldDetails.type_of_field,
+                    vm.placeholder = fieldDetails.placeholder,
+                        vm.values = JSON.parse(fieldDetails.values)   
+                    vm.classification = fieldDetails.classification
+                    
+                    if (vm.fieldType == "checkbox" || vm.fieldType == "dropdown") {
+                        $('.cstm-fieldpop-optarea').show();
+                        $('#dropdown-opt-draggble').remove();
+                        $.each(vm.values, function (index, option)
+                        {
+                         $('.cstm-fieldpop-optarea .addOpt').before(`<ul id="dropdown-opt-draggble" class="ui-sortable"><li class="maindiv ui-sortable-handle"><div class="virtual-table"><div class="virtual-table-cell"><a href="#" class="cursor-move"><i class="icon icon-draggble"></i></a></div> <div class="virtual-table-cell"><input type="text" value="${option}" name="checkbox-opt[]" id="optionName" class="required"></div> <div class="virtual-table-cell"><a href="#"  class="delete-opt"><i class="icon icon-delete"></i></a></div></div></li></ul>`)  
+                        })
+                        
+                    }
+                    
+                 
+                }
+            
+            
+            })
+            },
 
         },
     
@@ -491,6 +542,14 @@ $(document).ready(function() {
               tabs.sortTabs($(this).attr('data-id'), $(this).index(),"freelancer")
          })
         });
+    
+
+        jQuery('body').on('click', '.btn-edit-onbrdfields', function ()
+                {
+
+                   tabs.getFieldDetails('Edit', $(this))
+            
+        })
     
 
 

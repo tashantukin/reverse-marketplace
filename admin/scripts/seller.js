@@ -24,13 +24,8 @@
         el: ".page-content",
         data() {
             return {
-                allFreelancerFields: [],
-                fieldName: '',
-                fieldDescription: '',
-                fieldType: '',
-                placeholder: '',
-                values: '',
-                classification: ''
+                allFreelancerFields: []
+               
 
                 
              
@@ -76,51 +71,7 @@
                 }
             },
 
-            async getFieldDetails(action, e){
-                vm = this;
-            var data = [{ 'Name': 'Id', 'Operator': "equal", "Value": e.currentTarget.getAttribute('data-id') }]
-            
-            $('#field-id').val(e.currentTarget.getAttribute('data-id'));
-            $('#field-action').val('edit');
-            $.ajax({
-                method: "POST",
-                url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/freelancer_form/`,
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                
-                data: JSON.stringify(data),
-                //  })
-                success: function (response)
-                {
-                    console.log({ response })
-                
-                    const fields = response
-                    const fieldDetails = fields.Records[0]
-
-                    vm.fieldName = fieldDetails.name;
-                    vm.fieldDescription = fieldDetails.text,
-                    vm.fieldType = fieldDetails.type_of_field,
-                    vm.placeholder = fieldDetails.placeholder,
-                        vm.values = JSON.parse(fieldDetails.values)   
-                    vm.classification = fieldDetails.classification
-                    
-                    if (vm.fieldType == "checkbox" || vm.fieldType == "dropdown") {
-                        $('.cstm-fieldpop-optarea').show();
-                        $('#dropdown-opt-draggble').remove();
-                        $.each(vm.values, function (index, option)
-                        {
-                         $('.cstm-fieldpop-optarea .addOpt').before(`<ul id="dropdown-opt-draggble" class="ui-sortable"><li class="maindiv ui-sortable-handle"><div class="virtual-table"><div class="virtual-table-cell"><a href="#" class="cursor-move"><i class="icon icon-draggble"></i></a></div> <div class="virtual-table-cell"><input type="text" value="${option}" name="checkbox-opt[]" id="optionName" class="required"></div> <div class="virtual-table-cell"><a href="#"  class="delete-opt"><i class="icon icon-delete"></i></a></div></div></li></ul>`)  
-                        })
-                        
-                    }
-                    
-                 
-                }
-            
-            
-            })
-            },
+           
     
             async getAllJobs(action) {
                 try {
@@ -294,6 +245,9 @@
 
             
         });
+
+        
+         
 
 
        

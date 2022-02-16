@@ -138,12 +138,20 @@
                         $('[role="tablist"]').empty();
                         $('.custom-listing-table-onbrd').empty();
                         
-                    $.each(vm.allOnboardTabs, function (index, tab){ 
+                        $.each(vm.allOnboardTabs, function (index, tab)
+                        { 
+                         if (tab.sort_order == 0) {
+                                 classes = "tab-pane fade in active";
+                            
+                            } else {
+                                classes = "tab-pane fade";
+                            // backbutton =  `<button onclick="j_prevTab();" class="btn btn-jobform-outline">Back</button>`
+                            }
                        
                         $('[role="tablist"]').append(`<li role="presentation"><a href="#${tab.Id}" data-id="${tab.Id}"  aria-controls= ${tab.Id} role="tab" data-toggle="tab"> ${tab.tab_name} </a></li>`);
                         
                          $(".tab-content").append(`
-                             <div role="tabpanel" class="tab-pane" id="${tab.Id}">
+                             <div role="tabpanel" class="${classes}" id="${tab.Id}">
                                     <div class="panel-box tabular">
                                         <div class="custom-list-box-heading-onbrd white">
 

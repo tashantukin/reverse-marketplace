@@ -114,6 +114,8 @@
                         $('#OnboardingSteps .ui-sortable').empty()
                         $.each(vm.allTabs, function (index, tab)
                         {
+
+                          
                             $("#OnboardingSteps .ui-sortable").append(`
                             <li data-parent="" class="has-subitems" steps-id = ${tab.Id} v-on:click="testdrag" >
                                     <div class="row-wrapper main-sub">
@@ -152,11 +154,18 @@
                         
                         $.each(vm.allTabs, function (index, tab)
                         {
+                            if (tab.sort_order == 0) {
+                                 classes = "tab-pane fade in active";
+                            
+                            } else {
+                                classes = "tab-pane fade";
+                            // backbutton =  `<button onclick="j_prevTab();" class="btn btn-jobform-outline">Back</button>`
+                            }
                        
                             $('[role="tablist"]').append(`<li role="presentation"><a href="#${tab.Id}" data-id="${tab.Id}"  aria-controls= ${tab.Id} role="tab" data-toggle="tab"> ${tab.tab_name} </a></li>`);
                         
                             $(".tab-content").append(`
-                             <div role="tabpanel" class="tab-pane" id="${tab.Id}">
+                             <div role="tabpanel" class="${classes}" id="${tab.Id}">
                                     <div class="panel-box tabular">
                                         <div class="custom-list-box-heading-onbrd white">
 
@@ -550,27 +559,27 @@ $(document).ready(function() {
          })
             
             
-        });
+    });
 
 
-        jQuery('body').on('click', '.icon.icon-toggle.arrow-down', function() {
-            console.log('down')
-            var current = $(this).closest(".custom-list-box-onbrd").parent('li');
-            current.next(".added-description").after(current);
+    jQuery('body').on('click', '.icon.icon-toggle.arrow-down', function() {
+        console.log('down')
+        var current = $(this).closest(".custom-list-box-onbrd").parent('li');
+        current.next(".added-description").after(current);
 
-            $(this).parents('ul').find('li').each(function ()
-         {
-              tabs.sortTabs($(this).attr('data-id'), $(this).index(),"jobs")
-         })
-        });
-    
+        $(this).parents('ul').find('li').each(function ()
+        {
+            tabs.sortTabs($(this).attr('data-id'), $(this).index(),"jobs")
+        })
+    });
 
-        jQuery('body').on('click', '.btn-edit-onbrdfields', function ()
-                    {
 
-                    tabs.getFieldDetails('Edit', $(this))
-                
-            })
+    jQuery('body').on('click', '.btn-edit-onbrdfields', function ()
+                {
+
+                tabs.getFieldDetails('Edit', $(this))
+            
+    })
 
 
 

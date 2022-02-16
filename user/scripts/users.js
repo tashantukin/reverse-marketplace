@@ -10,7 +10,7 @@ var userId;
 var userguid = $('#userGuid').val()
 var taskFiles = [];
 var allFiles = [];
-
+var sellerFields;
 var packagePath = scriptSrc.replace("/scripts/users.js", "").trim();
 
 function getCookie(name){
@@ -48,13 +48,14 @@ function waitForElement(elementPath, callBack)
 //retrieve dynamic fields
 waitForElement('.tab-content', function ()
 {
-const sellerFields = new Vue({
+sellerFields = new Vue({
     el: ".freelancer-content-main",
 
     data()
     {
         return {
             allSellerFields: [],
+            totalTabs: 0,
             fieldDetails: [],
             taskOption: [],
             uploadCustomFields: [],
@@ -69,7 +70,8 @@ const sellerFields = new Vue({
             postalCode: '',
             telephone: '',
             isEdit: 0,
-            allTabs: []
+            allTabs: [],
+            allFreelancerCustomDetails: {},
 
         }
     },
@@ -191,6 +193,7 @@ const sellerFields = new Vue({
                     })
                     const tabs = await response
                     vm.allTabs = tabs.data.Records
+                    vm.totalTabs = tabs.data.TotalRecords;
                     var classes = "";
                     var backbutton = "";
                     console.log(vm.allTabs);
@@ -204,6 +207,11 @@ const sellerFields = new Vue({
                             classes = "tab-pane fade";
                             backbutton =  `<button onclick="j_prevTab();" class="btn btn-jobform-outline">Back</button>`
                         }
+
+                         //if last tab, text is Save, else, Next
+                        var buttonText = vm.totalTabs == (index + 1) ? 'Save' : 'Next'
+                        var buttonId = vm.totalTabs == (index + 1) ? 'save' : ""
+                        console.log( `${vm.totalTabs}  ${(index + 1)}` )
                         $(".tab-content").append(`
                         
                              <div id="${tab.Id}" class="${classes}"
@@ -212,8 +220,8 @@ const sellerFields = new Vue({
                             <div class="jobform-form">
                             <h3>${tab.tab_name}</h3>
                              <hr>
-                             <div class="next-tab-area"><span class="seller-btn"> <a onclick="j_nextTab();"
-                                class="my-btn btn-red" href="javascript:void(0);">Next</a> </span></div>
+                               <div class="next-tab-area"><span class="seller-btn"> <a onclick="j_nextTab();"
+                                class="my-btn btn-red" href="javascript:void(0);" id="${buttonId}">${ buttonText }</a> </span></div>
                                 </div>
                             </div>
 
@@ -264,7 +272,6 @@ const sellerFields = new Vue({
 
                             var isrequired  = fieldRequired == 'True' ? 'required' : "";
                             var customFieldInput = '';
-                            
                                switch (fieldType) {
                                 case 'search':
 
@@ -281,7 +288,7 @@ const sellerFields = new Vue({
                                 
                                 case 'textfield':
                             
-                                    customFieldInput = `<div class="form-group ${isrequired}"> <label for=${fieldId}>${fieldName}</label>  <input type="text" class="form-control" name="${fieldName}"id="${fieldName}" placeholder=""></div>`
+                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label>  <input type="text" class="form-control" name="${fieldName}"id="${fieldName}" placeholder=""></div>`
                                     break;
                                
                                 case 'dropdown':
@@ -291,7 +298,7 @@ const sellerFields = new Vue({
                                     {
                                         options += `<option name='${option}' value="${option}">${option}</option>`
                                     });
-                                    customFieldInput = `<div class="form-group"> <label for=${fieldId}>${fieldName}</label> <select id="${fieldId}" class="form-control ${isrequired}"  name="${fieldName}" id="${fieldName}" type="dropdown">
+                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label> <select id="${fieldId}" class="form-control"  name="${fieldName}" id="${fieldName}" type="dropdown">
                                       ${options}
                                     </select> </div>`;
                                     break;    
@@ -302,11 +309,11 @@ const sellerFields = new Vue({
                                     $.each(JSON.parse(field.values), function (index, option)
                                     {
                                         chkoptions += `<div class="fancy-checkbox checkbox-sm">
-                                        <input type="checkbox" id="${option}" name="${option}" class="${isrequired}">
+                                        <input type="checkbox" id="${option}" name="${fieldId}">
                                         <label for="${option}"><span>${option}</span>
                                         </label>  </div>`
                                     });
-                                    customFieldInput = `<div class="form-group custom-fancyjb custom-details" id="${fieldId}"> 
+                                    customFieldInput = `<div class="form-group custom-fancyjb custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> 
                                     <label for=${fieldId}>${fieldName}</label>    
                                     ${chkoptions}
                                     </div>`;
@@ -317,11 +324,11 @@ const sellerFields = new Vue({
                                     $.each(JSON.parse(field.values), function (index, option)
                                     {
                                         radioOptions += `<div class="fancy-radio radio-sm">
-                                        <input type="radio" id="${option}" name="${option}" class="${isrequired}">
+                                        <input type="radio" id="${option}" name="${option}">
                                         <label for="${option}"><span>${option}</span>
                                         </label>  </div>`
                                     });
-                                    customFieldInput = `<div class="custom-fancyjb custom-details" id="${fieldId}"> 
+                                    customFieldInput = `<div class="custom-fancyjb custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> 
                                     <label for=${fieldId}>${fieldName}</label>    
                                     ${radioOptions}
                                     </div>`;
@@ -330,12 +337,12 @@ const sellerFields = new Vue({
                                 
                                 case 'number': 
                             
-                                    customFieldInput = `<div class="form-group ${isrequired}"> <label for=${fieldId}>${fieldName}</label>  <input type="number" class="form-control" name="${fieldName}"id="${fieldName}" placeholder=""></div>`
+                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label>  <input type="number" class="form-control" name="${fieldName}"id="${fieldName}" placeholder=""></div>`
                                     break;
                                
                                 case 'datepicker':
 
-                                    customFieldInput = `<div class="form-group"><label for=${fieldId}>${fieldName}</label><input type="text" class="form-control datepicker ${isrequired}" name="${fieldName}" id="${fieldName}" placeholder="DD/MM/YYYY"> </div>`
+                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}"  custom-type="${fieldType}"><label for=${fieldId}>${fieldName}</label><input type="text" class="form-control datepicker" name="${fieldName}" id="${fieldName}" placeholder="DD/MM/YYYY"> </div>`
                                     jQuery('.datepicker').datetimepicker({
                                     viewMode: 'days',
                                     format: 'DD/MM/YYYY'
@@ -344,28 +351,28 @@ const sellerFields = new Vue({
                                 
                                 case 'textarea':
                                     
-                                    customFieldInput = `<div class="form-group">
+                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}">
                                    <label for=${fieldId}>${fieldName}</label>
-                                    <textarea class="form-control ${isrequired}" name="${fieldName}" id="${fieldName}" rows="5" placeholder=""></textarea>
+                                    <textarea class="form-control" name="${fieldName}" id="${fieldName}" rows="5" placeholder=""></textarea>
                                     </div>`
                                     break;
                                
                                 case 'checkconfirm':
 
-                                    customFieldInput = `<div class="form-group custom-fancyjb">
+                                    customFieldInput = `<div class="form-group custom-fancyjb custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}">
                                     <div class="fancy-checkbox checkbox-sm">
-                                        <input type="checkbox" name="${fieldName}" id="${fieldName}" class="${isrequired}">
+                                        <input type="checkbox" name="${fieldId}" id="${fieldName}">
                                          <label for=${fieldId}>${fieldName}</label>
                                     </div>
                                     </div>`
-                                       break;
-                                   
+                                    break;
+                            
                                 case 'file':
 
-                                    customFieldInput = `<div class="form-group" id="${fieldId}">
+                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}">
                                         <div class="custom-fancyjb">
                                             <div class="fancy-checkbox checkbox-sm">
-                                                <input type="checkbox" checked="checked" name="${fieldName}" class="${isrequired}"
+                                                <input type="checkbox" checked="checked" name="${fieldName}"
                                                     id="${fieldId}">
                                                 <label for="${fieldId}"><span> ${fieldName}
                                                     </span></label>
@@ -398,7 +405,7 @@ const sellerFields = new Vue({
                                         </div>
                                     </div>`
                                     break;
-                           
+                                
                                 case 'note':
 
                                     customFieldInput = `<div class="jobform-note">
@@ -407,7 +414,8 @@ const sellerFields = new Vue({
                                     <p></p>
                                 </div>`
                                     break;
-                               }
+                        
+                            }
                             
                             var customField = `
                                 ${customFieldInput}
@@ -427,6 +435,69 @@ const sellerFields = new Vue({
             
             })
         },
+
+          async getAllFieldData(el)
+        {
+            //
+             el.find('.tab-pane').each(function ()
+             {
+                 var tabData = [];
+                 var $this = $(this);
+                 var customValue;
+                 $(this).find('.custom-details').each(function ()
+                      
+                 {
+                     switch ($(this).attr('custom-type')) {
+                        
+                         case 'textfield':
+                             customValue = $(this).find('input').val();
+                             break;
+                         case 'number':
+                            customValue = $(this).find('input').val();
+                             break;
+                         case 'datepicker': 
+                            customValue = $(this).find('input').val();
+                             break;
+                         case 'textarea': 
+                            customValue = $(this).find('textarea').val();
+                             break;
+                         case 'dropdown': 
+                            customValue = $(this).find('select').val();
+                             break;
+                         case 'radiobutton': 
+                            customValue = $(this).find("input:checked").attr('name');
+                             break;
+                         case 'checkbox': 
+                            var checkvalues = [];
+                            $(this).find('input:checkbox').each(function() 
+                            {    
+                                if($(this).is(':checked'))
+                                checkvalues.push($(this).attr('id'));
+                            });
+                            customValue = checkvalues;
+                             break;
+                         
+                         case 'checkconfirm': 
+                            var checkvalues = [];
+                            $(this).find('input:checkbox').each(function() 
+                            {    
+                                if($(this).is(':checked'))
+                                checkvalues.push($(this).attr('id'));
+                            });
+                            customValue = checkvalues;
+                             break;
+
+                    }
+
+
+                     tabData.push({ 'tab_name': $this.attr('classification-name'), 'customfield_id': $(this).attr('id'), 'customfield_name' : $(this).attr('custom-name'), 'values' : customValue})
+                 })
+
+
+                 vm.allFreelancerCustomDetails[$(this).attr('id')] = tabData;   
+            })
+            console.log( `${ JSON.stringify(vm.allFreelancerCustomDetails) }`)
+        }
 
     },
 
@@ -1012,6 +1083,12 @@ $(document).ready(function ()
                 format: 'DD/MM/YYYY'
             })
     });
+
+      $('body').on('click', '#save', function ()
+    {
+        sellerFields.getAllFieldData($('.tab-content'));
+
+    })
 
     
 

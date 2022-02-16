@@ -1,0 +1,90 @@
+{
+    "c4a83991-a8ec-4427-a902-a873876ea89a": [{
+        "tab_name": "Get Quote",
+        "customfield_id": "7bc7c770-cb39-4d26-981a-02516dc2917a",
+        "customfield_name": "Required field",
+        "values": "sdwsdas"
+    }, {
+        "tab_name": "Get Quote",
+        "customfield_id": "bc2e0105-9e1b-4b6e-acd0-5ad3cac59d09",
+        "customfield_name": "Check Option",
+        "values": ["OPtion 1", "option 2"]
+    }, {
+        "tab_name": "Get Quote",
+        "customfield_id": "e207b30e-a35b-4753-923b-70eebf29b70a",
+        "customfield_name": "dropdown",
+        "values": "Telehealth"
+    }, {
+        "tab_name": "Get Quote",
+        "customfield_id": "294c3451-374a-4839-bf79-d5fd3e2951a8",
+        "customfield_name": "Custom radio"
+    }, {
+        "tab_name": "Get Quote",
+        "customfield_id": "9befe2af-71f3-4e7c-aeea-e76b787e3ae8",
+        "customfield_name": "string required field",
+        "values": ""
+    }, {
+        "tab_name": "Get Quote",
+        "customfield_id": "c2922443-d122-41ef-aa55-eb821bb5f3e2",
+        "customfield_name": "hello  5",
+        "values": ""
+    }, {
+        "tab_name": "Get Quote",
+        "customfield_id": "52077107-7971-414c-9d02-f9997eba2d9b",
+        "customfield_name": "Upload  cf",
+        "values": ""
+    }, {
+        "tab_name": "Get Quote",
+        "customfield_id": "b493d25d-f8f6-4f60-901d-7a3cab0a381f",
+        "customfield_name": "Quotation field",
+        "values": "OPTION 1"
+    }],
+    "a969a7fe-01ee-40ca-a608-be216561f6ab": [{
+        "tab_name": "Time Frame",
+        "customfield_id": "0936d7e8-aca7-4156-b304-7dbf0fd7e40f",
+        "customfield_name": "hello",
+        "values": ""
+    }, {
+        "tab_name": "Time Frame",
+        "customfield_id": "19bac656-2ed1-43ca-8eff-c1970f83cfda",
+        "customfield_name": "hello",
+        "values": ""
+    }, {
+        "tab_name": "Time Frame",
+        "customfield_id": "65cdad85-af0f-43b4-b663-e00a99a424d9",
+        "customfield_name": "Validity Time",
+        "values": ""
+    }],
+    "bd50792d-9cc1-4469-a6d0-c18507b3988d": [{
+        "tab_name": "Contact Details",
+        "customfield_id": "471d8c8e-a904-41b7-9138-10305e793cf9",
+        "customfield_name": "new required field",
+        "values": ""
+    }, {
+        "tab_name": "Contact Details",
+        "customfield_id": "b5fc913e-0b55-4f1c-9ed2-6b0f041a5548",
+        "customfield_name": "required string",
+        "values": ""
+    }, {
+        "tab_name": "Contact Details",
+        "customfield_id": "50844f04-9266-43e7-9dc7-d3bf2c673da7",
+        "customfield_name": "hello 4",
+        "values": ""
+    }, {
+        "tab_name": "Contact Details",
+        "customfield_id": "c6518aca-10df-4bef-b5ea-e5f179a221da",
+        "customfield_name": "Textarea",
+        "values": ""
+    }, {
+        "tab_name": "Contact Details",
+        "customfield_id": "cd4f1189-ad73-45e2-b842-e6f88bf66256",
+        "customfield_name": "required field 2",
+        "values": ""
+    }],
+    "40989509-ef8f-4412-aae4-b5984b32da80": [{
+        "tab_name": "Select Location ",
+        "customfield_id": "3afabb0c-8a7b-460d-947b-101453b47f04",
+        "customfield_name": "Location field",
+        "values": ""
+    }]
+}

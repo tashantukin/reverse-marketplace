@@ -22,7 +22,7 @@
 
     //run on creation page only
     new Vue({
-        el: ".page-content",
+        el: "#main",
         data() {
             return {
                 allJobFields: [],

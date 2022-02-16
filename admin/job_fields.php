@@ -357,18 +357,18 @@ jQuery(document).ready(function() {
 
     jQuery('body').on('click', '.btn-edit-onbrdfields', function() {
 
-        var fn = jQuery(this).closest('.added-description').find('.user-field-name-onbrd').text();
-        var ft = jQuery(this).closest('.added-description').find('.user-field-type-onbrd').text();
-        var st = jQuery(this).closest('.added-description').find('.user-field-consumer-onbrd')
-            .text();
+        // var fn = jQuery(this).closest('.added-description').find('.user-field-name-onbrd').text();
+        // var ft = jQuery(this).closest('.added-description').find('.user-field-type-onbrd').text();
+        // var st = jQuery(this).closest('.added-description').find('.user-field-consumer-onbrd')
+        //     .text();
 
-        jQuery('#onbrd_field_name').val(fn);
-        jQuery('#onbrd_field_type').val(ft);
-        jQuery('#onbrd_steps').val(st);
+        // jQuery('#onbrd_field_name').val(fn);
+        // jQuery('#onbrd_field_type').val(ft);
+        // jQuery('#onbrd_steps').val(st);
 
         jQuery('#OnboardingFields').modal('show');
 
-        tr_row_update = jQuery(this).closest('.added-description');
+        // tr_row_update = jQuery(this).closest('.added-description');
 
     });
 
@@ -854,7 +854,6 @@ function addSteps(x) {
                                             </ul>
             
                                         </div>
-
 
                                     </div>
                                 </div>

@@ -466,7 +466,7 @@ const jobData = new Vue({
                                         <div class="custom-fancyjb">
                                             <div class="fancy-checkbox checkbox-sm">
                                                 <input type="checkbox" checked="checked" name="${fieldName}"
-                                                    id="${fieldId}">
+                                                    data-id="${fieldId}" >
                                                 <label for="${fieldId}"><span> ${fieldName}
                                                     </span></label>
                                             </div>
@@ -480,8 +480,8 @@ const jobData = new Vue({
                                                         <input type="text" class="form-control" value="">
                                                         <div class="browse-btn">
                                                             <input type="file" value="Browse..." multiple
-                                                                onchange="readURL(this);" id="uploads"
-                                                                upload-name="${fieldName}">
+                                                                onchange="readURL(this);" id="file-doc"
+                                                                upload-name="${fieldName}" field-id="${fieldId}">
                                                             <span id="logo_add2">Upload</span>
                                                         </div>
                                                     </a>
@@ -616,31 +616,40 @@ var documentData = (function ()
     function init()
     {
 
-        function getFile ()       
+        function getFile (el)       
         {   
             if ($("#file-doc[type='file']") !== undefined && $("#file-doc[type='file']") !== null && $("#file-doc[type='file']").val() !== '') {
 
                 totalfiles = document.getElementById('file-doc').files.length;
                 console.log({ totalfiles });
+                var fieldId = el.attr('field-id');
+                var tabId =  el.parents('.tab-pane').attr('id');
     
                 var fileList = [];
-                
-                for (var index = 0; index < totalfiles; index++) {
+
+                if (totalfiles > 5) {
+                    alert("You can select only 5 files");
+                } else {
+                    for (var index = 0; index < totalfiles; index++) {
     
                     fileList.push(document.getElementById('file-doc').files[index])
                 }
                 
                 fileList.forEach( function (file, i) {
                 
-                    sendFile(file, i);
+                    sendFile(file, fieldId, tabId, i);
                     console.log({ i });
                 
                 })
+                  
+                }
+                
+                
 
             } 
         }
 
-        function sendFile(file, i)
+        function sendFile(file, fId, tId, i)
         {
             
             var apiUrl = packagePath + '/get_token.php';
@@ -665,22 +674,22 @@ var documentData = (function ()
                     console.log('data' + JSON.stringify(data));
                     var url = '/api/v2/files/' +  id  + '/files/';
                     jQuery.ajax({
-                    url: url,
-                    data: data,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    method: 'POST',
-                    type: 'POST',
-                    beforeSend: function beforeSend(xhr)
-                    {
-                        xhr.setRequestHeader('Authorization', `Bearer ${atoken}`);
-                    },
-                    success: function success(result)
-                    {
-                        console.log(result);
-                        taskFiles.push({ 'URL' : result[0]['SourceUrl'], 'name' : result[0]['Filename'] });
-
+                        url: url,
+                        data: data,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        method: 'POST',
+                        type: 'POST',
+                        beforeSend: function beforeSend(xhr)
+                        {
+                            xhr.setRequestHeader('Authorization', `Bearer ${atoken}`);
+                        },
+                        success: function success(result)
+                        {
+                            console.log(result);
+                            taskFiles.push({ 'URL': result[0]['SourceUrl'], 'name': result[0]['Filename'], 'field-id': fId, 'tab-id': tId });
+                            console.log({taskFiles})
                         // allFiles.forEach(function (filename, i)
                         // {
                             $('.table-document tbody').append(`<tr>
@@ -808,7 +817,7 @@ $(document).ready(function ()
 
     $('body').on('change', '#file-doc', function (){
         var documents = documentData.getInstance();
-        documents.getFile();
+        documents.getFile($(this));
         
     })
     

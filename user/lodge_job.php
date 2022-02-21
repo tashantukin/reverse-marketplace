@@ -53,6 +53,21 @@
    <script src="/user/plugins/8e94739d-b260-41ec-9496-dfa98bb8cdc0/scripts/maps/usa_states.js" charset="utf-8"></script> -->
     <script type="text/javascript" src="scripts/jquery.mapael.js"></script>
     <script type="text/javascript" src="scripts/usa_states.js"></script>
+    <!-- leaflet css  -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+
+    <style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    #map {
+        width: 100%;
+        height: 80vh;
+    }
+    </style>
 
 
 </head>
@@ -183,6 +198,7 @@
 <!--modal register-->
 
 <!-- begin footer -->
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 <div class="modal-overlay"></div>
 <script type="text/javascript">
 $(function() {
@@ -206,6 +222,18 @@ $(function() {
         onSelected: function(selectedData) {}
     });
 });
+
+
+
+function waitForElement(elementPath, callBack) {
+    window.setTimeout(function() {
+        if ($(elementPath).length) {
+            callBack(elementPath, $(elementPath));
+        } else {
+            waitForElement(elementPath, callBack);
+        }
+    }, 500);
+}
 
 function j_nextTab() {
     jQuery(".jobform-tab li.active").next('li').children('a').trigger('click');
@@ -328,23 +356,7 @@ jQuery(document).ready(function() {
     $(window).on('resize', jobTabTimeline);
 
 
-    jQuery('body').on('change', '#in_person_work', function(event) {
-        if ($(this).is(':checked')) {
-            $('.location-map-hide-show').fadeIn('slow');
-            newMap()
-        } else {
-            $('.location-map-hide-show').fadeOut('slow');
-        }
-    });
 
-    jQuery('body').on('change', '#remote_work', function(event) {
-        if ($(this).is(':checked')) {
-            $('.location-map-hide-show').fadeOut('slow');
-
-        } else {
-            $('.location-map-hide-show').fadeIn('slow');
-        }
-    });
 
 
     jQuery('.jobform-tab .nav-tabs a').on('show.bs.tab', function(event) {
@@ -1177,8 +1189,71 @@ jQuery(document).ready(function() {
 
     // });
 });
+var map;
+waitForElement('#map', function() {
+    map = L.map('map').fitWorld();
+    // L.map('map').setView([0, 0], 6);
+
+    //osm layer
+    var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    });
+    osm.addTo(map);
+
+
+
+    if (!navigator.geolocation) {
+        console.log("Your browser doesn't support geolocation feature!")
+    } else {
+        setInterval(() => {
+            navigator.geolocation.getCurrentPosition(getPosition)
+        }, 5000);
+    }
+})
+var marker, circle;
+
+function getPosition(position) {
+    // console.log(position)
+    var lat = position.coords.latitude
+    var long = position.coords.longitude
+    var accuracy = position.coords.accuracy
+
+    if (marker) {
+        map.removeLayer(marker)
+    }
+
+    if (circle) {
+        map.removeLayer(circle)
+    }
+
+    marker = L.marker([lat, long])
+    circle = L.circle([lat, long], {
+        radius: accuracy
+    })
+
+    var featureGroup = L.featureGroup([marker, circle]).addTo(map)
+
+    map.fitBounds(featureGroup.getBounds())
+
+    console.log("Your coordinate is: Lat: " + lat + " Long: " + long + " Accuracy: " + accuracy)
+}
 </script>
-<script type="text/javascript" src="scripts/jquery.mapael.js"></script>
+
+
+
+<!-- leaflet js  -->
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="scripts/jquery.mapael.js">
+</script>
+
 <script type="text/javascript" src="scripts/usa_states.js"></script>
 <script type="text/javascript" src="scripts/maps/world_countries.js"></script>
 <script type="text/javascript" src="scripts/lodge_job.js"></script>

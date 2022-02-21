@@ -170,6 +170,7 @@
                     <option value="radiobutton">Radiobutton</option>
                     <option value="datepicker">Date Picker</option>
                     <option value="file">File Upload</option>
+                    <option value="location">Location</option>
                 </select>
             </div>
 

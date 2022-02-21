@@ -507,6 +507,33 @@ const jobData = new Vue({
                                     <p></p>
                                 </div>`
                                     break;
+                                case 'location':
+                                     customFieldInput = `<div class="btn-hbox custom-fancyjb cdflex">
+                       
+                              <div class="fancy-radio radio-sm">
+                                 <input type="radio" name="remote_work" id="remote_work" value="0" checked="">
+                                 <label for="remote_work"><span>Remote Work</span></label>
+                              </div>
+                              <div class="fancy-radio radio-sm">
+                                 <input type="radio" name="remote_work" id="in_person_work" value="1">
+                                 <label for="in_person_work"><span>In-Person Work</span></label>
+                              </div>
+                           </div>
+
+
+                            <div class="location-map-hide-show" style="">
+                            
+                            <div class="form-group">
+                                    <label for="location_details">Location Details</label>
+                                    <input type="text" class="form-control" name="location_details" id="location_details" placeholder="" value="Sample Address 13, SY123">
+                                    </div>
+                            <div class="mapcontainer">
+                                <div id="map">
+
+                                </div>
+                            </div>
+
+                            </div>`
                         
                             }
                             
@@ -663,15 +690,15 @@ var documentData = (function ()
                 {
                     var adminToken = $.parseJSON(response);
                     var atoken = adminToken['token']['access_token'];
-                    console.log({ atoken })
+                    //console.log({ atoken })
                     
                     var id = adminToken['id'];
-                    console.log({ id })
+                   // console.log({ id })
                     
                     var data = new FormData();
                     data.set('file', file);
 
-                    console.log('data' + JSON.stringify(data));
+                   // console.log('data' + JSON.stringify(data));
                     var url = '/api/v2/files/' +  id  + '/files/';
                     jQuery.ajax({
                         url: url,
@@ -695,7 +722,7 @@ var documentData = (function ()
                             $('.table-document tbody').append(`<tr>
                             <td class="action-icondelete"><a class="delete-cat" href="javascript:void(0)"><i class="icon icon-ndelete"></i></a></td>
                             <td>${result[0]['Filename']}</td>
-                            <td><div class="text-right document-action"><a href="${result[0]['SourceUrl']}">View</a>|<a href="${result[0]['SourceUrl']}">Download</a></div></td>
+                            <td><div class="text-right document-action"><a href="${result[0]['SourceUrl']}" target="_blank">View</a>|<a href="${result[0]['SourceUrl']}" target="_blank">Download</a></div></td>
                             </tr>`);
                             
                         // })
@@ -828,7 +855,6 @@ $(document).ready(function ()
     })
 
 
-    
     $('body').on('focus',".datepicker", function(){
             $(this).datetimepicker({
                 viewMode: 'days',
@@ -837,13 +863,31 @@ $(document).ready(function ()
     });
 
 
-
- 
     $('body').on('click', '#save', function ()
     {
         jobData.getAllFieldData($('.tab-content'));
 
     })
+
+        $('body').on('change', '#in_person_work', function() {
+        console.log('in person click')
+        if ($(this).is(':checked')) {
+            $('.location-map-hide-show').fadeIn('slow');
+           // newMap()
+        } else {
+            $('.location-map-hide-show').fadeOut('slow');
+        }
+    });
+
+    $('body').on('change', '#remote_work', function() {
+            console.log('remote work click')
+            if ($(this).is(':checked')) {
+                $('.location-map-hide-show').fadeOut('slow');
+
+            } else {
+                $('.location-map-hide-show').fadeIn('slow');
+            }
+        });
 
 
     

@@ -507,6 +507,7 @@ const jobData = new Vue({
                                     <p></p>
                                 </div>`
                                     break;
+                               
                                 case 'location':
                                      customFieldInput = `<div class="btn-hbox custom-fancyjb cdflex">
                        
@@ -869,14 +870,14 @@ $(document).ready(function ()
 
     })
 
-        $('body').on('change', '#in_person_work', function() {
-        console.log('in person click')
-        if ($(this).is(':checked')) {
-            $('.location-map-hide-show').fadeIn('slow');
-           // newMap()
-        } else {
-            $('.location-map-hide-show').fadeOut('slow');
-        }
+    $('body').on('change', '#in_person_work', function() {
+    console.log('in person click')
+    if ($(this).is(':checked')) {
+        $('.location-map-hide-show').fadeIn('slow');
+        // newMap()
+    } else {
+        $('.location-map-hide-show').fadeOut('slow');
+    }
     });
 
     $('body').on('change', '#remote_work', function() {
@@ -887,7 +888,7 @@ $(document).ready(function ()
             } else {
                 $('.location-map-hide-show').fadeIn('slow');
             }
-        });
+    });
 
 
     

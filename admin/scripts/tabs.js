@@ -44,7 +44,8 @@
                 fieldType: '',
                 fieldSteps: '',
                 values: '',
-                fieldId: ''
+                fieldId: '',
+                placeholder: ''
          
                 
             }

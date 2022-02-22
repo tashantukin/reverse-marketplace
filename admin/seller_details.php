@@ -41,7 +41,7 @@
 
                             <button class="btn cmn-btn-clear" id="btn-add-new-steps" type="button">
 
-                                Add new steps
+                                Add/Edit Steps
 
                             </button>
                             <button class="btn cmn-btn-blue" id="btn-add-new-field" type="button">
@@ -202,7 +202,7 @@
             </div>
 
             <div class="form-group">
-                <label>Steps</label>
+                <label>This field is shown in step:</label>
                 <select class="form-control required" name="onbrd_steps" id="onbrd_steps" :value="classification">
                     <option v-for="tab in allOnboardTabs" :value=tab.Id>{{tab.tab_name}}</option>
                 </select>

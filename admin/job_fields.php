@@ -40,7 +40,7 @@
                         <div class="auto pull-right text-right">
                             <button class="btn cmn-btn-clear" id="btn-add-new-steps" type="button">
 
-                                Add new steps
+                                Add/Edit Steps
 
                             </button>
                             <button class="btn cmn-btn-blue" id="btn-add-new-field" type="button">
@@ -157,6 +157,13 @@
                 <input type="text" :value="fieldName" class="form-control required" name="onbrd_field_name"
                     id="onbrd_field_name">
             </div>
+
+            <div class="form-group">
+                <label>Placeholder</label>
+                <input :value="placeholder" type="text" class="form-control" name="onbrd_field_placeholder"
+                    id="onbrd_field_placeholder">
+            </div>
+
             <div class="form-group">
                 <label>Field Type*</label>
                 <select class="form-control required" name="onbrd_field_type" id="onbrd_field_type" :value="fieldType">
@@ -195,7 +202,7 @@
             </div>
 
             <div class="form-group">
-                <label>Steps</label>
+                <label>This field is shown in step:</label>
                 <select class="form-control required" name="onbrd_steps" id="onbrd_steps" :value="fieldSteps">
                     <option v-for="tab in allTabs" :value=tab.Id>{{tab.tab_name}}</option>
                     <!-- <option value="Get Quote">Get Quote</option>

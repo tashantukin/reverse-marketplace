@@ -5,13 +5,15 @@ const protocol = window.location.protocol;
 const token = getCookie('webapitoken');
 const baseURL = window.location.hostname;
 var packageId = re.exec(scriptSrc.toLowerCase())[1];
-
+   const url = window.location.href.toLowerCase();
 var userId;
 var userguid = $('#userGuid').val()
 var taskFiles = [];
 var allFiles = [];
 var sellerFields;
 var packagePath = scriptSrc.replace("/scripts/users.js", "").trim();
+var locationList = new Array();
+var search_group = new L.LayerGroup();
 
 function getCookie(name){
     var value = '; ' + document.cookie;
@@ -31,6 +33,11 @@ function waitForElement(elementPath, callBack)
     }
   }, 500);
 }
+
+
+
+
+
 
 
  function GetSortOrder(prop) {    
@@ -233,6 +240,8 @@ sellerFields = new Vue({
 
                     })
 
+                    
+
     
                 } catch (error) {
                     console.log("error", error);
@@ -266,16 +275,16 @@ sellerFields = new Vue({
                         $.each(fieldDetails, function (index, field)
                         {
                             fieldName = field.name,
-                            fieldType = field.type_of_field,
-                            fieldId = field.Id 
+                                fieldType = field.type_of_field,
+                                fieldId = field.Id
                             fieldRequired = field.is_required;
 
-                            var isrequired  = fieldRequired == 'True' ? 'required' : "";
+                            var isrequired = fieldRequired == 'True' ? 'required' : "";
                             var customFieldInput = '';
-                               switch (fieldType) {
+                            switch (fieldType) {
                                 case 'search':
 
-                                customFieldInput = `<div class="search-abn">
+                                    customFieldInput = `<div class="search-abn">
                                 <input type="search" class="form-control search" name="${fieldName}"
                                     placeholder="${field.placeholder}">
                                 <button><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
@@ -301,9 +310,9 @@ sellerFields = new Vue({
                                     customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label> <select id="${fieldId}" class="form-control"  name="${fieldName}" id="${fieldName}" type="dropdown">
                                       ${options}
                                     </select> </div>`;
-                                    break;    
+                                    break;
                                        
-                                case 'checkbox': 
+                                case 'checkbox':
 
                                     let chkoptions = '';
                                     $.each(JSON.parse(field.values), function (index, option)
@@ -319,8 +328,8 @@ sellerFields = new Vue({
                                     </div>`;
                                     break;
 
-                                case 'radiobutton': 
-                                     let radioOptions = '';
+                                case 'radiobutton':
+                                    let radioOptions = '';
                                     $.each(JSON.parse(field.values), function (index, option)
                                     {
                                         radioOptions += `<div class="fancy-radio radio-sm">
@@ -335,7 +344,7 @@ sellerFields = new Vue({
 
                                     break;
                                 
-                                case 'number': 
+                                case 'number':
                             
                                     customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label>  <input type="number" class="form-control" name="${fieldName}"id="${fieldName}" placeholder=""></div>`
                                     break;
@@ -344,8 +353,8 @@ sellerFields = new Vue({
 
                                     customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}"  custom-type="${fieldType}"><label for=${fieldId}>${fieldName}</label><input type="text" class="form-control datepicker" name="${fieldName}" id="${fieldName}" placeholder="DD/MM/YYYY"> </div>`
                                     jQuery('.datepicker').datetimepicker({
-                                    viewMode: 'days',
-                                    format: 'DD/MM/YYYY'
+                                        viewMode: 'days',
+                                        format: 'DD/MM/YYYY'
                                     });
                                     break;
                                 
@@ -414,6 +423,34 @@ sellerFields = new Vue({
                                     <p></p>
                                 </div>`
                                     break;
+                                   
+                                case 'location':
+                                    customFieldInput = `<div class="btn-hbox custom-fancyjb cdflex">
+                       
+                              <div class="fancy-radio radio-sm">
+                                 <input type="radio" name="remote_work" id="remote_work" value="0" checked="">
+                                 <label for="remote_work"><span>Remote Work</span></label>
+                              </div>
+                              <div class="fancy-radio radio-sm">
+                                 <input type="radio" name="remote_work" id="in_person_work" value="1">
+                                 <label for="in_person_work"><span>In-Person Work</span></label>
+                              </div>
+                           </div>
+
+                            <div class="location-map-hide-show" style="">
+                            
+                            <div class="form-group">
+                                    <label for="location_details">Servicing Area</label>
+                                    <input type="text" class="form-control" name="location_details" id="location_details" placeholder="" value="Sample Address 13, SY123">
+                                    </div>
+                            <div class="mapcontainer">
+                                <div id="map">
+                               
+                                </div>
+                            </div>
+
+                            </div>`
+
                         
                             }
                             
@@ -423,7 +460,13 @@ sellerFields = new Vue({
                         
                             $(`.tab-content #${tabId} .jobform-form hr`).before(customField)
 
+
+                            
+
                         })
+
+
+                      
 
                         
                         
@@ -497,7 +540,53 @@ sellerFields = new Vue({
                  vm.allFreelancerCustomDetails[$(this).attr('id')] = tabData;   
             })
             console.log( `${ JSON.stringify(vm.allFreelancerCustomDetails) }`)
-        }
+        }, 
+          
+        async getLocations()
+            {
+
+                 try {
+                     vm = this;
+                     const response = await axios({
+                         method: "GET",
+                         url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_locations`,
+                         // data: data,
+                         headers: {
+                             'Authorization': `Bearer ${token}`
+                         }
+                     })
+                     const locations = await response
+                   
+                    
+                     $.each(locations.data.Records, function (index, coords)
+                     {
+                         var location_list = JSON.parse(coords['location_list'])
+
+                         $.each(location_list, function (index, loc)
+                         {
+
+                             console.log({loc})
+                             var clickPositionMarker = L.marker([loc['lat'], loc['lng']], {
+                                    color: 'red',
+                                    fillColor: '#f03',
+                                    fillOpacity: 0.5,
+                                    radius: 500
+                                });
+
+                            clickPositionMarker.addTo(search_group).bindPopup(coords['job_id'])
+                                    .openPopup();
+
+                            
+                         })
+                     })
+
+                    
+
+    
+                 } catch (error) {
+                     console.log("error", error);
+                 }
+             }
 
     },
 
@@ -1026,6 +1115,8 @@ var documentData = (function ()
 })()
 
 
+
+
 $(document).ready(function ()
 {
    // $('#register-modal-consumer').hide();
@@ -1088,7 +1179,133 @@ $(document).ready(function ()
     {
         sellerFields.getAllFieldData($('.tab-content'));
 
-    })
+      })
+    
+
+    $('body').on('change', '#in_person_work', function() {
+    console.log('in person click')
+    if ($(this).is(':checked')) {
+        $('.location-map-hide-show').fadeIn('slow');
+         if (url.indexOf("/subscribe") >= 0) {
+
+
+                        var map;
+                        
+             var clickArr = new Array();
+            
+
+           
+             waitForElement('#map', function ()
+             {
+                 if (!map) {
+                     map = L.map('map').fitWorld();
+                     // L.map('map').setView([0, 0], 6);
+
+                     //osm layer
+                     var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                     });
+                     osm.addTo(map);
+                     map.addLayer(search_group);
+                 }
+                
+                  //add the existing jobs here
+                 sellerFields.getLocations();
+
+                 // map.on('click', onMapClick);
+
+                 var markers = new Array();
+                           
+                            map.on('click', function (e)
+                            {
+                                var clickPositionMarker = L.marker([e.latlng.lat, e.latlng.lng], {
+                                    color: 'red',
+                                    fillColor: '#f03',
+                                    fillOpacity: 0.5,
+                                    radius: 500
+                                });
+                                clickArr.push(clickPositionMarker);
+                                mapLat = e.latlng.lat;
+                                mapLon = e.latlng.lng;
+                                clickPositionMarker.addTo(search_group).bindPopup("<a name='removeClickM' id=" + e
+                                    .latlng.lat +
+                                    "_" + e.latlng.lng + ">Remove Me</a>")
+                                    .openPopup();
+                                $('.leaflet-popup-close-button').attr('id', e
+                                    .latlng.lat +
+                                    "_" + e.latlng.lng)
+
+                                /*   clickPositionMarker.on('click', function(e) {
+                                  markerDelAgain(); 
+                                }); */
+
+                                locationList.push(e.latlng);
+                                console.log({
+                                    locationList
+                                });
+
+                            });
+
+                            if (!navigator.geolocation) {
+                                console.log("Your browser doesn't support geolocation feature!")
+                            } else {
+                                //setInterval(() => {
+                                navigator.geolocation.getCurrentPosition(getPosition)
+                                //}, 5000);
+                            }
+
+                            var marker, circle;
+
+                            function getPosition(position)
+                            {
+                                // console.log(position)
+                                var lat = position.coords.latitude
+                                var long = position.coords.longitude
+                                var accuracy = position.coords.accuracy
+
+                                if (marker) {
+                                    map.removeLayer(marker)
+                                }
+
+                                if (circle) {
+                                    map.removeLayer(circle)
+                                }
+
+                                marker = L.marker([lat, long])
+                                circle = L.circle([lat, long], {
+                                    radius: accuracy
+                                })
+
+                                var featureGroup = L.featureGroup([marker, circle]).addTo(map)
+
+                                map.fitBounds(featureGroup.getBounds())
+
+                                console.log("Your coordinate is: Lat: " + lat + " Long: " + long + " Accuracy: " + accuracy)
+
+                            }
+
+
+
+                        })
+                    }
+
+    } else {
+        $('.location-map-hide-show').fadeOut('slow');
+    }
+    });
+
+    $('body').on('change', '#remote_work', function() {
+            console.log('remote work click')
+            if ($(this).is(':checked')) {
+                $('.location-map-hide-show').fadeOut('slow');
+
+            } else {
+                $('.location-map-hide-show').fadeIn('slow');
+            }
+    });
+
+  
+   
 
     
 

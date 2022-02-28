@@ -12,6 +12,8 @@ var packagePath = scriptSrc.replace("/scripts/lodge_job.js", "").trim();
 var allFiles = [];
 var allTasks = [];
 var totalfiles;
+var taskFiles = [];
+var locationList = new Array();
 
 
 function getCookie(name){
@@ -54,30 +56,34 @@ function cache_save_job()
         console.log({ text })
         selectedTasks.push(text);
    });
-
+  
     var job_details = {
-        "remote_work": $("#remote_work")[0].checked,
-        "inperson_work": $("#in_person_work")[0].checked,
-        "inperson_work_address": $("#location_details").val(),
-        "job_type_full_time": $("#full_time")[0].checked,
-        "job_type_contract": $("#contract")[0].checked,
-        "payment_fixed": $("#payment_fixed")[0].checked,
-        "payment_fixed_value": $("#payment_fixed_value").val(),
-        "payment_hourly": $("#payment_hourly")[0].checked,
-        "payment_hourly_value": $("#payment_hourly_value").val(),
-        "job_availability" : $("#job_valid").val(), 
+
+        "custom_fields": JSON.stringify(jobData.allJobCustomDetails),
+        "location_list":  JSON.stringify(locationList),
+        "document_list" : JSON.stringify(taskFiles)
+        // "remote_work": $("#remote_work")[0].checked,
+        // "inperson_work": $("#in_person_work")[0].checked,
+        // "inperson_work_address": $("#location_details").val(),
+        // "job_type_full_time": $("#full_time")[0].checked,
+        // "job_type_contract": $("#contract")[0].checked,
+        // "payment_fixed": $("#payment_fixed")[0].checked,
+        // "payment_fixed_value": $("#payment_fixed_value").val(),
+        // "payment_hourly": $("#payment_hourly")[0].checked,
+        // "payment_hourly_value": $("#payment_hourly_value").val(),
+        // "job_availability" : $("#job_valid").val(), 
        
-        "time_frame_urgent": $("#urgent")[0].checked,
-        "time_frame_nohurry": $("#no_hurry")[0].checked,
-        "time_frame_timestamp": $("#date-valid").val(),
-        "comments": $("#comments").val(),
-        "acknowledged_legal": $("#acknowledge")[0].checked,
-        "buyer_email": $("#email").val(),
-        "buyer_name": $("#name").val(),
-        "buyer_contact_no": $("#contact_number").val(),
-        "provide_personal_details_to_merchant": $("#provide_applicant")[0].checked,
-        "buyerID": buyerID,
-        "task_type_list" : JSON.stringify(selectedTasks)
+        // "time_frame_urgent": $("#urgent")[0].checked,
+        // "time_frame_nohurry": $("#no_hurry")[0].checked,
+        // "time_frame_timestamp": $("#date-valid").val(),
+        // "comments": $("#comments").val(),
+        // "acknowledged_legal": $("#acknowledge")[0].checked,
+        // "buyer_email": $("#email").val(),
+        // "buyer_name": $("#name").val(),
+        // "buyer_contact_no": $("#contact_number").val(),
+        // "provide_personal_details_to_merchant": $("#provide_applicant")[0].checked,
+        // "buyerID": buyerID,
+        // "task_type_list" : JSON.stringify(selectedTasks)
     };
 
     console.log(job_details);
@@ -521,7 +527,6 @@ const jobData = new Vue({
                               </div>
                            </div>
 
-
                             <div class="location-map-hide-show" style="">
                             
                             <div class="form-group">
@@ -530,7 +535,7 @@ const jobData = new Vue({
                                     </div>
                             <div class="mapcontainer">
                                 <div id="map">
-
+                               
                                 </div>
                             </div>
 
@@ -618,7 +623,8 @@ const jobData = new Vue({
 
                  vm.allJobCustomDetails[$(this).attr('id')] = tabData;   
             })
-            console.log( `${ JSON.stringify(vm.allJobCustomDetails) }`)
+            console.log(`${JSON.stringify(vm.allJobCustomDetails)}`)
+            cache_save_job();
         }
         
 
@@ -640,7 +646,7 @@ const jobData = new Vue({
 var documentData = (function ()
   {
     var instance;
-    var taskFiles = [];
+   
     function init()
     {
 
@@ -839,6 +845,111 @@ var documentData = (function ()
   })()
 $(document).ready(function ()
 {
+    const url = window.location.href.toLowerCase();
+   if (url.indexOf("/lodge_job.php") >= 0) {
+    var map;
+    var search_group = new L.LayerGroup();
+    var clickArr = new Array();
+
+
+    waitForElement('#map', function ()
+    {
+        map = L.map('map').fitWorld();
+        // L.map('map').setView([0, 0], 6);
+
+        //osm layer
+        var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        });
+        osm.addTo(map);
+
+        // map.on('click', onMapClick);
+
+        var markers = new Array();
+
+
+
+        map.addLayer(search_group);
+
+
+        map.on('click', function (e)
+        {
+            var clickPositionMarker = L.marker([e.latlng.lat, e.latlng.lng], {
+                color: 'red',
+                fillColor: '#f03',
+                fillOpacity: 0.5,
+                radius: 500
+            });
+            clickArr.push(clickPositionMarker);
+            mapLat = e.latlng.lat;
+            mapLon = e.latlng.lng;
+            clickPositionMarker.addTo(search_group).bindPopup("<a name='removeClickM' id=" + e
+                .latlng.lat +
+                "_" + e.latlng.lng + ">Remove Me</a>")
+                .openPopup();
+            $('.leaflet-popup-close-button').attr('id', e
+                .latlng.lat +
+                "_" + e.latlng.lng)
+
+            /*   clickPositionMarker.on('click', function(e) {
+              markerDelAgain(); 
+            }); */
+
+            locationList.push(e.latlng);
+            console.log({
+                locationList
+            });
+
+        });
+
+        if (!navigator.geolocation) {
+            console.log("Your browser doesn't support geolocation feature!")
+        } else {
+            //setInterval(() => {
+            navigator.geolocation.getCurrentPosition(getPosition)
+            //}, 5000);
+        }
+
+        var marker, circle;
+
+        function getPosition(position)
+        {
+            // console.log(position)
+            var lat = position.coords.latitude
+            var long = position.coords.longitude
+            var accuracy = position.coords.accuracy
+
+            if (marker) {
+                map.removeLayer(marker)
+            }
+
+            if (circle) {
+                map.removeLayer(circle)
+            }
+
+            marker = L.marker([lat, long])
+            circle = L.circle([lat, long], {
+                radius: accuracy
+            })
+
+            var featureGroup = L.featureGroup([marker, circle]).addTo(map)
+
+            map.fitBounds(featureGroup.getBounds())
+
+            console.log("Your coordinate is: Lat: " + lat + " Long: " + long + " Accuracy: " + accuracy)
+
+        }
+
+
+
+    })
+
+}
+
+
+
+
+
     //getToken()
     $(".my-btn").css({ padding: "0px" });
     $(".fancy-checkbox label span").css({height: "0px"});

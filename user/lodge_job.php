@@ -472,6 +472,28 @@ jQuery(document).ready(function() {
         format: 'DD/MM/YYYY'
     });
 
+    jQuery("a[name='removeClickM']").on('click', function(e) {
+        //  $(document).on("click", "a[name='removeClickM']", function(e) {
+
+        // Stop form from submitting normally
+        e.preventDefault();
+
+        console.log('removing');
+
+        for (i = 0; i < clickArr.length; i++) {
+
+            if (search_group.hasLayer(clickArr[i])) {
+                if (clickArr[i]._latlng.lat + "_" + clickArr[i]._latlng.lng == $(this).attr(
+                        'id')) {
+                    hideLayer(search_group, clickArr[i]);
+                    clickArr.splice(clickArr.indexOf(clickArr[i]), 1);
+                }
+
+            }
+
+        }
+    })
+
 
     function newMap() {
         var newData = {
@@ -1112,131 +1134,86 @@ jQuery(document).ready(function() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // $('.cmaphilight').maphilight({
-    //     // fill the shape
-    //     fill: true,
-
-    //     // fill color
-    //     fillColor: '000000',
-
-    //     // fill opacity
-    //     fillOpacity: 0.2,
-
-    //     // outline the shape
-    //     stroke: true,
-
-    //     // stroke color
-    //     strokeColor: 'ff0000',
-
-    //     // stroke opacity
-    //     strokeOpacity: 1,
-
-    //     // stroke width
-    //     strokeWidth: 1,
-
-    //     // fade in the shapes on mouseover
-    //     fade: true,
-
-    //     // always show the hilighted areas
-    //     alwaysOn: false,
-
-    //     // never show the hilighted areas
-    //     neverOn: false,
-
-    //     // The name of an attribute to group areas by, or a selector for elements in the map to group. 
-    //     // Or an array of the same
-    //     // If this is present then all areas in the map which have the same attribute value as the hovered area will hilight as well
-    //     groupBy: false,
-
-    //     // If true, applies the class on the <img> to the wrapper div maphilight created.
-    //     // If a string, that string is used as a class on the wrapper div.
-    //     wrapClass: true,
-
-    //     // apply a shadow to the shape
-    //     shadow: false,
-    //     shadowX: 0,
-    //     shadowY: 0,
-    //     shadowRadius: 6,
-    //     shadowColor: '000000',
-    //     shadowOpacity: 0.8,
-    //     // Can be 'outside', 'inside', or 'both'.
-    //     shadowPosition: 'outside',
-    //     // Can be 'stroke' or 'fill'
-    //     shadowFrom: false,
-
-    // });
 });
-var map;
-waitForElement('#map', function() {
-    map = L.map('map').fitWorld();
-    // L.map('map').setView([0, 0], 6);
-
-    //osm layer
-    var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    });
-    osm.addTo(map);
 
 
+// function onMapClick(e) {
 
-    if (!navigator.geolocation) {
-        console.log("Your browser doesn't support geolocation feature!")
-    } else {
-        setInterval(() => {
-            navigator.geolocation.getCurrentPosition(getPosition)
-        }, 5000);
-    }
-})
-var marker, circle;
+//     var marker = new L.Marker(e.latlng, {
+//         draggable: true
+//     });
+//     map.addLayer(marker);
+//     markers[marker._leaflet_id] = marker;
+//     console.log(markers);
+//     $('#overlay > ul').append('<li>Marker ' + marker._leaflet_id + ' - <a href="#" class="remove" id="' +
+//         marker._leaflet_id + '">remove</a></li>');
 
-function getPosition(position) {
-    // console.log(position)
-    var lat = position.coords.latitude
-    var long = position.coords.longitude
-    var accuracy = position.coords.accuracy
+//     // Remove a marker
+//     $('.remove').on("click", function() {
+//         // Remove the marker
+//         map.removeLayer(markers[$(this).attr('id')]);
 
-    if (marker) {
-        map.removeLayer(marker)
-    }
+//         // Remove the link
+//         $(this).parent('li').remove();
 
-    if (circle) {
-        map.removeLayer(circle)
-    }
+//         // Remove the marker from the array
+//         delete markers[$(this).attr('id')];
 
-    marker = L.marker([lat, long])
-    circle = L.circle([lat, long], {
-        radius: accuracy
-    })
+//     });
 
-    var featureGroup = L.featureGroup([marker, circle]).addTo(map)
+// };
 
-    map.fitBounds(featureGroup.getBounds())
+// var popup = L.popup();
+// var marker = L.marker();
 
-    console.log("Your coordinate is: Lat: " + lat + " Long: " + long + " Accuracy: " + accuracy)
-}
+// function onMapClick(e) {
+//     popup
+//         .setLatLng(e.latlng)
+//         .setContent("You clicked the map at " + e.latlng.toString())
+//         .openOn(map);
+//     console.log(e.latlng);
+
+
+//     marker = L.marker(e.latlng, {
+//         color: 'red',
+//         fillColor: '#f03',
+//         fillOpacity: 0.5,
+//         radius: 500
+//     }).addTo(map);
+
+//     map.addLayer(marker);
+
+// }
+// const deleteMarker = (e) => {
+//     if (deleteBool) {
+//         e.target.removeFrom(map)
+//         deleteBool = false
+//     }
+// }
+
+// map.on('click', onMapClick);
+// marker.on('click', deleteMarker)
+// // marker.on("popupopen", onPopupOpen);
+
+// //Button who active deleteBool
+// const button = document.getElementById('btn')
+
+// //Boolean who let me delete marker
+// let deleteBool = false
+
+// //Button function to enable boolean
+// button.addEventListener('click', () => {
+//     deleteBool = true
+
+
+
+///})
+
+// Function to delete marker 
+
+
+
+//})
 </script>
 
 

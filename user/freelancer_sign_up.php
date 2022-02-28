@@ -42,9 +42,25 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
 
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
     <script type="text/javascript" src="subscribe/8e94739d-b260-41ec-9496-dfa98bb8cdc0/scripts/users.js"></script>
 
+    <!-- leaflet css  -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 
+
+    <style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    #map {
+        width: 100%;
+        height: 80vh;
+    }
+    </style>
 
 
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
@@ -165,6 +181,7 @@
     <div class="modal-overlay"></div>
 
     <!-- begin footer -->
+
     <script type="text/javascript">
     $(function() {
         var ddlData = [{
@@ -191,7 +208,7 @@
     function j_nextTab() {
         jQuery(".jobform-tab li.active").next('li').children('a').trigger('click');
         setTimeout(function() {
-            newMap();
+            //   newMap();
         }, 500);
 
     }
@@ -305,9 +322,9 @@
         jQuery('body').on('change', '#servicing_area_all', function(event) {
             if ($(this).is(':checked')) {
                 //  $('.location-map-hide-show').fadeIn('slow');
-                newMapSelectedAll();
+                // newMapSelectedAll();
             } else {
-                newMap();
+                // newMap();
                 //  $('.location-map-hide-show').fadeOut('slow');
             }
         });
@@ -315,9 +332,9 @@
         jQuery('body').on('change', '#servicing_area_remote', function(event) {
             if ($(this).is(':checked')) {
                 //  $('.location-map-hide-show').fadeIn('slow');
-                newMap();
+                //     newMap();
             } else {
-                newMap();
+                //   newMap();
                 //  $('.location-map-hide-show').fadeOut('slow');
             }
         });

@@ -276,41 +276,273 @@
                 </div>
 
                 <div role="tabpanel" class="tab-pane" id="payments">
-                    <div class="panel-box tabular">
-                        <div class="panel-box subscription-form">
-                            <div class="page-content-top">
-                                <h4>Link your Stripe account to your Marketplace <i class="icon info-blue-icon"></i>
-                                    <span class="blue-color">How do I connect to Stripe?</span>
-                                </h4>
-                                <h5>If you change your live secret keys, all your merchants will have to <span
-                                        class="color-red">re-onboard</span> to your <span class="color-red">new</span>
-                                    Subscription account before they can start selling again!</h5>
+                    <div class="panel--box tabular">
+
+
+                        <div class="panel-box payment-content">
+                            <div class="page-content-btm">
+                                <div class="language-selected-container">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>PAYMENT METHOD</th>
+                                                <th>MANDATORY</th>
+                                                <th>STATUS</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbLanguageRow">
+                                            <tr>
+                                                <td>
+                                                    <div class="payment-stripe"></div>
+                                                </td>
+                                                <td>
+                                                    <div class="onoffswitch">
+                                                        <input type="checkbox" name="onoffswitch"
+                                                            class="onoffswitch-checkbox" id="myonoffswitch1"
+                                                            disabled="">
+                                                        <label class="onoffswitch-label" for="myonoffswitch1"> <span
+                                                                class="onoffswitch-inner"></span> <span
+                                                                class="onoffswitch-switch"></span> </label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="payment-status-color1"></div>
+                                                    <div class="payment-status not-added">Not Added</div>
+                                                </td>
+                                                <td><a href="/adminportal/pay_stripe.html"><span
+                                                            class="btn-payment-link">Link Account</span></a>
+                                                    <div class="animation-svg"><a href="pay_stripe.html"></a></div>
+                                                </td>
+                                            </tr>
+                                            <!-- <tr>
+                                                <td>
+                                                    <div class="payment-paypal"></div>
+                                                </td>
+                                                <td>
+                                                    <div class="onoffswitch">
+                                                        <input type="checkbox" name="onoffswitch"
+                                                            class="onoffswitch-checkbox" id="myonoffswitch2p"
+                                                            checked="">
+                                                        <label class="onoffswitch-label" for="myonoffswitch2p"> <span
+                                                                class="onoffswitch-inner"></span> <span
+                                                                class="onoffswitch-switch"></span> </label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="payment-status-color2"></div>
+                                                    <div class="payment-status">Active</div>
+                                                </td>
+                                                <td><a href="/adminportal/pay_paypal.html"><span
+                                                            class="btn-payment-link">Link Account</span></a></td>
+                                            </tr> -->
+                                            <tr>
+                                                <td>
+                                                    <div class="payment-omise"></div>
+                                                </td>
+                                                <td>
+                                                    <div class="onoffswitch">
+                                                        <input type="checkbox" name="onoffswitch"
+                                                            class="onoffswitch-checkbox" id="myonoffswitch2" checked="">
+                                                        <label class="onoffswitch-label" for="myonoffswitch2"> <span
+                                                                class="onoffswitch-inner"></span> <span
+                                                                class="onoffswitch-switch"></span> </label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="payment-status-color2"></div>
+                                                    <div class="payment-status">Active</div>
+                                                </td>
+                                                <td><a href="/adminportal/pay_omise.html"><span
+                                                            class="btn-payment-link">Link Account</span></a></td>
+                                            </tr>
+                                            <!-- <tr>
+                                                <td>
+                                                    <div class="payment-stripe"></div>
+                                                    <div><b>Holding Funds</b></div>
+                                                </td>
+                                                <td>
+                                                    <div class="onoffswitch">
+                                                        <input type="checkbox" name="onoffswitch"
+                                                            class="onoffswitch-checkbox" id="myonoffswitchshf">
+                                                        <label class="onoffswitch-label" for="myonoffswitchshf"> <span
+                                                                class="onoffswitch-inner"></span> <span
+                                                                class="onoffswitch-switch"></span> </label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="payment-status-color1"></div>
+                                                    <div class="payment-status not-added">Not Added</div>
+                                                </td>
+                                                <td><a href="/adminportal/stripe-holding-funds.html"><span
+                                                            class="btn-payment-link">Settings</span></a></td>
+                                            </tr> -->
+                                            <tr>
+                                                <td>
+                                                    <div><b>Cash on delivery*</b></div>
+                                                </td>
+                                                <td>
+                                                    <div class="onoffswitch">
+                                                        <input type="checkbox" name="onoffswitch"
+                                                            class="onoffswitch-checkbox" id="myonoffswitchcod">
+                                                        <label class="onoffswitch-label" for="myonoffswitchcod"> <span
+                                                                class="onoffswitch-inner"></span> <span
+                                                                class="onoffswitch-switch"></span> </label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="payment-status-color1"></div>
+                                                    <div class="payment-status not-added">Not Added</div>
+                                                </td>
+                                                <td><a href="/adminportal/payment_cod.html"><span
+                                                            class="btn-payment-link">Settings</span></a></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <div class="offline-payment-img"><a
+                                                            href="/adminportal/payment_custom.html"><img
+                                                                src="images/paymill.jpg"></a></div>
+                                                </td>
+                                                <td>
+                                                    <div class="onoffswitch">
+                                                        <input type="checkbox" name="onoffswitch"
+                                                            class="onoffswitch-checkbox" id="myonoffswitch3" checked="">
+                                                        <label class="onoffswitch-label" for="myonoffswitch3"> <span
+                                                                class="onoffswitch-inner"></span> <span
+                                                                class="onoffswitch-switch"></span> </label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="payment-status-color2"></div>
+                                                    <div class="payment-status">Active</div>
+                                                </td>
+                                                <td><a href="/adminportal/payment_custom.html"><span
+                                                            class="btn-payment-link">Settings</span></a><a
+                                                        href="javascript:void(0);"
+                                                        onclick="DeleteCustomMethod(this)"><img
+                                                            src="images/delete.svg"></a></td>
+                                            </tr>
+                                            <!-- Last TR afer all data to add new custom payment method-->
+                                            <!-- <tr>
+                                                <td colspan="4">
+                                                    <div class="add-custom-method-sec">
+                                                        <a href="/adminportal/payment_custom.html"><img
+                                                                src="images/plus-add-sign.svg"> Add a custom payment
+                                                            method</a>
+                                                        <div id="toolTip" class="payment-tooltip hide">
+                                                            <p>Select the preferred payment method for your marketplace
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr> -->
+                                            <!-- End last TR after all custom data-->
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                            <form name="live_secret_key" id="live_secret_key" action="#">
-                                <div class="form-area">
-                                    <div class="form-element">
-                                        <label for="live-publishable-key"><span class="red-bold-strong">LIVE</span>
-                                            PUBLISHABLE KEY</label>
-                                        <input type="text" name="publishable-key" id="live-publishable-key"
-                                            class="txt required">
-                                    </div>
-                                    <div class="form-element">
-                                        <label for="live-secret-key"><span class="red-bold-strong">LIVE</span> SECRET
-                                            KEY</label>
-                                        <input type="text" name="" id="live-secret-key" class="txt required">
-                                    </div>
+                        </div>
+                        <form class="job_customise">
+                            <div class="panel-box panel-remove-margin">
+                                <div class="page-content-top">
+                                    <h4>Customise your fees</h4>
+                                    <p>Money to be charged by the Marketplace Operator and paid to the operator.</p>
+                                </div>
+                                <div class="page-content-btm">
+                                    <h5 class="frame-title">Buyer Setting</h5>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group" v-for="charge in chargesListBuyer"
+                                                :charge-type="charge.is_fixed">
+                                                <label :for="charge.Id" class="">{{ charge.title }}</label>
 
-                                    <div class="sync-data">
+                                                <div v-if="charge.is_fixed==0">
+                                                    <div class="meta-item-radio radio-style-1">
+                                                        <div class="fancy-radio">
+                                                            <input type="radio" checked="" value="fixed"
+                                                                class="radio-ccheckbox" :name="charge.Id"
+                                                                :id="charge.Id + '_fixed'">
+                                                            <label :for="charge.Id + '_fixed'">
+                                                                <span>Fixed Price</span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="meta-item-radio radio-style-1">
+                                                        <div class="fancy-radio">
+                                                            <input type="radio" value="percentage"
+                                                                class="radio-ccheckbox" :name="charge.Id"
+                                                                :id="charge.Id + '_percent'">
+                                                            <label :for="charge.Id + '_percent'">
+                                                                <span>Percentage</span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
-                                        <div class="btn-area" id="save-btn"> <a href="javascript:void(0);"
-                                                class="btn-blue" onclick="MakeUneditable()">Save</a></div>
-                                        <div class="btn-area" id="edit-btn" style="display: none;"><a
-                                                href="javascript:void(0);" class="btn-blue"
-                                                onclick="SaveConfirm()">Edit</a></div>
+                                                <div class="form-input-prefix doller-prefix">
+                                                    <input type="text" class="required form-control input-style-3"
+                                                        :value="charge.value" :id="charge.Id">
+                                                </div>
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
+
+
+                            </div>
+
+                            <div class="panel-box">
+                                <div class="page-content-btm">
+                                    <h5 class="frame-title">Seller Setting</h5>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group" v-for="charge in chargesListSeller"
+                                                :charge-type="charge.is_fixed">
+                                                <label :for="charge.Id" class="">{{ charge.title }}</label>
+
+                                                <div v-if="charge.is_fixed==0">
+                                                    <div class="meta-item-radio radio-style-1">
+                                                        <div class="fancy-radio">
+                                                            <input type="radio" checked="" value="fixed"
+                                                                class="radio-ccheckbox" :name="charge.Id"
+                                                                :id="charge.Id + '_fixed'">
+                                                            <label :for="charge.Id + '_fixed'">
+                                                                <span>Fixed Price</span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="meta-item-radio radio-style-1">
+                                                        <div class="fancy-radio">
+                                                            <input type="radio" value="percentage"
+                                                                class="radio-ccheckbox" :name="charge.Id"
+                                                                :id="charge.Id + '_percent'">
+                                                            <label :for="charge.Id + '_percent'">
+                                                                <span>Percentage</span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-input-prefix doller-prefix">
+                                                    <input type="text" class="required form-control input-style-3"
+                                                        :id="charge.Id" :value="charge.value">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="btn-area">
+                                        <button onclick="job_customise();" class="btn cmn-btn-blue"
+                                            id="btn-save-charges" type="button">Save</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </form>
+
 
                     </div>
                 </div>
@@ -537,67 +769,97 @@ $(document).ready(function() {
     $('[data-toggle="tooltip"]').tooltip({
         template: '<div class="tooltip tooltip-custom-1" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
     });
-});
 
-jQuery('body').on('click', '.btn-edit-onbrdfields', function() {
+    // charge configurations radio btt for % and fixed price
 
-    var fn = jQuery(this).closest('.added-description').find('.user-field-name-onbrd').text();
-    var ft = jQuery(this).closest('.added-description').find('.user-field-type-onbrd').text();
-    var st = jQuery(this).closest('.added-description').find('.user-field-consumer-onbrd').text();
+    jQuery('body').on('change', '.radio-style-1 input[type=radio]', function() {
+        var value = $(this).val()
+        console.log({
+            value
+        })
+        if (value == 'fixed') {
+            $(this).closest('.form-group').find('.form-input-prefix').removeClass('percentage-prefix');
+            $(this).closest('.form-group').find('.form-input-prefix').addClass('fixed-prefix');
+        } else {
+            $(this).closest('.form-group').find('.form-input-prefix').addClass('percentage-prefix');
+            $(this).closest('.form-group').find('.form-input-prefix').removeClass('fixed-prefix');
+        }
+    })
 
-    jQuery('#onbrd_field_name').val(fn);
-    jQuery('#onbrd_field_type').val(ft);
-    jQuery('#onbrd_steps').val(st);
 
-    jQuery('#OnboardingFields').modal('show');
 
-    tr_row_update = jQuery(this).closest('.added-description');
 
-});
 
-$('#pagination-container-job').pagination({
-    dataSource: [1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-        4, 4, 4, 4, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-        4, 4, 4, 4, 4, 4
-    ],
-    //            totalNumber: 5,
-    //            pageSize: 10,
-    //            locator: 'items',
-    callback: function(data, pagination) {
-        $('#job-table').html($('#job-table').html());
-    }
-});
-$('#pagination-container-approvals').pagination({
-    dataSource: [1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-        4, 4, 4, 4, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-        4, 4, 4, 4, 4, 4
-    ],
-    //            totalNumber: 5,
-    //            pageSize: 10,
-    //            locator: 'items',
-    callback: function(data, pagination) {
-        $('#approvals-table').html($('#approvals-table').html());
-    }
-});
 
-jQuery('body').on('click', '.icon.icon-toggle.arrow-up', function() {
-    var current = $(this).closest(".custom-list-box-onbrd").parent('li');
-    current.prev(".added-description").before(current);
-});
-jQuery('body').on('click', '.icon.icon-toggle.arrow-down', function() {
-    var current = $(this).closest(".custom-list-box-onbrd").parent('li');
-    current.next(".added-description").after(current);
-});
+    jQuery('body').on('click', '.btn-edit-onbrdfields', function() {
 
-jQuery('body').on('click', '#job-table tbody tr', function() {
-    window.location = 'freelancer.html';
-});
-jQuery('body').on('click', '#approval-table tbody tr', function() {
-    window.location = 'freelancer.html';
+        var fn = jQuery(this).closest('.added-description').find('.user-field-name-onbrd').text();
+        var ft = jQuery(this).closest('.added-description').find('.user-field-type-onbrd').text();
+        var st = jQuery(this).closest('.added-description').find('.user-field-consumer-onbrd').text();
+
+        jQuery('#onbrd_field_name').val(fn);
+        jQuery('#onbrd_field_type').val(ft);
+        jQuery('#onbrd_steps').val(st);
+
+        jQuery('#OnboardingFields').modal('show');
+
+        tr_row_update = jQuery(this).closest('.added-description');
+
+    });
+
+    $('#pagination-container-job').pagination({
+        dataSource: [1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+            4, 4, 4, 4,
+            4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+            4, 4, 4, 4,
+            4, 4, 4, 4, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+            4, 4, 4, 4,
+            4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+            4, 4, 4, 4,
+            4, 4, 4, 4, 4, 4
+        ],
+        //            totalNumber: 5,
+        //            pageSize: 10,
+        //            locator: 'items',
+        callback: function(data, pagination) {
+            $('#job-table').html($('#job-table').html());
+        }
+    });
+    $('#pagination-container-approvals').pagination({
+        dataSource: [1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+            4, 4, 4, 4,
+            4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+            4, 4, 4, 4,
+            4, 4, 4, 4, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+            4, 4, 4, 4,
+            4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+            4, 4, 4, 4,
+            4, 4, 4, 4, 4, 4
+        ],
+        //            totalNumber: 5,
+        //            pageSize: 10,
+        //            locator: 'items',
+        callback: function(data, pagination) {
+            $('#approvals-table').html($('#approvals-table').html());
+        }
+    });
+
+    jQuery('body').on('click', '.icon.icon-toggle.arrow-up', function() {
+        var current = $(this).closest(".custom-list-box-onbrd").parent('li');
+        current.prev(".added-description").before(current);
+    });
+    jQuery('body').on('click', '.icon.icon-toggle.arrow-down', function() {
+        var current = $(this).closest(".custom-list-box-onbrd").parent('li');
+        current.next(".added-description").after(current);
+    });
+
+    jQuery('body').on('click', '#job-table tbody tr', function() {
+        window.location = 'freelancer.html';
+    });
+    jQuery('body').on('click', '#approval-table tbody tr', function() {
+        window.location = 'freelancer.html';
+    });
+
 });
 </script>
 <script src="https://bootstrap.arcadier.com/adminportal_pre/js/custom-nicescroll.js" type="text/javascript">

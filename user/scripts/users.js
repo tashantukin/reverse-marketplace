@@ -34,12 +34,6 @@ function waitForElement(elementPath, callBack)
   }, 500);
 }
 
-
-
-
-
-
-
  function GetSortOrder(prop) {    
     return function(a, b) {    
         if (a[prop] > b[prop]) {    
@@ -49,7 +43,24 @@ function waitForElement(elementPath, callBack)
         }    
         return 0;    
         }    
-    } 
+} 
+    
+function distanceBetweenTwoPlace(firstLat, firstLon, secondLat, secondLon, unit) {
+        var firstRadlat = Math.PI * firstLat/180
+        var secondRadlat = Math.PI * secondLat/180
+        var theta = firstLon-secondLon;
+        var radtheta = Math.PI * theta/180
+        var distance = Math.sin(firstRadlat) * Math.sin(secondRadlat) + Math.cos(firstRadlat) * Math.cos(secondRadlat) * Math.cos(radtheta);
+        if (distance > 1) {
+            distance = 1;
+        }
+        distance = Math.acos(distance)
+        distance = distance * 180/Math.PI
+        distance = distance * 60 * 1.1515
+        if (unit=="K") { distance = distance * 1.609344 }
+        if (unit=="N") { distance = distance * 0.8684 }
+        return distance
+}
 
 
 //retrieve dynamic fields
@@ -184,7 +195,6 @@ sellerFields = new Vue({
  
         },
 
-        
         async getAllTabs()
             {
                
@@ -479,7 +489,7 @@ sellerFields = new Vue({
             })
         },
 
-          async getAllFieldData(el)
+        async getAllFieldData(el)
         {
             //
              el.find('.tab-pane').each(function ()
@@ -542,8 +552,7 @@ sellerFields = new Vue({
             console.log( `${ JSON.stringify(vm.allFreelancerCustomDetails) }`)
         }, 
           
-        async getLocations()
-            {
+        async getLocations(){
 
                  try {
                      vm = this;
@@ -586,7 +595,38 @@ sellerFields = new Vue({
                  } catch (error) {
                      console.log("error", error);
                  }
-             }
+        },
+
+        async getNearestLocations(currentLat, currentLng, distInKm)
+        {
+             try {
+                     vm = this;
+                     const response = await axios({
+                         method: "GET",
+                         url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_locations`,
+                     })
+                     const locations = await response
+                   
+                     $.each(locations.data.Records, function (index, coords)
+                     {
+                         var location_list = JSON.parse(coords['location_list'])
+
+                         $.each(location_list, function (index, loc)
+                         {
+
+                            if (distanceBetweenTwoPlace(currentLat, currentLng, loc['lat'], loc['lng'], "K") <= distInKm) {
+                                console.log( coords['job_id']);
+                            }
+
+                            
+                         })
+                     })
+
+            
+            } catch (error) {
+                console.log("error", error);
+            }
+        }
 
     },
 
@@ -614,11 +654,6 @@ sellerFields = new Vue({
            // this.getUserDetails();
         });
       }
-
-
-
-    
-
 })
 
 })
@@ -1281,6 +1316,7 @@ $(document).ready(function ()
                                 map.fitBounds(featureGroup.getBounds())
 
                                 console.log("Your coordinate is: Lat: " + lat + " Long: " + long + " Accuracy: " + accuracy)
+                                sellerFields.getNearestLocations(lat, long, 100)
 
                             }
 

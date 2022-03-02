@@ -20,14 +20,16 @@
   
 
     //run on creation page only
-    new Vue({
+   var manageFields =  new Vue({
         el: "#main",
         data() {
             return {
                 allJobs: [],
                 allFreelancers: [],
                 uploadCustomFields: [],
-                emailFields: ""
+                emailFields: "",
+                chargesListBuyer: [],
+                chargesListSeller: []
 
              
             }
@@ -71,7 +73,6 @@
                     console.log("error", error);
                 }
             },
-
 
             async getAllJobs(action) {
                 try {
@@ -121,6 +122,56 @@
                 }
             },
 
+            async getAllCharges(user) {
+                try {
+                    vm = this;
+                    const response = await axios({
+                        method: "GET",
+                        url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/charges_configuration`,
+                    })
+                    const charges = await response
+                    let allCharges = charges.data
+                   
+                    user == 'buyer' ?
+                    vm.chargesListBuyer = allCharges.Records.filter((field) => field.user ===  user)
+                        : vm.chargesListSeller = allCharges.Records.filter((field) => field.user === user)
+                    
+                    console.log( vm.chargesListBuyer );
+                    console.log( vm.chargesListSeller );
+                    // return templates
+
+                } catch (error) {
+                    console.log("error", error);
+                }
+            },
+             
+            async saveCharges(chargeId, type, value)
+            {
+                
+                try {
+                    vm = this;
+                    var data = { value , type }
+                    const response = await axios({
+                        method: "PUT",
+                        url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/charges_configuration/rows/${chargeId}`,
+                        headers: {
+                        "Content-Type": "application/json"
+                        },
+                    
+                    data: JSON.stringify(data),
+                    })
+                    const charges = await response
+                    
+                    console.log({charges})
+
+                } catch (error) {
+                    console.log("error", error);
+                }
+
+
+
+            },
+
             searchFields: function (cf, header)
             {
                // console.log({ cf });
@@ -130,8 +181,6 @@
                // return field.code == header;
              // })
             },
-
-
 
             updateStatus(action, e)
             {
@@ -172,7 +221,9 @@
         beforeMount() {
             this.getAllFreelancers('GET')
             this.getAllCustomFields('GET')
-            this.getAllJobs('GET')
+            this.getAllJobs('GET');
+            this.getAllCharges('buyer');
+            this.getAllCharges('seller');
         },
 
 
@@ -375,7 +426,23 @@
         });
 
 
-       
+
+    
+        $('#btn-save-charges').click(function ()
+        {
+
+            $('.job_customise .panel-box').find('.form-group').each(function ()
+            {
+                var charge_id = $(this).find('input[type=text]').attr('id')
+                var charge_type = $(this).attr('charge-type') == 1 ? 'fixed' : $(`input[name="${charge_id}"]:checked`).val();
+                
+                var charge_value = $(this).find('input[type=text]').val();
+                manageFields.saveCharges(charge_id, charge_type, charge_value);
+
+            })
+          
+            
+        });
 
 
 

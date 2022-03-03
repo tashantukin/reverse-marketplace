@@ -310,9 +310,9 @@
                                                     <div class="payment-status-color1"></div>
                                                     <div class="payment-status not-added">Not Added</div>
                                                 </td>
-                                                <td><a href="/adminportal/pay_stripe.html"><span
-                                                            class="btn-payment-link">Link Account</span></a>
-                                                    <div class="animation-svg"><a href="pay_stripe.html"></a></div>
+                                                <td><a href="stripe.php"><span class="btn-payment-link">Link
+                                                            Account</span></a>
+                                                    <div class="animation-svg"><a href="stripe.php"></a></div>
                                                 </td>
                                             </tr>
                                             <!-- <tr>

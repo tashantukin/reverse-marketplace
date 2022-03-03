@@ -53,15 +53,13 @@
     <!-- responsive style-->
     <link href="css/responsive.css" rel="stylesheet" type="text/css">
 
-
+    <script src="https://js.stripe.com/v3/"></script>
     </meta>
 </head>
 
-
-
-<div class="page-content" id="payments-content">
+<div class="page-content" id="stripe-payments-content">
     <div class="gutter-wrapper">
-        <div class="page-topnav"> <a class="btn-back" href="payments.html"><i class="icon icon-arrowleft"></i> Back</a>
+        <div class="page-topnav"> <a class="btn-back" href="index.php"><i class="icon icon-arrowleft"></i> Back</a>
         </div>
         <div class="panel-box">
             <div class="page-content-top">
@@ -99,12 +97,14 @@
                             PUBLISHABLE KEY</p>
                         <input type="text" id="live-publishable-key" name="live-publishable-key" value=""
                             class="form-control required">
+                        <p class="error"> </p>
                     </div>
                     <div class="tracking-id show-right-broder mt-20">
                         <p class="google-analytics-id-txt goo-lowercase"><span class="red-bold-strong">LIVE</span>
                             SECRET KEY</p>
                         <input type="text" id="live-secret-key" name="live-secret-key" value=""
                             class="form-control required">
+                        <p class="errorSecret"> </p>
                     </div>
                     <div class="mt-20">
                         <div id="save-btn"><input type="button" onclick="MakeUneditable()" class="link-id-btn"
@@ -215,3 +215,132 @@ Do verify your Stripe account via email if you created a new account for this pr
         <p>&nbsp;</p>
     </div>
 </div>
+
+
+<script type="text/javascript">
+// Struip connect functions
+function MakeConnectStripeUnedit() {
+    var e = false;
+    jQuery("#connect-stripe-marketplace .required").each(function() {
+        var val = jQuery(this).val();
+        var attr = jQuery(this).attr('id');
+        if (jQuery.trim(val) == '') {
+            e = true;
+            jQuery(this).addClass('error-con');
+        }
+
+    });
+    if (!e) {
+        jQuery("#production-clientt-id").prop("readonly", true);
+        jQuery("#connect-save-btn").hide();
+        jQuery("#connect-edit-btn").show();
+    }
+}
+
+function SaveConnectStripeConfirm() {
+    var e = false;
+    jQuery("#live_secret_key .required").each(function() {
+        var val = jQuery(this).val();
+        var attr = jQuery(this).attr('id');
+        if (jQuery.trim(val) == '') {
+            e = true;
+            jQuery(this).addClass('error-con');
+        }
+
+    });
+    if (!e) {
+        jQuery("#cover").fadeIn();
+        jQuery("#connect-stripe-account").fadeIn();
+    }
+}
+
+function popupCoonectStrip_ok() {
+    jQuery("#cover").fadeOut();
+    jQuery("#connect-stripe-account").fadeOut();
+    jQuery("#production-clientt-id").prop("readonly", false);
+    jQuery("#connect-edit-btn").hide();
+    jQuery("#connect-save-btn").show();
+}
+// End stripe connect functions
+
+// Set link stripe functions
+function popupConfirm_close(closeid) {
+    jQuery("#cover").fadeOut();
+    jQuery("#" + closeid).fadeOut();
+}
+
+function popupConfirm_ok() {
+    jQuery("#cover").fadeOut();
+    jQuery("#link-stripe-account").fadeOut();
+    jQuery("#live-secret-key").prop("readonly", false);
+    jQuery("#live-publishable-key").prop("readonly", false);
+    jQuery("#edit-btn").hide();
+    jQuery("#save-btn").show();
+}
+
+// function MakeUneditable() {
+//     var e = false;
+//     jQuery("#live_secret_key .required").each(function() {
+//         var val = jQuery(this).val();
+//         var attr = jQuery(this).attr('id');
+//         if (jQuery.trim(val) == '') {
+//             e = true;
+//             jQuery(this).addClass('error-con');
+//         }
+
+//     });
+//     if (!e) {
+//         jQuery("#live-secret-key").prop("readonly", true);
+//         jQuery("#live-publishable-key").prop("readonly", true);
+//         jQuery("#save-btn").hide();
+//         jQuery("#edit-btn").show();
+//     }
+
+// }
+
+function SaveConfirm() {
+    var e = false;
+    jQuery("#live_secret_key .required").each(function() {
+        var val = jQuery(this).val();
+        var attr = jQuery(this).attr('id');
+        if (jQuery.trim(val) == '') {
+            e = true;
+            jQuery(this).addClass('error-con');
+        }
+
+    });
+    if (!e) {
+        jQuery("#cover").fadeIn();
+        jQuery("#link-stripe-account").fadeIn();
+    }
+}
+// End set live key function
+
+function login_paypal(email) {
+    jQuery('#paypalLogin').modal('show');
+}
+jQuery(document).ready(function() {
+    jQuery(".required").focus(function() {
+        jQuery(this).removeClass('error-con');
+    });
+    jQuery(".mobi-header .navbar-toggle").click(function(e) {
+        e.preventDefault();
+        jQuery("body").toggleClass("sidebar-toggled");
+    });
+    jQuery(".navbar-back").click(function() {
+        jQuery(".mobi-header .navbar-toggle").trigger('click');
+    });
+
+
+});
+
+jQuery(".panel-box-title").click(function() {
+    jQuery(this).parents('.panel-box').toggleClass('active');
+    jQuery(this).parents('.panel-box').find('.panel-box-content').slideToggle();
+});
+</script>
+<script type="text/javascript" src="js/custom-nicescroll.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
+<script type="text/javascript" src="scripts/payments.js"></script>

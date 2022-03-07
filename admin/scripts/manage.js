@@ -145,12 +145,12 @@
                 }
             },
              
-            async saveCharges(chargeId, type, value)
+            async saveCharges(chargeId, type, value, status)
             {
                 
                 try {
                     vm = this;
-                    var data = { value , type }
+                    var data = { value , type, status }
                     const response = await axios({
                         method: "PUT",
                         url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/charges_configuration/rows/${chargeId}`,
@@ -435,15 +435,19 @@
             {
                 var charge_id = $(this).find('input[type=text]').attr('id')
                 var charge_type = $(this).attr('charge-type') == 1 ? 'fixed' : $(`input[name="${charge_id}"]:checked`).val();
+                var status =  $(this).find('.onoffswitch-checkbox')[0].checked
                 
                 var charge_value = $(this).find('input[type=text]').val();
-                manageFields.saveCharges(charge_id, charge_type, charge_value);
+                manageFields.saveCharges(charge_id, charge_type, charge_value,status);
 
             })
           
             
         });
 
+
+
+       
 
 
         

@@ -169,7 +169,7 @@
                     <div class="tracking-id show-right-broder mt-20">
                         <p class="google-analytics-id-txt goo-lowercase"><span class="red-bold-strong">PRODUCTION</span>
                             CLIENT ID</p>
-                        <input type="text" name="production-clientt-id" id="production-clientt-id"
+                        <input type="text" name="production-clientt-id" id="production-client-id"
                             class="form-control required" value="">
                     </div>
                     <div class="tracking-id show-right-broder mt-20">

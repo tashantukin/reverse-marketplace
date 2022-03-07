@@ -1,58 +1,3 @@
-.home-banner.banner-slider {
-    position: relative;
-    margin-top: -60px;
-}
-
-
-/* .home-banner .banner-quote > h1 {
-    color: #fff;
-    font-size: 47px !important;
-    font-weight: 300 !important;
-    margin: 0 auto 20px;
-    letter-spacing: 0.2em;
-    max-width: 890px;
-    width: 100%;
-    line-height: 65px;
-} */
-
-
-.home-banner .banner-quote>h1 {
-    color: #fff;
-    font-size: 47px !important;
-    font-weight: 300 !important;
-    margin: 0 auto 20px;
-    letter-spacing: 0.2em;
-    max-width: 890px;
-    width: 100%;
-    line-height: 65px;
-    margin-top: 20%;
-}
-
-.warning-message {
-    font-size: 13px !important;
-    color: red !important;
-    padding: 5px 2px !important;
-}
-
-
-.home-banner .banner-quote>p {
-    padding: 0 5%;
-    text-align: center;
-    font-size: 16px !important;
-    font-weight: 300;
-    letter-spacing: 0.05em;
-}
-
-.btnjob {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 40px;
-}
-
-
-
-
 @media only screen and (min-width: 1500px) {
     .align-center-div {
         height: 100vh;
@@ -183,7 +128,8 @@
 .btn-jobform-outline {
     border: 1px solid var(--user-color);
     background-color: transparent;
-    padding: 8px 33px;
+    padding: 8px 24px;
+    width: 103px;
     color: var(--user-color);
     font-weight: 600;
     outline: none !important;
@@ -1033,6 +979,7 @@
 .jobform-form hr {
     border-top: 2px solid #d2d2d2;
     margin-top: 50px;
+    width: 100%;
 }
 
 .modal-job-popup {
@@ -1381,6 +1328,155 @@
 
 .btn-hrmmargin {
     margin: 0;
+}
+
+.no-lodge {
+    font-weight: 400;
+    font-size: 18px;
+    display: block;
+    padding: 12px 0px;
+}
+
+.common-text p {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    color: #4D4D4D;
+}
+
+.common-text p:first-of-type {
+    padding-top: 0px;
+}
+
+.seller-setting-p p {
+    padding-top: 0px;
+}
+
+.seller-setting-p p:first-of-type {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.payment-input {
+    text-align: center;
+}
+
+.btn-link-payment {
+    border-radius: 20px;
+}
+
+.col-md-12.seller-payment-container {
+    border-bottom: 1px solid #C4C4C4;
+    ;
+}
+
+.seller-payment-container .img-payment-warning {
+    background: url("../images/verify_pay_red.svg")no-repeat;
+    width: 30px;
+    height: 32px;
+    margin-top: 6px;
+}
+
+.seller-payment-container span {
+    width: Calc(100% - 46px);
+}
+
+.header .logo img {
+    height: 100%;
+    max-width: 100px;
+    max-height: 45px;
+}
+
+.payment-con {
+    padding-top: 35px;
+}
+
+.payment-con h3 {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 29px;
+    color: #4A4A4A;
+    margin-bottom: 20px;
+}
+
+.payment-middle-con {
+    padding: 30px 47px;
+    background: #FFFFFF;
+    border-radius: 10px;
+    margin-bottom: 14px;
+}
+
+.payment-middle-con .common-text {
+    max-width: 474px;
+    margin-bottom: 34px;
+}
+
+.payment-bottom-con {
+    padding: 20px 47px;
+    background: #FFFFFF;
+    border-radius: 10px;
+    margin-bottom: 50px;
+}
+
+.payment-bottom-con .next-tab-area {
+    display: flex;
+
+}
+
+.payment-bottom-con .seller-btn {
+    margin: 0px;
+    margin-left: 7px;
+}
+
+.payment-bottom-con .next-tab-area .my-btn {
+    margin: 0;
+    width: 150px;
+    height: 40px;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.payment-bottom-con .next-tab-area .btn-clear {
+    background: transparent;
+    border: 1px solid #5AC5B2;
+    color: #5AC5B2;
+}
+
+.payment-modal .modal-dialog {
+    max-width: 729px;
+    width: 100%;
+}
+
+.payment-modal .modal-body {
+    padding: 22px 47px;
+}
+
+.payment-modal .payment-con {
+    padding-top: 0px;
+}
+
+.payment-modal .payment-middle-con {
+    padding: 0px;
+}
+
+.payment-modal .payment-bottom-con {
+    padding: 0px;
+    margin-bottom: 33px;
+}
+
+.payment-modal .common-text p:first-of-type {
+    margin-bottom: 26px;
+}
+
+.lock-icon {
+    background-image: url("../images/lock.svg");
+    height: 18px;
+    width: 12px;
+    margin-right: 6px;
+    margin-top: -5px;
 }
 
 @media only screen and (max-width: 1200px) {

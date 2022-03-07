@@ -452,11 +452,10 @@
                                 <div class="page-content-btm">
                                     <h5 class="frame-title">Buyer Setting</h5>
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-6 ff-sm-panel">
                                             <div class="form-group" v-for="charge in chargesListBuyer"
                                                 :charge-type="charge.is_fixed">
                                                 <label :for="charge.Id" class="">{{ charge.title }}</label>
-
                                                 <div v-if="charge.is_fixed==0">
                                                     <div class="meta-item-radio radio-style-1">
                                                         <div class="fancy-radio">
@@ -479,10 +478,46 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div v-if="charge.is_fixed==0" class="job-fonoffswitch">
 
-                                                <div class="form-input-prefix doller-prefix">
-                                                    <input type="text" class="required form-control input-style-3"
-                                                        :value="charge.value" :id="charge.Id">
+                                                    <div class="form-input-prefix doller-prefix">
+                                                        <input type="text" class="required form-control input-style-3"
+                                                            :id="charge.Id" :value="charge.value">
+                                                    </div>
+
+                                                    <div class="onoffswitch">
+                                                        <input v-if="charge.status=='False'" type="checkbox"
+                                                            name="onoffswitch" class="onoffswitch-checkbox"
+                                                            :id="charge.Id + '_toggle'">
+                                                        <input v-if="charge.status=='True'" type="checkbox"
+                                                            name="onoffswitch" class="onoffswitch-checkbox"
+                                                            :id="charge.Id + '_toggle'" checked>
+                                                        <label class="onoffswitch-label" :for="charge.Id + '_toggle'">
+                                                            <span class="onoffswitch-inner"></span> <span
+                                                                class="onoffswitch-switch"></span></label>
+                                                    </div>
+                                                </div>
+
+                                                <div v-if="charge.is_fixed==1" class="job-fonoffswitch">
+                                                    <div v-if="charge.is_fixed==1"
+                                                        class="form-input-prefix doller-prefix">
+                                                        <input type="text" class="required form-control input-style-3"
+                                                            :id="charge.Id" :value="charge.value">
+                                                    </div>
+
+                                                    <div class="onoffswitch">
+                                                        <input v-if="charge.status=='False'" type="checkbox"
+                                                            name="onoffswitch" class="onoffswitch-checkbox"
+                                                            :id="charge.Id + '_toggle'">
+                                                        <input v-if="charge.status=='True'" type="checkbox"
+                                                            name="onoffswitch" class="onoffswitch-checkbox"
+                                                            :id="charge.Id + '_toggle'" checked>
+                                                        <label class="onoffswitch-label" :for="charge.Id + '_toggle'">
+                                                            <span class="onoffswitch-inner"></span> <span
+                                                                class="onoffswitch-switch"></span></label>
+                                                    </div>
+
+
                                                 </div>
                                             </div>
 
@@ -498,11 +533,10 @@
                                     <h5 class="frame-title">Seller Setting</h5>
 
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-6 ff-sm-panel">
                                             <div class="form-group" v-for="charge in chargesListSeller"
                                                 :charge-type="charge.is_fixed">
                                                 <label :for="charge.Id" class="">{{ charge.title }}</label>
-
                                                 <div v-if="charge.is_fixed==0">
                                                     <div class="meta-item-radio radio-style-1">
                                                         <div class="fancy-radio">
@@ -525,22 +559,58 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div v-if="charge.is_fixed==0" class="job-fonoffswitch">
 
-                                                <div class="form-input-prefix doller-prefix">
-                                                    <input type="text" class="required form-control input-style-3"
-                                                        :id="charge.Id" :value="charge.value">
+                                                    <div class="form-input-prefix doller-prefix">
+                                                        <input type="text" class="required form-control input-style-3"
+                                                            :id="charge.Id" :value="charge.value">
+                                                    </div>
+
+                                                    <div class="onoffswitch">
+                                                        <input v-if="charge.status=='False'" type="checkbox"
+                                                            name="onoffswitch" class="onoffswitch-checkbox"
+                                                            :id="charge.Id + '_toggle'">
+                                                        <input v-if="charge.status=='True'" type="checkbox"
+                                                            name="onoffswitch" class="onoffswitch-checkbox"
+                                                            :id="charge.Id + '_toggle'" checked>
+
+                                                        <label class="onoffswitch-label" :for="charge.Id + '_toggle'">
+                                                            <span class="onoffswitch-inner"></span> <span
+                                                                class="onoffswitch-switch"></span></label>
+                                                    </div>
                                                 </div>
+
+                                                <div v-if="charge.is_fixed==1" class="job-fonoffswitch">
+                                                    <div v-if="charge.is_fixed==1"
+                                                        class="form-input-prefix doller-prefix">
+                                                        <input type="text" class="required form-control input-style-3"
+                                                            :id="charge.Id" :value="charge.value">
+                                                    </div>
+
+                                                    <div class="onoffswitch">
+                                                        <input v-if="charge.status=='False'" type="checkbox"
+                                                            name="onoffswitch" class="onoffswitch-checkbox"
+                                                            :id="charge.Id + '_toggle'">
+                                                        <input v-if="charge.status=='True'" type=" checkbox"
+                                                            name="onoffswitch" class="onoffswitch-checkbox"
+                                                            :id="charge.Id + '_toggle'" checked>
+                                                        <label class="onoffswitch-label" :for="charge.Id + '_toggle'">
+                                                            <span class="onoffswitch-inner"></span> <span
+                                                                class="onoffswitch-switch"></span></label>
+                                                    </div>
+
+
+                                                </div>
+
                                             </div>
-
                                         </div>
-                                    </div>
-                                    <div class="btn-area">
-                                        <button onclick="job_customise();" class="btn cmn-btn-blue"
-                                            id="btn-save-charges" type="button">Save</button>
-                                    </div>
+                                        <div class="btn-area">
+                                            <button onclick="job_customise();" class="btn cmn-btn-blue"
+                                                id="btn-save-charges" type="button">Save</button>
+                                        </div>
 
+                                    </div>
                                 </div>
-                            </div>
                         </form>
 
 
@@ -786,6 +856,15 @@ $(document).ready(function() {
         }
     })
 
+
+    $('body').on('change', '.job-fonoffswitch input[type=checkbox]', function() {
+        console.log('toogle on off')
+        if ($(this).prop('checked') == false) {
+            $(this).closest('.job-fonoffswitch').find('input[type=text]').attr('disabled', true);
+        } else {
+            $(this).closest('.job-fonoffswitch').find('input[type=text]').attr('disabled', false);
+        }
+    });
 
 
 

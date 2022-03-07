@@ -32,7 +32,7 @@
             async saveKeys() {
                 try {
                     vm = this;
-                    var data = {  'secretKey': $('#live-secret-key').val(), 'publishableKey': $('#live-publishable-key').val()};
+                    var data = {  'secretKey': $('#live-secret-key').val(), 'publishableKey': $('#live-publishable-key').val(), 'client-id' : $('#production-client-id').val()};
                     const response = await axios({
                         method: "POST",
                         url: packagePath + '/save_stripe_keys.php',

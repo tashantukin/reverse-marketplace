@@ -6,6 +6,7 @@ $content = json_decode($contentBodyJson, true);
 
 $api_key = $content['secretKey'];
 $account_url = $content['publishableKey'];
+$client_id = $content['client-id'];
 $baseUrl = getMarketplaceBaseUrl();
 $admin_token = getAdminToken();
 $customFieldPrefix = getCustomFieldPrefix();
@@ -20,6 +21,7 @@ $packageCustomFields = callAPI("GET", $admin_token['access_token'], $url, false)
 
 $ApiKey = '';
 $AccountURL = '';
+$clientKey = "";
 
 foreach ($packageCustomFields as $cf) {
 
@@ -29,6 +31,9 @@ foreach ($packageCustomFields as $cf) {
 
     if ($cf['Name'] == 'stripe_pub_key' && substr($cf['Code'], 0, strlen($customFieldPrefix)) == $customFieldPrefix) {
         $pubKey  = $cf['Code'];
+    }
+    if ($cf['Name'] == 'stripe_client_id' && substr($cf['Code'], 0, strlen($customFieldPrefix)) == $customFieldPrefix) {
+        $clientKey  = $cf['Code'];
     }
     
 }
@@ -43,11 +48,15 @@ $data = [
             'Values' => [$account_url],
         ],
 
+        [
+            'Code' => $clientKey,
+            'Values' => [$client_id],
+        ] 
+
     ],
 ];
 
 echo json_encode(['data' =>  $data]);
-
 
 $url = $baseUrl . '/api/v2/marketplaces/';
 $result = callAPI("POST", $admin_token['access_token'], $url, $data);

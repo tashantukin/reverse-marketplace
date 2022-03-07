@@ -5,7 +5,7 @@ const protocol = window.location.protocol;
 const token = getCookie('webapitoken');
 const baseURL = window.location.hostname;
 var packageId = re.exec(scriptSrc.toLowerCase())[1];
-   const url = window.location.href.toLowerCase();
+const url = window.location.href.toLowerCase();
 var userId;
 var userguid = $('#userGuid').val()
 var taskFiles = [];
@@ -15,6 +15,14 @@ var packagePath = scriptSrc.replace("/scripts/users.js", "").trim();
 var locationList = new Array();
 var search_group = new L.LayerGroup();
 
+ function getParameterByName(name, url = window.location.href) {
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
 function getCookie(name){
     var value = '; ' + document.cookie;
     var parts = value.split('; ' + name + '=');
@@ -61,7 +69,29 @@ function distanceBetweenTwoPlace(firstLat, firstLon, secondLat, secondLon, unit)
         if (unit=="N") { distance = distance * 0.8684 }
         return distance
 }
+ function completeOnboarding(code)
+        {
+            var apiUrl = packagePath + '/stripe_auth.php';
+            var data = { code };
+            $.ajax({
+                url: apiUrl,
+                method: 'POST',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                success: function (response)
+                {
+                    var response= $.parseJSON(response);
+                    
+                    console.log({response})
 
+                },
+                error: function error(e)
+                {
+                    
+                }
+                
+            })
+        }
 
 //retrieve dynamic fields
 waitForElement('.tab-content', function ()
@@ -248,7 +278,94 @@ sellerFields = new Vue({
                         
                         vm.getAllFields(tab.Id, tab.tab_name)
 
+
+                        if (vm.totalTabs == (index + 1)) {
+                           var paymentTab =  `<div id="payment-acceptance" class="tab-pane fade">
+                        <button onclick="j_prevTab();" class="btn btn-jobform-outline">Back</button>
+                        <div class="jobform-form">
+                           <h3>Payment Acceptance</h3>
+                              <div class="seller-common-box pull-left" id="PaymentListSec">
+                                 <div class="item-form-group">
+                                    <div class="seller-setting-p">
+                                       <p>
+                                          <b>
+                                          Payment Method
+                                          </b>
+                                       </p>
+                                       <p>
+                                          Select your preferred payment method.
+                                       </p>
+                                    </div>
+                                    <div class="col-md-12 seller-payment-container">
+                                       <div class="col-xs-12 col-sm-3 col-md-3">
+                                          <div class="type-payment payment-stripe">
+                                          </div>
+                                       </div>
+                                       <div class="col-xs-12 col-sm-4 col-md-4">
+                                          <div class="payment-input" id="StripeSellerPayment" placeholder="Email Address">
+                                             No account linked
+                                          </div>
+                                       </div>
+
+                                       <div class="col-xs-12 col-sm-5 col-md-5">
+                                          <div class="col-xs-12 col-sm-12 col-md-12">
+                                             <div class="btn-link-payment" id="BtnStripeLinked">
+                                                Link Account
+                                             </div>
+                                          </div>
+                                          <div class="col-xs-12 col-sm-12 col-md-12 verified">
+                                             <div class="img-payment-warning">
+                                             </div>
+                                             <span class="stripe">
+                                             This payment method is compulsory.
+                                             </span>
+                                          </div>
+                                       </div>
+
+                                       
+                                    </div>
+                                    
+                                    <div class="col-md-12 seller-payment-container">
+                                       <div class="col-xs-12 col-sm-3 col-md-3">
+                                          <div class="pay-getway-logo-txt">
+                                             Cash on Delivery
+                                          </div>
+                                       </div>
+                                       <div class="col-xs-12 col-sm-4 col-md-4">
+                                          <div class="payment-input" id="CashOnDeliveryPayment">
+                                             No account linked
+                                          </div>
+                                       </div>
+                                       <div class="col-xs-12 col-sm-5 col-md-5">
+                                          <div class="col-xs-12 col-sm-12 col-md-12">
+                                             <div class="btn-link-payment" data-verify="false" id="BtnCashDelivery" onclick="AddPaymentCashOnDelivery(this)">
+                                                Link Account
+                                             </div>
+                                          </div>
+                                          <div class="col-xs-12 col-sm-12 col-md-12 verified">
+                                             <div class="img-payment-warning">
+                                             </div>
+                                             <span class="paycashdelivery">
+                                             This payment method is compulsory.
+                                             </span>
+                                          </div>
+                                       </div>
+                                       
+                                    </div>
+                        
+                                 </div>
+                              </div>
+                         
+                           <hr>
+                            <div class="next-tab-area"><span class="seller-btn"> <a onclick="j_nextTab();" class="my-btn btn-red" href="javascript:void(0);">Next</a> </span></div>
+                        </div>
+                            </div>`
+
+                         $(".tab-content").append(paymentTab);     
+                        }
+
                     })
+
 
                     
 
@@ -491,7 +608,7 @@ sellerFields = new Vue({
 
         async getAllFieldData(el)
         {
-            //
+             vm = this;
              el.find('.tab-pane').each(function ()
              {
                  var tabData = [];
@@ -626,7 +743,8 @@ sellerFields = new Vue({
             } catch (error) {
                 console.log("error", error);
             }
-        }
+        },
+        
 
     },
 
@@ -651,6 +769,143 @@ sellerFields = new Vue({
         this.$nextTick(() => {
             this.getAllSellerFields()
             
+           // this.getUserDetails();
+        });
+      }
+})
+
+})
+
+//payment methods
+
+
+waitForElement('#payment-acceptance', function ()
+{
+payments = new Vue({
+    el: "#payment-acceptance",
+
+    data()
+    {
+        return {
+            stripeSecretKey: "",
+            stripePubKey: "",
+            stripeClientId: "",
+            stripeOnboardingLink: ""
+
+            
+           
+
+        }
+    },
+    methods: {
+        async getAuthorizeToken(callback)
+        {
+            var apiUrl = packagePath + '/get_token.php';
+            
+            $.ajax({
+                url: apiUrl,
+                method: 'POST',
+                
+                contentType: 'application/json',
+                success: function (response)
+                {
+                    var adminToken = $.parseJSON(response);
+                    
+                    callback(adminToken['token']['access_token']);
+
+                },
+                error: function error(e)
+                {
+                    
+                }
+                
+            })
+        },
+
+        async getCustomFields(callback)
+        { 
+
+            vm = this;
+            this.getAuthorizeToken(function (result)
+            {
+                var token = result;
+            var apiUrl = '/api/v2/marketplaces'
+            $.ajax({
+                url: apiUrl,
+                method: 'GET',
+                contentType: 'application/json',
+                    headers: {
+                    "Content-Type": "application/json"
+                    },
+                beforeSend: function beforeSend(xhr)
+                {
+                    xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+                },
+                success: function (result)
+                {
+                    if (result) {
+                        callback(result.CustomFields);
+                    }
+                }
+            });
+
+
+            })
+            
+            
+        
+        },
+
+        async getStripeRedirectLink()
+        {
+            	this.getCustomFields(function (result)
+				{   vm = this;
+					var client_id;
+					if (result) {
+						$.each(result, function (index, cf)
+						{
+							if (cf.Name == 'stripe_client_id') {
+								code = cf.Code;
+								client_id = cf.Values[0];
+                                
+                                this.stripeOnboardingLink = `https://connect.stripe.com/express/oauth/authorize?response_type=code&client_id=${client_id}&&redirect_uri=${baseURL}/subscribe?redirect=true`
+                                window.location.href = this.stripeOnboardingLink;
+							}
+	
+						})
+			
+					}
+					
+				});	
+        },
+
+        
+
+    },
+
+    filters: {
+        capitalize: function (str)
+        {
+          return str.charAt(0).toUpperCase() + str.slice(1);
+        },
+
+        hypenate : function (str)
+        {
+          return str.replace(" ","-").toLowerCase();
+        },
+      },
+    beforeMount()
+    {
+      
+    
+    },
+
+    mounted() {
+       // this.currentTime = 3;
+    
+        this.$nextTick(() => {
+           // this.getStripeRedirectLink()
+           // this.getStripeRedirectLink();
            // this.getUserDetails();
         });
       }
@@ -1154,6 +1409,13 @@ var documentData = (function ()
 
 $(document).ready(function ()
 {
+
+    if (url.indexOf('/subscribe?redirect=true&code=') >= 0) {
+
+        var new_client_id = getParameterByName('code');
+        completeOnboarding(new_client_id)
+
+    }
    // $('#register-modal-consumer').hide();
     $('#register-modal-seller').hide();
     $('.cart-menu').hide();
@@ -1342,7 +1604,17 @@ $(document).ready(function ()
 
   
    
+   //PAYMENT
+    
+    
+    //STRIPE LINK
+    $('body').on('click', '#BtnStripeLinked', function ()
+    {
+       
+         payments.getStripeRedirectLink();
 
+    })
+    
     
 
 

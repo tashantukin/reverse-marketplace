@@ -213,9 +213,11 @@ sellerFields = new Vue({
                         vm.registrationStatus = userDetails['status']
 
                         $('.nav-tabs li:nth-child(1)').removeClass('active');
-                        $('.nav-tabs li:nth-child(3)').addClass('active');
+                        $('.nav-tabs #verification-tab').addClass('active');
                         $('#registration').removeClass('active in');
                         if (vm.registrationStatus == 'Approved') {
+                            $('.nav-tabs #approval-tab').addClass('active');
+                            $('.nav-tabs #verification').removeClass('active');
                             $('#approval').addClass('active in'); 
                         } else {
                             $('#verification').addClass('active in');
@@ -403,10 +405,10 @@ sellerFields = new Vue({
                            <div class="verification-box"><p>Waiting for verification.<br>We are currently assessing the data you have filled in.</p></div>
                            <div class="form-group">
                               <label for="comments">Additional admin comments:</label>
-                              <div class="comment-desc">Patilibunti, sintere crente constiu muscivi denamqu itastrum publiis, ne conloctum, nihilius eo etilinam manunum tum inat poerem nem, us bons re, Cas alicae conte, vitifere que nonsus, cononvenditi, ocae inirtil icaur, virtius aperus, te publistraed re confex manducontisEdicauci ondicae, quostastati, quitiamernum tum inatuset potius. Quam re tum se ina L. Fora tum atis estatis neque arideff rehenditea quam ina, P. Huc faccibus Catraed eesigna, omplicemPatilibunti, sintere crente constiu muscivi denamqu itastrum publiis, ne conloctum, nihilius eo etilinam manunum tum inat poerem nem, us bons re, Cas alicae conte, vitifere que nonsus, cononvenditi, ocae inirtil icaur, virtius aperus, te publistraed re confex manducontisEdicauci ondicae, quostastati, quitiamernum tum inatuset potius. Quam re tum se ina L. Fora tum atis estatis neque arideff rehenditea quam ina, P. Huc faccibus Catraed eesigna, omplicem</div>
+                              <div class="comment-desc"></div>
                            </div>
                            <hr>
-                            <div class="next-tab-area"><span class="seller-btn"> <a onclick="j_nextTab();" class="my-btn btn-red" href="javascript:void(0);">Next</a> </span></div>
+                            
                         </div>
                      </div>
                     <div id="approval" class="tab-pane fade default">
@@ -418,7 +420,7 @@ sellerFields = new Vue({
                               <textarea class="form-control required" rows="5" name="approval" id="approval" placeholder=""></textarea>
                            </div>
                            <hr>
-                           <div class="next-tab-area"><span class="seller-btn"> <a onclick="j_nextTab();" class="my-btn btn-red" href="javascript:void(0);">Next</a> </span></div>
+                           <div class="next-tab-area" id="start"><span class="seller-btn"> <a onclick="j_nextTab();" class="my-btn btn-red" href="javascript:void(0);">Start</a> </span></div>
                         </div>
                      </div>
                             
@@ -446,9 +448,9 @@ sellerFields = new Vue({
                             
 
                             $(".tab-content").append(paymentTab);     
+                            $(".my-btn").css({ padding: "0px" });
                             
-                           
-
+                        
                         }
 
 
@@ -669,8 +671,32 @@ sellerFields = new Vue({
                             </div>
 
                             </div>`
-
-                        
+                                    break;
+                                
+                            case 'address-fields':
+                                     customFieldInput = `<div class="form-group">
+                              <label for="address">Address</label>
+                              <input type="text" class="form-control required" name="address" id="address" placeholder="">
+                           </div>
+                           <div class="form-group">
+                              <label for="country">Country</label>
+                              <select class="form-control required" name="country" id="country">
+                                 <option selected value="australia">Australia</option>
+                              </select>
+                           </div>
+                           <div class="form-group">
+                              <label for="state">State</label>
+                              <input type="text" class="form-control required" name="state" id="state" placeholder="">
+                           </div>
+                           <div class="form-group">
+                              <label for="city">City</label>
+                              <input type="text" class="form-control required" name="city" id="city" placeholder="">
+                           </div>
+                           <div class="form-group">
+                              <label for="postal_code">Postal Code</label>
+                              <input type="text" class="form-control required" name="postal_code" id="postal_code" placeholder="">
+                           </div>
+                           <div class="form-group">`
                             }
                             
                             var customField = `
@@ -680,7 +706,6 @@ sellerFields = new Vue({
                             $(`.tab-content #${tabId} .jobform-form hr`).before(customField)
 
 
-                            
 
                         })
 
@@ -696,6 +721,51 @@ sellerFields = new Vue({
             
             
             })
+        },
+
+
+        async  saveUser(cf,location,files)
+        {
+           // customfield_data, $('#location').val(), allFiles
+            var user_details = {
+
+                "user_id": localStorage.getItem('userID'),
+                "custom_fields": cf,
+                "servicing_area": location,
+                'location_coordinates': locationList,
+                "status": "Pending",
+                'files': files,
+                'stripe_key': localStorage.getItem('stripe_acc_id'),
+                'is_payment_onboarded' : localStorage.getItem('stripe_acc_id') == null ? false : true,
+
+                 
+                'full_address': `${$('#address').val()} ${$('#city').val()}  ${$('#country').val()} ${$('#state').val()} ${$('#postal-code').val()}`,
+                'email': $('#email').val(),
+                'company_name': $('#company-name').val(),
+                'country':  $('#country').val(),
+                'state' :$('#state').val(),
+                'city' : $('#city').val(),
+                'postal-code': $('#postal-code').val(),
+                'contact-number': $('#phone').val(),
+                
+            };
+        
+            console.log(user_details);
+            var settings = {
+                "url": packagePath + "/save_user.php",
+                "method": "POST",
+                "data": JSON.stringify(user_details)
+            }
+            $.ajax(settings).done(function(response){
+                
+               // var allresponse = $.parseJSON(response)
+                console.log($.parseJSON(response));
+               // localStorage.setItem("jobID", allresponse.Id);
+        
+        
+             
+            });
+        
         },
 
         async getAllFieldData(el)
@@ -755,14 +825,15 @@ sellerFields = new Vue({
                      tabData.push({ 'tab_name': $this.attr('classification-name'), 'customfield_id': $(this).attr('id'), 'customfield_name' : $(this).attr('custom-name'), 'values' : customValue})
                  })
 
-
                  vm.allFreelancerCustomDetails[$(this).attr('id')] = tabData;   
             })
             console.log(`${JSON.stringify(vm.allFreelancerCustomDetails)}`)
             
             localStorage.setItem("fieldValues", JSON.stringify(vm.allFreelancerCustomDetails));
-            
+            this.saveUser(vm.allFreelancerCustomDetails, $('#location_details').val(), allFiles);
 
+
+    
         }, 
           
         async getLocations(){
@@ -1177,22 +1248,28 @@ var usersData = (function ()
 
         function saveUser(cf,location,files)
         {
-            
+           // customfield_data, $('#location').val(), allFiles
             var user_details = {
 
                 "user_id": userId,
                 "custom_fields": cf,
                 "servicing_area": location,
+                'location_coordinates': JSON.stringify(location),
                 "status": "Pending",
-                'files': files,
-                'full_address': `${$('#address').val()} ${$('#city').val()}  ${$('#country').val()} ${$('#state').val()} ${$('#postal-code').val()}`,
+                'files': JSON.stringify(allFiles),
+                'stripe_key': localStorage.getItem('stripe_acc_id'),
+                'is_payment_onboarded' : localStorage.getItem('stripe_acc_id') == null ? false : true,
+
+                 
+                'full_address': `${$('#address').val()} ${$('#city').val()}  ${$('#country').val()} ${$('#state').val()} ${$('#postal_code').val()}`,
                 'email': $('#email').val(),
                 'company_name': $('#company-name').val(),
                 'country':  $('#country').val(),
                 'state' :$('#state').val(),
                 'city' : $('#city').val(),
                 'postal-code': $('#postal-code').val(),
-                'contact-number' : $('#phone').val()
+                'contact-number': $('#phone').val(),
+                
             };
         
             console.log(user_details);
@@ -1263,8 +1340,7 @@ var usersData = (function ()
                 "Id": $('#userGuid').val()
                 
             };
-        
-          
+    
             var settings = {
                 "url": packagePath + "/update_confirmation.php",
                 "method": "POST",
@@ -1272,7 +1348,7 @@ var usersData = (function ()
             }
             $.ajax(settings).done(function(response){
                 
-               
+                window.location.href = baseURL;
             
             });
     
@@ -1798,7 +1874,8 @@ $(document).ready(function ()
          payments.getStripeRedirectLink();
 
     })
-    
+
+   
     
 
 

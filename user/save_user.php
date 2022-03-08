@@ -14,6 +14,12 @@
         'status' => $content['status'],
         'attached_files' => $content['files'],
 
+
+        'stripe_key' => $content['stripe_key'],
+        'location_coordinates' => $content['location_coordinates'],
+        'is_payment_onboarded' => $content['is_payment_onboarded'],
+        
+
         'full_address' => $content['full_address'],
         'email'=> $content['email'], 
         'company_name' => $content['company_name'],  

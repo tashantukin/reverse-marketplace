@@ -187,7 +187,6 @@ $url = $baseUrl . '/api/v2/rewrite-rules';
 $result = callAPI("POST", $admin_token['access_token'], $url, $script13);
 
 
-
 $script14 = [
     'Key' => '/subscribe/'. $plugin_id .'/stripe_auth.php',
     'Value' => '/' .  'user' .'/' . $host2 . '/' . $host3 . '/stripe_auth.php',

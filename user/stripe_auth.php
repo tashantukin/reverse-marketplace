@@ -9,10 +9,6 @@ $code = $content['code'];
 $baseUrl = getMarketplaceBaseUrl();
 $stripe_secret_key = getSecretKey();
 
-//$stripe = new \Stripe\StripeClient('sk_test_BQokikJOvBiI2HlWgH4olfQ2');
-
-
-//$stripe = new \Stripe\StripeClient($stripe_secret_key);
 \Stripe\Stripe::setApiKey($stripe_secret_key);
 $response = \Stripe\OAuth::token([
   'grant_type' => 'authorization_code',
@@ -22,13 +18,5 @@ $response = \Stripe\OAuth::token([
 // Access the connected account id in the response
 $connected_account_id = $response->stripe_user_id;
 
-//$customer =  $stripe->accounts->create(['type' => 'express']);
-// $stripe->accounts->create(['type' => 'express']);
-// $customer = $stripe->customers->create([
-//     'description' => 'example customer',
-//     'email' => 'email@example.com',
-//     'payment_method' => 'pm_card_visa',
-// ]);
 echo json_encode($response);
-
-?>
+ ?>

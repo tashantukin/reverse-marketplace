@@ -82,7 +82,40 @@ function distanceBetweenTwoPlace(firstLat, firstLon, secondLat, secondLon, unit)
                 {
                     var response= $.parseJSON(response);
                     
-                    console.log({response})
+                    console.log({ response })
+                   //   $("#BtnStripeLinked").click(function(){
+                    $("#BtnStripeLinked").removeClass("error-con");
+                    localStorage.setItem("stripe-onboarded", "true");
+                    localStorage.setItem("stripe_acc_id", response.stripe_user_id);
+                    
+                    
+                        
+                     $("#StripeSellerPayment").text("").css("color", "#000");
+
+                     var imageUrl =  
+                        protocol +
+                        baseURL  +
+                        "/user/plugins/" +
+                        packageId +
+                        "/images/done.svg";
+
+                    var warning = $('#BtnStripeLinked').parent().siblings('.verified').find('.img-payment-warning');
+
+                    var warningspan = $('#BtnStripeLinked').parent().siblings('.verified').find('span');
+
+                    warning.css({'background': 'url(' + imageUrl + ')no-repeat', 'background-color': '#ff5a60', 'border-radius' : '30px', 'width': '30px', 'height' : '30px', 'margin-top': '5px' } );
+
+                    warningspan.text("Verified").css('color', '#ff5a60');
+
+                    $('#BtnStripeLinked').parents(".seller-payment-container").find("span.stripe").css({'width': 'Calc(100% - 40px)', 'line-height' : '40px'});
+
+                    
+
+
+                    
+
+                   
+                // });
 
                 },
                 error: function error(e)
@@ -280,7 +313,7 @@ sellerFields = new Vue({
 
 
                         if (vm.totalTabs == (index + 1)) {
-                           var paymentTab =  `<div id="payment-acceptance" class="tab-pane fade">
+                           var paymentTab =  `<div id="payment-acceptance" class="tab-pane fade default">
                         <button onclick="j_prevTab();" class="btn btn-jobform-outline">Back</button>
                         <div class="jobform-form">
                            <h3>Payment Acceptance</h3>
@@ -359,12 +392,71 @@ sellerFields = new Vue({
                            <hr>
                             <div class="next-tab-area"><span class="seller-btn"> <a onclick="j_nextTab();" class="my-btn btn-red" href="javascript:void(0);">Next</a> </span></div>
                         </div>
-                            </div>`
+                            </div>
+                            
+                            
+                            <div id="verification" class="tab-pane fade default">
+                        <button onclick="j_prevTab();" class="btn btn-jobform-outline">Back</button>
+                        <div class="jobform-form">
+                           <h3>Verification</h3>
 
-                         $(".tab-content").append(paymentTab);     
+                           <div class="verification-box"><p>Waiting for verification.<br>We are currently assessing the data you have filled in.</p></div>
+                           <div class="form-group">
+                              <label for="comments">Additional admin comments:</label>
+                              <div class="comment-desc">Patilibunti, sintere crente constiu muscivi denamqu itastrum publiis, ne conloctum, nihilius eo etilinam manunum tum inat poerem nem, us bons re, Cas alicae conte, vitifere que nonsus, cononvenditi, ocae inirtil icaur, virtius aperus, te publistraed re confex manducontisEdicauci ondicae, quostastati, quitiamernum tum inatuset potius. Quam re tum se ina L. Fora tum atis estatis neque arideff rehenditea quam ina, P. Huc faccibus Catraed eesigna, omplicemPatilibunti, sintere crente constiu muscivi denamqu itastrum publiis, ne conloctum, nihilius eo etilinam manunum tum inat poerem nem, us bons re, Cas alicae conte, vitifere que nonsus, cononvenditi, ocae inirtil icaur, virtius aperus, te publistraed re confex manducontisEdicauci ondicae, quostastati, quitiamernum tum inatuset potius. Quam re tum se ina L. Fora tum atis estatis neque arideff rehenditea quam ina, P. Huc faccibus Catraed eesigna, omplicem</div>
+                           </div>
+                           <hr>
+                            <div class="next-tab-area"><span class="seller-btn"> <a onclick="j_nextTab();" class="my-btn btn-red" href="javascript:void(0);">Next</a> </span></div>
+                        </div>
+                     </div>
+                    <div id="approval" class="tab-pane fade default">
+                        <button onclick="j_prevTab();" class="btn btn-jobform-outline">Back</button>
+                        <div class="jobform-form">
+                           <h3>Approval</h3>
+                           <div class="form-group">
+                              <label for="approval">Description</label>
+                              <textarea class="form-control required" rows="5" name="approval" id="approval" placeholder=""></textarea>
+                           </div>
+                           <hr>
+                           <div class="next-tab-area"><span class="seller-btn"> <a onclick="j_nextTab();" class="my-btn btn-red" href="javascript:void(0);">Next</a> </span></div>
+                        </div>
+                     </div>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            `
+
+
+                            
+
+                            $(".tab-content").append(paymentTab);     
+                            
+                           
+
                         }
 
+
+                        
+
                     })
+
+                  
 
 
                     
@@ -609,7 +701,7 @@ sellerFields = new Vue({
         async getAllFieldData(el)
         {
              vm = this;
-             el.find('.tab-pane').each(function ()
+             el.find('.tab-pane:not(.default)').each(function ()
              {
                  var tabData = [];
                  var $this = $(this);
@@ -666,7 +758,11 @@ sellerFields = new Vue({
 
                  vm.allFreelancerCustomDetails[$(this).attr('id')] = tabData;   
             })
-            console.log( `${ JSON.stringify(vm.allFreelancerCustomDetails) }`)
+            console.log(`${JSON.stringify(vm.allFreelancerCustomDetails)}`)
+            
+            localStorage.setItem("fieldValues", JSON.stringify(vm.allFreelancerCustomDetails));
+            
+
         }, 
           
         async getLocations(){
@@ -983,7 +1079,6 @@ var usersData = (function ()
    
     var userToken, userId;
 
-
     function init()
     {
         function createUser(email, password, confPassword)
@@ -1030,11 +1125,11 @@ var usersData = (function ()
                         $('#register-modal-seller').hide();
                         $('.cart-menu').hide();
                        // console.log(result);
-                       
                       //  console.log(result['access_token']);
                         userId = result['UserId'];
+                        localStorage.setItem("userID", userId);
+                        
                        
-
                         if (typeof successCallback === "function") {
                         if (result && result.length > 0) {
                     
@@ -1117,8 +1212,6 @@ var usersData = (function ()
             });
         
         }
-
-
 
         function getCustomFieldValues()
         {
@@ -1409,14 +1502,81 @@ var documentData = (function ()
 
 $(document).ready(function ()
 {
-
+    //if the page refreshes and the user is already done on registration,
+    // do not redirect it back to registration page and sign up again,
+    //redirect it to verification or payment page if stripe redirection
+   
+    //stripe redirection
     if (url.indexOf('/subscribe?redirect=true&code=') >= 0) {
 
         var new_client_id = getParameterByName('code');
         completeOnboarding(new_client_id)
 
+        waitForElement('#payment-acceptance', function ()
+        {
+            jQuery(".jobform-tab #payment-tab").children('a').trigger('click');
+            jQuery(".tab-content #registration").removeClass('in active');
+            jQuery(".tab-content #payment-acceptance").addClass('in active');
+
+
+            var allCurrentFields = $.parseJSON(localStorage.getItem("fieldValues"));
+            $.each(allCurrentFields, function (index, field)
+            {
+                $.each(field, function (index, fieldValue)
+                {
+                    console.log({ fieldValue })
+                    console.log(fieldValue.customfield_id)
+                    $(`#${fieldValue.customfield_id}`).find('input').val(fieldValue.values)
+                    $(`#${fieldValue.customfield_id}`).find('textarea').val(fieldValue.values)
+                    $(`#${fieldValue.customfield_id}`).find('input').val(parseInt(fieldValue.values))
+                })
+                            
+            })
+           
+        })
+        
+        
+
+    } else {
+           waitForElement('#payment-acceptance', function ()
+        {
+            var currentFreelancerId = localStorage.getItem("userID");
+            console.log({ currentFreelancerId });
+            if (currentFreelancerId != null) {
+                //redirect back to page not registration tab
+                jQuery(".jobform-tab #registration-tab").next('li').children('a').trigger('click');
+                jQuery(".tab-content #registration").removeClass('in active')
+                jQuery(".tab-content .tab-pane:nth-child(2)").addClass('in active');
+                // jQuery(".tab-content #registration").next('.tab-pane').addClass('in');
+                // jQuery(".tab-content #registration").next('.tab-pane').addClass('active');
+            }
+            
+          
+          //reload all the existing fields from the local storage
+
+          var allCurrentFields = $.parseJSON(localStorage.getItem("fieldValues"));
+          $.each(allCurrentFields, function (index, field)
+          {
+              $.each(field, function (index, fieldValue)
+              {
+                  console.log({ fieldValue })
+                   console.log( fieldValue.customfield_id )
+                  $(`#${fieldValue.customfield_id}`).find('input').val(fieldValue.values)
+                  $(`#${fieldValue.customfield_id}`).find('textarea').val(fieldValue.values)
+                  $(`#${fieldValue.customfield_id}`).find('input').val(parseInt(fieldValue.values))
+              })
+             
+          })
+
+
+        })
     }
-   // $('#register-modal-consumer').hide();
+
+    
+   
+
+
+    //seller registration button 
     $('#register-modal-seller').hide();
     $('.cart-menu').hide();
     $(".my-btn").css({ padding: "0px" });
@@ -1451,6 +1611,30 @@ $(document).ready(function ()
         //validation here
 
         //validation passed
+        //check if the user is just getting back on other page and already onboarded earlier
+        var isPaymentOnboarded = localStorage.getItem('stripe-onboarded');
+        console.log(isPaymentOnboarded);
+        if (isPaymentOnboarded == 'true') {
+            console.log('here');
+              $("#StripeSellerPayment").text("").css("color", "#000");
+
+                  var imageUrl =  
+                        protocol +
+                        baseURL  +
+                        "/user/plugins/" +
+                        packageId +
+                        "/images/done.svg";
+
+                    var warning = $('#BtnStripeLinked').parent().siblings('.verified').find('.img-payment-warning');
+
+                    var warningspan = $('#BtnStripeLinked').parent().siblings('.verified').find('span');
+
+                    warning.css({'background': 'url(' + imageUrl + ')no-repeat', 'background-color': '#ff5a60', 'border-radius' : '30px', 'width': '30px', 'height' : '30px', 'margin-top': '5px'});
+
+                    warningspan.text("Verified").css('color', '#ff5a60');
+
+                    $('#BtnStripeLinked').parents(".seller-payment-container").find("span.stripe").css({'width': 'Calc(100% - 40px)', 'line-height' : '40px'});
+        }
         var users = usersData.getInstance();
         users.getCustomFieldValues();
         

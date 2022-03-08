@@ -95,15 +95,57 @@
                     <div class="job-form-tab-design">
                         <div class="jobform-tab">
                             <ul class="nav nav-tabs">
-                                <li v-for="tab in allTabs" v-bind:class="{ active: tab.sort_order== 0 }"><a
-                                        data-toggle="tab" :href="'#' + tab.Id"><span>{{ tab.tab_name }}</span></a></li>
+                                <li class="active" id="registration-tab"><a data-toggle="tab"
+                                        href="#registration"><span>Registration
+                                        </span></a>
+                                </li>
+                                <li v-for="tab in allTabs" v-bind:class=""><a data-toggle="tab"
+                                        :href="'#' + tab.Id"><span>{{ tab.tab_name }}</span></a></li>
 
-                                <li><a data-toggle="tab" href="#payment-acceptance" class=""><span>Payment
+                                <li id="payment-tab"><a data-toggle="tab" href="#payment-acceptance" class="">
+                                        <span>Payment
                                             Acceptance</span></a>
+                                </li>
+
+                                <li id="verification-tab"><a data-toggle="tab" href="#verification"
+                                        class=""><span>Verification</span></a></li>
+                                <li id="approval-tab"><a data-toggle="tab" href="#approval"
+                                        class=""><span>Approved</span></a>
                                 </li>
                             </ul>
                         </div>
                         <div class="tab-content">
+                            <!-- default tab -->
+                            <div id="registration" class="tab-pane fade in active default">
+                                <div class="jobform-form">
+                                    <h3>Registration</h3>
+                                    <div class="form-group">
+                                        <label for="email">Email Address</label>
+                                        <input type="text" class="form-control" name="email" id="email" placeholder="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password">Set a Password</label>
+                                        <input type="password" class="form-control" name="password" id="password"
+                                            placeholder="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="retype_password">Retype Password</label>
+                                        <input type="password" class="form-control" name="retype_password"
+                                            id="retype_password" placeholder="">
+                                    </div>
+
+                                    <div class="jobform-note">
+                                        <p><u>Note</u></p>
+                                        <p>To be verified, please have a copy of the following documents ready. </p>
+                                        <p>Current ABN and Current Insurance Certificate.</p>
+                                    </div>
+
+                                    <div class="register-btn">
+                                        <button onclick="j_nextTab();" class="btn btn-register">Register</button>
+
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
                     </div>
@@ -113,31 +155,7 @@
         <!-- End Item form-->
     </div>
     </div>
-    <!-- footer -->
-    <!-- <div class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="footer-wrapper">
-                    <div class="footer-navigation">
-                        <ul>
-                            <li><a href="https://bootstrap.arcadier.com/spacetime/about-us.html">ABOUT</a></li>
-                            <li><a href="https://bootstrap.arcadier.com/spacetime/return-policy.html">SERVICE TERMS</a>
-                            </li>
-                            <li><a href="https://bootstrap.arcadier.com/spacetime/privacy-policy.html">PRIVACY</a></li>
-                            <li><a href="https://bootstrap.arcadier.com/spacetime/terms-of-service.html">RETURNS</a>
-                            </li>
-                            <li><a href="https://bootstrap.arcadier.com/spacetime/contact.html">CONTACT</a></li>
-                            <li><a href="https://bootstrap.arcadier.com/spacetime/faq.html">FAQ</a></li>
-                        </ul>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="footer-bottom">
-                        <h6>MARKETPLACENAMELIMIT30CHARSTOO</h6>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
+
     <div class="backTop"><a href="javascript:void(0);" onclick="ScrollTop();"><img
                 src="https://bootstrap.arcadier.com/spacetime/images/mobile_top.svg"></a></div>
     <div class="modal fade model-img-crop" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"

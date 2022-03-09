@@ -45,8 +45,6 @@
           });
 
 
-
-
         $('#onbrd_field_type').on('change', function ()
         {
             jQuery('.cstm-fieldpop-optarea').hide();

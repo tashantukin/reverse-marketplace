@@ -196,4 +196,13 @@ $script14 = [
 $url = $baseUrl . '/api/v2/rewrite-rules';
 $result = callAPI("POST", $admin_token['access_token'], $url, $script14);
 
+$script15 = [
+    'Key' => '/subscribe/'. $plugin_id .'/stripe_charge.php',
+    'Value' => '/' .  'user' .'/' . $host2 . '/' . $host3 . '/stripe_charge.php',
+
+];
+
+$url = $baseUrl . '/api/v2/rewrite-rules';
+$result = callAPI("POST", $admin_token['access_token'], $url, $script15);
+
 ?>

@@ -48,6 +48,8 @@
         charset="utf-8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js" charset="utf-8"></script>
 
+    <script src="https://js.stripe.com/v3/"></script>
+
     <!-- <script src="/user/plugins/8e94739d-b260-41ec-9496-dfa98bb8cdc0/scripts/maps/france_departments.js" charset="utf-8"></script>
    <script src="/user/plugins/8e94739d-b260-41ec-9496-dfa98bb8cdc0/scripts/maps/world_countries.js" charset="utf-8"></script>
    <script src="/user/plugins/8e94739d-b260-41ec-9496-dfa98bb8cdc0/scripts/maps/usa_states.js" charset="utf-8"></script> -->
@@ -81,9 +83,14 @@
                         <li v-for="tab in allTabs" v-bind:class="{ active: tab.sort_order== 0 }"><a data-toggle="tab"
                                 :href="'#' + tab.Id"><span>{{ tab.tab_name }}</span></a></li>
 
+                        <li v-if="jobChargeEnabled == 'True'" class=""><a data-toggle="tab" href="#payment"
+                                aria-expanded="true"><span>Payment</span></a>
+                        </li>
+
                     </ul>
                 </div>
                 <div class="tab-content">
+
 
                 </div>
 

@@ -8,12 +8,21 @@ var packageId = re.exec(scriptSrc.toLowerCase())[1];
 var userId = $("#userGuid").val();
 var packagePath = scriptSrc.replace("/scripts/lodge_job.js", "").trim();
 
+// Add an instance of the card Element into the `card-element` <div>.
+
+
 //document upload vars
 var allFiles = [];
 var allTasks = [];
 var totalfiles;
 var taskFiles = [];
 var locationList = new Array();
+
+const formatter = new Intl.NumberFormat("en-US", {
+      minimumFractionDigits: 2,
+      
+});
+    
 
 
 function getCookie(name){
@@ -124,7 +133,9 @@ const jobData = new Vue({
             contactFields: [],
             allTabs: [],
             allJobCustomDetails: {},
-            url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_form/`
+            url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_form/`,
+            jobListCharge: 0,
+            jobChargeEnabled: ''
 
         }
     },
@@ -145,6 +156,36 @@ const jobData = new Vue({
                 vm.allJobDetails = details.data
                 vm.jobDetails = vm.allJobDetails.Records.filter((data) => data.name === 'Task Lists')
                 vm.taskOption = $.parseJSON(vm.jobDetails[0].values);
+                
+            } catch (error) {
+                console.log("error", error);
+            }
+
+            
+        },
+
+         async getChargeRate()
+        {
+            try {
+                vm = this;
+                const response = await axios({
+                    method: "GET",
+                    url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/charges_configuration/`,
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                const details = await response
+                var jobCharges = details.data
+                var jobCharge = jobCharges.Records.filter((data) => data.charge_name === 'job_listed_buyer')
+                console.log({ jobCharge });
+
+                vm.jobListCharge = parseInt(jobCharge[0].value);
+            
+                vm.jobListCharge = vm.jobListCharge;
+                vm.jobChargeEnabled = jobCharge[0].status;
+                
+                this.getAllTabs();
                 
             } catch (error) {
                 console.log("error", error);
@@ -197,7 +238,6 @@ const jobData = new Vue({
                // vm.taskOption = $.parseJSON(vm.jobDetails[0].values);
 
 
-    
             } catch (error) {
                 console.log("error", error);
             }
@@ -296,19 +336,20 @@ const jobData = new Vue({
                     console.log(vm.allTabs);
                     
                     $.each(vm.allTabs, function (index, tab)
-                    {  
+                    {
                         if (tab.sort_order == 0) {
                             classes = "tab-pane fade in active";
                            
                             
                         } else {
                             classes = "tab-pane fade";
-                             backbutton =  `<button onclick="j_prevTab();" class="btn btn-jobform-outline">Back</button>`
+                            backbutton = `<button onclick="j_prevTab();" class="btn btn-jobform-outline">Back</button>`
                         }
                         //if last tab, text is Save, else, Next
-                        var buttonText = vm.totalTabs == (index + 1) ? 'Save' : 'Next'
+                        var buttonText = (vm.totalTabs == (index + 1) && vm.jobChargeEnabled == 'False') ? 'Save' : 'Next'
+                        console.log(vm.jobChargeEnabled)
                         var buttonId = vm.totalTabs == (index + 1) ? 'save' : ""
-                        console.log( `${vm.totalTabs}  ${(index + 1)}` )
+                        console.log(`${vm.totalTabs}  ${(index + 1)}`)
                     
                         $(".tab-content").append(`
                         
@@ -321,25 +362,67 @@ const jobData = new Vue({
 
                              <hr>
                              <div class="next-tab-area"><span class="seller-btn"> <a onclick="j_nextTab();"
-                                class="my-btn btn-red" href="javascript:void(0);" id="${buttonId}">${ buttonText }</a> </span></div>
+                                class="my-btn btn-red" href="javascript:void(0);" id="${buttonId}">${buttonText}</a> </span></div>
                                 </div>
                             </div>
 
                          `)
-                          $(".my-btn").css({ padding: "0px" });
-                          $(".fancy-checkbox label span").css({height: "0px"});
+                        $(".my-btn").css({ padding: "0px" });
+                        $(".fancy-checkbox label span").css({ height: "0px" });
                         
                         vm.getAllFields(tab.Id, tab.tab_name)
 
-                    })
+                         if (vm.jobChargeEnabled == 'True') {
+                            
+                        
+                            if (vm.totalTabs == index + 1) {
 
+                                var paymentTab = `<div id="payment" class="tab-pane fade">
+                                    <button onclick="j_prevTab();" class="btn btn-jobform-outline">Back</button>
+                                    <div class="jobform-form">
+                                        <h3>Payment</h3>
+                                        <div class="form-group">
+                                        <label for="paymentMethod">Payment Method</label>
+                                        <select class="form-control required" name="payment" id="paymentScheme">
+                                            <option selected="" value="stripe">Stripe</option>
+                                            
+                                        </select>
+                                        </div>
+
+                                        <div class="common-text">
+                                        <p>You will be charged $${formatter.format(vm.jobListCharge)} to list this job</p>
+                                        <p>Upon clicking the Pay button, you will be re-directed to the Payment Gateway to continue with your transaction</p>
+                                        
+                                        </div>
+                                        <div id="card-element"> </div>
+                                                <!-- Used to display Element errors. -->
+                                                <div id="card-errors" role="alert"></div>
+                                                <p id="card-errors" style="margin-bottom: 10px; line-height: inherit; color: #eb1c26; font-weight: bold;"></p>
+                                            
+                                                
+                                                <div  id ="paynowPackage" class="next-tab-area"><span class="seller-btn"> <a onclick=""  class="my-btn btn-red" href="javascript:void(0);">Pay Now</a> </span></div>
+                                                                
+                                            <hr>
+                                            
+                                        </div>
+                                    </div>`
+
+
+                                    $('.tab-content').append(paymentTab);
+                                    $(".my-btn").css({ padding: "0px" });
+                                
+                                }
+                             }
+
+                         })
+
+                     
     
                 } catch (error) {
                     console.log("error", error);
                 }
         },
          
-
         async getAllFields(tabId,tabName)
          {
                 vm = this;
@@ -549,10 +632,12 @@ const jobData = new Vue({
                         
                             $(`.tab-content #${tabId} .jobform-form hr`).before(customField)
 
+                           
 
                         })
 
                         
+
                         
                     }
                    
@@ -624,18 +709,62 @@ const jobData = new Vue({
                  vm.allJobCustomDetails[$(this).attr('id')] = tabData;   
             })
             console.log(`${JSON.stringify(vm.allJobCustomDetails)}`)
-            cache_save_job();
-        }
+               if (vm.jobChargeEnabled == 'False') {
+                          cache_save_job();  
+                }
+            
+        },
+
+       async charge(token)
+       { 
+           vm = this;
+            var apiUrl = packagePath + '/stripe_charge.php';
+            var data = { token }
+                $.ajax({
+                    url: apiUrl,
+                    method: 'POST',
+                    contentType: 'application/json',
+                     data: JSON.stringify(data),
+                success: function(result) {
+                    result = JSON.parse(result);
+                    if (result.id) {
+
+                        if (vm.jobChargeEnabled == 'True') {
+                            cache_save_job();  
+                        }
+                //if there is a charge id returned, save the job details and redirect to the finish page
+                        jQuery(".jobform-tab li.active a").attr('href');
+                        jQuery(".jobform-tab").removeClass('prevTab');
+                        jQuery('.jobform-tab .nav-tabs li').addClass('check');
+                        jQuery('.jobform-tab .nav-tabs li').prevAll().addClass('check');
+                        jQuery('.jobform-tab .nav-tabs li').removeClass('active');
+                        setTimeout(function(){ 
+                        window.location.href = "lodged.html";
+                        },1000);
+                
+                        //complete the lodge
+
+                      
+                        
+
+                }
+
+      
+			},
+			error: function(jqXHR, status, err) {
+			//	toastr.error('Error!');
+			}
+		});
+	
+    }
         
 
     },
     beforeMount() {
-        // this.getAllJobData()
-        // this.getLocationFields()
-        // this.getQuotationFields()
-        // this.getTimeFrameFields()
-        // this.getContactDetailsFields()
-        this.getAllTabs()
+       
+        this.getChargeRate()
+        
+     
     }
 
 })
@@ -846,105 +975,105 @@ var documentData = (function ()
 $(document).ready(function ()
 {
     const url = window.location.href.toLowerCase();
-   if (url.indexOf("/lodge_job.php") >= 0) {
-    var map;
-    var search_group = new L.LayerGroup();
-    var clickArr = new Array();
+    if (url.indexOf("/lodge_job.php") >= 0) {
+        var map;
+        var search_group = new L.LayerGroup();
+        var clickArr = new Array();
 
 
-    waitForElement('#map', function ()
-    {
-        map = L.map('map').fitWorld();
-        // L.map('map').setView([0, 0], 6);
-
-        //osm layer
-        var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        });
-        osm.addTo(map);
-
-        // map.on('click', onMapClick);
-
-        var markers = new Array();
-
-
-
-        map.addLayer(search_group);
-
-
-        map.on('click', function (e)
+        waitForElement('#map', function ()
         {
-            var clickPositionMarker = L.marker([e.latlng.lat, e.latlng.lng], {
-                color: 'red',
-                fillColor: '#f03',
-                fillOpacity: 0.5,
-                radius: 500
+            map = L.map('map').fitWorld();
+            // L.map('map').setView([0, 0], 6);
+
+            //osm layer
+            var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             });
-            clickArr.push(clickPositionMarker);
-            mapLat = e.latlng.lat;
-            mapLon = e.latlng.lng;
-            clickPositionMarker.addTo(search_group).bindPopup("<a name='removeClickM' id=" + e
-                .latlng.lat +
-                "_" + e.latlng.lng + ">Remove Me</a>")
-                .openPopup();
-            $('.leaflet-popup-close-button').attr('id', e
-                .latlng.lat +
-                "_" + e.latlng.lng)
+            osm.addTo(map);
 
-            /*   clickPositionMarker.on('click', function(e) {
-              markerDelAgain(); 
-            }); */
+            // map.on('click', onMapClick);
 
-            locationList.push(e.latlng);
-            console.log({
-                locationList
+            var markers = new Array();
+
+
+
+            map.addLayer(search_group);
+
+
+            map.on('click', function (e)
+            {
+                var clickPositionMarker = L.marker([e.latlng.lat, e.latlng.lng], {
+                    color: 'red',
+                    fillColor: '#f03',
+                    fillOpacity: 0.5,
+                    radius: 500
+                });
+                clickArr.push(clickPositionMarker);
+                mapLat = e.latlng.lat;
+                mapLon = e.latlng.lng;
+                clickPositionMarker.addTo(search_group).bindPopup("<a name='removeClickM' id=" + e
+                    .latlng.lat +
+                    "_" + e.latlng.lng + ">Remove Me</a>")
+                    .openPopup();
+                $('.leaflet-popup-close-button').attr('id', e
+                    .latlng.lat +
+                    "_" + e.latlng.lng)
+
+                /*   clickPositionMarker.on('click', function(e) {
+                  markerDelAgain(); 
+                }); */
+
+                locationList.push(e.latlng);
+                console.log({
+                    locationList
+                });
+
             });
 
-        });
-
-        if (!navigator.geolocation) {
-            console.log("Your browser doesn't support geolocation feature!")
-        } else {
-            //setInterval(() => {
-            navigator.geolocation.getCurrentPosition(getPosition)
-            //}, 5000);
-        }
-
-        var marker, circle;
-
-        function getPosition(position)
-        {
-            // console.log(position)
-            var lat = position.coords.latitude
-            var long = position.coords.longitude
-            var accuracy = position.coords.accuracy
-
-            if (marker) {
-                map.removeLayer(marker)
+            if (!navigator.geolocation) {
+                console.log("Your browser doesn't support geolocation feature!")
+            } else {
+                //setInterval(() => {
+                navigator.geolocation.getCurrentPosition(getPosition)
+                //}, 5000);
             }
 
-            if (circle) {
-                map.removeLayer(circle)
+            var marker, circle;
+
+            function getPosition(position)
+            {
+                // console.log(position)
+                var lat = position.coords.latitude
+                var long = position.coords.longitude
+                var accuracy = position.coords.accuracy
+
+                if (marker) {
+                    map.removeLayer(marker)
+                }
+
+                if (circle) {
+                    map.removeLayer(circle)
+                }
+
+                marker = L.marker([lat, long])
+                circle = L.circle([lat, long], {
+                    radius: accuracy
+                })
+
+                var featureGroup = L.featureGroup([marker, circle]).addTo(map)
+
+                map.fitBounds(featureGroup.getBounds())
+
+                console.log("Your coordinate is: Lat: " + lat + " Long: " + long + " Accuracy: " + accuracy)
+
             }
 
-            marker = L.marker([lat, long])
-            circle = L.circle([lat, long], {
-                radius: accuracy
-            })
-
-            var featureGroup = L.featureGroup([marker, circle]).addTo(map)
-
-            map.fitBounds(featureGroup.getBounds())
-
-            console.log("Your coordinate is: Lat: " + lat + " Long: " + long + " Accuracy: " + accuracy)
-
-        }
 
 
+        })
 
-    })
-
-}
+    }
 
 
 
@@ -952,9 +1081,10 @@ $(document).ready(function ()
 
     //getToken()
     $(".my-btn").css({ padding: "0px" });
-    $(".fancy-checkbox label span").css({height: "0px"});
+    $(".fancy-checkbox label span").css({ height: "0px" });
 
-    $('body').on('change', '#file-doc', function (){
+    $('body').on('change', '#file-doc', function ()
+    {
         var documents = documentData.getInstance();
         documents.getFile($(this));
         
@@ -967,11 +1097,12 @@ $(document).ready(function ()
     })
 
 
-    $('body').on('focus',".datepicker", function(){
-            $(this).datetimepicker({
-                viewMode: 'days',
-                format: 'DD/MM/YYYY'
-            })
+    $('body').on('focus', ".datepicker", function ()
+    {
+        $(this).datetimepicker({
+            viewMode: 'days',
+            format: 'DD/MM/YYYY'
+        })
     });
 
 
@@ -981,28 +1112,106 @@ $(document).ready(function ()
 
     })
 
-    $('body').on('change', '#in_person_work', function() {
-    console.log('in person click')
-    if ($(this).is(':checked')) {
-        $('.location-map-hide-show').fadeIn('slow');
-        // newMap()
-    } else {
-        $('.location-map-hide-show').fadeOut('slow');
-    }
+    $('body').on('change', '#in_person_work', function ()
+    {
+        console.log('in person click')
+        if ($(this).is(':checked')) {
+            $('.location-map-hide-show').fadeIn('slow');
+            // newMap()
+        } else {
+            $('.location-map-hide-show').fadeOut('slow');
+        }
     });
 
-    $('body').on('change', '#remote_work', function() {
-            console.log('remote work click')
-            if ($(this).is(':checked')) {
-                $('.location-map-hide-show').fadeOut('slow');
+    $('body').on('change', '#remote_work', function ()
+    {
+        console.log('remote work click')
+        if ($(this).is(':checked')) {
+            $('.location-map-hide-show').fadeOut('slow');
 
-            } else {
-                $('.location-map-hide-show').fadeIn('slow');
+        } else {
+            $('.location-map-hide-show').fadeIn('slow');
+        }
+    });
+
+ waitForElement('#payment', function ()
+    {
+    var script = document.createElement('script');
+    script.onload = function ()
+    {
+        // getMarketplaceCustomFields(function(result) {
+        //   $.each(result, function(index, cf) {
+            
+        //       if (cf.Name == 'stripe_pub_key' && cf.Code.startsWith(customFieldPrefix)) {
+        //        stripePubKey = cf.Values[0];
+        //       }
+        //   })
+
+        //if (stripePubKey) {
+        //do stuff with the script
+        var stripe = Stripe('pk_test_51IDN6ALQSWMKUO5eXiY7nrd6P3dE6oLh42AQpfpUxz64OgHjaSiME8LLPmyWuaPOlUIAT0H0sLjfMkPWd4eBUbxC00gi2lcEOX');
+        var elements = stripe.elements();
+        var card = elements.create('card', { hidePostalCode: true, style: style });
+        var style = {
+            base: {
+                'lineHeight': '1.35',
+                'fontSize': '1.11rem',
+                'color': '#495057',
+                'fontFamily': 'apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif'
             }
-    });
-
-
+        };
+        if ($('#card-element').length) {
+            card.mount('#card-element');
+        }
     
+        // Create a token or display an error the form is submitted.
+        var submitButton = document.getElementById('paynowPackage');
+        if (submitButton) {
+            submitButton.addEventListener('click',
+                function (event)
+                {
+                    event.preventDefault();
+                    $("#paynowPackage").attr("disabled", "disabled");
+                    stripe.createToken(card).then(function (result)
+                    {
+                        if (result.error) {
+                            // Inform the user if there was an error
+                            var errorElement = document.getElementById('card-errors');
+                            errorElement.textContent = result.error.message;
+    
+                            // $("#payNowButton").removeAttr("disabled");
+                        } else {
 
+                            console.log({ result })
+                            charge(result.token);
+                            $("#paynowPackage").prop("disabled", true);
+                                 
+                                  
+                            //subscribe(card, stripe)
+                                  
+    
+                            // Send the result.token.id to a php file and use the token to create the subscription
+                            // SubscriptionManager.PayNowSubmit(result.token.id, e);
+                        }
+                    });
+    
+                });
+        }
+              
+        card.on('change', function (event)
+        {
+            displayError(event);
+        });
+        //  }
+        //});
+     }
+      script.src = "https://js.stripe.com/v3/";
+
+            document.head.appendChild(script); //or something of the likes
+
+                  // Create an instance of the card Element
+            $('#card-element').css("width", "30em");
+})
+           
 
 })

@@ -14,7 +14,7 @@
     error_log($content['Id']);
 
    // $packageId, $tableName, $rowId, $data)
-    $response = $API->editRowEntry($packageId, 'job_cache', $content['jobId'], $job_details);
+    $response = $API->editRowEntry($packageId, 'job_list', $content['jobId'], $job_details);
 
     echo json_encode($response);
 

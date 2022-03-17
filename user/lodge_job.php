@@ -304,9 +304,9 @@ function validateTab(tab) {
                 }
             });
 
-            if (!jQuery("#acknowledge").prop("checked")) {
+            if (!jQuery(".acknowledge").prop("checked")) {
                 validate = 1;
-                jQuery("#acknowledge").addClass('error-con');
+                jQuery(".acknowledge").addClass('error-con');
             }
 
             break;

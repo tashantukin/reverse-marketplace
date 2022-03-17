@@ -358,7 +358,7 @@
               
               $.ajax({
                 method: "POST",
-                url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_cache/`,
+                url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_list/`,
                 headers: {
                   "Content-Type": "application/json"
                 },
@@ -376,24 +376,24 @@
                      let allJobs = ''
                       if (page == '#tab-interested' || page == '#tab-quoted') {
                          allJobs = `<tr data-id="${job['Id'] }" user-id="${userId}"> </td>
-                        <td> <a href="user/plugins/${packageId}/${page}.php?jobId=${job['Id'] }&userId=${userId}">${job['job_availability']}</a></td>
+                        <td> <a href="user/plugins/${packageId}/${page}.php?jobId=${job['Id'] }&userId=${userId}">${job['job_validity']}</a></td>
                         <td>${job['buyer_email']}</td>
                       
-                        <td>${job['buyer_contact_no']}</td>
+                        <td>${job['buyer_contact']}</td>
                         
                         <td>${job['is_accepted'] == 1 ? 'Yes' : 'No'} </td>
 
-                        <td class="width-location">${job['buyer_contact_no']}</td>
+                        <td class="width-location">${job['buyer_contact']}</td>
                         <td>${new Date( date* 1000).format("dd/mm/yyyy")}</td>
                        </tr>`;
                       } else {
                         allJobs = `<tr data-id="${job['Id'] }" user-id="${userId}"> </td>
-                        <td> <a href="user/plugins/${packageId}/${page}.php?jobId=${job['Id'] }&userId=${userId}">${job['job_availability']}</a></td>
+                        <td> <a href="user/plugins/${packageId}/${page}.php?jobId=${job['Id'] }&userId=${userId}">${job['job_validity']}</a></td>
                         <td>${job['buyer_email']}</td>
                       
-                        <td>${job['buyer_contact_no']}</td>
+                        <td>${job['buyer_contact']}</td>
                         
-                        <td class="width-location">${job['inperson_work_address']}</td>
+                        <td class="width-location">${job['in_person_work_address']}</td>
                         <td>${new Date( date* 1000).format("dd/mm/yyyy")}</td>
                        </tr>`;
                      }
@@ -479,7 +479,7 @@
             
             $.ajax({
               method: "GET",
-              url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_cache/`,
+              url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_list/`,
               headers: {
                 "Content-Type": "application/json"
               },
@@ -524,10 +524,10 @@
                     let allJobs = `<tr data-id="${job['Id']}">
 
                   ${status}
-                  <td>${job['job_availability']}</td>
+                  <td>${job['job_validity']}</td>
                   <td>${job['buyer_email']}</td>
-                  <td>${job['buyer_contact_no']}</td>
-                  <td class="width-location">${job['inperson_work_address']}</td>
+                  <td>${job['buyer_contact']}</td>
+                  <td class="width-location">${job['in_person_work_address']}</td>
                   <td>${job['is_accepted'] == 1 ? 'Yes' : 'No'} </td>
                   <td>-</td>
                  </tr>`;
@@ -538,14 +538,9 @@
 
                   })
                   
-                 
-                  
                 }
                   
-                
-            
-              
-          
+               
               }
         
         
@@ -838,7 +833,7 @@
             
                  $.ajax({
                     method: "POST",
-                    url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_cache/`,
+                    url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_list/`,
                     headers: {
                        "Content-Type": "application/json"
                     },
@@ -1085,6 +1080,102 @@
         });
       });
         
+       
+      //quote charge
+         if (urls.indexOf('/charge_quote.php') >= 0) {
+       //waitForElement('#payment', function ()
+   // {
+    var script = document.createElement('script');
+    script.onload = function ()
+    {
+        // getMarketplaceCustomFields(function(result) {
+        //   $.each(result, function(index, cf) {
+            
+        //       if (cf.Name == 'stripe_pub_key' && cf.Code.startsWith(customFieldPrefix)) {
+        //        stripePubKey = cf.Values[0];
+        //       }
+        //   })
+
+        //if (stripePubKey) {
+        //do stuff with the script
+        var stripe = Stripe('pk_test_51IDN6ALQSWMKUO5eXiY7nrd6P3dE6oLh42AQpfpUxz64OgHjaSiME8LLPmyWuaPOlUIAT0H0sLjfMkPWd4eBUbxC00gi2lcEOX');
+        var elements = stripe.elements();
+        var card = elements.create('card', { hidePostalCode: true, style: style });
+        var style = {
+            base: {
+                'lineHeight': '1.35',
+                'fontSize': '1.11rem',
+                'color': '#495057',
+                'fontFamily': 'apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif'
+            }
+        };
+        if ($('#card-element').length) {
+            card.mount('#card-element');
+        }
+    
+        // Create a token or display an error the form is submitted.
+        var submitButton = document.getElementById('paynowPackage');
+        if (submitButton) {
+            submitButton.addEventListener('click',
+                function (event)
+                {
+                    event.preventDefault();
+                    $("#paynowPackage").attr("disabled", "disabled");
+                    stripe.createToken(card).then(function (result)
+                    {
+                        if (result.error) {
+                            // Inform the user if there was an error
+                            var errorElement = document.getElementById('card-errors');
+                            errorElement.textContent = result.error.message;
+    
+                            // $("#payNowButton").removeAttr("disabled");
+                        } else {
+
+                            console.log({ result })
+                            jobData.charge(result.token);
+                            $("#paynowPackage").prop("disabled", true);
+                                 
+                                  
+                            //subscribe(card, stripe)
+                                  
+    
+                            // Send the result.token.id to a php file and use the token to create the subscription
+                            // SubscriptionManager.PayNowSubmit(result.token.id, e);
+                        }
+                    });
+    
+                });
+        }
+              
+        card.on('change', function (event)
+        {
+            displayError(event);
+        });
+        //  }
+        //});
+     }
+      script.src = "https://js.stripe.com/v3/";
+
+            document.head.appendChild(script); //or something of the likes
+
+                  // Create an instance of the card Element
+            $('#card-element').css("width", "30em");
+//})
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         
         //home page
 

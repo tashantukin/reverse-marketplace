@@ -141,42 +141,44 @@
                                                     :href="'job-details.php?jobId=' + job.Id">{{job.buyer_email}}</a>
                                             </td>
                                             <td data-th="Job Location"><a
-                                                    :href="'job-details.php?jobId=' + job.Id">{{job.inperson_work_address}}</a>
+                                                    :href="'job-details.php?jobId=' + job.Id">{{job.in_person_work_address}}</a>
                                             </td>
 
                                             <td data-th="Job Type"
-                                                v-if="job.job_type_contract=='True' &&  job.job_type_full_time=='True'">
+                                                v-if="job.is_job_type_contract=='True' &&  job.is_job_type_fulltime=='True'">
                                                 <a href="freelancer.html">Contract,Full Time</a>
                                             </td>
-                                            <td data-th="Job Type" v-else-if="job.job_type_contract=='True'"><a
+                                            <td data-th="Job Type" v-else-if="job.is_job_type_contract=='True'"><a
                                                     href="">Contract</a></td>
-                                            <td data-th="Job Type" v-else-if="job.job_type_full_time=='True'"><a
+                                            <td data-th="Job Type" v-else-if="job.is_job_type_fulltime=='True'"><a
                                                     href="">Full Time</a></td>
                                             <td data-th="Job Type"
-                                                v-else="job.job_type_full_time=='False' && job.job_type_contract=='False' ">
+                                                v-else="job.is_job_type_fulltime=='False' && job.is_job_type_contract=='False' ">
                                                 <a href="">--</a>
                                             </td>
 
                                             <!-- <td data-th="Payment Type" v-if="job.payment_hourly=='True' && job.payment_fixed=='True" ><a href="freelancer.html">Fixed,Hourly</a></td> -->
-                                            <td data-th="Payment Type" v-if="job.payment_fixed=='True'"><a
+                                            <td data-th="Payment Type" v-if="job.is_payment_fixed=='True'"><a
                                                     href="">Fixed</a></td>
-                                            <td data-th="Payment Type" v-if="job.payment_hourly=='True'"><a
+                                            <td data-th="Payment Type" v-if="job.is_payment_hourly=='True'"><a
                                                     href="">Hourly</a></td>
 
-                                            <td data-th="Job to be completed by" v-if="job.time_frame_timestamp !=''"><a
-                                                    href=""><span
-                                                        class="text-danger">{{ job.time_frame_timestamp }}</span></a>
+                                            <td data-th="Job to be completed by" v-if="job.time_frame_date != 'False'">
+                                                <a href=""><span
+                                                        class="text-danger">{{ job.completion_date }}</span></a>
                                             </td>
-                                            <td data-th="Job to be completed by" v-if="job.time_frame_urgent =='True'">
+                                            <td data-th="Job to be completed by"
+                                                v-if="job.time_frame_urgent =='True' && job.time_frame_date == 'False'">
                                                 <a href=""><span class="text-danger">Urgent</span></a>
                                             </td>
-                                            <td data-th="Job to be completed by" v-if="job.time_frame_nohurry =='True'">
+                                            <td data-th="Job to be completed by"
+                                                v-if="job.time_frame_nohurry =='True' && job.time_frame_date == 'False' ">
                                                 <a href=""><span class="text-danger">No hurry</span></a>
                                             </td>
 
 
                                             <td data-th="Availability"><a href=""><span
-                                                        class="text-danger">{{ job.job_availability}}</span></a></td>
+                                                        class="text-danger">{{ job.job_validity}}</span></a></td>
                                             <td data-th="No.of Quote"><a href="">{{ job.no_of_quotes}}</a></td>
                                             <td data-th="Status"><a href="">{{ job.status}}</a></td>
                                         </tr>
@@ -459,8 +461,8 @@
                                                 <div v-if="charge.is_fixed==0">
                                                     <div class="meta-item-radio radio-style-1">
                                                         <div class="fancy-radio">
-                                                            <input type="radio" checked="" value="fixed"
-                                                                class="radio-ccheckbox" :name="charge.Id"
+                                                            <input type="radio" :checked="charge.type == 'fixed'"
+                                                                value="fixed" class="radio-ccheckbox" :name="charge.Id"
                                                                 :id="charge.Id + '_fixed'">
                                                             <label :for="charge.Id + '_fixed'">
                                                                 <span>Fixed Price</span>
@@ -469,9 +471,9 @@
                                                     </div>
                                                     <div class="meta-item-radio radio-style-1">
                                                         <div class="fancy-radio">
-                                                            <input type="radio" value="percentage"
-                                                                class="radio-ccheckbox" :name="charge.Id"
-                                                                :id="charge.Id + '_percent'">
+                                                            <input type="radio" :checked="charge.type == 'percentage'"
+                                                                value="percentage" class="radio-ccheckbox"
+                                                                :name="charge.Id" :id="charge.Id + '_percent'">
                                                             <label :for="charge.Id + '_percent'">
                                                                 <span>Percentage</span>
                                                             </label>
@@ -540,8 +542,8 @@
                                                 <div v-if="charge.is_fixed==0">
                                                     <div class="meta-item-radio radio-style-1">
                                                         <div class="fancy-radio">
-                                                            <input type="radio" checked="" value="fixed"
-                                                                class="radio-ccheckbox" :name="charge.Id"
+                                                            <input type="radio" :checked="charge.type == 'fixed'" value="
+                                                                fixed" class="radio-ccheckbox" :name="charge.Id"
                                                                 :id="charge.Id + '_fixed'">
                                                             <label :for="charge.Id + '_fixed'">
                                                                 <span>Fixed Price</span>
@@ -550,9 +552,9 @@
                                                     </div>
                                                     <div class="meta-item-radio radio-style-1">
                                                         <div class="fancy-radio">
-                                                            <input type="radio" value="percentage"
-                                                                class="radio-ccheckbox" :name="charge.Id"
-                                                                :id="charge.Id + '_percent'">
+                                                            <input type="radio" :checked="charge.type == 'percentage'"
+                                                                value="percentage" class="radio-ccheckbox"
+                                                                :name="charge.Id" :id="charge.Id + '_percent'">
                                                             <label :for="charge.Id + '_percent'">
                                                                 <span>Percentage</span>
                                                             </label>

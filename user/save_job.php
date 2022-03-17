@@ -9,17 +9,43 @@
     $cf_details = [
          "custom_fields" => $content['custom_fields'],
          "location_list"=> $content['location_list'],
-         "document_list" =>  $content['document_list']
+         "document_list" =>  $content['document_list'],
 
-        // 'remote_work' => $content['remote_work'],
-        // 'inperson_work' => $content['inperson_work'],
-        // 'inperson_work_address' => $content['inperson_work_address'],
-        // 'job_type_full_time' => $content['job_type_full_time'],
-        // 'job_type_contract' =>  $content['job_type_contract'],
-        // 'job_availability' => $content['job_availability'],
-        // 'payment_fixed' => $content['payment_fixed'],
-        // 'payment_fixed_value' => $content['payment_fixed_value'],
-        // 'payment_hourly' => $content['payment_hourly'],
+         //job locations
+        'is_remote_work' => $content['is_remote_work'],
+        'is_in_person_work' => $content['is_inperson_work'],
+        'in_person_work_address' => $content['in_person_work_address'],
+
+
+        //job type
+        'is_job_type_fulltime' => $content['is_job_type_fulltime'],
+        'is_job_type_contract' =>  $content['is_job_type_contract'],
+        
+        //payment
+        'is_payment_fixed' => $content['is_payment_fixed'],
+        'is_payment_hourly' => $content['is_payment_hourly'],
+        'payment_amount' => $content['payment_amount'],
+
+        //task type list
+        'task_type_list' => $content['task_type_list'],
+
+        //time frame
+        'time_frame_urgent' => $content['time_frame_urgent'], 
+        'time_frame_nohurry' => $content['time_frame_nohurry'],
+        'time_frame_date' => $content['time_frame_date'],
+        'completion_date' => $content['completion_date'],   
+        'job_validity' => $content['job_validity'],
+        'comments' => $content['comments'],
+
+        //contact info
+
+        'buyer_name' => $content['buyer_name'],
+        'buyer_email' => $content['buyer_email'],
+        'buyer_contact' => $content['buyer_contact'],
+        'will_provide_info' => "True",
+        'status' => 'Available',
+        'no_of_quotes' => 0
+        
         // 'payment_hourly_value' => $content['payment_hourly_value'],
         // 'task_type_BAS_Agent' => $content['task_type_BAS_Agent'],
         // 'task_type_Tax' => $content['task_type_Tax'],
@@ -36,7 +62,7 @@
         // 'buyer_name' => $content['buyer_name'],
         // 'buyer_contact_no' => $content['buyer_contact_no'], 
         // 'provide_personal_details_to_merchant' => $content['provide_personal_details_to_merchant'],
-        // 'task_type_list' => $content['task_type_list'],
+        
         // 'status' => 'Available',
         // 'no_of_quotes' => 0
     ];

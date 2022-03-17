@@ -79,7 +79,7 @@
                     vm = this;
                     const response = await axios({
                         method: action,
-                        url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_cache?sort=-CreatedDateTime`,
+                        url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_list?sort=-CreatedDateTime`,
                         // data: data,
                         headers: {
                             'Authorization': `Bearer ${token}`

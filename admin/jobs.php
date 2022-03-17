@@ -11,7 +11,7 @@ function getContent($customID) {
     //$url = $baseUrl . '/api/v2/plugins/'.$packageId.'/custom-tables/Templates/'.$pageID; 
 
     $templates = array(array('Name' => 'Id', "Operator" => "in",'Value' => $customID));
-    $url =  $baseUrl . '/api/v2/plugins/'. getPackageID() .'/custom-tables/job_cache';
+    $url =  $baseUrl . '/api/v2/plugins/'. getPackageID() .'/custom-tables/job_list';
     $templateDetails =  callAPI("POST", $admin_token['access_token'], $url, $templates);
     
     return $templateDetails;
@@ -91,4 +91,3 @@ function getQuoted($jobId, $freelancerId) {
 // }
 
 ?>
-

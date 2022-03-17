@@ -7,6 +7,7 @@ const baseURL = window.location.hostname;
 var packageId = re.exec(scriptSrc.toLowerCase())[1];
 var userId = $("#userGuid").val();
 var packagePath = scriptSrc.replace("/scripts/lodge_job.js", "").trim();
+var payment_enabled;
 
 // Add an instance of the card Element into the `card-element` <div>.
 
@@ -24,7 +25,15 @@ const formatter = new Intl.NumberFormat("en-US", {
 });
     
 
-
+ function displayError(event) {
+  // changeLoadingStatePrices(false);
+    let displayError = document.getElementById('card-errors');
+    if (event.error) {
+      displayError.textContent = event.error.message;
+    } else {
+      displayError.textContent = '';
+    }
+  }
 function getCookie(name){
     var value = '; ' + document.cookie;
     var parts = value.split('; ' + name + '=');
@@ -59,32 +68,54 @@ function cache_save_job()
     //     document.cookie = "buyerID:" + buyerID;
     // }
     var selectedTasks = new Array();
-    $("#task-list input[name='tasks']:checked").each(function ()
+    $("[custom-name='Type of Tasks'] input:checked").each(function ()
     {
         var text = $(this).closest('div').find('span').text();
         console.log({ text })
         selectedTasks.push(text);
    });
-  
+    console.log({ selectedTasks });
     var job_details = {
 
         "custom_fields": JSON.stringify(jobData.allJobCustomDetails),
         "location_list":  JSON.stringify(locationList),
-        "document_list" : JSON.stringify(taskFiles)
-        // "remote_work": $("#remote_work")[0].checked,
-        // "inperson_work": $("#in_person_work")[0].checked,
-        // "inperson_work_address": $("#location_details").val(),
-        // "job_type_full_time": $("#full_time")[0].checked,
-        // "job_type_contract": $("#contract")[0].checked,
-        // "payment_fixed": $("#payment_fixed")[0].checked,
-        // "payment_fixed_value": $("#payment_fixed_value").val(),
-        // "payment_hourly": $("#payment_hourly")[0].checked,
-        // "payment_hourly_value": $("#payment_hourly_value").val(),
-        // "job_availability" : $("#job_valid").val(), 
-       
-        // "time_frame_urgent": $("#urgent")[0].checked,
-        // "time_frame_nohurry": $("#no_hurry")[0].checked,
-        // "time_frame_timestamp": $("#date-valid").val(),
+        "document_list": JSON.stringify(taskFiles),
+        
+        //locations
+        "is_remote_work": $("#remote_work")[0].checked,
+        "is_inperson_work": $("#in_person_work")[0].checked,
+        "in_person_work_address": $("#location_details").val(),
+
+
+        //job type
+        "is_job_type_fulltime": $("#full_time")[0].checked,
+        "is_job_type_contract": $("#contract")[0].checked,
+
+        //payemnt
+        "is_payment_fixed": $("#payment_fixed")[0].checked,
+        "is_payment_hourly": $("#payment_hourly")[0].checked,
+        "payment_amount"  : $("#amount").val(),
+
+        //task type list
+        "task_type_list" : JSON.stringify(selectedTasks),
+
+        //time frame
+
+        "time_frame_urgent": $("#job_completion_urgent")[0].checked,
+        "time_frame_nohurry": $("#job_completion_no_hurry")[0].checked,
+        "time_frame_date": $("#job_completion_specify_date")[0].checked,
+        "completion_date" : $("#completion_date").val(),
+        "job_validity" : $("#job_validity").val(), 
+        'comments': $("#comments_to_the_applicant").val(), 
+        
+        //contact info
+
+        'buyer_name': $('#name').val(),
+        'buyer_email': $('#email').val(),
+        'buyer_contact' : $('contact_number').val(),
+        
+        //'will_provide_info' 
+    
         // "comments": $("#comments").val(),
         // "acknowledged_legal": $("#acknowledge")[0].checked,
         // "buyer_email": $("#email").val(),
@@ -111,9 +142,17 @@ function cache_save_job()
         var documents = documentData.getInstance();
        // documents.getFile();
         documents.saveFiles("POST", allresponse.Id);
+
+        jQuery(".jobform-tab li.active a").attr('href');
+        jQuery(".jobform-tab").removeClass('prevTab');
+        jQuery('.jobform-tab .nav-tabs li').addClass('check');
+        jQuery('.jobform-tab .nav-tabs li').prevAll().addClass('check');
+        jQuery('.jobform-tab .nav-tabs li').removeClass('active');
+        setTimeout(function(){ 
+        window.location.href = "lodged.html";
+        },1000);
        // document.cookie = "jobID: " + response.Id 
     });
-
 
 }
 
@@ -184,9 +223,9 @@ const jobData = new Vue({
             
                 vm.jobListCharge = vm.jobListCharge;
                 vm.jobChargeEnabled = jobCharge[0].status;
-                
+                payment_enabled = vm.jobChargeEnabled;
                 this.getAllTabs();
-                
+
             } catch (error) {
                 console.log("error", error);
             }
@@ -470,7 +509,7 @@ const jobData = new Vue({
                                 
                                 case 'textfield':
                             
-                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label>  <input type="text" class="form-control" name="${fieldName}"id="${fieldName}" placeholder=""></div>`
+                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label>  <input type="text" class="form-control" name="${fieldName}"id="${fieldName.replace(" ","_").toLowerCase()}" placeholder=""></div>`
                                     break;
                                
                                 case 'dropdown':
@@ -491,8 +530,8 @@ const jobData = new Vue({
                                     $.each(JSON.parse(field.values), function (index, option)
                                     {
                                         chkoptions += `<div class="fancy-checkbox checkbox-sm">
-                                        <input type="checkbox" id="${option}" name="${fieldId}">
-                                        <label for="${option}"><span>${option}</span>
+                                        <input type="checkbox" id="${option.replace(" ","_").toLowerCase()}" name="${fieldId}">
+                                        <label for="${option.replace(" ","_").toLowerCase()}"><span>${option}</span>
                                         </label>  </div>`
                                     });
                                     customFieldInput = `<div class="form-group custom-fancyjb custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> 
@@ -506,8 +545,8 @@ const jobData = new Vue({
                                     $.each(JSON.parse(field.values), function (index, option)
                                     {
                                         radioOptions += `<div class="fancy-radio radio-sm">
-                                        <input type="radio" id="${option}" name="${option}">
-                                        <label for="${option}"><span>${option}</span>
+                                        <input type="radio" id="${fieldName.replace(" ","_").toLowerCase()}_${option.replace(" ","_").toLowerCase()}" name="${fieldId}">
+                                        <label for="${fieldName.replace(" ","_").toLowerCase()}_${option.replace(" ","_").toLowerCase()}"><span>${option}</span>
                                         </label>  </div>`
                                     });
                                     customFieldInput = `<div class="custom-fancyjb custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> 
@@ -524,7 +563,7 @@ const jobData = new Vue({
                                
                                 case 'datepicker':
 
-                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}"  custom-type="${fieldType}"><label for=${fieldId}>${fieldName}</label><input type="text" class="form-control datepicker" name="${fieldName}" id="${fieldName}" placeholder="DD/MM/YYYY"> </div>`
+                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}"  custom-type="${fieldType}"><label for=${fieldId}>${fieldName}</label><input type="text" class="form-control datepicker" name="${fieldName}" id="${fieldName.replace(" ","_").toLowerCase()}" placeholder="DD/MM/YYYY"> </div>`
                                     jQuery('.datepicker').datetimepicker({
                                     viewMode: 'days',
                                     format: 'DD/MM/YYYY'
@@ -535,7 +574,7 @@ const jobData = new Vue({
                                     
                                     customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}">
                                    <label for=${fieldId}>${fieldName}</label>
-                                    <textarea class="form-control" name="${fieldName}" id="${fieldName}" rows="5" placeholder=""></textarea>
+                                    <textarea class="form-control" name="${fieldName}" id="${fieldName.replace(" ","_").toLowerCase()}" rows="5" placeholder=""></textarea>
                                     </div>`
                                     break;
                                
@@ -543,8 +582,8 @@ const jobData = new Vue({
 
                                     customFieldInput = `<div class="form-group custom-fancyjb custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}">
                                     <div class="fancy-checkbox checkbox-sm">
-                                        <input type="checkbox" name="${fieldId}" id="${fieldName}">
-                                         <label for=${fieldId}>${fieldName}</label>
+                                        <input type="checkbox" name="${fieldId}" id="${fieldName.replace(" ","_").toLowerCase()}" class="acknowledge">
+                                         <label for="${fieldName.replace(" ","_").toLowerCase()}">${fieldName}</label>
                                     </div>
                                     </div>`
                                     break;
@@ -733,14 +772,7 @@ const jobData = new Vue({
                             cache_save_job();  
                         }
                 //if there is a charge id returned, save the job details and redirect to the finish page
-                        jQuery(".jobform-tab li.active a").attr('href');
-                        jQuery(".jobform-tab").removeClass('prevTab');
-                        jQuery('.jobform-tab .nav-tabs li').addClass('check');
-                        jQuery('.jobform-tab .nav-tabs li').prevAll().addClass('check');
-                        jQuery('.jobform-tab .nav-tabs li').removeClass('active');
-                        setTimeout(function(){ 
-                        window.location.href = "lodged.html";
-                        },1000);
+                        
                 
                         //complete the lodge
 
@@ -1075,10 +1107,6 @@ $(document).ready(function ()
 
     }
 
-
-
-
-
     //getToken()
     $(".my-btn").css({ padding: "0px" });
     $(".fancy-checkbox label span").css({ height: "0px" });
@@ -1108,7 +1136,11 @@ $(document).ready(function ()
 
     $('body').on('click', '#save', function ()
     {
-        jobData.getAllFieldData($('.tab-content'));
+        if (payment_enabled = "True") {
+            jobData.getAllFieldData($('.tab-content'));
+
+        }
+        
 
     })
 
@@ -1183,7 +1215,7 @@ $(document).ready(function ()
                         } else {
 
                             console.log({ result })
-                            charge(result.token);
+                            jobData.charge(result.token);
                             $("#paynowPackage").prop("disabled", true);
                                  
                                   

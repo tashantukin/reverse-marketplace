@@ -238,17 +238,17 @@ sellerFields = new Vue({
                         var files = JSON.parse(userDetails['attached_files']);
                         console.log({ files });
 
-                        files.forEach(function (file, i)
-                        {
-                            file['files'].forEach(function (filename, i)
-                            {
-                                $('.table-document tbody').append(`<tr>
-                                <td class="action-icondelete"><a class="delete-cat" href="javascript:void(0)"><i class="icon icon-ndelete"></i></a></td>
-                                <td>${filename['name']}</td>
-                                <td><div class="text-right document-action"><a href="${filename['URL']}">View</a>|<a href="${filename['URL']}">Download</a></div></td>
-                                </tr>`);
-                            })
-                        })
+                        // files.forEach(function (file, i)
+                        // {
+                        //     file['files'].forEach(function (filename, i)
+                        //     {
+                        //         $('.table-document tbody').append(`<tr>
+                        //         <td class="action-icondelete"><a class="delete-cat" href="javascript:void(0)"><i class="icon icon-ndelete"></i></a></td>
+                        //         <td>${filename['name']}</td>
+                        //         <td><div class="text-right document-action"><a href="${filename['URL']}">View</a>|<a href="${filename['URL']}">Download</a></div></td>
+                        //         </tr>`);
+                        //     })
+                        // })
                     }
             
                 
@@ -1283,8 +1283,9 @@ var usersData = (function ()
                // var allresponse = $.parseJSON(response)
                 console.log($.parseJSON(response));
                // localStorage.setItem("jobID", allresponse.Id);
-        
-        
+                localStorage.removeItem("userID");
+                localStorage.removeItem("stripe-onboarded");
+
              
             });
         
@@ -1348,7 +1349,7 @@ var usersData = (function ()
             }
             $.ajax(settings).done(function(response){
                 
-                window.location.href = baseURL;
+                window.location.href = "/";
             
             });
     
@@ -1649,7 +1650,7 @@ $(document).ready(function ()
     }
 
     
-   
+  
 
 
     //seller registration button 

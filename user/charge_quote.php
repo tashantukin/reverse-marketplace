@@ -36,6 +36,11 @@
     <!-- custom js -->
     <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/custom.js"></script>
     <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/jquery.ddslick.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+
+
     <!-- bootstrap style -->
     <link href="https://bootstrap.arcadier.com/spacetime/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="https://bootstrap.arcadier.com/spacetime/css/bootstrap-datetimepicker.min.css" rel="stylesheet"
@@ -73,7 +78,9 @@
                             </div>
 
                             <div class="common-text">
-                                <p>You will be charged $00.00 to Submit a Quote</p>
+                                <p>You will be charged $<span id="charge-amount">{{ jobListCharge }} </span> to Submit
+                                    a
+                                    Quote</p>
                                 <p>Upon clicking the Pay button, you will be re-directed to the Payment Gateway to
                                     continue with your transaction</p>
 
@@ -97,7 +104,8 @@
                         <div class="next-tab-area pull-right">
                             <span class="seller-btn"> <a class="my-btn btn-clear" href="javascript:void(0);">Cancel</a>
                             </span>
-                            <span class="seller-btn"> <a class="my-btn btn-red" href="javascript:void(0);">Pay Now</a>
+                            <span class="seller-btn"> <a class="my-btn btn-red" id="paynowPackage"
+                                    href="javascript:void(0);">Pay Now</a>
                             </span>
                         </div>
                     </div>
@@ -139,6 +147,9 @@
 
 
 </body>
+
+<!-- begin footer -->
 <script type="text/javascript" src="scripts/scripts.js"></script>
+<!-- end footer -->
 
 </html>

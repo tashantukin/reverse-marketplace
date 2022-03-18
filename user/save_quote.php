@@ -44,7 +44,7 @@
         //$url = $baseUrl . '/api/v2/plugins/'.$packageId.'/custom-tables/Templates/'.$pageID; 
     
         $templates = array(array('Name' => 'Id', "Operator" => "in",'Value' => $content['job_id']));
-        $url =  $baseUrl . '/api/v2/plugins/'. $packageId .'/custom-tables/job_cache';
+        $url =  $baseUrl . '/api/v2/plugins/'. $packageId .'/custom-tables/job_list';
         $templateDetails =  callAPI("POST", $admin_token, $url, $templates);
 
         $number_of_quotes = $templateDetails['Records'][0]['no_of_quotes'];
@@ -62,7 +62,7 @@
         //update the no of quotes and status of the job lodged
     
        // $packageId, $tableName, $rowId, $data)
-        $response = $API->editRowEntry($packageId, 'job_cache', $content['job_id'], $job_details);
+        $response = $API->editRowEntry($packageId, 'job_list', $content['job_id'], $job_details);
 
 
      //update the freelancer_quotes table

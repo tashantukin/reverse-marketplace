@@ -10,7 +10,10 @@
     var urls = window.location.href.toLowerCase();
     var userId = $("#userGuid").val();
     const protocol = window.location.protocol;
-    const baseURL = window.location.hostname;
+   const baseURL = window.location.hostname;
+   var chargeEnabled = "False";
+   var viewBidBuyerEnabled = "False";
+   
     //const token = getCookie('webapitoken');
 
     
@@ -37,8 +40,64 @@
         },
       });
     }
+   const formatter = new Intl.NumberFormat("en-US", {
+      minimumFractionDigits: 2,
+      
+   });
+    function displayError(event) {
+  // changeLoadingStatePrices(false);
+    let displayError = document.getElementById('card-errors');
+    if (event.error) {
+      displayError.textContent = event.error.message;
+    } else {
+      displayError.textContent = '';
+    }
+   }
+   
+   function getQuoteData()
+   {
+       var jobTasks = new Array();
+         $(".qq-total-sum .saved").each(function ()
+         {
+               var title = $(this).find('.title').text();
+               var price = $(this).find('.qq-option span b').text();
+               console.log({ title })
+            
+            jobTasks.push({ title, price });
+            
+         });
+
+         var quote_details = {
+
+            "job_id": $('#job-id').val(),
+            "freelancer_id": $('#user-id').val(),
+            "job_summary": jobTasks,
+            "total": $(".qq-total").find('span b').text(),
+            "all_discount": $(".qq-discount .qq-option").find('span b').text(),
+            "all_total": $(".qq-subtotal").find('span b').text(),
+            "quoted-by" : $("#quoted-by").text(),
+            
+            "job_completion": $("#completion").text(),
+            "availability_date": $("#availability").val(),
+            "validity_date": $("#validity").val(),
+            
+            
+            "deposit_required": $("#deposit_required")[0].checked,
+            "for_7_days": $("#7_days")[0].checked,
+            "for_30_days" : $("#30_days")[0].checked, 
+            "deposit_amount": $("#deposit_required").parents('.checkbox-row-flex').find('.qq-option span b').text(),
+            "comments_on_terms": $("#payment_comments").val(),
+
+
+            "payment_cod": $("#COD")[0].checked,
+            "payment_credit_card": $("#credit_card")[0].checked,
+            "payment_paypal": $("#paypal")[0].checked,
+            
+         };
+         localStorage.setItem('quote_details', JSON.stringify(quote_details))
+   }
   
-    var userData = (function ()
+   var userData = (function ()
     {
       var instance;
       
@@ -347,12 +406,38 @@
      })()
 
   
-     var jobData = (function () {
+   var jobData = (function () {
        var instance;
        
         function init()
         {
-        
+           
+           async function getChargeDetails()
+           {
+              var data = [{ 'Name': 'charge_name', 'Operator': "in", "Value": 'job_bid_buyer' }]
+              
+              $.ajax({
+                 method: "POST",
+                 url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/charges_configuration/`,
+                 headers: {
+                    "Content-Type": "application/json"
+                 },
+            
+                 data: JSON.stringify(data),
+         
+                 success: function (response)
+                 {
+                    const charge = response.Records[0];
+                    viewBidBuyerEnabled = charge['status'];
+                    console.log({ viewBidBuyerEnabled });
+
+
+                 }
+               })
+         
+           }
+
+
           async function getJobDetail(jobId,el,page,date){
               var data = [{ 'Name': 'Id', 'Operator': "in", "Value": jobId }]
               
@@ -438,6 +523,12 @@
                 const job = jobs.Records
                 //if existing user, verify the status
                  if (job) {
+                    var viewButtonTd = "";
+                    if (viewBidBuyerEnabled == 'True') {
+                        viewButtonTd =   `<td class="text-right"><a href="" class="btn btn-jobform-outline">View</a></td>`
+                    } else {
+                        viewButtonTd =  `<td class="text-right"><a href="user/plugins/${packageId}/${page}.php?jobId=${quote['job_id']}&userId=${quote['freelancer_id']}" class="btn btn-jobform-outline">View</a></td>`;
+                    }
 
                     job.forEach(function (quote, i)
                     {
@@ -448,7 +539,8 @@
                        <td><div class="job-quotedtitle"><span class="qtitle">Amount</span><span class="qdesc">$AUD${quote['all_total']}</span></div></td>
                        <td><div class="job-quotedtitle"><span class="qtitle">Availability</span><span class="qdesc">${quote['availability_date']}</span></div></td>
                        <td><div class="job-quotedtitle"><span class="qtitle">Status</span><span class="qdesc">Valid to ${quote['validity_date']} </span></div></td>
-                       <td class="text-right"><a href="user/plugins/${packageId}/${page}.php?jobId=${quote['job_id'] }&userId=${quote['freelancer_id']}" class="btn btn-jobform-outline">View</a></td>
+                      
+                         ${ viewButtonTd }
                     </tr>`;
                        
                        
@@ -920,7 +1012,8 @@
              getJobLodges: getJobLodges,
              getUserJobList: getUserJobList,
              getAcceptedJobs: getAcceptedJobs,
-             getRejectedJobs : getRejectedJobs
+             getRejectedJobs: getRejectedJobs,
+             getChargeDetails:  getChargeDetails
             
           }
           
@@ -942,7 +1035,7 @@
    })()
    
 
-     var quoteData =  (function () {
+   var quoteData =  (function () {
       var instance;
       
        function init()
@@ -950,56 +1043,12 @@
        
          // save the quoted job 
         
-      
          function quoteJob()
          {
-
-            var jobTasks = new Array();
-            $(".qq-total-sum .saved").each(function ()
-            {
-                var title = $(this).find('.title').text();
-                var price = $(this).find('.qq-option span b').text();
-                console.log({ title })
-               
-               jobTasks.push({ title, price });
-               
-            });
-
-            console.log({ jobTasks })
-             
-            var quote_details = {
-
-               "job_id": $('#job-id').val(),
-               "freelancer_id": $('#user-id').val(),
-               "job_summary": jobTasks,
-               "total": $(".qq-total").find('span b').text(),
-               "all_discount": $(".qq-discount .qq-option").find('span b').text(),
-               "all_total": $(".qq-subtotal").find('span b').text(),
-               "quoted-by" : $("#quoted-by").text(),
-               
-               "job_completion": $("#completion").text(),
-               "availability_date": $("#availability").val(),
-               "validity_date": $("#validity").val(),
-               
-               
-               "deposit_required": $("#deposit_required")[0].checked,
-               "for_7_days": $("#7_days")[0].checked,
-               "for_30_days" : $("#30_days")[0].checked, 
-               "deposit_amount": $("#deposit_required").parents('.checkbox-row-flex').find('.qq-option span b').text(),
-               "comments_on_terms": $("#payment_comments").val(),
-
-
-               "payment_cod": $("#COD")[0].checked,
-               "payment_credit_card": $("#credit_card")[0].checked,
-               "payment_paypal": $("#paypal")[0].checked,
-               
-            };
-
-            console.log(quote_details);
             var settings = {
                 "url": packagePath + "/save_quote.php",
                 "method": "POST",
-                "data": JSON.stringify(quote_details)
+                "data": localStorage.getItem('quote_details')
             }
             $.ajax(settings).done(function(response){
                toastr.success('Your quote has been submitted');
@@ -1007,15 +1056,10 @@
                console.log(allresponse);
                urls = `${protocol}//${baseURL}/`;
                window.location.href = urls;
+               localStorage.removeItem('quote_details');
                
-               
-        
-      
-            });
             
-
-
-     
+            });
          
           }
           
@@ -1071,9 +1115,10 @@
 
   })()
   
-  
-  
-    $(document).ready(function () {
+   
+  //charges of quotation
+   
+$(document).ready(function () {
       getMarketplaceCustomFields(function (result) {
         $.each(result, function (index, cf) {
          
@@ -1082,7 +1127,102 @@
         
        
       //quote charge
-         if (urls.indexOf('/charge_quote.php') >= 0) {
+       if (urls.indexOf('/charge_quote.php') >= 0) {
+      
+         const chargeData = new Vue({
+         el: "#payment",
+
+         data()
+         {
+            return {
+               
+               jobListCharge: 0,
+               jobChargeEnabled: ''
+               
+
+            }
+         },
+         methods: {
+               async getChargeRate()
+            {
+                  try {
+                     vm = this;
+                     const response = await axios({
+                        method: "GET",
+                        url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/charges_configuration/`,
+
+                     })
+                     const details = await response
+                     var jobCharges = details.data
+                     var jobCharge = jobCharges.Records.filter((data) => data.charge_name === 'job_bid_seller')
+                     console.log({ jobCharge });
+
+                     vm.jobListCharge = parseInt(jobCharge[0].value);
+                     console.log(parseInt(jobCharge[0].value));
+                  
+                     //vm.jobListCharge = vm.jobListCharge;
+                     vm.jobChargeEnabled = jobCharge[0].status;
+                     payment_enabled = vm.jobChargeEnabled;
+                     
+
+                  } catch (error) {
+                     console.log("error", error);
+                  }
+
+                  
+            },
+
+            
+            async charge(token)
+            { 
+               vm = this;
+                  var apiUrl = packagePath + '/stripe_charge.php';
+                  var data = { token }
+                     $.ajax({
+                        url: apiUrl,
+                        method: 'POST',
+                        contentType: 'application/json',
+                           data: JSON.stringify(data),
+                     success: function(result) {
+                        result = JSON.parse(result);
+                        if (result.id) {
+
+                          // if (vm.jobChargeEnabled == 'True') {
+                              //send the quote
+                              var quote = quoteData.getInstance();
+                              quote.quoteJob();
+                                 // cache_save_job();  
+                            //  }
+                     //if there is a charge id returned, save the job details and redirect to the finish page
+                              
+                     
+                              //complete the lodge
+
+                           
+                              
+
+                     }
+
+            
+               },
+               error: function(jqXHR, status, err) {
+               //	toastr.error('Error!');
+               }
+            });
+         
+         }
+            
+
+         },
+         beforeMount() {
+            
+            this.getChargeRate()
+            
+         
+         }
+
+         })
+
        //waitForElement('#payment', function ()
    // {
     var script = document.createElement('script');
@@ -1132,7 +1272,7 @@
                         } else {
 
                             console.log({ result })
-                            jobData.charge(result.token);
+                            chargeData.charge(result.token);
                             $("#paynowPackage").prop("disabled", true);
                                  
                                   
@@ -1161,22 +1301,100 @@
                   // Create an instance of the card Element
             $('#card-element').css("width", "30em");
 //})
-    }
+       }
+      
+      //freelancer quote
+   
+       if (urls.indexOf('/freelancer_quote.php') >= 0) {
+          
+       const chargeData = new Vue({
+         el: "#freelancer-quote",
 
+         data()
+         {
+            return {
+               
+               jobListCharge: 0,
+               jobChargeEnabled: ''
+               
+            }
+         },
+         methods: {
+               async getChargeRate()
+            {
+                  try {
+                     vm = this;
+                     const response = await axios({
+                        method: "GET",
+                        url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/charges_configuration/`,
 
+                     })
+                     const details = await response
+                     var jobCharges = details.data
+                     var jobCharge = jobCharges.Records.filter((data) => data.charge_name === 'job_bid_seller')
+                    
+                     //vm.jobListCharge = vm.jobListCharge;
+                     vm.jobChargeEnabled = jobCharge[0].status;
+                     chargeEnabled = jobCharge[0].status;
+                     console.log({chargeEnabled})
+                    
+                     
 
+                  } catch (error) {
+                     console.log("error", error);
+                  }
 
+                  
+            },
 
+         
+            
 
+         },
+         beforeMount() {
+            
+            this.getChargeRate()
+            
+         }
 
+       })
+      
 
+      $('#submit-top').on('click', function (event)
+      {
+         event.stopPropagation();
+         event.stopImmediatePropagation();
+         getQuoteData();
 
-
-
-
-
-
+         if (chargeEnabled == 'True') {
+             window.location = packagePath + "/charge_quote.php"
+         } else {
+         var quote = quoteData.getInstance();
+         quote.quoteJob();
+         }
+         
         
+      
+      })
+
+      $('#submit-bottom').on('click', function (event)
+      {
+         event.stopPropagation();
+         event.stopImmediatePropagation();
+         getQuoteData();
+
+         if (chargeEnabled == 'True') {
+             window.location = packagePath + "/charge_quote.php"
+         } else {
+         var quote = quoteData.getInstance();
+         quote.quoteJob();
+         }
+         
+      })
+
+          
+       }
+
         //home page
 
        if (document.body.className.includes('page-home')) {
@@ -1188,14 +1406,16 @@
           //check if there is an existing lodge job on local storage, if there is, update the job cache with the buyer id (user id)
 
         var user = userData.getInstance();
-        var jobs = jobData.getInstance();
-        jobs.getAllJobs()
-        jobs.getInterestedJobs()
+          var jobs = jobData.getInstance();
+         jobs.getChargeDetails();
+         jobs.getAllJobs()
+         jobs.getInterestedJobs()
          jobs.getQuotedJobs()
          jobs.getAcceptedJobs()
          jobs.getRejectedJobs()
          jobs.getJobLodges()
          jobs.getUserJobList()
+         
         
          
          if ($('#userGuid').length != 0) {
@@ -1234,24 +1454,6 @@
        }
        
        //quotation page
-
-
-       $('#submit-top').on('click', function (event)
-       {
-         event.stopPropagation();
-         event.stopImmediatePropagation();
-         var quote = quoteData.getInstance();
-          quote.quoteJob();
-       })
-
-       $('#submit-bottom').on('click', function (event)
-       {
-         event.stopPropagation();
-         event.stopImmediatePropagation();
-          var quote = quoteData.getInstance();
-          quote.quoteJob();
-       })
-
 
 
        //accept button

@@ -593,7 +593,7 @@
                                                         <input v-if="charge.status=='False'" type="checkbox"
                                                             name="onoffswitch" class="onoffswitch-checkbox"
                                                             :id="charge.Id + '_toggle'">
-                                                        <input v-if="charge.status=='True'" type=" checkbox"
+                                                        <input v-if="charge.status=='True'" type="checkbox"
                                                             name="onoffswitch" class="onoffswitch-checkbox"
                                                             :id="charge.Id + '_toggle'" checked>
                                                         <label class="onoffswitch-label" :for="charge.Id + '_toggle'">

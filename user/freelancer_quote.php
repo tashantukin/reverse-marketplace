@@ -17,6 +17,10 @@
     <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/bootbox.min.js"></script>
     <link href="https://bootstrap.arcadier.com/spacetime/css/importFonts.css" rel="stylesheet" type="text/css">
     <link href="https://bootstrap.arcadier.com/spacetime/css/style.css" rel="stylesheet" type="text/css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+
     <?php 
 include 'jobs.php';
 $job_id = $_GET['jobId'];
@@ -92,7 +96,7 @@ else {
 
     <!-- header -->
     <div class="main">
-        <div class="content-pages">
+        <div class="content-pages" id="freelancer-quote">
             <div class="freelancer-content-main">
 
                 <input type="hidden" id="job-id" value="<?php echo $job_id ?>">

@@ -6,8 +6,6 @@ $user_id = $_GET['userId'];
 $jobDetails = getContent($job_id);
 $jobFiles = getFiles($job_id);
 $userDetails = getFreelancerDetails($user_id);
-
-
 $quotedDetails = getQuoted($job_id, $user_id);
 
 $job_completion = '';

@@ -39,74 +39,87 @@ else {
 ?>
 
 <!DOCTYPE html
-PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Market Place :: Applicant's Quote</title>
-<!-- core js -->
-<script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/jquery-min.js"></script>
-<!-- bootstrap js -->
-<script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/moment.min.js"></script>
-<script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/bootstrap-datetimepicker.min.js"></script>
-<!-- bootbox js -->
-<script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/bootbox.min.js"></script>
-<link href="https://bootstrap.arcadier.com/spacetime/css/importFonts.css" rel="stylesheet" type="text/css">
-<link href="https://bootstrap.arcadier.com/spacetime/css/style.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/jquery.nicescroll.min.js"></script>
-<!-- flying element js -->
-<script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/codex-fly.js"></script>
-<!-- mobile-menu js -->
-<script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/mobile-menu.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Market Place :: Applicant's Quote</title>
+    <!-- core js -->
+    <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/jquery-min.js"></script>
+    <!-- bootstrap js -->
+    <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/moment.min.js"></script>
+    <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/bootstrap-datetimepicker.min.js">
+    </script>
+    <!-- bootbox js -->
+    <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/bootbox.min.js"></script>
+    <link href="https://bootstrap.arcadier.com/spacetime/css/importFonts.css" rel="stylesheet" type="text/css">
+    <link href="https://bootstrap.arcadier.com/spacetime/css/style.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/jquery.nicescroll.min.js"></script>
+    <!-- flying element js -->
+    <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/codex-fly.js"></script>
+    <!-- mobile-menu js -->
+    <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/mobile-menu.js"></script>
 
-<script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/pagination.min.js"></script>
-<!-- custom js -->
-<script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/custom.js"></script>
-<script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/jquery.ddslick.js"></script>
-<!-- bootstrap style -->
-<link href="https://bootstrap.arcadier.com/spacetime/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-<link href="https://bootstrap.arcadier.com/spacetime/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
-<link href="https://bootstrap.arcadier.com/spacetime/css/fancy-radio.css" rel="stylesheet" type="text/css">
-<link href="https://bootstrap.arcadier.com/spacetime/css/pagination.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/pagination.min.js"></script>
+    <!-- custom js -->
+    <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/custom.js"></script>
+    <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/jquery.ddslick.js"></script>
+    <!-- bootstrap style -->
+    <link href="https://bootstrap.arcadier.com/spacetime/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="https://bootstrap.arcadier.com/spacetime/css/bootstrap-datetimepicker.min.css" rel="stylesheet"
+        type="text/css">
+    <link href="https://bootstrap.arcadier.com/spacetime/css/fancy-radio.css" rel="stylesheet" type="text/css">
+    <link href="https://bootstrap.arcadier.com/spacetime/css/pagination.css" rel="stylesheet" type="text/css">
 
-<!-- custom style-->
-<link href="https://bootstrap.arcadier.com/spacetime/css/style.css" rel="stylesheet" type="text/css">
-<!-- responsive style-->
-<link href="https://bootstrap.arcadier.com/spacetime/css/responsive.css" rel="stylesheet" type="text/css">
-<link href="css/custom.css" rel="stylesheet" type="text/css">
-<!-- modal style-->
-<link href="https://bootstrap.arcadier.com/spacetime/css/modal.css" rel="stylesheet" type="text/css">
+    <!-- custom style-->
+    <link href="https://bootstrap.arcadier.com/spacetime/css/style.css" rel="stylesheet" type="text/css">
+    <!-- responsive style-->
+    <link href="https://bootstrap.arcadier.com/spacetime/css/responsive.css" rel="stylesheet" type="text/css">
+    <link href="css/custom.css" rel="stylesheet" type="text/css">
+    <!-- modal style-->
+    <link href="https://bootstrap.arcadier.com/spacetime/css/modal.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="css/style.css" />
 </head>
 
 <body class="seller-items">
 
-                                <div class="main">
-                                    <div class="content-pages">
-                                        <div class="freelancer-content-main">
-                                            <div class="container">
-                                                <div class="page-reverse-title">
-                                                    <h1>Applicant's Quote</h1>
-                                                </div>
-                                                <div class="quote-question-section">
-                                                    <div class="navtab-flex">
-                                                        <div class="quote-title-design"><?php echo $userDetails['Records'][0]['company_name'] ?></div>
-                                                    </div>
-                                                    
-                                                    
-                                                    <div class="quote-question-main rm-quote-bottom">
-                                                        <h4>1. Applicant Details</h4>
-                                                        <div class="quotedtitle-flex">
-                                                        <div class="job-quotedtitle"><span class="qtitle">Quoted by</span><span class="qdesc"><?php echo $quotedDetails['Records'][0]['quote_by'] ?></span></div>
-                                                        <div class="job-quotedtitle"><span class="qtitle">Date</span><span class="qdesc"><?php echo date('d/m/Y H:i', $quotedDetails['Records'][0]['CreatedDateTime']); ?></span></div>
-                                                        <div class="job-quotedtitle"><span class="qtitle">Amount</span><span class="qdesc">$<?php echo $quotedDetails['Records'][0]['all_total'] ?></span></div>
-                                                        <div class="job-quotedtitle"><span class="qtitle">Availability</span><span class="qdesc"><?php echo $quotedDetails['Records'][0]['availability_date'] ?></span></div>
-                                                        <div class="job-quotedtitle"><span class="qtitle">Status</span><span class="qdesc"><?php echo $quotedDetails['Records'][0]['status'] ?></span></div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- <div class="quote-info-message-box">
+    <div class="main">
+        <div class="content-pages">
+            <div class="freelancer-content-main">
+                <div class="container">
+                    <div class="page-reverse-title">
+                        <h1>Applicant's Quote</h1>
+                    </div>
+                    <div class="quote-question-section">
+                        <div class="navtab-flex">
+                            <div class="quote-title-design"><?php echo $userDetails['Records'][0]['company_name'] ?>
+                            </div>
+                        </div>
+
+
+                        <div class="quote-question-main rm-quote-bottom">
+                            <h4>1. Applicant Details</h4>
+                            <div class="quotedtitle-flex">
+                                <div class="job-quotedtitle"><span class="qtitle">Quoted by</span><span
+                                        class="qdesc"><?php echo $quotedDetails['Records'][0]['quote_by'] ?></span>
+                                </div>
+                                <div class="job-quotedtitle"><span class="qtitle">Date</span><span
+                                        class="qdesc"><?php echo date('d/m/Y H:i', $quotedDetails['Records'][0]['CreatedDateTime']); ?></span>
+                                </div>
+                                <div class="job-quotedtitle"><span class="qtitle">Amount</span><span
+                                        class="qdesc">$<?php echo $quotedDetails['Records'][0]['all_total'] ?></span>
+                                </div>
+                                <div class="job-quotedtitle"><span class="qtitle">Availability</span><span
+                                        class="qdesc"><?php echo $quotedDetails['Records'][0]['availability_date'] ?></span>
+                                </div>
+                                <div class="job-quotedtitle"><span class="qtitle">Status</span><span
+                                        class="qdesc"><?php echo $quotedDetails['Records'][0]['status'] ?></span></div>
+                            </div>
+                        </div>
+                        <!-- <div class="quote-info-message-box">
                                                         <div class="infoflex-area">
                                                             <div class="quote-msg-box">
                                                             <svg version="1.2" baseProfile="tiny-ps" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 46 39" width="46" height="39"><title>Page 1</title>
@@ -120,23 +133,23 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD
                                                             <button type="button" class="btn btn-send-message">Send a Message</button>
                                                         </div>
                                                     </div> -->
-                                                            
-
-        <div class="quote-question-main">
-            <div class="row">
-                <div class="col-sm-8">
-                    <div class="quote-question-section">
-                        <h4>2. Job Summary</h4>
 
 
-                        <?php
+                        <div class="quote-question-main">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div class="quote-question-section">
+                                        <h4>2. Job Summary</h4>
+
+
+                                        <?php
                                foreach(json_decode($quotedDetails['Records'][0]['job_summary'],true) as $task) {
                                     echo "<div class='qq-title'><span class='dash'></span><span class='title'>" . $task['title'] . "</span><div class='qq-option'><span>AUD <b>" . $task['price'] ." </b></span></div></div>";
 
 
                                }
                             ?>
-                        <!-- <div class="qq-title"><span class="dash"></span><span class="title">BAS Agent</span></div>
+                                        <!-- <div class="qq-title"><span class="dash"></span><span class="title">BAS Agent</span></div>
                         <div class="qq-title"><span class="dash"></span><span class="title">Tax</span><div class="qq-option"><span>AUD <b>0.00</b></span></div></div>
                         <div class="qq-title"><span class="dash"></span><span class="title">Audit</span><div class="qq-option"><span>AUD <b>0.00</b></span></div></div>
                         <div class="qq-title"><span class="dash"></span><span class="title">Book-keeping</span><div class="qq-option"><span>AUD <b>10.00</b></span></div></div>
@@ -147,213 +160,346 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD
                         </div>
                         <div class="qq-title"><span class="dash"></span><span>Other Jobs 2</span><p>  File 2 | <a href="#">Download File</a></p>
                         </div> -->
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="info-box">
-                            <p>Email: <?php echo $userDetails['Records'][0]['email'] ?></p>
-                           <p>Name: <?php echo $userDetails['Records'][0]['company_name'] ?></p>
-                           <p>Contact Number: <?php echo $userDetails['Records'][0]['contact_number'] ?></p>
-                    </div>
-                </div>
-            </div>
-            <hr>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="quote-question-section">
-                            <div class="qq-title"><span class="dash"></span><span class="title">Total</span><div class="qq-option"><span>AUD <b><?php echo $quotedDetails['Records'][0]['total'] ?></b></span></div></div>
-                            <div class="qq-title"><span class="dash"></span><span class="title">All at once - Discount</span><div class="qq-option"><span>AUD <b><?php echo $quotedDetails['Records'][0]['all_discount'] ?></b></span></div></div>
-                            <div class="qq-title"><span class="dash"></span><span class="title">All at once - Total</span><div class="qq-option"><span>AUD <b><?php echo $quotedDetails['Records'][0]['all_total'] ?></b></span></div></div>
-                        </div>
-                    </div>
-                </div>
-                <hr>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="quote-question-section">
-                                <div class="qq-title">Job to be completed by: <span class="danger"> <?php echo $job_completion ?></span></div>
-                                <div class="qq-title"><span class="dash"></span><span class="title">Availability</span><span><?php echo $quotedDetails['Records'][0]['availability_date'] ?></span></div>
-                                <?php echo $job_type ?>
-                                <div class="qq-title"><span class="dash"></span><span class="title">Hourly</span><span>AUD <?php echo $jobDetails['Records'][0]['payment_hourly_value'] ?></span></div>
-                                <div class="qq-title"><span class="dash"></span><span class="title">Fixed Price</span><span>AUD <?php echo $jobDetails['Records'][0]['payment_fixed_value'] ?></span></div>
-
-                                <div class="form-group">
-                                    <label for="comments">Comments to applicant:</label>
-                                    <div class="comment-desc"><?php echo $jobDetails['Records'][0]['comments'] ?></div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="info-box">
+                                        <p>Email: <?php echo $userDetails['Records'][0]['email'] ?></p>
+                                        <p>Name: <?php echo $userDetails['Records'][0]['company_name'] ?></p>
+                                        <p>Contact Number: <?php echo $userDetails['Records'][0]['contact_number'] ?>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    </div>
-                    <div class="quote-question-main">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="quote-question-section">
-                                    <h4>3. Payment</h4>
-                                    <div class="qq-title"><span class="title">Deposit Required <span class="black-color">(7days)</span></span><div class="qq-option"><span>AUD <b><?php echo $quotedDetails['Records'][0]['deposit_amount'] ?></b></span></div></div>
-                                    <div class="form-group">
-                                        <label for="comments">Comments on payment terms:</label>
-                                        <div class="comment-desc"><?php echo $quotedDetails['Records'][0]['comments_on_terms'] ?></div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="quote-question-section">
+                                        <div class="qq-title"><span class="dash"></span><span class="title">Total</span>
+                                            <div class="qq-option"><span>AUD
+                                                    <b><?php echo $quotedDetails['Records'][0]['total'] ?></b></span>
+                                            </div>
+                                        </div>
+                                        <div class="qq-title"><span class="dash"></span><span class="title">All at once
+                                                - Discount</span>
+                                            <div class="qq-option"><span>AUD
+                                                    <b><?php echo $quotedDetails['Records'][0]['all_discount'] ?></b></span>
+                                            </div>
+                                        </div>
+                                        <div class="qq-title"><span class="dash"></span><span class="title">All at once
+                                                - Total</span>
+                                            <div class="qq-option"><span>AUD
+                                                    <b><?php echo $quotedDetails['Records'][0]['all_total'] ?></b></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="quote-question-section">
+                                        <div class="qq-title">Job to be completed by: <span class="danger">
+                                                <?php echo $job_completion ?></span></div>
+                                        <div class="qq-title"><span class="dash"></span><span
+                                                class="title">Availability</span><span><?php echo $quotedDetails['Records'][0]['availability_date'] ?></span>
+                                        </div>
+                                        <?php echo $job_type ?>
+                                        <div class="qq-title"><span class="dash"></span><span
+                                                class="title">Hourly</span><span>AUD
+                                                <?php echo $jobDetails['Records'][0]['payment_hourly_value'] ?></span>
+                                        </div>
+                                        <div class="qq-title"><span class="dash"></span><span class="title">Fixed
+                                                Price</span><span>AUD
+                                                <?php echo $jobDetails['Records'][0]['payment_fixed_value'] ?></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="comments">Comments to applicant:</label>
+                                            <div class="comment-desc">
+                                                <?php echo $jobDetails['Records'][0]['comments'] ?></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="quote-question-main">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="quote-question-section">
+                                        <h4>3. Payment</h4>
+                                        <div class="qq-title"><span class="title">Deposit Required <span
+                                                    class="black-color">(7days)</span></span>
+                                            <div class="qq-option"><span>AUD
+                                                    <b><?php echo $quotedDetails['Records'][0]['deposit_amount'] ?></b></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="comments">Comments on payment terms:</label>
+                                            <div class="comment-desc">
+                                                <?php echo $quotedDetails['Records'][0]['comments_on_terms'] ?></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                        <hr>
+                            <hr>
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="quote-question-section">
                                         <div class="qq-title">Payment method:</div>
-                                        <div class="qq-title"><span class="dash"></span><span class="title">COD</span></div>
-                                        <div class="qq-title"><span class="dash"></span><span class="title">Credit Card</span></div>
-                                        <div class="qq-title"><span class="dash"></span><span class="title">PayPal</span></div>
+                                        <div class="qq-title"><span class="dash"></span><span class="title">COD</span>
+                                        </div>
+                                        <div class="qq-title"><span class="dash"></span><span class="title">Credit
+                                                Card</span></div>
+                                        <div class="qq-title"><span class="dash"></span><span
+                                                class="title">PayPal</span></div>
                                     </div>
                                 </div>
                             </div>
 
-                    </div>
-
-                    <div class="navtab-flex">
-                        <div class="checkbox-row-flex">
-                            <div class="checkbox-width custom-fancyjb">
-                                <div class="fancy-checkbox checkbox-sm">
-                                    <input type="checkbox" name="read_and_agreed" id="read_and_agreed">
-                                        <label for="read_and_agreed"><span>I have read and agreed to the quote presented.</span></label>
-                                </div>
-                            </div>
                         </div>
-                        <div class="navtab-filter">
-                            <button class="btn btn-quote-cancel btnsubmit" data-toggle="modal" data-target="#acceptModal">Accept</button>
-                            <button class="btn btn-quote-reject btnsubmit" data-toggle="modal" data-target="#rejectModal">Reject</button>
-                            <button class="btn btn-quote-submit" data-toggle="modal" data-target="#cancelModal">Cancel</button>
-                        </div>
-                    </div>
 
-                    </div>
-
-                    </div>
-                    </div>
-
-
-                    </div>
-                    </div>
-                    <!-- End Item form-->
-                    </div>
-                    </div>
-                    <!-- footer -->
-                
-                    <!-- footer -->
-                    <!--modal register-->
-                    <div class="modal-frame model-register">
-                        <div class="mymodal">
-                            <div class="modal-inset">
-                                <div class="modal-body">
-                                    <div class="modal-wrapper">
-                                        <div class="modal-logo text-center"><img
-                                                src="https://bootstrap.arcadier.com/spacetime/images/logo.png">
-                                        </div>
-                                        <div class="modal-head">Register / Sign in</div>
-                                        <div class="modal-main">
-                                            <ul>
-                                                <li><a href="#"><img src="https://bootstrap.arcadier.com/spacetime/images/fb_login.svg"></a>
-                                                </li>
-                                                <li><a href="#"><img src="https://bootstrap.arcadier.com/spacetime/images/goo_login.svg"></a>
-                                                </li>
-                                            </ul>
-                                        </div>
+                        <div class="navtab-flex">
+                            <div class="checkbox-row-flex">
+                                <div class="checkbox-width custom-fancyjb">
+                                    <div class="fancy-checkbox checkbox-sm">
+                                        <input type="checkbox" name="read_and_agreed" id="read_and_agreed">
+                                        <label for="read_and_agreed"><span>I have read and agreed to the quote
+                                                presented.</span></label>
                                     </div>
                                 </div>
                             </div>
-                            <button class="modal-close close"></button>
+                            <div class="navtab-filter">
+                                <button class="btn btn-quote-cancel btnsubmit" id="accept"
+                                    data-toggle="modal">Accept</button>
+                                <button class="btn btn-quote-reject btnsubmit" data-toggle="modal"
+                                    id="reject">Reject</button>
+                                <button class="btn btn-quote-submit" data-toggle="modal" data-target="#cancelModal"
+                                    id="cancel">Cancel</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <!-- End Item form-->
+    </div>
+    </div>
+    <!-- footer -->
+
+    <!-- footer -->
+    <!--modal register-->
+    <div class="modal-frame model-register">
+        <div class="mymodal">
+            <div class="modal-inset">
+                <div class="modal-body">
+                    <div class="modal-wrapper">
+                        <div class="modal-logo text-center"><img
+                                src="https://bootstrap.arcadier.com/spacetime/images/logo.png">
+                        </div>
+                        <div class="modal-head">Register / Sign in</div>
+                        <div class="modal-main">
+                            <ul>
+                                <li><a href="#"><img
+                                            src="https://bootstrap.arcadier.com/spacetime/images/fb_login.svg"></a>
+                                </li>
+                                <li><a href="#"><img
+                                            src="https://bootstrap.arcadier.com/spacetime/images/goo_login.svg"></a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                    
+                </div>
+            </div>
+            <button class="modal-close close"></button>
+        </div>
+    </div>
+
     <div class="modal fade modal-align-center" id="cancelModal" role="dialog">
-      <div class="modal-dialog">
-         <!-- Modal content-->
-         <div class="modal-content">
-            <div class="modal-body">
-                <div class="modal-job-popup">
-                     <div class="modal-title">
-                        <h4>Would you like to look at it later?</h4>
-                     </div>
-                     
-                     <div class="text-center">
-                        <p>You may revisit the quote sent in by the applicant<br>at a later time if you wish to do so.</p>
-                     </div>
-                     <div class="btn-hbox">
-                        <a class="btn btn-block btn-jobform-fill" href="/">Yes</a>
-                        <button type="button" class="btn btn-block btn-jobform-outline" data-dismiss="modal">No</button>
-                     </div>
-                </div>
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="modal-job-popup">
+                        <div class="modal-title">
+                            <h4>Would you like to look at it later?</h4>
+                        </div>
 
+                        <div class="text-center">
+                            <p>You may revisit the quote sent in by the applicant<br>at a later time if you wish to do
+                                so.</p>
+                        </div>
+                        <div class="btn-hbox">
+                            <a class="btn btn-block btn-jobform-fill" href="/">Yes</a>
+                            <button type="button" class="btn btn-block btn-jobform-outline"
+                                data-dismiss="modal">No</button>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-         </div>
-      </div>
-   </div>
+        </div>
+    </div>
     <div class="modal fade modal-align-center" id="acceptModal" role="dialog">
-      <div class="modal-dialog">
-         <!-- Modal content-->
-         <div class="modal-content">
-            <div class="modal-body">
-                <div class="modal-job-popup">
-                     <div class="modal-title">
-                        <h4>Would you like to proceed?</h4>
-                     </div>
-                     
-                     <div class="text-center">
-                        <p>After submission of choice, no changes can be <br>made after choosing to proceed.</p>
-                     </div>
-                     <div class="btn-hbox">
-                        <a class="btn btn-block btn-jobform-fill" href="/" id="accept-confirm" job-id="<?php echo $job_id ?>" user-id="<?php echo $user_id ?>" quote-id="<?php echo $quotedDetails['Records'][0]['Id'] ?>">Yes</a>
-                        <button type="button" class="btn btn-block btn-jobform-outline" data-dismiss="modal">No</button>
-                     </div>
-                </div>
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="modal-job-popup">
+                        <div class="modal-title">
+                            <h4>Would you like to proceed?</h4>
+                        </div>
 
+                        <div class="text-center">
+                            <p>After submission of choice, no changes can be <br>made after choosing to proceed.</p>
+                        </div>
+                        <div class="btn-hbox">
+                            <a class="btn btn-block btn-jobform-fill" href="/" id="accept-confirm"
+                                job-id="<?php echo $job_id ?>" user-id="<?php echo $user_id ?>"
+                                quote-id="<?php echo $quotedDetails['Records'][0]['Id'] ?>">Yes</a>
+                            <button type="button" class="btn btn-block btn-jobform-outline"
+                                data-dismiss="modal">No</button>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-         </div>
-      </div>
-   </div>
+        </div>
+    </div>
     <div class="modal fade modal-align-center" id="rejectModal" role="dialog">
-      <div class="modal-dialog">
-         <!-- Modal content-->
-         <div class="modal-content">
-            <div class="modal-body">
-                <div class="modal-job-popup">
-                     <div class="modal-title">
-                        <h4>Would you like to proceed?</h4>
-                     </div>
-                     
-                     <div class="text-center">
-                        <p>After submission of choice, no changes can be<br>made after choosing to proceed.</p>
-                     </div>
-                     <div class="btn-hbox">
-                        <a class="btn btn-block btn-jobform-fill" href="/" id="reject-confirm" job-id="<?php echo $job_id ?>" user-id="<?php echo $user_id ?>" quote-id="<?php echo $quotedDetails['Records'][0]['Id'] ?>">Yes</a>
-                        <button type="button" class="btn btn-block btn-jobform-outline" data-dismiss="modal">No</button>
-                     </div>
-                </div>
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="modal-job-popup">
+                        <div class="modal-title">
+                            <h4>Would you like to proceed?</h4>
+                        </div>
 
+                        <div class="text-center">
+                            <p>After submission of choice, no changes can be<br>made after choosing to proceed.</p>
+                        </div>
+                        <div class="btn-hbox">
+                            <a class="btn btn-block btn-jobform-fill" href="/" id="reject-confirm"
+                                job-id="<?php echo $job_id ?>" user-id="<?php echo $user_id ?>"
+                                quote-id="<?php echo $quotedDetails['Records'][0]['Id'] ?>">Yes</a>
+                            <button type="button" class="btn btn-block btn-jobform-outline"
+                                data-dismiss="modal">No</button>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-         </div>
-      </div>
-   </div>
-<!--modal register-->
-<div class="modal-overlay"></div>
-<script type="text/javascript">
-    $(function () {
-        var ddlData = [{text: "EN", value: 1, imageSrc: "images/gb.svg"}, {text: "CN", value: 2, imageSrc: "images/cn.svg"}, {text: "FR", value: 3, imageSrc: "images/fr.svg"}];
-        $('.language-list').ddslick({data: ddlData, width: 100, imagePosition: "left", onSelected: function (selectedData) {
-            }});
+        </div>
+    </div>
+
+    <div class="modal fade payment-modal" id="paymentModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-body">
+
+                    <div id="payment" class="payment-con clearfix">
+
+                        <h3>Payment</h3>
+                        <div class="payment-middle-con ">
+
+                            <div class="form-group">
+                                <label for="paymentMethod">Payment Method</label>
+                                <select class="form-control required" name="payment" id="paymentScheme">
+                                    <option selected value="stripe">Stripe</option>
+
+                                </select>
+                            </div>
+
+                            <div class="common-text">
+                                <p>You will be charged $<span id="charge-amount"></span> to Submit a Quote</p>
+                                <p>Upon clicking the Pay button, you will be re-directed to the Payment Gateway to
+                                    continue with your transaction</p>
+
+                            </div>
+
+                            <div id="card-element"> </div>
+                            <!-- Used to display Element errors. -->
+                            <div id="card-errors" role="alert"></div>
+                            <p id="card-errors"
+                                style="margin-bottom: 10px; line-height: inherit; color: #eb1c26; font-weight: bold;">
+                            </p>
+
+
+                        </div>
+
+                        <div class="payment-bottom-con clearfix">
+                            <div class="next-tab-area pull-right">
+                                <span class="seller-btn"> <a class="my-btn btn-clear" data-dismiss="modal"
+                                        href="javascript:void(0);">Cancel</a> </span>
+                                <span class="seller-btn"> <a class="my-btn btn-red" id="paynowPackage"
+                                        job-id="<?php echo $job_id ?>" user-id="<?php echo $user_id ?>"
+                                        quote-id="<?php echo $quotedDetails['Records'][0]['Id'] ?>"
+                                        href="javascript:void(0);">Pay
+                                        Now</a> </span>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <!--modal register-->
+    <div class="modal-overlay"></div>
+    <script type="text/javascript">
+    $(function() {
+        var ddlData = [{
+            text: "EN",
+            value: 1,
+            imageSrc: "images/gb.svg"
+        }, {
+            text: "CN",
+            value: 2,
+            imageSrc: "images/cn.svg"
+        }, {
+            text: "FR",
+            value: 3,
+            imageSrc: "images/fr.svg"
+        }];
+        $('.language-list').ddslick({
+            data: ddlData,
+            width: 100,
+            imagePosition: "left",
+            onSelected: function(selectedData) {}
+        });
     });
 
-    jQuery(document).ready(function () {
+    jQuery(document).ready(function() {
 
         jQuery('.datepicker').datetimepicker({
             viewMode: 'days',
             format: 'DD/MM/YYYY'
         });
 
-        jQuery("#mobi-search").click(function () {
+        jQuery("#mobi-search").click(function() {
             jQuery(".search-bar").slideToggle();
             if (jQuery("#mobile-menu").is(":visible")) {
                 jQuery("#mobile-menu").hide();
@@ -364,9 +510,15 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD
         });
 
         /*nice scroll */
-        jQuery("#mobile-menu > ul").niceScroll({cursorcolor: "#000", cursorwidth: "6px", cursorborderradius: "5px", cursorborder: "1px solid transparent", touchbehavior: true});
+        jQuery("#mobile-menu > ul").niceScroll({
+            cursorcolor: "#000",
+            cursorwidth: "6px",
+            cursorborderradius: "5px",
+            cursorborder: "1px solid transparent",
+            touchbehavior: true
+        });
 
-        jQuery("#menu-toggle").click(function () {
+        jQuery("#menu-toggle").click(function() {
             var target = jQuery(".category-items");
             var parent = jQuery(".category-menu");
             jQuery(parent).show();
@@ -378,76 +530,92 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD
 
         jQuerymodal = jQuery('.modal-frame');
         jQueryoverlay = jQuery('.modal-overlay');
-        jQuerymodal.bind('webkitAnimationEnd oanimationend msAnimationEnd animationend', function (e) {
+        jQuerymodal.bind('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e) {
             if (jQuerymodal.hasClass('state-leave')) {
                 jQuerymodal.removeClass('state-leave');
             }
         });
-        jQuery('.close').on('click', function () {
+        jQuery('.close').on('click', function() {
             jQueryoverlay.removeClass('state-show');
             jQuerymodal.removeClass('state-appear').addClass('state-leave');
             jQuery('body').removeClass('modal-open')
         });
-        jQuery('#register-modal').on('click', function () {
+        jQuery('#register-modal').on('click', function() {
             jQueryoverlay.addClass('state-show');
             jQuerymodal.removeClass('state-leave').addClass('state-appear');
-            jQuery('html, body').animate({scrollTop: 0}, 0);
+            jQuery('html, body').animate({
+                scrollTop: 0
+            }, 0);
             jQuery('body').addClass('modal-open');
 
         });
-        jQuery('body').on('click', '.btnsubmit', function () {
+        jQuery('body').on('click', '.btnsubmit', function() {
             var validate = 0
-            if (!jQuery("#read_and_agreed").prop("checked") ) {
-                  validate = 1;
-                  jQuery("#read_and_agreed").addClass('error-con');
-               }
-            if(!validate){
-                setTimeout(function(){ 
-                   window.location.href = "home-logged.html";
-                },500);
+            if (!jQuery("#read_and_agreed").prop("checked")) {
+                validate = 1;
+                jQuery("#read_and_agreed").addClass('error-con');
+            }
+            if (!validate) {
+                setTimeout(function() {
+                    window.location.href = "home-logged.html";
+                }, 500);
             }
         });
-        
-        jQuery('body').on('click', '.save-link', function () {
+
+        jQuery('body').on('click', '.save-link', function() {
             var $input = $(this).closest('.qq-option').find('input');
             if ($input.length > 0) {
-                $(this).closest('.qq-option').html('<span>AUD <b>' + number_format($input.val(), 2) + '</b></span><a href="javascript:void(0);" class="edit-link">Edit</a>');
+                $(this).closest('.qq-option').html('<span>AUD <b>' + number_format($input.val(), 2) +
+                    '</b></span><a href="javascript:void(0);" class="edit-link">Edit</a>');
                 $input.remove();
             }
         });
-        jQuery('body').on('click', '.cancel-link', function () {
+        jQuery('body').on('click', '.cancel-link', function() {
             var $input = $(this).closest('.qq-option').find('input');
             if ($input.length > 0) {
-                $(this).closest('.qq-option').html('<span>AUD <b>0.00</b></span><a href="javascript:void(0);" class="edit-link">Edit</a>');
+                $(this).closest('.qq-option').html(
+                    '<span>AUD <b>0.00</b></span><a href="javascript:void(0);" class="edit-link">Edit</a>'
+                );
                 $input.remove();
             }
         });
-        jQuery('body').on('click', '.edit-link', function () {
+        jQuery('body').on('click', '.edit-link', function() {
             var $input = $(this).closest('.qq-option').find('span b');
             if ($input.length > 0) {
-                $(this).closest('.qq-option').html('<input type="text" class="numbersOnlyD" placeholder="AUD 0.00" value="' + $input.text() + '"><a href="javascript:void(0);" class="save-link">Save</a>|<a href="javascript:void(0);" class="cancel-link">Cancel</a>');
+                $(this).closest('.qq-option').html(
+                    '<input type="text" class="numbersOnlyD" placeholder="AUD 0.00" value="' +
+                    $input.text() +
+                    '"><a href="javascript:void(0);" class="save-link">Save</a>|<a href="javascript:void(0);" class="cancel-link">Cancel</a>'
+                );
                 $input.remove();
             }
         });
 
-        jQuery('body').on('click', '.save-linkdate', function () {
+        jQuery('body').on('click', '.save-linkdate', function() {
             var $input = $(this).closest('.qq-option').find('input');
             if ($input.length > 0) {
-                $(this).closest('.qq-option').html('<span><b>' + $input.val() + '</b></span><a href="javascript:void(0);" class="edit-linkdate">Edit</a>');
+                $(this).closest('.qq-option').html('<span><b>' + $input.val() +
+                    '</b></span><a href="javascript:void(0);" class="edit-linkdate">Edit</a>');
                 $input.remove();
             }
         });
-        jQuery('body').on('click', '.cancel-linkdate', function () {
+        jQuery('body').on('click', '.cancel-linkdate', function() {
             var $input = $(this).closest('.qq-option').find('input');
             if ($input.length > 0) {
-                $(this).closest('.qq-option').html('<span><b>DD/MM/YYYY</b></span><a href="javascript:void(0);" class="edit-linkdate">Edit</a>');
+                $(this).closest('.qq-option').html(
+                    '<span><b>DD/MM/YYYY</b></span><a href="javascript:void(0);" class="edit-linkdate">Edit</a>'
+                );
                 $input.remove();
             }
         });
-        jQuery('body').on('click', '.edit-linkdate', function () {
+        jQuery('body').on('click', '.edit-linkdate', function() {
             var $input = $(this).closest('.qq-option').find('span b');
             if ($input.length > 0) {
-                $(this).closest('.qq-option').html('<input type="text" class="datepicker" placeholder="DD/MM/YYYY" value="' + $input.text() + '"><a href="javascript:void(0);" class="save-linkdate">Save</a>|<a href="javascript:void(0);" class="cancel-linkdate">Cancel</a>');
+                $(this).closest('.qq-option').html(
+                    '<input type="text" class="datepicker" placeholder="DD/MM/YYYY" value="' +
+                    $input.text() +
+                    '"><a href="javascript:void(0);" class="save-linkdate">Save</a>|<a href="javascript:void(0);" class="cancel-linkdate">Cancel</a>'
+                );
                 jQuery('.datepicker').datetimepicker({
                     viewMode: 'days',
                     format: 'DD/MM/YYYY'
@@ -457,8 +625,9 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD
         });
 
     });
+
     function number_format(number, decimals, dec_point, thousands_sep) {
-        number = number * 1;//makes sure `number` is numeric value
+        number = number * 1; //makes sure `number` is numeric value
         var str = number.toFixed(decimals ? decimals : 0).toString().split('.');
         var parts = [];
         for (var i = str[0].length; i > 0; i -= 3) {
@@ -467,7 +636,11 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD
         str[0] = parts.join(thousands_sep ? thousands_sep : ',');
         return str.join(dec_point ? dec_point : '.');
     }
-</script>
+
+    function lockView(x) {
+        jQuery('#paymentModal').modal('show');
+    }
+    </script>
 </body>
 
 </html>

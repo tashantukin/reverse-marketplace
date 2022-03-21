@@ -13,6 +13,9 @@
    const baseURL = window.location.hostname;
    var chargeEnabled = "False";
    var viewBidBuyerEnabled = "False";
+   var buyerViewBidCharge;
+   var buyerAcceptBidCharge;
+   var buyerAcceptBidChargeEnabled;
    
     //const token = getCookie('webapitoken');
 
@@ -53,7 +56,42 @@
       displayError.textContent = '';
     }
    }
-   
+    function lockView(x) {
+        jQuery('#paymentModal').modal('show');
+    }
+
+  function charge(token, amount, quoteId, accessUrl)
+   {
+      amount = Math.round(amount * 100)
+      var apiUrl = packagePath + '/stripe_charge.php';
+      var data = { token, amount, quoteId }
+      $.ajax({
+         url: apiUrl,
+         method: 'POST',
+         contentType: 'application/json',
+         data: JSON.stringify(data),
+         success: function (result)
+         {
+            result = JSON.parse(result);
+            if (result.id) {
+
+               console.log('charge');
+
+               window.location = accessUrl;
+               
+            }
+
+
+         },
+         error: function (jqXHR, status, err)
+         {
+            //	toastr.error('Error!');
+         }
+      });
+
+   }
+
+
    function getQuoteData()
    {
        var jobTasks = new Array();
@@ -412,9 +450,9 @@
         function init()
         {
            
-           async function getChargeDetails()
+           async function getChargeDetails(charge_name)
            {
-              var data = [{ 'Name': 'charge_name', 'Operator': "in", "Value": 'job_bid_buyer' }]
+              var data = [{ 'Name': 'charge_name', 'Operator': "in", "Value": charge_name }]
               
               $.ajax({
                  method: "POST",
@@ -429,8 +467,24 @@
                  {
                     const charge = response.Records[0];
                     viewBidBuyerEnabled = charge['status'];
+                    buyerViewBidCharge = charge['value'];
                     console.log({ viewBidBuyerEnabled });
 
+
+
+                    if (charge_name == 'job_accepted_buyer') {
+                       buyerAcceptBidCharge = charge['value'];
+                        buyerAcceptBidChargeEnabled = charge['status'];
+                       
+                       console.log({ buyerAcceptBidChargeEnabled });
+
+                     $('#charge-amount').text(parseFloat(buyerAcceptBidCharge).toFixed(2))
+                      
+                  }
+                  
+
+
+               
 
                  }
                })
@@ -523,16 +577,86 @@
                 const job = jobs.Records
                 //if existing user, verify the status
                  if (job) {
-                    var viewButtonTd = "";
-                    if (viewBidBuyerEnabled == 'True') {
-                        viewButtonTd =   `<td class="text-right"><a href="" class="btn btn-jobform-outline">View</a></td>`
-                    } else {
-                        viewButtonTd =  `<td class="text-right"><a href="user/plugins/${packageId}/${page}.php?jobId=${quote['job_id']}&userId=${quote['freelancer_id']}" class="btn btn-jobform-outline">View</a></td>`;
-                    }
+                  
 
                     job.forEach(function (quote, i)
                     {
+
+                    var viewButtonTd = "";
+                    if (viewBidBuyerEnabled == 'True' && quote['buyer_view_paid'] != 'TRUE') {
+                        viewButtonTd =   `<td class="text-right"><a href="javascript:void(0);" class="btn btn-jobform-outline" id="charge-modal" onclick="lockView(this)" data-id="${quote['Id']}" return-url="user/plugins/${packageId}/${page}.php?jobId=${quote['job_id']}&userId=${quote['freelancer_id']}"><i class="icon lock-icon"></i>View</a></td>`
+                         var paymentModal = `
+                           <div class="modal fade payment-modal" id="paymentModal" role="dialog">
+                           <input type ="hidden" id ="quoted-id"/ >
+                           <input type ="hidden" id="access-url" />
+
+                              <div class="modal-dialog">
+                                 <!-- Modal content-->
+                                 <div class="modal-content">
+                                    <div class="modal-body">
+                                       
+                                       <div id="payment" class="payment-con clearfix">
+                              
+                                          <h3>Payment</h3>
+                                          <div class="payment-middle-con ">
+                                 
+                                                <div class="form-group">
+                                                   <label for="paymentMethod">Payment Method</label>
+                                                   <select class="form-control required" name="payment" id="paymentScheme">
+                                                      <option selected value="stripe">Stripe</option>
+                                                   </select>
+                                                </div>
+                              
+                                                <div class="common-text">
+                                                   <p>You will be charged $<span id="charge-amount">${parseFloat(buyerViewBidCharge).toFixed(2)}</span> to Submit a Quote</p>
+                                                   <p>Upon clicking the Pay button, you will be re-directed to the Payment Gateway to continue with your transaction</p>
+                                                
+                                                </div>
+
+                                                <div id="card-element"> </div>
+                                                <!-- Used to display Element errors. -->
+                                                <div id="card-errors" role="alert"></div>
+                                                <p id="card-errors"
+                                                   style="margin-bottom: 10px; line-height: inherit; color: #eb1c26; font-weight: bold;">
+                                                </p>
+
+
+
+                                          <hr>
+
+
+
+                                             
+                                             
+                                          </div>
+                                          
+                                          <div class="payment-bottom-con clearfix">
+                                             <div class="next-tab-area pull-right">
+                                                <span class="seller-btn"> <a  class="my-btn btn-clear" data-dismiss="modal" href="javascript:void(0);">Cancel</a> </span>
+                                                <span class="seller-btn"> <a  class="my-btn btn-red" href="javascript:void(0);" id="paynowPackage">Pay Now</a> </span>
+                                             </div>
+                                          </div>
+                                    </div>
+                                       
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="modal-overlay"></div>
+                        `
+                        var lockFunction = `<script> function lockView(x){
+                           $('#paymentModal').modal('show');
+                           $('#quoted-id').val($(x).attr('data-id')); 
+                           $('#access-url').val($(x).attr('return-url'))
+
+                           console.log($(x).attr('data-id'))
+                        }  </script>`
+                        $('.footer').append(paymentModal);
+                        $('body').append(lockFunction);
                    
+                    } else {
+                        viewButtonTd =  `<td class="text-right"><a href="user/plugins/${packageId}/${page}.php?jobId=${quote['job_id']}&userId=${quote['freelancer_id']}" class="btn btn-jobform-outline">View</a></td>`;
+                    }
                        let allJobs = `<tr>
                        <td><div class="job-quotedtitle"><span class="qtitle">Quoted by</span><span class="qdesc">${quote['quote_by']}</span></div></td>
                        <td><div class="job-quotedtitle"><span class="qtitle">Date</span><span class="qdesc">${new Date( quote['CreatedDateTime']* 1000).format("dd/mm/yyyy")}</span></div></td>
@@ -895,7 +1019,7 @@
                                     </div>
                                   <div class="table-quoted-container">
                                     
-     
+   
                                   <div class="pagination-center"><nav class="text-center" id="pagination-container" aria-label="Page navigation"></nav></div>
                                   </div>
                                </div>
@@ -1118,33 +1242,36 @@
    
   //charges of quotation
    
-$(document).ready(function () {
-      getMarketplaceCustomFields(function (result) {
-        $.each(result, function (index, cf) {
+   $(document).ready(function ()
+   {
+      getMarketplaceCustomFields(function (result)
+      {
+         $.each(result, function (index, cf)
+         {
          
-        });
+         });
       });
         
        
       //quote charge
-       if (urls.indexOf('/charge_quote.php') >= 0) {
+      if (urls.indexOf('/charge_quote.php') >= 0) {
       
          const chargeData = new Vue({
-         el: "#payment",
+            el: "#payment",
 
-         data()
-         {
-            return {
-               
-               jobListCharge: 0,
-               jobChargeEnabled: ''
-               
-
-            }
-         },
-         methods: {
-               async getChargeRate()
+            data()
             {
+               return {
+               
+                  jobListCharge: 0,
+                  jobChargeEnabled: ''
+               
+
+               }
+            },
+            methods: {
+               async getChargeRate()
+               {
                   try {
                      vm = this;
                      const response = await axios({
@@ -1170,158 +1297,162 @@ $(document).ready(function () {
                   }
 
                   
-            },
+               },
 
             
-            async charge(token)
-            { 
-               vm = this;
+               async charge(token, amount)
+               {
+                  vm = this;
+                  amount = Math.round(amount * 100)
                   var apiUrl = packagePath + '/stripe_charge.php';
-                  var data = { token }
-                     $.ajax({
-                        url: apiUrl,
-                        method: 'POST',
-                        contentType: 'application/json',
-                           data: JSON.stringify(data),
-                     success: function(result) {
+                  var data = { token, amount }
+                  $.ajax({
+                     url: apiUrl,
+                     method: 'POST',
+                     contentType: 'application/json',
+                     data: JSON.stringify(data),
+                     success: function (result)
+                     {
                         result = JSON.parse(result);
                         if (result.id) {
 
-                          // if (vm.jobChargeEnabled == 'True') {
-                              //send the quote
-                              var quote = quoteData.getInstance();
-                              quote.quoteJob();
-                                 // cache_save_job();  
-                            //  }
-                     //if there is a charge id returned, save the job details and redirect to the finish page
+                           // if (vm.jobChargeEnabled == 'True') {
+                           //send the quote
+                           var quote = quoteData.getInstance();
+                           quote.quoteJob();
+                           // cache_save_job();  
+                           //  }
+                           //if there is a charge id returned, save the job details and redirect to the finish page
                               
                      
-                              //complete the lodge
+                           //complete the lodge
 
                            
                               
 
+                        }
+
+            
+                     },
+                     error: function (jqXHR, status, err)
+                     {
+                        //	toastr.error('Error!');
                      }
-
-            
-               },
-               error: function(jqXHR, status, err) {
-               //	toastr.error('Error!');
+                  });
+         
                }
-            });
-         
-         }
             
 
-         },
-         beforeMount() {
+            },
+            beforeMount()
+            {
             
-            this.getChargeRate()
+               this.getChargeRate()
             
          
-         }
+            }
 
          })
 
-       //waitForElement('#payment', function ()
-   // {
-    var script = document.createElement('script');
-    script.onload = function ()
-    {
-        // getMarketplaceCustomFields(function(result) {
-        //   $.each(result, function(index, cf) {
+         //waitForElement('#payment', function ()
+         // {
+         var script = document.createElement('script');
+         script.onload = function ()
+         {
+            // getMarketplaceCustomFields(function(result) {
+            //   $.each(result, function(index, cf) {
             
-        //       if (cf.Name == 'stripe_pub_key' && cf.Code.startsWith(customFieldPrefix)) {
-        //        stripePubKey = cf.Values[0];
-        //       }
-        //   })
+            //       if (cf.Name == 'stripe_pub_key' && cf.Code.startsWith(customFieldPrefix)) {
+            //        stripePubKey = cf.Values[0];
+            //       }
+            //   })
 
-        //if (stripePubKey) {
-        //do stuff with the script
-        var stripe = Stripe('pk_test_51IDN6ALQSWMKUO5eXiY7nrd6P3dE6oLh42AQpfpUxz64OgHjaSiME8LLPmyWuaPOlUIAT0H0sLjfMkPWd4eBUbxC00gi2lcEOX');
-        var elements = stripe.elements();
-        var card = elements.create('card', { hidePostalCode: true, style: style });
-        var style = {
-            base: {
-                'lineHeight': '1.35',
-                'fontSize': '1.11rem',
-                'color': '#495057',
-                'fontFamily': 'apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif'
+            //if (stripePubKey) {
+            //do stuff with the script
+            var stripe = Stripe('pk_test_51IDN6ALQSWMKUO5eXiY7nrd6P3dE6oLh42AQpfpUxz64OgHjaSiME8LLPmyWuaPOlUIAT0H0sLjfMkPWd4eBUbxC00gi2lcEOX');
+            var elements = stripe.elements();
+            var card = elements.create('card', { hidePostalCode: true, style: style });
+            var style = {
+               base: {
+                  'lineHeight': '1.35',
+                  'fontSize': '1.11rem',
+                  'color': '#495057',
+                  'fontFamily': 'apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif'
+               }
+            };
+            if ($('#card-element').length) {
+               card.mount('#card-element');
             }
-        };
-        if ($('#card-element').length) {
-            card.mount('#card-element');
-        }
     
-        // Create a token or display an error the form is submitted.
-        var submitButton = document.getElementById('paynowPackage');
-        if (submitButton) {
-            submitButton.addEventListener('click',
-                function (event)
-                {
-                    event.preventDefault();
-                    $("#paynowPackage").attr("disabled", "disabled");
-                    stripe.createToken(card).then(function (result)
-                    {
+            // Create a token or display an error the form is submitted.
+            var submitButton = document.getElementById('paynowPackage');
+            if (submitButton) {
+               submitButton.addEventListener('click',
+                  function (event)
+                  {
+                     event.preventDefault();
+                     $("#paynowPackage").attr("disabled", "disabled");
+                     stripe.createToken(card).then(function (result)
+                     {
                         if (result.error) {
-                            // Inform the user if there was an error
-                            var errorElement = document.getElementById('card-errors');
-                            errorElement.textContent = result.error.message;
+                           // Inform the user if there was an error
+                           var errorElement = document.getElementById('card-errors');
+                           errorElement.textContent = result.error.message;
     
-                            // $("#payNowButton").removeAttr("disabled");
+                           // $("#payNowButton").removeAttr("disabled");
                         } else {
 
-                            console.log({ result })
-                            chargeData.charge(result.token);
-                            $("#paynowPackage").prop("disabled", true);
+                           console.log({ result })
+                           chargeData.charge(result.token, $('#charge-amount').val());
+                           $("#paynowPackage").prop("disabled", true);
                                  
                                   
-                            //subscribe(card, stripe)
+                           //subscribe(card, stripe)
                                   
     
-                            // Send the result.token.id to a php file and use the token to create the subscription
-                            // SubscriptionManager.PayNowSubmit(result.token.id, e);
+                           // Send the result.token.id to a php file and use the token to create the subscription
+                           // SubscriptionManager.PayNowSubmit(result.token.id, e);
                         }
-                    });
+                     });
     
-                });
-        }
+                  });
+            }
               
-        card.on('change', function (event)
-        {
-            displayError(event);
-        });
-        //  }
-        //});
-     }
-      script.src = "https://js.stripe.com/v3/";
+            card.on('change', function (event)
+            {
+               displayError(event);
+            });
+            //  }
+            //});
+         }
+         script.src = "https://js.stripe.com/v3/";
 
-            document.head.appendChild(script); //or something of the likes
+         document.head.appendChild(script); //or something of the likes
 
-                  // Create an instance of the card Element
-            $('#card-element').css("width", "30em");
-//})
-       }
+         // Create an instance of the card Element
+         $('#card-element').css("width", "30em");
+         //})
+      }
       
       //freelancer quote
    
-       if (urls.indexOf('/freelancer_quote.php') >= 0) {
+      if (urls.indexOf('/freelancer_quote.php') >= 0) {
           
-       const chargeData = new Vue({
-         el: "#freelancer-quote",
+         const chargeData = new Vue({
+            el: "#freelancer-quote",
 
-         data()
-         {
-            return {
-               
-               jobListCharge: 0,
-               jobChargeEnabled: ''
-               
-            }
-         },
-         methods: {
-               async getChargeRate()
+            data()
             {
+               return {
+               
+                  jobListCharge: 0,
+                  jobChargeEnabled: ''
+               
+               }
+            },
+            methods: {
+               async getChargeRate()
+               {
                   try {
                      vm = this;
                      const response = await axios({
@@ -1336,7 +1467,7 @@ $(document).ready(function () {
                      //vm.jobListCharge = vm.jobListCharge;
                      vm.jobChargeEnabled = jobCharge[0].status;
                      chargeEnabled = jobCharge[0].status;
-                     console.log({chargeEnabled})
+                     console.log({ chargeEnabled })
                     
                      
 
@@ -1345,69 +1476,190 @@ $(document).ready(function () {
                   }
 
                   
+               },
+
+         
+            
+
             },
-
-         
+            beforeMount()
+            {
             
-
-         },
-         beforeMount() {
+               this.getChargeRate()
             
-            this.getChargeRate()
-            
-         }
+            }
 
-       })
+         })
       
 
-      $('#submit-top').on('click', function (event)
-      {
-         event.stopPropagation();
-         event.stopImmediatePropagation();
-         getQuoteData();
+         $('#submit-top').on('click', function (event)
+         {
+            event.stopPropagation();
+            event.stopImmediatePropagation();
+            getQuoteData();
 
-         if (chargeEnabled == 'True') {
-             window.location = packagePath + "/charge_quote.php"
-         } else {
-         var quote = quoteData.getInstance();
-         quote.quoteJob();
-         }
+            if (chargeEnabled == 'True') {
+               window.location = packagePath + "/charge_quote.php"
+            } else {
+               var quote = quoteData.getInstance();
+               quote.quoteJob();
+            }
          
+      
+         })
+
+         $('#submit-bottom').on('click', function (event)
+         {
+            event.stopPropagation();
+            event.stopImmediatePropagation();
+            getQuoteData();
+
+            if (chargeEnabled == 'True') {
+               window.location = packagePath + "/charge_quote.php"
+            } else {
+               var quote = quoteData.getInstance();
+               quote.quoteJob();
+            }
+         
+         })
+      }
+
+       //quotation page
+      if (urls.indexOf('/applicant-quote.php')) {
+
+         var jobs = jobData.getInstance();
+
+         jobs.getChargeDetails('job_accepted_buyer');
+         
+         // waitForElement('#paymentModal', function ()
+         // {
+         var script = document.createElement('script');
+         script.onload = function ()
+         {
+            // getMarketplaceCustomFields(function(result) {
+            //   $.each(result, function(index, cf) {
+               
+            //       if (cf.Name == 'stripe_pub_key' && cf.Code.startsWith(customFieldPrefix)) {
+            //        stripePubKey = cf.Values[0];
+            //       }
+            //   })
+
+            //if (stripePubKey) {
+            //do stuff with the script
+            var stripe = Stripe('pk_test_51IDN6ALQSWMKUO5eXiY7nrd6P3dE6oLh42AQpfpUxz64OgHjaSiME8LLPmyWuaPOlUIAT0H0sLjfMkPWd4eBUbxC00gi2lcEOX');
+            var elements = stripe.elements();
+            var card = elements.create('card', { hidePostalCode: true, style: style });
+            var style = {
+               base: {
+                  'lineHeight': '1.35',
+                  'fontSize': '1.11rem',
+                  'color': '#495057',
+                  'fontFamily': 'apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif'
+               }
+            };
+            if ($('#card-element').length) {
+               card.mount('#card-element');
+            }
+      
+            // Create a token or display an error the form is submitted.
+            var submitButton = document.getElementById('paynowPackage');
+            if (submitButton) {
+               submitButton.addEventListener('click',
+                  function (event)
+                  {
+                     event.preventDefault();
+                     $("#paynowPackage").attr("disabled", "disabled");
+                     stripe.createToken(card).then(function (result)
+                     {
+                        if (result.error) {
+                           // Inform the user if there was an error
+                           var errorElement = document.getElementById('card-errors');
+                           errorElement.textContent = result.error.message;
+      
+                           // $("#payNowButton").removeAttr("disabled");
+                        } else {
+
+                           console.log({ result })
+                           charge(result.token, $('#charge-amount').text(), $('#quoted-id').val(), $('#access-url').val());
+                           $("#paynowPackage").prop("disabled", true);
+                                    
+                                    
+                           //subscribe(card, stripe)
+                                    
+      
+                           // Send the result.token.id to a php file and use the token to create the subscription
+                           // SubscriptionManager.PayNowSubmit(result.token.id, e);
+                        }
+                     });
+      
+                  });
+            }
+               
+            card.on('change', function (event)
+            {
+               displayError(event);
+            });
+            //  }
+            //});
+         }
+         script.src = "https://js.stripe.com/v3/";
+
+         document.head.appendChild(script); //or something of the likes
+
+         // Create an instance of the card Element
+         $('#card-element').css("width", "30em");
+   
+         // });
+
+         }
+
+      $('#accept').on('click', function (event)
+      {
+         if (buyerAcceptBidChargeEnabled == "True") {
+            lockView();
+
+         } else {
+             jQuery('#acceptModal').modal('show');
+         }      
+      })
         
-      
-      })
 
-      $('#submit-bottom').on('click', function (event)
+
+      //accept button
+
+      $('#accept-confirm').on('click', function (event)
       {
-         event.stopPropagation();
-         event.stopImmediatePropagation();
-         getQuoteData();
-
-         if (chargeEnabled == 'True') {
-             window.location = packagePath + "/charge_quote.php"
-         } else {
-         var quote = quoteData.getInstance();
-         quote.quoteJob();
-         }
          
+         var quote = quoteData.getInstance();
+         quote.quoteAction('Accepted', $(this).attr('job-id'), $(this).attr('user-id'), $(this).attr('quote-id'));
+      })
+       
+      //reject confirm
+      $('#reject-confirm').on('click', function (event)
+      {
+         
+         var quote = quoteData.getInstance();
+         quote.quoteAction('Rejected', $(this).attr('job-id'), $(this).attr('user-id'), $(this).attr('quote-id'));
       })
 
-          
-       }
 
-        //home page
+      //home page
 
-       if (document.body.className.includes('page-home')) {
+      if (document.body.className.includes('page-home')) {
+
+        
+
          $('#register-modal-seller').hide();
-          $('.cart-menu').hide();
+         $('.cart-menu').hide();
+         
           
-          //for newly registered buyers after lodging a job
+         //for newly registered buyers after lodging a job
 
-          //check if there is an existing lodge job on local storage, if there is, update the job cache with the buyer id (user id)
+         //check if there is an existing lodge job on local storage, if there is, update the job cache with the buyer id (user id)
 
-        var user = userData.getInstance();
-          var jobs = jobData.getInstance();
-         jobs.getChargeDetails();
+         var user = userData.getInstance();
+         var jobs = jobData.getInstance();
+         jobs.getChargeDetails('job_bid_buyer');
          jobs.getAllJobs()
          jobs.getInterestedJobs()
          jobs.getQuotedJobs()
@@ -1424,57 +1676,120 @@ $(document).ready(function () {
          }
        
 
-            var buttons = `
+         var buttons = `
             <div class="btnjob"><a href="/user/plugins/${packageId}/lodge_job.php" class="btn btn-lodge">Lodge a Job</a>
             <a href="/subscribe" class="btn btn-freelancer">I am a Freelancer</a>
              </div>`
 
-            $('.home-banner').addClass('reverse-slider');
+         $('.home-banner').addClass('reverse-slider');
 
-            $('.home-banner .banner-quote  p').after(buttons);
+         $('.home-banner .banner-quote  p').after(buttons);
             
-            $('.section-category').parent('div').hide();
+         $('.section-category').parent('div').hide();
 
-            $('.home-serach').hide();
+         $('.home-serach').hide();
 
-            $('.section-shop').hide();
+         $('.section-shop').hide();
         
 
 
-        //changing status on ALL tabs available to interested
+         //changing status on ALL tabs available to interested
 
-        $(document).on('change', '#status', function ()
-        
-        {
-          var jobs = jobData.getInstance();
-          var $this = $(this);
-          jobs.saveStatus($this);
-        });
+         $(document).on('change', '#status', function ()
+ {
+            var jobs = jobData.getInstance();
+            var $this = $(this);
+            jobs.saveStatus($this);
+         });
 
-       }
+      waitForElement('#paymentModal', function ()
+      {
+      var script = document.createElement('script');
+      script.onload = function ()
+      {
+         // getMarketplaceCustomFields(function(result) {
+         //   $.each(result, function(index, cf) {
+            
+         //       if (cf.Name == 'stripe_pub_key' && cf.Code.startsWith(customFieldPrefix)) {
+         //        stripePubKey = cf.Values[0];
+         //       }
+         //   })
+
+         //if (stripePubKey) {
+         //do stuff with the script
+         var stripe = Stripe('pk_test_51IDN6ALQSWMKUO5eXiY7nrd6P3dE6oLh42AQpfpUxz64OgHjaSiME8LLPmyWuaPOlUIAT0H0sLjfMkPWd4eBUbxC00gi2lcEOX');
+         var elements = stripe.elements();
+         var card = elements.create('card', { hidePostalCode: true, style: style });
+         var style = {
+            base: {
+               'lineHeight': '1.35',
+               'fontSize': '1.11rem',
+               'color': '#495057',
+               'fontFamily': 'apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif'
+            }
+         };
+         if ($('#card-element').length) {
+            card.mount('#card-element');
+         }
+    
+         // Create a token or display an error the form is submitted.
+         var submitButton = document.getElementById('paynowPackage');
+         if (submitButton) {
+            submitButton.addEventListener('click',
+               function (event)
+               {
+                  event.preventDefault();
+                  $("#paynowPackage").attr("disabled", "disabled");
+                  stripe.createToken(card).then(function (result)
+                  {
+                     if (result.error) {
+                        // Inform the user if there was an error
+                        var errorElement = document.getElementById('card-errors');
+                        errorElement.textContent = result.error.message;
+    
+                        // $("#payNowButton").removeAttr("disabled");
+                     } else {
+
+                        console.log({ result })
+                        charge(result.token, $('#charge-amount').text(), $('#quoted-id').val(), $('#access-url').val());
+                        $("#paynowPackage").prop("disabled", true);
+                                 
+                                  
+                        //subscribe(card, stripe)
+                                  
+    
+                        // Send the result.token.id to a php file and use the token to create the subscription
+                        // SubscriptionManager.PayNowSubmit(result.token.id, e);
+                     }
+                  });
+    
+               });
+         }
+              
+         card.on('change', function (event)
+         {
+            displayError(event);
+         });
+         //  }
+         //});
+      }
+      script.src = "https://js.stripe.com/v3/";
+
+      document.head.appendChild(script); //or something of the likes
+
+      // Create an instance of the card Element
+      $('#card-element').css("width", "30em");
+ 
+      });
+
+      }
        
-       //quotation page
+     
+   
 
-
-       //accept button
-
-       $('#accept-confirm').on('click', function (event)
-       {
-         
-          var quote = quoteData.getInstance();
-          quote.quoteAction('Accepted', $(this).attr('job-id'),$(this).attr('user-id'),$(this).attr('quote-id'));
-       })
-       
-
-       //reject confirm
-       $('#reject-confirm').on('click', function (event)
-       {
-         
-          var quote = quoteData.getInstance();
-          quote.quoteAction('Rejected', $(this).attr('job-id'),$(this).attr('user-id'),$(this).attr('quote-id'));
-       })
-      
-      
-    });
+      //stripe
+   
+     
+   });
   })();
   

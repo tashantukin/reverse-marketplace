@@ -87,6 +87,8 @@
                                         data-toggle="tab">Approvals</a></li>
                                 <li role="presentation"><a href="#payments" aria-controls="payments" role="tab"
                                         data-toggle="tab">Payments</a></li>
+                                <li role="presentation"><a href="#tab_email" aria-controls="tab_email" role="tab"
+                                        data-toggle="tab">Email</a></li>
                             </ul>
                         </div>
                         <div class="topnav-right">
@@ -618,8 +620,56 @@
 
                     </div>
                 </div>
+
+
             </div>
+
             <!-- tab description -->
+            <div role="tabpanel" class="tab-pane" id="tab_email">
+
+                <div class="panel-box panel-style-ab">
+                    <div class="panel-box-title">
+                        <h3>User Account</h3>
+                        <div class="pull-right"><a class="panel-toggle" href="javascript:void(0);"><i
+                                    class="icon icon-toggle"></i></a></div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="panel-box-content">
+                        <ul>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel-box panel-style-ab">
+                    <div class="panel-box-title">
+                        <h3>Bookings</h3>
+                        <div class="pull-right"><a class="panel-toggle" href="javascript:void(0);"><i
+                                    class="icon icon-toggle"></i></a></div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="panel-box-content">
+                        <ul>
+
+                            <!-- These 3 only available for spacetime -->
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel-box panel-style-ab">
+                    <div class="panel-box-title">
+                        <h3>Freelancer / Buyer</h3>
+                        <div class="pull-right"><a class="panel-toggle" href="javascript:void(0);"><i
+                                    class="icon icon-toggle"></i></a></div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="panel-box-content">
+                        <ul>
+
+                        </ul>
+                    </div>
+                </div>
+
+
+            </div>
         </div>
 
     </div>

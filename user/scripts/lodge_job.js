@@ -112,7 +112,7 @@ function cache_save_job()
 
         'buyer_name': $('#name').val(),
         'buyer_email': $('#email').val(),
-        'buyer_contact' : $('contact_number').val(),
+        'buyer_contact' : $('#contact_number').val(),
         
         //'will_provide_info' 
     

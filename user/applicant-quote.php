@@ -36,6 +36,11 @@ else if  ($jobDetails['Records'][0]['job_type_contract'] == 'True' && $jobDetail
 else {
     $job_type = '';
 }
+
+ $fixed_amount = $jobDetails['Records'][0]['is_payment_fixed'] == 'True' ? number_format((float)$jobDetails['Records'][0]['payment_amount'],2) : "";
+ $hourly_amount = $jobDetails['Records'][0]['is_payment_hourly'] == 'True' ? number_format((float)$jobDetails['Records'][0]['payment_amount'],2) : "";
+
+
 ?>
 
 <!DOCTYPE html
@@ -75,13 +80,27 @@ else {
     <link href="https://bootstrap.arcadier.com/spacetime/css/pagination.css" rel="stylesheet" type="text/css">
 
     <!-- custom style-->
-    <link href="https://bootstrap.arcadier.com/spacetime/css/style.css" rel="stylesheet" type="text/css">
+
+
     <!-- responsive style-->
     <link href="https://bootstrap.arcadier.com/spacetime/css/responsive.css" rel="stylesheet" type="text/css">
     <link href="css/custom.css" rel="stylesheet" type="text/css">
     <!-- modal style-->
     <link href="https://bootstrap.arcadier.com/spacetime/css/modal.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="css/style.css" />
+    <link href="https://bootstrap.arcadier.com/package/reverse/css/custom.css" rel="stylesheet" type="text/css">
+    <link href="https://bootstrap.arcadier.com/spacetime/css/style.css" rel="stylesheet" type="text/css">
+
+    <style>
+    .my-btn {
+        padding: 0px;
+
+    }
+
+    .btn-red {
+        padding: 0px;
+    }
+    </style>
 </head>
 
 <body class="seller-items">
@@ -207,11 +226,11 @@ else {
                                         <?php echo $job_type ?>
                                         <div class="qq-title"><span class="dash"></span><span
                                                 class="title">Hourly</span><span>AUD
-                                                <?php echo $jobDetails['Records'][0]['payment_hourly_value'] ?></span>
+                                                <?php echo $hourly_amount ?></span>
                                         </div>
                                         <div class="qq-title"><span class="dash"></span><span class="title">Fixed
                                                 Price</span><span>AUD
-                                                <?php echo $jobDetails['Records'][0]['payment_fixed_value'] ?></span>
+                                                <?php echo $fixed_amount ?></span>
                                         </div>
 
                                         <div class="form-group">
@@ -419,7 +438,7 @@ else {
                             </div>
 
                             <div class="common-text">
-                                <p>You will be charged $<span id="charge-amount"></span> to Submit a Quote</p>
+                                <p>You will be charged $<span id="charge-amount"></span> to Accept a Quote</p>
                                 <p>Upon clicking the Pay button, you will be re-directed to the Payment Gateway to
                                     continue with your transaction</p>
 
@@ -557,7 +576,7 @@ else {
             }
             if (!validate) {
                 setTimeout(function() {
-                    window.location.href = "home-logged.html";
+                    //window.location.href = "home-logged.html";
                 }, 500);
             }
         });

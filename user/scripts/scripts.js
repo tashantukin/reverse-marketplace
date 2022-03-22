@@ -16,9 +16,60 @@
    var buyerViewBidCharge;
    var buyerAcceptBidCharge;
    var buyerAcceptBidChargeEnabled;
+   var sellerViewAcceptedCharge;
+   var sellerViewAcceptedEnabled;
+   var lat;
+   var long;
+   var accuracy;
    
     //const token = getCookie('webapitoken');
+   function distanceBetweenTwoPlace(firstLat, firstLon, secondLat, secondLon, unit) {
+         var firstRadlat = Math.PI * firstLat/180
+         var secondRadlat = Math.PI * secondLat/180
+         var theta = firstLon-secondLon;
+         var radtheta = Math.PI * theta/180
+         var distance = Math.sin(firstRadlat) * Math.sin(secondRadlat) + Math.cos(firstRadlat) * Math.cos(secondRadlat) * Math.cos(radtheta);
+         if (distance > 1) {
+               distance = 1;
+         }
+         distance = Math.acos(distance)
+         distance = distance * 180/Math.PI
+         distance = distance * 60 * 1.1515
+         if (unit=="K") { distance = distance * 1.609344 }
+         if (unit=="N") { distance = distance * 0.8684 }
+         return distance
+   }
 
+   function getPosition(position)
+   {
+      // console.log(position)
+      lat = position.coords.latitude
+      long = position.coords.longitude
+      accuracy = position.coords.accuracy
+
+      // if (marker) {
+      //    map.removeLayer(marker)
+      // }
+
+      // if (circle) {
+      //    map.removeLayer(circle)
+      // }
+
+      // marker = L.marker([lat, long])
+      // circle = L.circle([lat, long], {
+      //    radius: accuracy
+      // })
+
+      // var featureGroup = L.featureGroup([marker, circle]).addTo(map)
+
+      // map.fitBounds(featureGroup.getBounds())
+
+      console.log("Your coordinate is: Lat: " + lat + " Long: " + long + " Accuracy: " + accuracy)
+      var jobs = jobData.getInstance();
+      jobs.getAllJobs();
+    //  sellerFields.getNearestLocations(lat, long, 100)
+
+   }
     
     function waitForElement(elementPath, callBack) {
       window.setTimeout(function () {
@@ -58,6 +109,9 @@
    }
     function lockView(x) {
         jQuery('#paymentModal').modal('show');
+   }
+     function lockViewFreelancer(x) {
+        jQuery('#paymentModalFreelancer').modal('show');
     }
 
   function charge(token, amount, quoteId, accessUrl)
@@ -79,6 +133,74 @@
 
                window.location = accessUrl;
                
+            }
+
+
+         },
+         error: function (jqXHR, status, err)
+         {
+            //	toastr.error('Error!');
+         }
+      });
+
+   }
+
+
+
+    function chargeFreelancerView(token, amount, freelancerQuoteId, accessUrl)
+   {
+      amount = Math.round(amount * 100)
+      var apiUrl = packagePath + '/stripe_charge.php';
+      var data = { token, amount, freelancerQuoteId }
+      $.ajax({
+         url: apiUrl,
+         method: 'POST',
+         contentType: 'application/json',
+         data: JSON.stringify(data),
+         success: function (result)
+         {
+            result = JSON.parse(result);
+            if (result.id) {
+
+               console.log('charge');
+
+              window.location = accessUrl;
+               
+            }
+
+
+         },
+         error: function (jqXHR, status, err)
+         {
+            //	toastr.error('Error!');
+         }
+      });
+
+   }
+
+  
+
+   function chargeQuoteAccept(token, amount, quoteId, accessUrl)
+   {
+      amount = Math.round(amount * 100)
+      var apiUrl = packagePath + '/stripe_charge.php';
+      var data = { token, amount, quoteId }
+      $.ajax({
+         url: apiUrl,
+         method: 'POST',
+         contentType: 'application/json',
+         data: JSON.stringify(data),
+         success: function (result)
+         {
+            result = JSON.parse(result);
+            if (result.id) {
+
+               console.log('charge');
+               // window.location = $('#access-url').val();
+
+                var quote = quoteData.getInstance();
+                quote.quoteAction('Accepted', $('#paynowPackage').attr('job-id'), $('#paynowPackage').attr('user-id'), $('#paynowPackage').attr('quote-id'));
+                  
             }
 
 
@@ -168,8 +290,16 @@
                if (userDetails) {
                   $('.navigation li').first().remove();
                   $('.btnjob').hide();
-               // if (userDetails['status'] == 'Approved' && userDetails['approved_confirmed'] == 1) { 
+               // if (userDetails['status'] == 'Approved' && userDetails['approved_confirmed'] == 1) {
                   //show the table
+                  
+                  if (!navigator.geolocation) {
+                                console.log("Your browser doesn't support geolocation feature!")
+                            } else {
+                                //setInterval(() => {
+                                navigator.geolocation.getCurrentPosition(getPosition)
+                                //}, 5000);
+                  }
 
                   var jobLodgesDiv =   `<div class="content-pages">
                   <div class="freelancer-content-main">
@@ -230,6 +360,7 @@
                                        <td>Location</td>
                                        <td>Accepted</td>
                                        <td>Quoted Date</td>
+                                       <td></td>
                                     </tr>
                                  </thead>
                                  <tbody>
@@ -290,6 +421,7 @@
                                        <td>Contact No.</td>
                                        <td>Location</td>
                                        <td>Quoted Date</td>
+
                                     </tr>
                                  </thead>
                                  <tbody>
@@ -478,9 +610,22 @@
                        
                        console.log({ buyerAcceptBidChargeEnabled });
 
-                     $('#charge-amount').text(parseFloat(buyerAcceptBidCharge).toFixed(2))
+                     $('#paymentModal #charge-amount').text(parseFloat(buyerAcceptBidCharge).toFixed(2))
                       
-                  }
+                    }
+
+                     if (charge_name == 'job_accepted_seller') {
+                       sellerViewAcceptedCharge = charge['value'];
+                       sellerViewAcceptedEnabled = charge['status'];
+                       
+                       console.log({  sellerViewAcceptedEnabled });
+
+                     $('#paymentModalFreelancer #charge-amount').text(parseFloat(sellerViewAcceptedCharge).toFixed(2))
+                      
+                    }
+
+                    
+
                   
 
 
@@ -492,7 +637,7 @@
            }
 
 
-          async function getJobDetail(jobId,el,page,date){
+          async function getJobDetail(jobId,el,page,date,isPaid,quoteId){
               var data = [{ 'Name': 'Id', 'Operator': "in", "Value": jobId }]
               
               $.ajax({
@@ -512,32 +657,185 @@
                   const job = jobs.Records[0]
                   //if existing user, verify the status
                    if (job) {
-                     let allJobs = ''
-                      if (page == '#tab-interested' || page == '#tab-quoted') {
-                         allJobs = `<tr data-id="${job['Id'] }" user-id="${userId}"> </td>
-                        <td> <a href="user/plugins/${packageId}/${page}.php?jobId=${job['Id'] }&userId=${userId}">${job['job_validity']}</a></td>
-                        <td>${job['buyer_email']}</td>
-                      
-                        <td>${job['buyer_contact']}</td>
-                        
-                        <td>${job['is_accepted'] == 1 ? 'Yes' : 'No'} </td>
-
-                        <td class="width-location">${job['buyer_contact']}</td>
-                        <td>${new Date( date* 1000).format("dd/mm/yyyy")}</td>
-                       </tr>`;
-                      } else {
-                        allJobs = `<tr data-id="${job['Id'] }" user-id="${userId}"> </td>
-                        <td> <a href="user/plugins/${packageId}/${page}.php?jobId=${job['Id'] }&userId=${userId}">${job['job_validity']}</a></td>
-                        <td>${job['buyer_email']}</td>
-                      
-                        <td>${job['buyer_contact']}</td>
-                        
-                        <td class="width-location">${job['in_person_work_address']}</td>
-                        <td>${new Date( date* 1000).format("dd/mm/yyyy")}</td>
-                       </tr>`;
-                     }
+                      let allJobs = ''
+                        var status;
                     
-                      
+                        if (job['status'] == 'Available') {
+                           status = ` <td><select class="form-control"id ="status">
+                           <option selected="" disabled="" value="Available">Available</option>
+                           <option value="Interested">Interested</option>
+                           </select></td>`
+                        } else if (job['status'] == 'Interested') {
+                           status = ` <td><select class="form-control">
+                           <option selected="" disabled="" value="Available">Available</option>
+                           <option selected="" value="Interested">Interested</option>
+                           </select></td>`
+                        } else if (job['status'] == 'Quoted') {
+                           status =`<td>Quoted</td>`
+
+                           }else if (job['status'] == 'Accepted') {
+                           status =`<td>Accepted</td>`
+
+                           }else if (job['status'] == 'Completed') {
+                           status =`<td>Completed</td>`
+
+                        } else {
+                           status =`<td>--</td>`
+                        }
+                      switch (el) {
+
+
+                         case '#tab-all':
+                            allJobs = `<tr data-id="${job['Id']}">
+
+                              ${status}
+                              <td>${job['job_validity']}</td>
+                              <td>${job['buyer_email']}</td>
+                              <td>${job['buyer_contact']}</td>
+                              <td class="width-location">${job['in_person_work_address']}</td>
+                              <td>${job['is_accepted'] == 1 ? 'Yes' : 'No'} </td>
+                              <td>-</td>
+                           </tr>`;
+
+
+                            break;
+
+
+                         case '#tab-interested' || '#tab-quoted':
+                            allJobs = `<tr data-id="${job['Id']}" user-id="${userId}"> </td>
+                           <td> <a href="${protocol}//${baseURL}/user/plugins/${packageId}/${page}.php?jobId=${job['Id']}&userId=${userId}">${job['job_validity']}</a></td>
+                           <td>${job['buyer_email']}</td>
+                        
+                           <td>${job['buyer_contact']}</td>
+                           <td class="width-location">${job['in_person_work_address']}</td>
+
+                           <td>${job['is_accepted'] == 1 ? 'Yes' : 'No'} </td>
+
+                         
+                           <td>${new Date(date * 1000).format("dd/mm/yyyy")}</td>
+                          </tr>`;
+                            break;
+                         case '#tab-quoted':
+                           allJobs = `<tr data-id="${job['Id']}" user-id="${userId}"> </td>
+                           <td> <a href="${protocol}//${baseURL}/user/plugins/${packageId}/${page}.php?jobId=${job['Id']}&userId=${userId}">${job['job_validity']}</a></td>
+                           <td>${job['buyer_email']}</td>
+                        
+                           <td>${job['buyer_contact']}</td>
+                           <td class="width-location">${job['in_person_work_address']}</td>
+
+                           <td>${job['is_accepted'] == 1 ? 'Yes' : 'No'} </td>
+
+                         
+                           <td>${new Date(date * 1000).format("dd/mm/yyyy")}</td>
+                          </tr>`;
+
+                            break;
+                         
+                         case '#tab-accepted':
+                            var viewButtonTd = "";
+                            console.log({ sellerViewAcceptedEnabled });
+                            if (sellerViewAcceptedEnabled == 'True' && isPaid != 'TRUE') {
+                               viewButtonTd = `<td class="text-right"><a href="javascript:void(0);" class="btn btn-jobform-outline" id="charge-modal" onclick="lockViewFreelancer(this)" data-id="${quoteId}" return-url="user/plugins/${packageId}/${page}.php?jobId=${job['Id']}&userId=${userId}"><i class="icon lock-icon"></i>View</a></td>`
+                               var paymentModal = `
+                                       <div class="modal fade payment-modal" id="paymentModalFreelancer" role="dialog">
+                                       <input type ="hidden" id ="quoted-id-fl"/ >
+                                       <input type ="hidden" id="access-url-fl" />
+
+                                          <div class="modal-dialog">
+                                             <!-- Modal content-->
+                                             <div class="modal-content">
+                                                <div class="modal-body">
+                                                   
+                                                   <div id="payment" class="payment-con clearfix">
+                                          
+                                                      <h3>Payment</h3>
+                                                      <div class="payment-middle-con ">
+                                             
+                                                            <div class="form-group">
+                                                               <label for="paymentMethod">Payment Method</label>
+                                                               <select class="form-control required" name="payment" id="paymentScheme">
+                                                                  <option selected value="stripe">Stripe</option>
+                                                               </select>
+                                                            </div>
+                                          
+                                                            <div class="common-text">
+                                                               <p>You will be charged $<span id="charge-amount">${parseFloat(buyerViewBidCharge).toFixed(2)}</span> to view an accepted quote.</p>
+                                                               <p>Upon clicking the Pay button, you will be re-directed to the Payment Gateway to continue with your transaction</p>
+                                                            
+                                                            </div>
+
+                                                            <div id="card-element"> </div>
+                                                            <!-- Used to display Element errors. -->
+                                                            <div id="card-errors" role="alert"></div>
+                                                            <p id="card-errors"
+                                                               style="margin-bottom: 10px; line-height: inherit; color: #eb1c26; font-weight: bold;">
+                                                            </p>
+
+
+
+                                                      <hr>
+
+
+
+                                                         
+                                                         
+                                                      </div>
+                                                      
+                                                      <div class="payment-bottom-con clearfix">
+                                                         <div class="next-tab-area pull-right">
+                                                            <span class="seller-btn"> <a  class="my-btn btn-clear" data-dismiss="modal" href="javascript:void(0);">Cancel</a> </span>
+                                                            <span class="seller-btn"> <a  class="my-btn btn-red" href="javascript:void(0);" id="paynowPackageFl">Pay Now</a> </span>
+                                                         </div>
+                                                      </div>
+                                                </div>
+                                                   
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="modal-overlay"></div>
+                                    `
+                               var lockFunction = `<script> function lockViewFreelancer(x){
+                                       $('#paymentModalFreelancer').modal('show');
+                                       $('#quoted-id-fl').val($(x).attr('data-id')); 
+                                       $('#access-url-fl').val($(x).attr('return-url'))
+
+                                       console.log($(x).attr('data-id'))
+                                    }  </script>`
+                               $('.footer').append(paymentModal);
+                               $('body').append(lockFunction);
+                              
+                            } else {
+                               viewButtonTd = `<td class="text-right"><a href="${protocol}//${baseURL}/user/plugins/${packageId}/${page}.php?jobId=${job['Id']}&userId=${userId}" class="btn btn-jobform-outline">View</a></td>`;
+                            }
+                            allJobs = `<tr data-id="${job['Id']}" user-id="${userId}"> </td>
+                              <td> <a href="${protocol}//${baseURL}/user/plugins/${packageId}/${page}.php?jobId=${job['Id']}&userId=${userId}">${job['job_validity']}</a></td>
+                              <td>${job['buyer_email']}</td>
+                           
+                              <td>${job['buyer_contact']}</td>
+                              
+                              <td class="width-location">${job['in_person_work_address']}</td>
+                              <td>${new Date(date * 1000).format("dd/mm/yyyy")}</td>
+                              
+                              ${viewButtonTd}
+
+                           </tr>`;
+                            break;
+                         default:
+                            console.log( page + 'in default');
+                        allJobs = `<tr data-id="${job['Id'] }" user-id="${userId}"> </td>
+                                    <td> <a href="${protocol}//${baseURL}/user/plugins/${packageId}/${page}.php?jobId=${job['Id'] }&userId=${userId}">${job['job_validity']}</a></td>
+                                    <td>${job['buyer_email']}</td>
+                                 
+                                    <td>${job['buyer_contact']}</td>
+                                    
+                                    <td class="width-location">${job['in_person_work_address']}</td>
+                                    <td>${new Date(date * 1000).format("dd/mm/yyyy")}</td>
+                                    
+                                 </tr>`;
+                  
+                      }
+            
                         waitForElement(`${el}`, function ()
                         {
                            $(`${el} table tbody`).append(allJobs);
@@ -584,7 +882,7 @@
 
                     var viewButtonTd = "";
                     if (viewBidBuyerEnabled == 'True' && quote['buyer_view_paid'] != 'TRUE') {
-                        viewButtonTd =   `<td class="text-right"><a href="javascript:void(0);" class="btn btn-jobform-outline" id="charge-modal" onclick="lockView(this)" data-id="${quote['Id']}" return-url="user/plugins/${packageId}/${page}.php?jobId=${quote['job_id']}&userId=${quote['freelancer_id']}"><i class="icon lock-icon"></i>View</a></td>`
+                        viewButtonTd =   `<td class="text-right"><a href="javascript:void(0);" class="btn btn-jobform-outline" id="charge-modal" onclick="lockView(this)" data-id="${quote['Id']}" return-url="${protocol}//${baseURL}/user/plugins/${packageId}/${page}.php?jobId=${quote['job_id']}&userId=${quote['freelancer_id']}"><i class="icon lock-icon"></i>View</a></td>`
                          var paymentModal = `
                            <div class="modal fade payment-modal" id="paymentModal" role="dialog">
                            <input type ="hidden" id ="quoted-id"/ >
@@ -608,7 +906,7 @@
                                                 </div>
                               
                                                 <div class="common-text">
-                                                   <p>You will be charged $<span id="charge-amount">${parseFloat(buyerViewBidCharge).toFixed(2)}</span> to Submit a Quote</p>
+                                                   <p>You will be charged $<span id="charge-amount">${parseFloat(buyerViewBidCharge).toFixed(2)}</span> to View a Quote</p>
                                                    <p>Upon clicking the Pay button, you will be re-directed to the Payment Gateway to continue with your transaction</p>
                                                 
                                                 </div>
@@ -655,7 +953,7 @@
                         $('body').append(lockFunction);
                    
                     } else {
-                        viewButtonTd =  `<td class="text-right"><a href="user/plugins/${packageId}/${page}.php?jobId=${quote['job_id']}&userId=${quote['freelancer_id']}" class="btn btn-jobform-outline">View</a></td>`;
+                        viewButtonTd =  `<td class="text-right"><a href="${protocol}//${baseURL}/user/plugins/${packageId}/${page}.php?jobId=${quote['job_id']}&userId=${quote['freelancer_id']}" class="btn btn-jobform-outline">View</a></td>`;
                     }
                        let allJobs = `<tr>
                        <td><div class="job-quotedtitle"><span class="qtitle">Quoted by</span><span class="qdesc">${quote['quote_by']}</span></div></td>
@@ -689,78 +987,111 @@
               
            }
           
+           async function getAllJobs() //with nearest locations.
+           {
+              $.ajax({
 
-          async function getAllJobs(){
+                  method: "GET",
+                  url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_locations?pageSize=1000`,
+                  headers: {
+                  "Content-Type": "application/json"
+                 },
+                  
+                 success: function (response)
+                 { 
+
+                    const locations = response;
+
+                  $.each(locations.Records, function (index, coords)
+                  {
+                        var location_list = JSON.parse(coords['location_list'])
+
+                        $.each(location_list, function (index, loc)
+                        {
+
+                           if (distanceBetweenTwoPlace(lat, long, loc['lat'], loc['lng'], "K") <= 1000) {
+                              console.log(coords['job_id']);
+                              
+                              getJobDetail(coords['job_id'],'#tab-all','freelancer_quote', coords['CreatedDateTime']);
+                           }
+
+                           
+                        })
+                  })
+
+                 }
+              })
+              
            
             
-            $.ajax({
-              method: "GET",
-              url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_list/`,
-              headers: {
-                "Content-Type": "application/json"
-              },
+            // $.ajax({
+            //   method: "GET",
+            //   url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_list/`,
+            //   headers: {
+            //     "Content-Type": "application/json"
+            //   },
             
-              success: function (response)
-              {
-                console.log({ response })
+            //   success: function (response)
+            //   {
+            //     console.log({ response })
               
-                const jobs = response
-                const jobDetails = jobs.Records
-                console.log({ jobDetails });
-                //if existing user, verify the status
-                if (jobDetails.length != 0) {
+            //     const jobs = response
+            //     const jobDetails = jobs.Records
+            //     console.log({ jobDetails });
+            //     //if existing user, verify the status
+            //     if (jobDetails.length != 0) {
 
-                  jobDetails.forEach(function (job, i)
-                  {
-                    var status;
+            //       jobDetails.forEach(function (job, i)
+            //       {
+            //         var status;
                     
-                    if (job['status'] == 'Available') {
-                      status = ` <td><select class="form-control"id ="status">
-                      <option selected="" disabled="" value="Available">Available</option>
-                      <option value="Interested">Interested</option>
-                      </select></td>`
-                    } else if (job['status'] == 'Interested') {
-                      status = ` <td><select class="form-control">
-                      <option selected="" disabled="" value="Available">Available</option>
-                      <option selected="" value="Interested">Interested</option>
-                      </select></td>`
-                    } else if (job['status'] == 'Quoted') {
-                      status =`<td>Quoted</td>`
+            //         if (job['status'] == 'Available') {
+            //           status = ` <td><select class="form-control"id ="status">
+            //           <option selected="" disabled="" value="Available">Available</option>
+            //           <option value="Interested">Interested</option>
+            //           </select></td>`
+            //         } else if (job['status'] == 'Interested') {
+            //           status = ` <td><select class="form-control">
+            //           <option selected="" disabled="" value="Available">Available</option>
+            //           <option selected="" value="Interested">Interested</option>
+            //           </select></td>`
+            //         } else if (job['status'] == 'Quoted') {
+            //           status =`<td>Quoted</td>`
 
-                     }else if (job['status'] == 'Accepted') {
-                      status =`<td>Accepted</td>`
+            //          }else if (job['status'] == 'Accepted') {
+            //           status =`<td>Accepted</td>`
 
-                     }else if (job['status'] == 'Completed') {
-                      status =`<td>Completed</td>`
+            //          }else if (job['status'] == 'Completed') {
+            //           status =`<td>Completed</td>`
 
-                    } else {
-                      status =`<td>--</td>`
-                    }
+            //         } else {
+            //           status =`<td>--</td>`
+            //         }
                     
-                    let allJobs = `<tr data-id="${job['Id']}">
+            //         let allJobs = `<tr data-id="${job['Id']}">
 
-                  ${status}
-                  <td>${job['job_validity']}</td>
-                  <td>${job['buyer_email']}</td>
-                  <td>${job['buyer_contact']}</td>
-                  <td class="width-location">${job['in_person_work_address']}</td>
-                  <td>${job['is_accepted'] == 1 ? 'Yes' : 'No'} </td>
-                  <td>-</td>
-                 </tr>`;
-                     waitForElement('#tab-all', function ()
-                     {
-                        $('#tab-all table tbody').append(allJobs);
-                     })
+            //       ${status}
+            //       <td>${job['job_validity']}</td>
+            //       <td>${job['buyer_email']}</td>
+            //       <td>${job['buyer_contact']}</td>
+            //       <td class="width-location">${job['in_person_work_address']}</td>
+            //       <td>${job['is_accepted'] == 1 ? 'Yes' : 'No'} </td>
+            //       <td>-</td>
+            //      </tr>`;
+            //          waitForElement('#tab-all', function ()
+            //          {
+            //             $('#tab-all table tbody').append(allJobs);
+            //          })
 
-                  })
+            //       })
                   
-                }
+            //     }
                   
                
-              }
+            //   }
         
         
-            })
+            // })
           }
 
           // get all available jobs
@@ -864,7 +1195,7 @@
                   jobDetails.forEach(function (job, i)
                   {
 
-                     getJobDetail(job['job_id'],'#tab-accepted','freelancer_quoted',job['CreatedDateTime']);
+                     getJobDetail(job['job_id'],'#tab-accepted','freelancer_quoted', job['CreatedDateTime'],job['seller_view_paid'],job['Id']);
                    
                  
                   })
@@ -1074,7 +1405,7 @@
                              <thead>
                            <tr data-id="${job['Id']}">
                               <th colspan="5">Job #${job['Id']}</th>
-                              <th class="text-right"><a href="user/plugins/${packageId}/job-details.php?jobId=${job['Id']}">Details &gt;&gt;</a></th>
+                              <th class="text-right"><a href="${protocol}//${baseURL}/user/plugins/${packageId}/job-details.php?jobId=${job['Id']}">Details &gt;&gt;</a></th>
                            </tr>
                         </thead>
                         <tbody>
@@ -1205,7 +1536,12 @@
              "method": "POST",
              "data": JSON.stringify(quote_details )
          }
-         $.ajax(settings).done(function(response){
+             $.ajax(settings).done(function (response)
+             {
+            
+                toastr.success('Successfully accepted the quotation');
+                window.location = "/";
+
              //remove the existing job id in localstorage after saving
             
              //localStorage.removeItem("jobID"); 
@@ -1580,7 +1916,7 @@
                         } else {
 
                            console.log({ result })
-                           charge(result.token, $('#charge-amount').text(), $('#quoted-id').val(), $('#access-url').val());
+                           chargeQuoteAccept(result.token, $('#charge-amount').text(), $('#quoted-id').val());
                            $("#paynowPackage").prop("disabled", true);
                                     
                                     
@@ -1660,7 +1996,8 @@
          var user = userData.getInstance();
          var jobs = jobData.getInstance();
          jobs.getChargeDetails('job_bid_buyer');
-         jobs.getAllJobs()
+         jobs.getChargeDetails('job_accepted_seller');
+        // jobs.getAllJobs()
          jobs.getInterestedJobs()
          jobs.getQuotedJobs()
          jobs.getAcceptedJobs()
@@ -1677,7 +2014,7 @@
        
 
          var buttons = `
-            <div class="btnjob"><a href="/user/plugins/${packageId}/lodge_job.php" class="btn btn-lodge">Lodge a Job</a>
+            <div class="btnjob"><a href="${protocol}//${baseURL}/user/plugins/${packageId}/lodge_job.php" class="btn btn-lodge">Lodge a Job</a>
             <a href="/subscribe" class="btn btn-freelancer">I am a Freelancer</a>
              </div>`
 
@@ -1752,7 +2089,95 @@
 
                         console.log({ result })
                         charge(result.token, $('#charge-amount').text(), $('#quoted-id').val(), $('#access-url').val());
-                        $("#paynowPackage").prop("disabled", true);
+                        $(" #paynowPackage").prop("disabled", true);
+                                 
+                                  
+                        //subscribe(card, stripe)
+                                  
+    
+                        // Send the result.token.id to a php file and use the token to create the subscription
+                        // SubscriptionManager.PayNowSubmit(result.token.id, e);
+                     }
+                  });
+    
+               });
+         }
+              
+         card.on('change', function (event)
+         {
+            displayError(event);
+         });
+         //  }
+         //});
+      }
+      script.src = "https://js.stripe.com/v3/";
+
+      document.head.appendChild(script); //or something of the likes
+
+      // Create an instance of the card Element
+      $('#card-element').css("width", "30em");
+ 
+      });
+         
+
+
+
+
+
+
+
+      // freelancer charges
+       waitForElement('#paymentModalFreelancer', function ()
+      {
+      var script = document.createElement('script');
+      script.onload = function ()
+      {
+         // getMarketplaceCustomFields(function(result) {
+         //   $.each(result, function(index, cf) {
+            
+         //       if (cf.Name == 'stripe_pub_key' && cf.Code.startsWith(customFieldPrefix)) {
+         //        stripePubKey = cf.Values[0];
+         //       }
+         //   })
+
+         //if (stripePubKey) {
+         //do stuff with the script
+         var stripe = Stripe('pk_test_51IDN6ALQSWMKUO5eXiY7nrd6P3dE6oLh42AQpfpUxz64OgHjaSiME8LLPmyWuaPOlUIAT0H0sLjfMkPWd4eBUbxC00gi2lcEOX');
+         var elements = stripe.elements();
+         var card = elements.create('card', { hidePostalCode: true, style: style });
+         var style = {
+            base: {
+               'lineHeight': '1.35',
+               'fontSize': '1.11rem',
+               'color': '#495057',
+               'fontFamily': 'apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif'
+            }
+         };
+         if ($('#card-element').length) {
+            card.mount('#card-element');
+         }
+    
+         // Create a token or display an error the form is submitted.
+         var submitButton = document.getElementById('paynowPackageFl');
+         if (submitButton) {
+            submitButton.addEventListener('click',
+               function (event)
+               {
+                  event.preventDefault();
+                  $("#paymentModalFreelancer #paynowPackageFl").attr("disabled", "disabled");
+                  stripe.createToken(card).then(function (result)
+                  {
+                     if (result.error) {
+                        // Inform the user if there was an error
+                        var errorElement = document.getElementById('card-errors');
+                        errorElement.textContent = result.error.message;
+    
+                        // $("#payNowButton").removeAttr("disabled");
+                     } else {
+
+                        console.log({ result })
+                        chargeFreelancerView(result.token, $('#paymentModalFreelancer #charge-amount').text(), $('#quoted-id-fl').val(), $('#access-url-fl').val());
+                        $("#paymentModalFreelancer #paynowPackageFl").prop("disabled", true);
                                  
                                   
                         //subscribe(card, stripe)

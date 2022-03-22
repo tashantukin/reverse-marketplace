@@ -36,12 +36,9 @@ else {
     $job_type = '';
 }
 
-$fixed_amount = $jobDetails['Records'][0]['is_payment_fixed'] == 'True' ? $jobDetails['Records'][0]['payment_amount'] : "";
- $hourly_amount = $jobDetails['Records'][0]['is_payment_hourly'] == 'True' ? $jobDetails['Records'][0]['payment_amount'] : "";
+$fixed_amount = $jobDetails['Records'][0]['is_payment_fixed'] == 'True' ? number_format((float)$jobDetails['Records'][0]['payment_amount'],2)  : "";
+ $hourly_amount = $jobDetails['Records'][0]['is_payment_hourly'] == 'True' ? number_format((float)$jobDetails['Records'][0]['payment_amount'],2) : "";
 ?>
-
-
-
 
 <!DOCTYPE html
     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -84,6 +81,8 @@ $fixed_amount = $jobDetails['Records'][0]['is_payment_fixed'] == 'True' ? $jobDe
     <!-- responsive style-->
     <link href="https://bootstrap.arcadier.com/spacetime/css/responsive.css" rel="stylesheet" type="text/css">
     <link href="css/custom.css" rel="stylesheet" type="text/css">
+    <link href="https://bootstrap.arcadier.com/package/reverse/css/custom.css" rel="stylesheet" type="text/css">
+
     <!-- modal style-->
     <link href="https://bootstrap.arcadier.com/spacetime/css/modal.css" rel="stylesheet" type="text/css">
 </head>

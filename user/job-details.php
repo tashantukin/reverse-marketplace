@@ -56,8 +56,8 @@ else {
 }
 
 
- $fixed_amount = $jobDetails['Records'][0]['is_payment_fixed'] == 'True' ? $jobDetails['Records'][0]['payment_amount'] : "";
- $hourly_amount = $jobDetails['Records'][0]['is_payment_hourly'] == 'True' ? $jobDetails['Records'][0]['payment_amount'] : "";
+ $fixed_amount = $jobDetails['Records'][0]['is_payment_fixed'] == 'True' ? number_format((float)$jobDetails['Records'][0]['payment_amount'],2) : "";
+ $hourly_amount = $jobDetails['Records'][0]['is_payment_hourly'] == 'True' ? number_format((float)$jobDetails['Records'][0]['payment_amount'],2) : "";
 ?>
 
 
@@ -174,7 +174,7 @@ else {
                                                 class="title">Availability</span><?php echo $jobDetails['Records'][0]['job_validity'] ?>
                                         </div>
                                         <div class="qq-title"><span class="dash"></span><span class="title">Validity
-                                                Date</span></div>
+                                                Date</span><?php echo $jobDetails['Records'][0]['job_validity'] ?></div>
                                         <?php echo $job_type; ?>
                                         <div class="qq-title"><span class="dash"></span><span
                                                 class="title">Hourly</span><span id="hourly_price"> AUD

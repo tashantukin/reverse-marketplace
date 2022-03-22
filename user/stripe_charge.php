@@ -13,6 +13,7 @@ $content = json_decode($contentBodyJson, true);
 $token = $content['token']['id'];
 $amount = $content['amount'];
 $quoteId = $content['quoteId'];
+$freelancer_quote_id = $content['freelancerQuoteId'];
 error_log($token);
 
 $baseUrl = getMarketplaceBaseUrl();
@@ -47,4 +48,18 @@ if ($quoteId) {
    // $response = $API->editRowEntry($packageId, 'job_cache', $content['Id'], $job_details);
 
     $response = $API->editRowEntry($packageId, 'job_quotes', $quoteId, $quote_details);
+}
+
+if ($freelancer_quote_id) { 
+    $quote_details = [
+        'seller_view_paid' => 'TRUE'
+        
+    ];
+   // error_log($freelancer_details);
+    error_log($content['Id']);
+
+   // $packageId, $tableName, $rowId, $data)
+   // $response = $API->editRowEntry($packageId, 'job_cache', $content['Id'], $job_details);
+
+    $response = $API->editRowEntry($packageId, 'freelancer_quotes', $freelancer_quote_id, $quote_details);
 }

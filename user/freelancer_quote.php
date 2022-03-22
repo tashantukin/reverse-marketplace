@@ -59,8 +59,8 @@ else {
 }
 
 
- $fixed_amount = $jobDetails['Records'][0]['is_payment_fixed'] == 'True' ? $jobDetails['Records'][0]['payment_amount'] : "";
- $hourly_amount = $jobDetails['Records'][0]['is_payment_hourly'] == 'True' ? $jobDetails['Records'][0]['payment_amount'] : "";
+ $fixed_amount = $jobDetails['Records'][0]['is_payment_fixed'] == 'True' ? number_format((float)$jobDetails['Records'][0]['payment_amount'],2) : "";
+ $hourly_amount = $jobDetails['Records'][0]['is_payment_hourly'] == 'True' ? number_format((float)$jobDetails['Records'][0]['payment_amount'],2) : "";
 ?>
 
 
@@ -210,11 +210,11 @@ else {
                                         <?php echo $job_type; ?>
                                         <div class="qq-title"><span class="dash"></span><span
                                                 class="title">Hourly</span><span id="hourly_price"> AUD
-                                                <?php echo $jobDetails['Records'][0]['payment_hourly_value'] ?> </span>
+                                                <?php echo $hourly_amount ?> </span>
                                         </div>
                                         <div class="qq-title"><span class="dash"></span><span class="title">Fixed
                                                 Price</span><span id="fixed_price">AUD
-                                                <?php echo $jobDetails['Records'][0]['payment_fixed_value'] ?></span>
+                                                <?php echo $fixed_amount ?></span>
                                         </div>
 
                                         <div class="form-group">
@@ -299,8 +299,8 @@ else {
                         </div>
 
                         <div class="navtab-flex">
-                            <div class="question-requester-design">Have a question? Ask requester a question <a
-                                    href="#">here</a></div>
+                            <!-- <div class="question-requester-design">Have a question? Ask requester a question <a
+                                    href="#">here</a></div> -->
                             <div class="navtab-filter btn-margin">
                                 <a href="homepage.html" class="btn btn-quote-cancel">Cancel</a>
                                 <button type="button" class="btn btn-quote-submit" id="submit-bottom">Submit

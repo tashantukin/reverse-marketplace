@@ -754,11 +754,12 @@ const jobData = new Vue({
             
         },
 
-       async charge(token)
+       async charge(token, amount)
        { 
            vm = this;
+           amount = 2000;
             var apiUrl = packagePath + '/stripe_charge.php';
-            var data = { token }
+            var data = { token, amount }
                 $.ajax({
                     url: apiUrl,
                     method: 'POST',
@@ -1046,7 +1047,7 @@ $(document).ready(function ()
                 mapLon = e.latlng.lng;
                 clickPositionMarker.addTo(search_group).bindPopup("<a name='removeClickM' id=" + e
                     .latlng.lat +
-                    "_" + e.latlng.lng + ">Remove Me</a>")
+                    "_" + e.latlng.lng + "></a>")
                     .openPopup();
                 $('.leaflet-popup-close-button').attr('id', e
                     .latlng.lat +

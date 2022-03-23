@@ -146,7 +146,6 @@
    }
 
 
-
     function chargeFreelancerView(token, amount, freelancerQuoteId, accessUrl)
    {
       amount = Math.round(amount * 100)
@@ -235,7 +234,7 @@
             "total": $(".qq-total").find('span b').text(),
             "all_discount": $(".qq-discount .qq-option").find('span b').text(),
             "all_total": $(".qq-subtotal").find('span b').text(),
-            "quoted-by" : $("#quoted-by").text(),
+            "quoted-by" : '--',
             
             "job_completion": $("#completion").text(),
             "availability_date": $("#availability").val(),
@@ -1984,7 +1983,8 @@
       if (document.body.className.includes('page-home')) {
 
         
-
+          localStorage.removeItem("userID");
+         localStorage.removeItem("stripe-onboarded");
          $('#register-modal-seller').hide();
          $('.cart-menu').hide();
          

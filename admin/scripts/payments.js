@@ -4,14 +4,36 @@
     var re = /([a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12})/i;
     var packageId = re.exec(scriptSrc.toLowerCase())[1];
     var userId = $('#userGuid').val();
-   
+    var customFieldPrefix = packageId.replace(/-/g, "");
     var timezone_offset_minutes = new Date().getTimezoneOffset();
     timezone_offset_minutes = timezone_offset_minutes == 0 ? 0 : -timezone_offset_minutes;
-   
+    var accessToken = 'Bearer ' + getCookie('webapitoken');
     const baseURL = window.location.hostname;
     const protocol = window.location.protocol;
 
+    function getCookie (name) {
+    var value = '; ' + document.cookie;
+    var parts = value.split('; ' + name + '=');
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }
+
+    function getMarketplaceCustomFields(callback){
+    var apiUrl = '/api/v2/marketplaces'
+    $.ajax({
+        url: apiUrl,
+          headers: {
+           'Authorization':  accessToken,
+       },
+        method: 'GET',
+        contentType: 'application/json',
+        success: function(result) {
+            if (result) {
+                callback(result.CustomFields);
+            }
+        }
+    });
     
+    }
     var stripeSettings =  new Vue({
         el: "#stripe-payments-content",
         data() {
@@ -162,6 +184,24 @@
     $(document).ready(function ()
     {
         
+
+
+    getMarketplaceCustomFields(function(result) {
+      $.each(result, function(index, cf) {
+        
+          if (cf.Name == 'stripe_api_key' && cf.Code.startsWith(customFieldPrefix)) {
+            var api_key = cf.Values[0];
+            $('#live-secret-key').val(api_key);
+          }
+          if (cf.Name == 'stripe_pub_key' && cf.Code.startsWith(customFieldPrefix)) {
+            var account_url = cf.Values[0];
+            $('#live-publishable-key').val(account_url);
+          }
+
+      })
+  });     
+
+
         $("#save-btn").on("click", function ()
         {
             stripeSettings.validateKeys();

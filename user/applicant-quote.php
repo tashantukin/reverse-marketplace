@@ -40,6 +40,12 @@ else {
  $fixed_amount = $jobDetails['Records'][0]['is_payment_fixed'] == 'True' ? number_format((float)$jobDetails['Records'][0]['payment_amount'],2) : "";
  $hourly_amount = $jobDetails['Records'][0]['is_payment_hourly'] == 'True' ? number_format((float)$jobDetails['Records'][0]['payment_amount'],2) : "";
 
+$style = "";
+if ($quotedDetails['Records'][0]['status'] == 'Accepted') {
+    $style =  "style='display:none'";
+}
+
+
 
 ?>
 
@@ -282,7 +288,7 @@ else {
                         <div class="navtab-flex">
                             <div class="checkbox-row-flex">
                                 <div class="checkbox-width custom-fancyjb">
-                                    <div class="fancy-checkbox checkbox-sm">
+                                    <div <?php echo $style ?> class="fancy-checkbox checkbox-sm">
                                         <input type="checkbox" name="read_and_agreed" id="read_and_agreed">
                                         <label for="read_and_agreed"><span>I have read and agreed to the quote
                                                 presented.</span></label>
@@ -290,12 +296,21 @@ else {
                                 </div>
                             </div>
                             <div class="navtab-filter">
-                                <button class="btn btn-quote-cancel btnsubmit" id="accept"
+                                <button <?php echo $style ?>class="btn btn-quote-cancel btnsubmit" id="accept"
                                     data-toggle="modal">Accept</button>
-                                <button class="btn btn-quote-reject btnsubmit" data-toggle="modal"
+                                <button <?php echo $style ?> class="btn btn-quote-reject btnsubmit" data-toggle="modal"
                                     id="reject">Reject</button>
-                                <button class="btn btn-quote-submit" data-toggle="modal" data-target="#cancelModal"
-                                    id="cancel">Cancel</button>
+                                <button <?php echo $style ?> class="btn btn-quote-submit" data-toggle="modal"
+                                    data-target="#cancelModal" id="cancel">Cancel</button>
+
+                                <button <?php echo $style ?> class="btn btn-quote-submit" data-toggle="modal"
+                                    data-target="#cancelModal" id="cancel">Cancel</button>
+                                <?php 
+                                    if ($quotedDetails['Records'][0]['status'] == 'Accepted') {
+                                        echo "<button class='btn btn-quote-submit'
+                                     data-toggle='modal'data-target='#paymentModal' id='done'>Mark as Complete</button>";
+                                }
+                                ?>
                             </div>
                         </div>
 

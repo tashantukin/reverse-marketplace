@@ -229,8 +229,8 @@
 
                                             <td data-th="Servicing Area" nowrap><a
                                                     :href="'freelancer_details.php?customid=' + field.Id">{{field.servicing_area}}
-                                                    <span data-toggle="tooltip" title="AA, BB, CC" class="txt-green">3
-                                                        More</span></td>
+                                                    <!-- <span data-toggle="tooltip" title="AA, BB, CC" class="txt-green">3
+                                                        More</span></td> -->
 
                                             <td v-for="fields in uploadCustomFields" :data-th="fields.name"><a
                                                     :href="'freelancer_details.php?customid=' + field.Id"><span
@@ -303,19 +303,20 @@
                                                 <td>
                                                     <div class="onoffswitch">
                                                         <input type="checkbox" name="onoffswitch"
-                                                            class="onoffswitch-checkbox" id="myonoffswitch1"
-                                                            disabled="">
+                                                            class="onoffswitch-checkbox" id="myonoffswitch2p"
+                                                            checked="">
                                                         <label class="onoffswitch-label" for="myonoffswitch1"> <span
                                                                 class="onoffswitch-inner"></span> <span
                                                                 class="onoffswitch-switch"></span> </label>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div class="payment-status-color1"></div>
-                                                    <div class="payment-status not-added">Not Added</div>
+                                                    <div class="payment-status-color2"></div>
+                                                    <div class="payment-status">Active</div>
+
                                                 </td>
-                                                <td><a href="stripe.php"><span class="btn-payment-link">Link
-                                                            Account</span></a>
+                                                <td><a href="stripe.php"><span
+                                                            class="btn-payment-link">Settings</span></a>
                                                     <div class="animation-svg"><a href="stripe.php"></a></div>
                                                 </td>
                                             </tr>
@@ -354,8 +355,8 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div class="payment-status-color2"></div>
-                                                    <div class="payment-status">Active</div>
+                                                    <div class="payment-status-color1"></div>
+                                                    <div class="payment-status not-added">Not Added</div>
                                                 </td>
                                                 <td><a href="/adminportal/pay_omise.html"><span
                                                             class="btn-payment-link">Link Account</span></a></td>
@@ -402,7 +403,7 @@
                                                             class="btn-payment-link">Settings</span></a></td>
                                             </tr>
 
-                                            <tr>
+                                            <!-- <tr>
                                                 <td>
                                                     <div class="offline-payment-img"><a
                                                             href="/adminportal/payment_custom.html"><img
@@ -416,8 +417,8 @@
                                                                 class="onoffswitch-inner"></span> <span
                                                                 class="onoffswitch-switch"></span> </label>
                                                     </div>
-                                                </td>
-                                                <td>
+                                                </td> -->
+                                            <!-- <td>
                                                     <div class="payment-status-color2"></div>
                                                     <div class="payment-status">Active</div>
                                                 </td>
@@ -425,8 +426,8 @@
                                                             class="btn-payment-link">Settings</span></a><a
                                                         href="javascript:void(0);"
                                                         onclick="DeleteCustomMethod(this)"><img
-                                                            src="images/delete.svg"></a></td>
-                                            </tr>
+                                                            src="images/delete.svg"></a></td> -->
+                                            <!-- </tr> -->
                                             <!-- Last TR afer all data to add new custom payment method-->
                                             <!-- <tr>
                                                 <td colspan="4">
@@ -629,6 +630,39 @@
 
                 <div class="panel-box panel-style-ab">
                     <div class="panel-box-title">
+                        <h3>Freelancer / Buyer</h3>
+                        <div class="pull-right"><a class="panel-toggle" href="javascript:void(0);"><i
+                                    class="icon icon-toggle"></i></a></div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="panel-box-content">
+                        <ul>
+                            <ul>
+                                <li>
+                                    <h5> New Freelancer Registration</h5>
+                                    <p>Sent to Admin for every new Freelancer sign up.</p> <a
+                                        href="edit_content.php?pageid=9a733374-1e37-47e1-9d96-128eb4bfb15f"
+                                        id="9a733374-1e37-47e1-9d96-128eb4bfb15f" class="action-edit-template">Edit</a>
+                                </li>
+                                <li>
+                                    <h5> Quotation Accepted</h5>
+                                    <p>Sent to seller once the buyer accepted the quotation.</p> <a
+                                        href="edit_content.php?pageid=4bcfd5ae-712f-434d-83a3-377756e82f41"
+                                        id="4bcfd5ae-712f-434d-83a3-377756e82f41" class="action-edit-template">Edit</a>
+                                </li>
+                                <li>
+                                    <h5> Quotation Rejected</h5>
+                                    <p>Sent to seller once the buyer rejected the quotation.</p> <a
+                                        href="edit_content.php?pageid=ac8c6077-2078-4045-ad71-4ea95c3ca4db"
+                                        id="ac8c6077-2078-4045-ad71-4ea95c3ca4db" class="action-edit-template">Edit</a>
+                                </li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="panel-box panel-style-ab">
+                    <div class="panel-box-title">
                         <h3>User Account</h3>
                         <div class="pull-right"><a class="panel-toggle" href="javascript:void(0);"><i
                                     class="icon icon-toggle"></i></a></div>
@@ -654,19 +688,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="panel-box panel-style-ab">
-                    <div class="panel-box-title">
-                        <h3>Freelancer / Buyer</h3>
-                        <div class="pull-right"><a class="panel-toggle" href="javascript:void(0);"><i
-                                    class="icon icon-toggle"></i></a></div>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="panel-box-content">
-                        <ul>
 
-                        </ul>
-                    </div>
-                </div>
 
 
             </div>

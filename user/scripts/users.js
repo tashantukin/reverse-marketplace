@@ -739,9 +739,9 @@ sellerFields = new Vue({
                 'is_payment_onboarded' : localStorage.getItem('stripe_acc_id') == null ? false : true,
 
                  
-                'full_address': `${$('#address').val()} ${$('#city').val()}  ${$('#country').val()} ${$('#state').val()} ${$('#postal-code').val()}`,
+                'full_address': `${$('#address').val()} ${$('#city').val()}  ${$('#country').val()} ${$('#state').val()}}`,
                 'email': $('#email').val(),
-                'company_name': $('#company-name').val(),
+                'company_name': 'Company 1', //$('#company-name').val(),
                 'country':  $('#country').val(),
                 'state' :$('#state').val(),
                 'city' : $('#city').val(),
@@ -1787,7 +1787,7 @@ $(document).ready(function ()
                                 mapLon = e.latlng.lng;
                                 clickPositionMarker.addTo(search_group).bindPopup("<a name='removeClickM' id=" + e
                                     .latlng.lat +
-                                    "_" + e.latlng.lng + ">Remove Me</a>")
+                                    "_" + e.latlng.lng + "></a>")
                                     .openPopup();
                                 $('.leaflet-popup-close-button').attr('id', e
                                     .latlng.lat +

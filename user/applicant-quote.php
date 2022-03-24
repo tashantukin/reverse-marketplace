@@ -121,6 +121,8 @@ if ($quotedDetails['Records'][0]['status'] == 'Accepted') {
                     <div class="quote-question-section">
                         <div class="navtab-flex">
                             <div class="quote-title-design"><?php echo $userDetails['Records'][0]['company_name'] ?>
+                                <input type="hidden" id="merchant-key"
+                                    value="<?php echo $userDetails['Records'][0]['stripe_key'] ?>" />
                             </div>
                         </div>
 
@@ -303,12 +305,10 @@ if ($quotedDetails['Records'][0]['status'] == 'Accepted') {
                                 <button <?php echo $style ?> class="btn btn-quote-submit" data-toggle="modal"
                                     data-target="#cancelModal" id="cancel">Cancel</button>
 
-                                <button <?php echo $style ?> class="btn btn-quote-submit" data-toggle="modal"
-                                    data-target="#cancelModal" id="cancel">Cancel</button>
                                 <?php 
                                     if ($quotedDetails['Records'][0]['status'] == 'Accepted') {
                                         echo "<button class='btn btn-quote-submit'
-                                     data-toggle='modal'data-target='#paymentModal' id='done'>Mark as Complete</button>";
+                                     data-toggle='modal'data-target='#paymentModalComplete' id='done'>Mark as Complete</button>";
                                 }
                                 ?>
                             </div>
@@ -474,6 +474,72 @@ if ($quotedDetails['Records'][0]['status'] == 'Accepted') {
                                 <span class="seller-btn"> <a class="my-btn btn-clear" data-dismiss="modal"
                                         href="javascript:void(0);">Cancel</a> </span>
                                 <span class="seller-btn"> <a class="my-btn btn-red" id="paynowPackage"
+                                        job-id="<?php echo $job_id ?>" user-id="<?php echo $user_id ?>"
+                                        quote-id="<?php echo $quotedDetails['Records'][0]['Id'] ?>"
+                                        href="javascript:void(0);">Pay
+                                        Now</a> </span>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="modal fade payment-modal" id="paymentModalComplete" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-body">
+                    <input type="hidden" id="merchant-charge"
+                        value="<?php echo $quotedDetails['Records'][0]['all_total'] ?>">
+
+                    <div id="payment" class="payment-con clearfix">
+
+                        <h3>Payment</h3>
+                        <div class="payment-middle-con ">
+
+                            <div class="form-group">
+                                <label for="paymentMethod">Payment Method</label>
+                                <select class="form-control required" name="payment" id="paymentScheme">
+                                    <option selected value="stripe">Stripe</option>
+
+                                </select>
+                            </div>
+
+                            <div class="common-text">
+                                <p>You will be charged $<span id="charge-amount-complete"></span> for a completed task
+                                    and payment for the completed task.</p>
+                                <p>Upon clicking the Pay button, you will be re-directed to the Payment Gateway to
+                                    continue with your transaction</p>
+
+                            </div>
+
+                            <div id="card-element-complete"> </div>
+                            <!-- Used to display Element errors. -->
+                            <div id="card-errors" role="alert"></div>
+                            <p id="card-errors"
+                                style="margin-bottom: 10px; line-height: inherit; color: #eb1c26; font-weight: bold;">
+                            </p>
+
+
+                        </div>
+
+                        <div class="payment-bottom-con clearfix">
+                            <div class="next-tab-area pull-right">
+                                <span class="seller-btn"> <a class="my-btn btn-clear" data-dismiss="modal"
+                                        href="javascript:void(0);">Cancel</a> </span>
+                                <span class="seller-btn"> <a class="my-btn btn-red" id="paynowPackageComplete"
                                         job-id="<?php echo $job_id ?>" user-id="<?php echo $user_id ?>"
                                         quote-id="<?php echo $quotedDetails['Records'][0]['Id'] ?>"
                                         href="javascript:void(0);">Pay

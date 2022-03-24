@@ -18,6 +18,8 @@
    var buyerAcceptBidChargeEnabled;
    var sellerViewAcceptedCharge;
    var sellerViewAcceptedEnabled;
+   var buyerCompletedCharge;
+   var buyerCompletedChargeEnabled;
    var lat;
    var long;
    var accuracy;
@@ -211,6 +213,47 @@
       });
 
    }
+
+      function chargeQuoteCompleted(token, amount, quoteId, accessUrl)
+      {
+         amount = Math.round($('#charge-amount-complete').text() * 100)
+         var apiUrl = packagePath + '/stripe_charge_complete.php';
+         var merchantToken = $('#merchant-key').val();
+                               
+         var adminCharge = amount;
+         var merchantCharge = Math.round($('#merchant-charge').val() * 100)
+         var data = { token, adminCharge, merchantCharge, merchantToken, quoteId }
+         $.ajax({
+            url: apiUrl,
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (result)
+            {
+               result = JSON.parse(result);
+               if (result.id) {
+
+                  console.log('charge');
+                  // window.location = $('#access-url').val();
+
+                  var quote = quoteData.getInstance();
+                  quote.quoteAction('Completed', $('#paynowPackageCompleted').attr('job-id'), $('#paynowPackageCompleted').attr('user-id'), $('#paynowPackageCompleted').attr('quote-id'));
+                     
+               }
+
+
+            },
+            error: function (jqXHR, status, err)
+            {
+               //	toastr.error('Error!');
+            }
+         });
+
+      }
+
+
+
+
 
 
    function getQuoteData()
@@ -621,6 +664,16 @@
 
                      $('#paymentModalFreelancer #charge-amount').text(parseFloat(sellerViewAcceptedCharge).toFixed(2))
                       
+                    }
+
+
+                    if (charge_name == 'job_paid_buyer') {
+                       
+                       buyerCompletedCharge = charge['value'];
+                       buyerCompletedChargeEnabled = charge['status'];
+
+                       $('#paymentModalComplete #charge-amount-complete').text(parseFloat(buyerCompletedCharge).toFixed(2))
+                  
                     }
 
                     
@@ -1865,7 +1918,9 @@
          var jobs = jobData.getInstance();
 
          jobs.getChargeDetails('job_accepted_buyer');
-         
+         jobs.getChargeDetails('job_paid_buyer');
+
+
          // waitForElement('#paymentModal', function ()
          // {
          var script = document.createElement('script');
@@ -1894,6 +1949,7 @@
             };
             if ($('#card-element').length) {
                card.mount('#card-element');
+              // card.mount('#card-element-complete');
             }
       
             // Create a token or display an error the form is submitted.
@@ -1945,6 +2001,91 @@
          $('#card-element').css("width", "30em");
    
          // });
+
+
+         waitForElement('#paymentModalComplete', function ()
+         {
+             var script = document.createElement('script');
+         script.onload = function ()
+         {
+            // getMarketplaceCustomFields(function(result) {
+            //   $.each(result, function(index, cf) {
+               
+            //       if (cf.Name == 'stripe_pub_key' && cf.Code.startsWith(customFieldPrefix)) {
+            //        stripePubKey = cf.Values[0];
+            //       }
+            //   })
+
+            //if (stripePubKey) {
+            //do stuff with the script
+            var stripe = Stripe('pk_test_51IDN6ALQSWMKUO5eXiY7nrd6P3dE6oLh42AQpfpUxz64OgHjaSiME8LLPmyWuaPOlUIAT0H0sLjfMkPWd4eBUbxC00gi2lcEOX');
+            var elements = stripe.elements();
+            var card = elements.create('card', { hidePostalCode: true, style: style });
+            var style = {
+               base: {
+                  'lineHeight': '1.35',
+                  'fontSize': '1.11rem',
+                  'color': '#495057',
+                  'fontFamily': 'apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif'
+               }
+            };
+            if ($('#card-element').length) {
+              // card.mount('#card-element');
+               card.mount('#card-element-complete');
+            }
+      
+            // Create a token or display an error the form is submitted.
+            var submitButton = document.getElementById('paynowPackageComplete');
+            if (submitButton) {
+               submitButton.addEventListener('click',
+                  function (event)
+                  {
+                     event.preventDefault();
+                     $("#paynowPackageComplete").attr("disabled", "disabled");
+                     stripe.createToken(card).then(function (result)
+                     {
+                        if (result.error) {
+                           // Inform the user if there was an error
+                           var errorElement = document.getElementById('card-errors');
+                           errorElement.textContent = result.error.message;
+      
+                           // $("#payNowButton").removeAttr("disabled");
+                        } else {
+
+                           console.log({ result })
+                           chargeQuoteCompleted(result.token, $('#charge-amount-completed').text(), $('#quoted-id').val());
+                           $("#paynowPackageComplete").prop("disabled", true);
+                                    
+                                    
+                           //subscribe(card, stripe)
+                                    
+      
+                           // Send the result.token.id to a php file and use the token to create the subscription
+                           // SubscriptionManager.PayNowSubmit(result.token.id, e);
+                        }
+                     });
+      
+                  });
+            }
+               
+            card.on('change', function (event)
+            {
+               displayError(event);
+            });
+            //  }
+            //});
+         }
+         script.src = "https://js.stripe.com/v3/";
+
+         document.head.appendChild(script); //or something of the likes
+
+         // Create an instance of the card Element
+         $('#card-element').css("width", "30em");
+         })
+
+
+
+
 
          }
 

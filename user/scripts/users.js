@@ -86,10 +86,9 @@ function distanceBetweenTwoPlace(firstLat, firstLon, secondLat, secondLon, unit)
                    //   $("#BtnStripeLinked").click(function(){
                     $("#BtnStripeLinked").removeClass("error-con");
                     localStorage.setItem("stripe-onboarded", "true");
-                    localStorage.setItem("stripe_acc_id", response.stripe_user_id);
+                    localStorage.setItem("stripe_acc_id", response.access_token);
                     
-                    
-                        
+                
                      $("#StripeSellerPayment").text("").css("color", "#000");
 
                      var imageUrl =  
@@ -124,7 +123,7 @@ function distanceBetweenTwoPlace(firstLat, firstLon, secondLat, secondLon, unit)
                 }
                 
             })
-        }
+}
 
 //retrieve dynamic fields
 waitForElement('.tab-content', function ()
@@ -657,13 +656,13 @@ sellerFields = new Vue({
                                  <label for="in_person_work"><span>In-Person Work</span></label>
                               </div>
                            </div>
-
-                            <div class="location-map-hide-show" style="">
-                            
                             <div class="form-group">
                                     <label for="location_details">Servicing Area</label>
-                                    <input type="text" class="form-control" name="location_details" id="location_details" placeholder="" value="Sample Address 13, SY123">
-                                    </div>
+                                    <input type="text" class="form-control" name="location_details" id="location_details" onfocusout="codeAddress_servicing()" placeholder="" value="Sample Address 13, SY123">
+                            </div>
+
+                            <div class="location-map-hide-show" style="display: none;">
+                            
                             <div class="mapcontainer">
                                 <div id="map">
                                
@@ -676,7 +675,7 @@ sellerFields = new Vue({
                             case 'address-fields':
                                      customFieldInput = `<div class="form-group">
                               <label for="address">Address</label>
-                              <input type="text" class="form-control required" name="address" id="address" placeholder="">
+                              <input type="text" class="form-control required" name="address" id="address" onfocusout="codeAddress()" placeholder="">
                            </div>
                            <div class="form-group">
                               <label for="country">Country</label>
@@ -732,7 +731,8 @@ sellerFields = new Vue({
                 "user_id": localStorage.getItem('userID'),
                 "custom_fields": cf,
                 "servicing_area": location,
-                'location_coordinates': locationList,
+                'location_coordinates': new Array($('#address-lat').val(), $('#address-long').val()),
+                'servicing_coords': new Array($('#servicing-lat').val(), $('#servicing-long').val()),
                 "status": "Pending",
                 'files': files,
                 'stripe_key': localStorage.getItem('stripe_acc_id'),
@@ -1683,7 +1683,7 @@ $(document).ready(function ()
         
     })
 
-    $('body').on('click', '#verification-details .jobform-form .next-tab-area .my-btn', function ()
+    $('body').on('click', '#payment-acceptance .jobform-form .next-tab-area .my-btn', function ()
     {
         //validation here
 
@@ -1743,110 +1743,110 @@ $(document).ready(function ()
     $('body').on('change', '#in_person_work', function() {
     console.log('in person click')
     if ($(this).is(':checked')) {
-        $('.location-map-hide-show').fadeIn('slow');
-         if (url.indexOf("/subscribe") >= 0) {
+       // $('.location-map-hide-show').fadeIn('slow');
+        //  if (url.indexOf("/subscribe") >= 0) {
 
 
-                        var map;
+        //                 var map;
                         
-             var clickArr = new Array();
+        //      var clickArr = new Array();
             
 
            
-             waitForElement('#map', function ()
-             {
-                 if (!map) {
-                     map = L.map('map').fitWorld();
-                     // L.map('map').setView([0, 0], 6);
+        //      waitForElement('#map', function ()
+        //      {
+        //          if (!map) {
+        //              map = L.map('map').fitWorld();
+        //              // L.map('map').setView([0, 0], 6);
 
-                     //osm layer
-                     var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                     });
-                     osm.addTo(map);
-                     map.addLayer(search_group);
-                 }
+        //              //osm layer
+        //              var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        //                  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        //              });
+        //              osm.addTo(map);
+        //              map.addLayer(search_group);
+        //          }
                 
-                  //add the existing jobs here
-                 sellerFields.getLocations();
+        //           //add the existing jobs here
+        //          sellerFields.getLocations();
 
-                 // map.on('click', onMapClick);
+        //          // map.on('click', onMapClick);
 
-                 var markers = new Array();
+        //          var markers = new Array();
                            
-                            map.on('click', function (e)
-                            {
-                                var clickPositionMarker = L.marker([e.latlng.lat, e.latlng.lng], {
-                                    color: 'red',
-                                    fillColor: '#f03',
-                                    fillOpacity: 0.5,
-                                    radius: 500
-                                });
-                                clickArr.push(clickPositionMarker);
-                                mapLat = e.latlng.lat;
-                                mapLon = e.latlng.lng;
-                                clickPositionMarker.addTo(search_group).bindPopup("<a name='removeClickM' id=" + e
-                                    .latlng.lat +
-                                    "_" + e.latlng.lng + "></a>")
-                                    .openPopup();
-                                $('.leaflet-popup-close-button').attr('id', e
-                                    .latlng.lat +
-                                    "_" + e.latlng.lng)
+        //                     map.on('click', function (e)
+        //                     {
+        //                         var clickPositionMarker = L.marker([e.latlng.lat, e.latlng.lng], {
+        //                             color: 'red',
+        //                             fillColor: '#f03',
+        //                             fillOpacity: 0.5,
+        //                             radius: 500
+        //                         });
+        //                         clickArr.push(clickPositionMarker);
+        //                         mapLat = e.latlng.lat;
+        //                         mapLon = e.latlng.lng;
+        //                         clickPositionMarker.addTo(search_group).bindPopup("<a name='removeClickM' id=" + e
+        //                             .latlng.lat +
+        //                             "_" + e.latlng.lng + "></a>")
+        //                             .openPopup();
+        //                         $('.leaflet-popup-close-button').attr('id', e
+        //                             .latlng.lat +
+        //                             "_" + e.latlng.lng)
 
-                                /*   clickPositionMarker.on('click', function(e) {
-                                  markerDelAgain(); 
-                                }); */
+        //                         /*   clickPositionMarker.on('click', function(e) {
+        //                           markerDelAgain(); 
+        //                         }); */
 
-                                locationList.push(e.latlng);
-                                console.log({
-                                    locationList
-                                });
+        //                         locationList.push(e.latlng);
+        //                         console.log({
+        //                             locationList
+        //                         });
 
-                            });
+        //                     });
 
-                            if (!navigator.geolocation) {
-                                console.log("Your browser doesn't support geolocation feature!")
-                            } else {
-                                //setInterval(() => {
-                                navigator.geolocation.getCurrentPosition(getPosition)
-                                //}, 5000);
-                            }
+        //                     if (!navigator.geolocation) {
+        //                         console.log("Your browser doesn't support geolocation feature!")
+        //                     } else {
+        //                         //setInterval(() => {
+        //                         navigator.geolocation.getCurrentPosition(getPosition)
+        //                         //}, 5000);
+        //                     }
 
-                            var marker, circle;
+        //                     var marker, circle;
 
-                            function getPosition(position)
-                            {
-                                // console.log(position)
-                                var lat = position.coords.latitude
-                                var long = position.coords.longitude
-                                var accuracy = position.coords.accuracy
+        //                     function getPosition(position)
+        //                     {
+        //                         // console.log(position)
+        //                         var lat = position.coords.latitude
+        //                         var long = position.coords.longitude
+        //                         var accuracy = position.coords.accuracy
 
-                                if (marker) {
-                                    map.removeLayer(marker)
-                                }
+        //                         if (marker) {
+        //                             map.removeLayer(marker)
+        //                         }
 
-                                if (circle) {
-                                    map.removeLayer(circle)
-                                }
+        //                         if (circle) {
+        //                             map.removeLayer(circle)
+        //                         }
 
-                                marker = L.marker([lat, long])
-                                circle = L.circle([lat, long], {
-                                    radius: accuracy
-                                })
+        //                         marker = L.marker([lat, long])
+        //                         circle = L.circle([lat, long], {
+        //                             radius: accuracy
+        //                         })
 
-                                var featureGroup = L.featureGroup([marker, circle]).addTo(map)
+        //                         var featureGroup = L.featureGroup([marker, circle]).addTo(map)
 
-                                map.fitBounds(featureGroup.getBounds())
+        //                         map.fitBounds(featureGroup.getBounds())
 
-                                console.log("Your coordinate is: Lat: " + lat + " Long: " + long + " Accuracy: " + accuracy)
-                                sellerFields.getNearestLocations(lat, long, 100)
+        //                         console.log("Your coordinate is: Lat: " + lat + " Long: " + long + " Accuracy: " + accuracy)
+        //                         sellerFields.getNearestLocations(lat, long, 100)
 
-                            }
+        //                     }
 
 
 
-                        })
-                    }
+        //                 })
+        //             }
 
     } else {
         $('.location-map-hide-show').fadeOut('slow');
@@ -1877,7 +1877,5 @@ $(document).ready(function ()
     })
 
    
-    
-
 
 })

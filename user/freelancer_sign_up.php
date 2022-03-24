@@ -32,9 +32,14 @@
         charset="utf-8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js" charset="utf-8"></script>
 
-
-
-    <!-- custom js -->
+    </script>
+    <!-- bootstrap js -->
+    <script src="js/bootstrap.min.js" type="text/javascript">
+    </script>
+    <!-- bootbox js -->
+    <script src="js/bootbox.min.js" type="text/javascript">
+    <!-- custom js 
+    -->
     <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/custom.js"></script>
     <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/jquery.ddslick.js"></script>
 
@@ -91,6 +96,10 @@
     <div class="main">
         <div class="content-pages">
             <div class="container">
+                <input type="hidden" id="address-lat">
+                <input type="hidden" id="address-long">
+                <input type="hidden" id="servicing-lat">
+                <input type="hidden" id="servicing-long">
                 <div class="freelancer-content-main">
                     <div class="job-form-tab-design">
                         <div class="jobform-tab">
@@ -227,6 +236,116 @@
         });
     });
 
+    function waitForElement(elementPath, callBack) {
+        window.setTimeout(function() {
+            if ($(elementPath).length) {
+                callBack(elementPath, $(elementPath));
+            } else {
+                waitForElement(elementPath, callBack);
+            }
+        }, 500);
+    }
+
+    function initialize() {
+        var address = (document.getElementById('address'));
+        var autocomplete = new google.maps.places.Autocomplete(address);
+        autocomplete.setTypes(['geocode']);
+        google.maps.event.addListener(autocomplete, 'place_changed', function() {
+            var place = autocomplete.getPlace();
+            if (!place.geometry) {
+                return;
+            }
+
+            var address = '';
+            if (place.address_components) {
+                address = [
+                    (place.address_components[0] && place.address_components[0].short_name || ''),
+                    (place.address_components[1] && place.address_components[1].short_name || ''),
+                    (place.address_components[2] && place.address_components[2].short_name || '')
+                ].join(' ');
+            }
+        });
+    }
+
+
+    function initialize_service_area() {
+        var address = (document.getElementById('location_details'));
+        var autocomplete = new google.maps.places.Autocomplete(address);
+        autocomplete.setTypes(['geocode']);
+        google.maps.event.addListener(autocomplete, 'place_changed', function() {
+            var place = autocomplete.getPlace();
+            if (!place.geometry) {
+                return;
+            }
+
+            var address = '';
+            if (place.address_components) {
+                address = [
+                    (place.address_components[0] && place.address_components[0].short_name || ''),
+                    (place.address_components[1] && place.address_components[1].short_name || ''),
+                    (place.address_components[2] && place.address_components[2].short_name || '')
+                ].join(' ');
+            }
+        });
+    }
+
+    function codeAddress() {
+        geocoder = new google.maps.Geocoder();
+        var address = document.getElementById("address").value;
+        geocoder.geocode({
+            'address': address
+        }, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                $('#address-lat').val(results[0].geometry.location.lat());
+                $('#address-long').val(results[0].geometry.location.lng());
+
+                console.log("Latitude: " + results[0].geometry.location.lat());
+                console.log("Longitude: " + results[0].geometry.location.lng());
+            } else {
+                console.log("Geocode was not successful for the following reason: " + status);
+            }
+        });
+    }
+
+    function codeAddress_servicing() {
+        geocoder = new google.maps.Geocoder();
+        var address = document.getElementById("location_details").value;
+        geocoder.geocode({
+            'address': address
+        }, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                $('#servicing-lat').val(results[0].geometry.location.lat());
+                $('#servicing-long').val(results[0].geometry.location.lng());
+
+                console.log("Latitude: " + results[0].geometry.location.lat());
+                console.log("Longitude: " + results[0].geometry.location.lng());
+            } else {
+                console.log("Geocode was not successful for the following reason: " + status);
+            }
+        });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     function j_nextTab() {
         jQuery(".jobform-tab li.active").next('li').children('a').trigger('click');
         console.log('this');
@@ -338,6 +457,11 @@
     }
 
     jQuery(document).ready(function() {
+        waitForElement('#address', function() {
+
+            google.maps.event.addDomListener(window, 'load', initialize);
+            google.maps.event.addDomListener(window, 'load', initialize_service_area);
+        })
         jobTabTimeline();
 
         $(window).on('resize', jobTabTimeline);
@@ -506,6 +630,16 @@
             jQuery('body').addClass('modal-open');
 
         });
+
+
+
+        // jQuery('#address').on('focusout', function() {
+
+
+
+
+        // });
+
 
 
     });
@@ -1128,17 +1262,103 @@
             }
         });
     }
+
+    function AddPaymentCashOnDelivery(ele)
+
+    {
+
+        var $this = jQuery(ele);
+
+        var $verify = $this.attr('data-verify');
+
+        if ($verify == 'false')
+
+        {
+
+            bootbox.confirm({
+
+                message: "By verifying this payment method, all your buyers will be able to checkout your items using Cash on Delivery and settlement has to be handled by you manually if they were to use this payment method.",
+
+                className: "my-confirmmodal",
+
+                buttons: {
+
+                    confirm: {
+
+                        label: 'Okay',
+
+                        className: 'btn-success'
+
+                    },
+
+                    cancel: {
+
+                        label: 'Cancel',
+
+                        className: 'btn-danger'
+
+                    }
+
+                },
+
+                callback: function(result) {
+
+                    if (result)
+
+                    {
+
+                        $("#CashOnDeliveryPayment").text("").css("color", "#000");
+
+                        var imageUrl = 'images/done.svg';
+
+                        var warning = $this.parent().siblings('.verified').find('.img-payment-warning');
+
+                        var warningspan = $this.parent().siblings('.verified').find('span');
+
+                        warning.css({
+                            'background': 'url(' + imageUrl + ')no-repeat',
+                            'background-color': '#00c8b2',
+                            'border-radius': '30px',
+                            'width': '30px',
+                            'height': '30px',
+                            'margin-top': '5px'
+                        });
+
+                        warningspan.text("Verified").css('color', '#00c8b2');
+
+                        $(".seller-payment-container span.paycashdelivery").css({
+                            'width': 'Calc(100% - 40px)',
+                            'line-height': '40px'
+                        });
+
+                        $("#BtnCashDelivery").removeClass("error-con");
+
+                        $this.attr('data-verify', 'true');
+
+                    }
+
+                }
+
+
+
+            });
+
+        }
+
+    }
     </script>
 
 
-
-
-
+    <script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbYXf7DUOc-j2QwGgtXcFp4fpGMD4Q59o&libraries=places">
+    </script>
     <script type="text/javascript" src="subscribe/8e94739d-b260-41ec-9496-dfa98bb8cdc0/scripts/jquery.mapael.js">
     </script>
     <script type="text/javascript" src="subscribe/8e94739d-b260-41ec-9496-dfa98bb8cdc0/scripts/usa_states.js"></script>
 
+    <script type="text/javascript">
 
+    </script>
 
 
 

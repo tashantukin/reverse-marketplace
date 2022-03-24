@@ -341,7 +341,7 @@
                                                 <td><a href="/adminportal/pay_paypal.html"><span
                                                             class="btn-payment-link">Link Account</span></a></td>
                                             </tr> -->
-                                            <tr>
+                                            <!-- <tr>
                                                 <td>
                                                     <div class="payment-omise"></div>
                                                 </td>
@@ -360,7 +360,7 @@
                                                 </td>
                                                 <td><a href="/adminportal/pay_omise.html"><span
                                                             class="btn-payment-link">Link Account</span></a></td>
-                                            </tr>
+                                            </tr> -->
                                             <!-- <tr>
                                                 <td>
                                                     <div class="payment-stripe"></div>
@@ -399,8 +399,8 @@
                                                     <div class="payment-status-color1"></div>
                                                     <div class="payment-status not-added">Not Added</div>
                                                 </td>
-                                                <td><a href="/adminportal/payment_cod.html"><span
-                                                            class="btn-payment-link">Settings</span></a></td>
+                                                <td><a href="cod.php"><span class="btn-payment-link">Settings</span></a>
+                                                </td>
                                             </tr>
 
                                             <!-- <tr>

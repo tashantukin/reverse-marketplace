@@ -17,6 +17,7 @@
 
         'stripe_key' => $content['stripe_key'],
         'location_coordinates' => $content['location_coordinates'],
+        'servicing_area_coords' => $content['servicing_coords'],
         'is_payment_onboarded' => $content['is_payment_onboarded'],
         
 

@@ -71,8 +71,7 @@
                             <div class="form-group">
                                 <label for="paymentMethod">Payment Method</label>
                                 <select class="form-control required" name="payment" id="paymentScheme">
-                                    <option selected value="stripe">Stripe</option>
-                                    <option value="omise">Omise</option>
+                                    <option value="stripe">Stripe</option>
                                     <option value="cod">Cash on Delivery</option>
                                 </select>
                             </div>
@@ -86,7 +85,7 @@
 
                             </div>
 
-                            <div id="card-element"> </div>
+                            <div id="card-element" style="display:none"> </div>
                             <!-- Used to display Element errors. -->
                             <div id="card-errors" role="alert"></div>
                             <p id="card-errors"

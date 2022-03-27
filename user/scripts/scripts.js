@@ -1640,9 +1640,18 @@
          });
       });
         
-       
       //quote charge
       if (urls.indexOf('/charge_quote.php') >= 0) {
+
+         $("#paymentScheme").change(function() {
+            if ($('option:selected', $(this)).val() == 'stripe') {
+            $('#card-element').show()
+               console.log('Active')
+            } else {
+               
+               $('#card-element').hide();
+            }
+         });    
       
          const chargeData = new Vue({
             el: "#payment",
@@ -1780,28 +1789,36 @@
                   {
                      event.preventDefault();
                      $("#paynowPackage").attr("disabled", "disabled");
-                     stripe.createToken(card).then(function (result)
-                     {
-                        if (result.error) {
-                           // Inform the user if there was an error
-                           var errorElement = document.getElementById('card-errors');
-                           errorElement.textContent = result.error.message;
-    
-                           // $("#payNowButton").removeAttr("disabled");
-                        } else {
 
-                           console.log({ result })
-                           chargeData.charge(result.token, $('#charge-amount').val());
-                           $("#paynowPackage").prop("disabled", true);
-                                 
-                                  
-                           //subscribe(card, stripe)
-                                  
-    
-                           // Send the result.token.id to a php file and use the token to create the subscription
-                           // SubscriptionManager.PayNowSubmit(result.token.id, e);
-                        }
-                     });
+                     if ($('option:selected', $('#paymentScheme')).text() == 'Cash on Delivery'){
+                        console.log('cod');
+                          var quote = quoteData.getInstance();
+                           quote.quoteJob();
+                     } else {
+                          stripe.createToken(card).then(function (result)
+                        {
+                           if (result.error) {
+                              // Inform the user if there was an error
+                              var errorElement = document.getElementById('card-errors');
+                              errorElement.textContent = result.error.message;
+      
+                              // $("#payNowButton").removeAttr("disabled");
+                           } else {
+
+                              console.log({ result })
+                              chargeData.charge(result.token, $('#charge-amount').val());
+                              $("#paynowPackage").prop("disabled", true);
+                                    
+                           }
+                         }); 
+                        
+                        
+                        
+                        console.log('stripe')
+                     }
+                  
+
+                     
     
                   });
             }

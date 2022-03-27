@@ -28,29 +28,26 @@ error_log($token);
 $baseUrl = getMarketplaceBaseUrl();
 $stripe_secret_key = getSecretKey();
 
-\Stripe\Stripe::setApiKey($stripe_secret_key);
+// \Stripe\Stripe::setApiKey($stripe_secret_key);
 
 
-// This is a $20.00 charge in US Dollar.
-$charge = \Stripe\Charge::create(
-array(
-'amount' => $adminCharge,
-'currency' => 'usd',
-'source' => $token
-)
-);
-
-// \Stripe\Stripe::setApiKey($merchantKey);
+// // This is a $20.00 charge in US Dollar.
 // $charge = \Stripe\Charge::create(
 // array(
-// 'amount' => $merchantCharge,
+// 'amount' => $adminCharge,
 // 'currency' => 'usd',
 // 'source' => $token
 // )
 // );
 
-
-
+\Stripe\Stripe::setApiKey($merchantKey);
+$charge = \Stripe\Charge::create(
+array(
+'amount' => $merchantCharge,
+'currency' => 'usd',
+'source' => $token
+)
+);
 
 
 echo json_encode($charge);

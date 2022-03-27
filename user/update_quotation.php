@@ -37,7 +37,6 @@ $baseUrl = $API->getMarketplaceBaseUrl();
 $admin_token = $API->AdminToken();
 
 
-
 //update the freelancer_quotes table
 
 $templates = array(array('Name' => 'job_id', "Operator" => "equal",'Value' => $content['jobId']), array('Name' =>

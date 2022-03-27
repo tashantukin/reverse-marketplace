@@ -104,10 +104,10 @@ $fixed_amount = $jobDetails['Records'][0]['is_payment_fixed'] == 'True' ? number
                         <div class="navtab-flex">
                             <div class="quote-title-design"><?php echo $userDetails['Records'][0]['company_name'] ?></p>
                             </div>
-                            <div class="navtab-filter btn-margin">
+                            <!-- <div class="navtab-filter btn-margin">
                                 <a href="/" class="btn btn-quote-cancel">Cancel</a>
                                 <button type="button" class="btn btn-quote-submit">Submit Quote</button>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="quote-question-main">
                             <div class="row">
@@ -299,10 +299,10 @@ $fixed_amount = $jobDetails['Records'][0]['is_payment_fixed'] == 'True' ? number
                         <div class="navtab-flex">
                             <div class="question-requester-design">Have a question? Ask requester a question <a
                                     href="#">here</a></div>
-                            <div class="navtab-filter btn-margin">
+                            <!-- <div class="navtab-filter btn-margin">
                                 <a href="/" class="btn btn-quote-cancel">Cancel</a>
                                 <button type="button" class="btn btn-quote-submit">Submit Quote</button>
-                            </div>
+                            </div> -->
                         </div>
 
                     </div>

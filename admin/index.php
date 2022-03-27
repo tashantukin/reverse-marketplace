@@ -178,7 +178,6 @@
                                                 <a href=""><span class="text-danger">No hurry</span></a>
                                             </td>
 
-
                                             <td data-th="Availability"><a href=""><span
                                                         class="text-danger">{{ job.job_validity}}</span></a></td>
                                             <td data-th="No.of Quote"><a href="">{{ job.no_of_quotes}}</a></td>
@@ -396,8 +395,8 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div class="payment-status-color1"></div>
-                                                    <div class="payment-status not-added">Not Added</div>
+                                                    <div class="payment-status-color2"></div>
+                                                    <div class="payment-status">Active</div>
                                                 </td>
                                                 <td><a href="cod.php"><span class="btn-payment-link">Settings</span></a>
                                                 </td>

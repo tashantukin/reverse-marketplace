@@ -55,7 +55,26 @@
     <link href="https://bootstrap.arcadier.com/package/reverse/css/custom.css" rel="stylesheet" type="text/css">
     <!-- modal style-->
     <link href="https://bootstrap.arcadier.com/spacetime/css/modal.css" rel="stylesheet" type="text/css">
+
+
+    <style>
+    .my-btn {
+        padding: 0px;
+
+    }
+
+    .btn-red {
+        padding: 0px;
+    }
+    </style>
 </head>
+
+<?php
+include 'jobs.php';
+$user_id = $_GET['userId'];
+$userDetails = getFreelancerDetails($user_id);
+
+?>
 
 <body class="seller-items">
     <!-- header -->
@@ -64,7 +83,8 @@
         <div class="content-pages">
             <div class="container">
                 <div id="payment" class="payment-con">
-
+                    <input type="hidden" id="stripe-pay-id"
+                        value=<?php  echo $userDetails['Records'][0]['stripe_payment_id'] ?>>
                     <h3>Payment</h3>
                     <div class="payment-middle-con row">
                         <div class="col-md-6">
@@ -77,7 +97,7 @@
                             </div>
 
                             <div class="common-text">
-                                <p>You will be charged $<span id="charge-amount">{{ jobListCharge }} </span> to Submit
+                                <p>You will be charged $<span id="charge-amount"> </span> to Submit
                                     a
                                     Quote</p>
                                 <p>Upon clicking the Pay button, you will be re-directed to the Payment Gateway to
@@ -85,7 +105,7 @@
 
                             </div>
 
-                            <div id="card-element" style="display:none"> </div>
+                            <div id="card-element-charge" style="display:none"> </div>
                             <!-- Used to display Element errors. -->
                             <div id="card-errors" role="alert"></div>
                             <p id="card-errors"
@@ -103,7 +123,7 @@
                         <div class="next-tab-area pull-right">
                             <span class="seller-btn"> <a class="my-btn btn-clear" href="javascript:void(0);">Cancel</a>
                             </span>
-                            <span class="seller-btn"> <a class="my-btn btn-red" id="paynowPackage"
+                            <span class="seller-btn"> <a class="my-btn btn-red" id="paynowPackageChargeQuote"
                                     href="javascript:void(0);">Pay Now</a>
                             </span>
                         </div>

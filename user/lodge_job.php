@@ -74,9 +74,42 @@
 
 </head>
 <!-- end header -->
+
+<?php
+include 'callAPI.php';
+include 'admin_token.php';
+$contentBodyJson = file_get_contents('php://input');
+$content = json_decode($contentBodyJson, true);
+$merchant_id = $content['user-id'];
+
+$baseUrl = getMarketplaceBaseUrl();
+$admin_token = getAdminToken();
+$customFieldPrefix = getCustomFieldPrefix();
+$userToken = $_COOKIE["webapitoken"];
+$url = $baseUrl . '/api/v2/users/'; 
+$result = callAPI("GET", $userToken, $url, false);
+$userId = $result['ID'];
+
+
+$url = $baseUrl . '/api/v2/users/' . $userId ; 
+$merchant = callAPI("GET", $admin_token['access_token'], $url, false);  
+
+$stripe_payment_id;
+
+foreach($merchant['CustomFields'] as $cf) { 
+    
+    if ($cf['Name'] == 'stripe_payment_id')
+     {
+        $stripe_payment_id = $cf['Values'][0];
+
+     }
+}
+
+?>
 <div class="content-pages">
     <div class="container ">
         <div class="freelancer-content-main">
+            <input type="hidden" id="stripe-id" value=<?php echo $stripe_payment_id ?>>
             <div class="lodge-tab-design ">
                 <div class="jobform-tab">
                     <ul class="nav nav-tabs">
@@ -1134,11 +1167,6 @@ jQuery(document).ready(function() {
             }
         });
     }
-
-
-
-
-
 
 
 });

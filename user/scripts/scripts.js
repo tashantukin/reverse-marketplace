@@ -214,43 +214,130 @@
 
    }
 
-      function chargeQuoteCompleted(token, amount, quoteId, accessUrl)
-      {
-         amount = Math.round($('#charge-amount-complete').text() * 100)
-         var apiUrl = packagePath + '/stripe_charge_complete.php';
-         var merchantToken = $('#merchant-key').val();
-                               
-         var adminCharge = amount;
-         var merchantCharge = Math.round($('#merchant-charge').val() * 100)
-         var data = { token, adminCharge, merchantCharge, merchantToken, quoteId }
+   function chargeQuoteCompleted(token, amount, quoteId, accessUrl)
+   {
+      amount = Math.round($('#charge-amount-complete').text() * 100)
+      var apiUrl = packagePath + '/stripe_charge_complete.php';
+      var merchantToken = $('#merchant-key').val();
+                              
+      var adminCharge = amount;
+      var merchantCharge = Math.round($('#merchant-charge').val() * 100)
+      var data = { token, adminCharge, merchantCharge, merchantToken, quoteId }
+      $.ajax({
+         url: apiUrl,
+         method: 'POST',
+         contentType: 'application/json',
+         data: JSON.stringify(data),
+         success: function (result)
+         {
+            result = JSON.parse(result);
+            if (result.id) {
+
+               console.log('charge');
+               // window.location = $('#access-url').val();
+
+               var quote = quoteData.getInstance();
+               quote.quoteAction('Completed', $('#paynowPackageComplete').attr('job-id'), $('#paynowPackageComplete').attr('user-id'), $('#paynowPackageComplete').attr('quote-id'));
+                  
+            }
+
+
+         },
+         error: function (jqXHR, status, err)
+         {
+            //	toastr.error('Error!');
+         }
+      });
+
+   }
+
+
+   //creating a stripe member
+    function createStripeMember(card, stripe)
+  {
+    //var addressInfo = JSON.parse(localStorage.getItem("address")) != null ? JSON.parse(localStorage.getItem("address")) : null;
+   //console.log((addressInfo));
+       var apiUrl = packagePath + '/createMember.php';
+       var quotes = $.parseJSON(localStorage.getItem('quote_details'))
+      var data = {
+        'full_name': `${quotes.freelancer_id}`,
+        'email': 'samplemail@gmail.com',
+        'contact_number': '000000',
+        'line1':  '',
+        'city':   '' , 
+        'country':  '',
+        'state':  '',
+        'postal_code':'' 
+        }
+		$.ajax({
+            url: apiUrl,
+            
+			method: 'POST',
+            contentType: 'application/json',
+           data: JSON.stringify(data),
+			success: function(result) {
+                result = JSON.parse(result);
+                var customerId = result.result
+
+                createPaymentMethod(customerId, card, stripe)
+      
+			},
+			error: function(jqXHR, status, err) {
+			//	toastr.error('Error!');
+			}
+		});
+	
+   }
+   
+    function createPaymentMethod(customerId, card, stripe)
+  {
+      
+      // const customerId = customer_id;
+      // Set up payment method for recurring usage
+       var quotes = $.parseJSON(localStorage.getItem('quote_details'))
+      let billingName = `${quotes.freelancer_id}`;
+    
+      stripe
+        .createPaymentMethod({
+          type: 'card',
+          card: card,
+          billing_details: {
+            name: billingName,
+          },
+        })
+        .then((result) => {
+          if (result.error) {
+            displayError(result);
+          } else {
+             // console.log(result.paymentMethod.id);
+             console.log({ customerId })
+             console.log(result.paymentMethod.id);
+            createSubscription(
+              customerId,result.paymentMethod.id);
+          }
+        });
+  }
+   function createSubscription(customerId, paymentId)
+   {
+         var apiUrl = packagePath + '/createSubscription.php';
+         var data = { 'customer_id': customerId,  'payment_id' : paymentId}
          $.ajax({
             url: apiUrl,
-            method: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(data),
-            success: function (result)
-            {
-               result = JSON.parse(result);
-               if (result.id) {
+            
+         method: 'POST',
+               contentType: 'application/json',
+                  data: JSON.stringify(data),
+         success: function(result) {
+            result = JSON.parse(result);
+            console.log({result})
+            
 
-                  console.log('charge');
-                  // window.location = $('#access-url').val();
-
-                  var quote = quoteData.getInstance();
-                  quote.quoteAction('Completed', $('#paynowPackageCompleted').attr('job-id'), $('#paynowPackageCompleted').attr('user-id'), $('#paynowPackageCompleted').attr('quote-id'));
-                     
-               }
-
-
-            },
-            error: function (jqXHR, status, err)
-            {
-               //	toastr.error('Error!');
-            }
-         });
-
-      }
-
+         },
+         error: function(jqXHR, status, err) {
+         //	toastr.error('Error!');
+         }
+      });
+   }
 
 
 
@@ -296,7 +383,8 @@
             "payment_paypal": $("#paypal")[0].checked,
             
          };
-         localStorage.setItem('quote_details', JSON.stringify(quote_details))
+      localStorage.setItem('quote_details', JSON.stringify(quote_details))
+     // localStorage.setItem('freelancer_id', JSON.stringify(quote_details))
    }
   
    var userData = (function ()
@@ -1304,13 +1392,55 @@
            function getJobLodges()
            {
               var jobId = localStorage.getItem("jobID"); 
+
+              var stripeCustId = localStorage.getItem("stripe_payment_id"); 
+
               console.log({ jobId });
               if (jobId != null) {
                  //update the job cache
                  updateBuyerID(jobId)
                  
               }
+
+              if (stripeCustId != null) {
+
+                 updateBuyerStripeId(stripeCustId)
+              }
+
+
            }
+
+
+            
+           function  updateBuyerStripeId(id)
+           {
+              waitForElement('#userGuid', function ()
+              {
+                 var user_details = {
+      
+                    "customerId": id,
+                   
+                 };
+          
+                 console.log({ user_details });
+                 
+              
+              var settings = {
+                  "url": packagePath + "/save_stripe_id_buyer.php",
+                  "method": "POST",
+                  "data": JSON.stringify(user_details )
+              }
+              $.ajax(settings).done(function(response){
+                  //remove the existing job id in localstorage after saving
+                 
+                  localStorage.removeItem("stripe_payment_id"); 
+              
+              });
+            })
+          
+          }
+
+
            
            function  updateBuyerID(id)
            {
@@ -1592,7 +1722,7 @@
              {
             
                 toastr.success('Successfully accepted the quotation');
-                window.location = "/";
+               // window.location = "/";
 
              //remove the existing job id in localstorage after saving
             
@@ -1642,16 +1772,36 @@
         
       //quote charge
       if (urls.indexOf('/charge_quote.php') >= 0) {
+ 
 
-         $("#paymentScheme").change(function() {
+         var quotes = $.parseJSON(localStorage.getItem('quote_details'))
+         console.log(quotes);
+         
+         console.log(quotes.freelancer_id);
+
+         $('body').on('change', "#paymentScheme", function () {
+              $('#charged-default').remove();
             if ($('option:selected', $(this)).val() == 'stripe') {
-            $('#card-element').show()
-               console.log('Active')
-            } else {
+             
+               if ($('#stripe-pay-id').val() != null) {
+
+                  $('#card-element-charge').hide(); 
+                  //if (!$('#charged-default').length) {
+                      $('.common-text').append(`<p id="charged-default"> You will be charged on your default payment method. </p>`);
+                   console.log('you will be charge on your default payment method')
+                 // }
+                 
                
-               $('#card-element').hide();
-            }
-         });    
+               } else {
+                   $('#card-element-charge').show()
+                  console.log('Active')
+              }
+         
+        } else {
+            
+            $('#card-element-charge').hide();
+        }
+        });    
       
          const chargeData = new Vue({
             el: "#payment",
@@ -1687,7 +1837,7 @@
                      //vm.jobListCharge = vm.jobListCharge;
                      vm.jobChargeEnabled = jobCharge[0].status;
                      payment_enabled = vm.jobChargeEnabled;
-                     
+                     $('#charge-amount').text(vm.jobListCharge)
 
                   } catch (error) {
                      console.log("error", error);
@@ -1695,7 +1845,6 @@
 
                   
                },
-
             
                async charge(token, amount)
                {
@@ -1737,7 +1886,53 @@
                      }
                   });
          
+               },
+
+                async chargeCustomer(customerId, amount)
+               {
+                  vm = this;
+                  amount = Math.round(amount * 100)
+                  var apiUrl = packagePath + '/stripe_charge_customer.php';
+                  var data = { customerId, amount }
+                  $.ajax({
+                     url: apiUrl,
+                     method: 'POST',
+                     contentType: 'application/json',
+                     data: JSON.stringify(data),
+                     success: function (result)
+                     {
+                        result = JSON.parse(result);
+
+                        console.log({ result });
+                        if (result) {
+
+                           // if (vm.jobChargeEnabled == 'True') {
+                           //send the quote
+
+
+                          var quote = quoteData.getInstance();
+                           quote.quoteJob();
+
+                           // cache_save_job();  
+                           //  }
+                           //if there is a charge id returned, save the job details and redirect to the finish page
+                              
+                     
+                           //complete the lodge
+
+                     
+                        }
+
+            
+                     },
+                     error: function (jqXHR, status, err)
+                     {
+                        //	toastr.error('Error!');
+                     }
+                  });
+         
                }
+            
             
 
             },
@@ -1777,40 +1972,53 @@
                   'fontFamily': 'apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif'
                }
             };
-            if ($('#card-element').length) {
-               card.mount('#card-element');
+            if ($('#card-element-charge').length) {
+               card.mount('#card-element-charge');
             }
     
             // Create a token or display an error the form is submitted.
-            var submitButton = document.getElementById('paynowPackage');
+            var submitButton = document.getElementById('paynowPackageChargeQuote');
             if (submitButton) {
                submitButton.addEventListener('click',
                   function (event)
                   {
                      event.preventDefault();
-                     $("#paynowPackage").attr("disabled", "disabled");
+                     $("#paynowPackageChargeQuote").attr("disabled", "disabled");
 
                      if ($('option:selected', $('#paymentScheme')).text() == 'Cash on Delivery'){
                         console.log('cod');
                           var quote = quoteData.getInstance();
                            quote.quoteJob();
                      } else {
-                          stripe.createToken(card).then(function (result)
-                        {
-                           if (result.error) {
-                              // Inform the user if there was an error
-                              var errorElement = document.getElementById('card-errors');
-                              errorElement.textContent = result.error.message;
-      
-                              // $("#payNowButton").removeAttr("disabled");
-                           } else {
 
-                              console.log({ result })
-                              chargeData.charge(result.token, $('#charge-amount').val());
-                              $("#paynowPackage").prop("disabled", true);
-                                    
-                           }
-                         }); 
+                        if ($('#stripe-pay-id').val() != null) {
+                           console.log('you will be charge on your default payment method')
+                         //  $('#card-element-charge').hide();
+                          // console.log('you will be charge on your default payment method')
+                             chargeData.chargeCustomer($('#stripe-pay-id').val(), $('#charge-amount').text());
+                             $("#paynowPackageChargeQuote").prop("disabled", true);
+                        } else {
+
+                           createStripeMember(card, stripe)
+                          stripe.createToken(card).then(function (result)
+                           {
+                              if (result.error) {
+                                 // Inform the user if there was an error
+                                 var errorElement = document.getElementById('card-errors');
+                                 errorElement.textContent = result.error.message;
+         
+                                 // $("#payNowButton").removeAttr("disabled");
+                              } else {
+
+                                 console.log({ result })
+                                chargeData.charge(result.token, $('#charge-amount').text());
+                                 $("#paynowPackageChargeQuote").prop("disabled", true);
+                                       
+                              }
+                           }); 
+                           
+                        }
+                        
                         
                         
                         
@@ -1904,7 +2112,7 @@
             getQuoteData();
 
             if (chargeEnabled == 'True') {
-               window.location = packagePath + "/charge_quote.php"
+               window.location = packagePath + `/charge_quote.php?userId=${$('#user-id').val()}`
             } else {
                var quote = quoteData.getInstance();
                quote.quoteJob();
@@ -1920,7 +2128,7 @@
             getQuoteData();
 
             if (chargeEnabled == 'True') {
-               window.location = packagePath + "/charge_quote.php"
+               window.location = packagePath + `/charge_quote.php?userId=${$('#user-id').val()}`
             } else {
                var quote = quoteData.getInstance();
                quote.quoteJob();

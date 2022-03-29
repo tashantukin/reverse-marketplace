@@ -18,13 +18,14 @@
     if (parts.length === 2) return parts.pop().split(';').shift();
   }
 
+    if (urls.indexOf('/cod.php') >= 0) {
+        var codCheckBox = document.getElementById('cod_myonoffswitch');
 
-  var codCheckBox = document.getElementById('cod_myonoffswitch');
-
-    codCheckBox.addEventListener('change', () => {
-        saveStatus(codCheckBox.checked, $('#cod-description').val());
-    });
-
+        codCheckBox.addEventListener('change', () =>
+        {
+            saveStatus(codCheckBox.checked, $('#cod-description').val());
+        });
+    }
 
     function saveStatus(codStatus,description)
     {
@@ -69,7 +70,6 @@
     });
     
     }
-
 
 
     if (urls.indexOf('/stripe.php') >= 0) {
@@ -261,6 +261,23 @@
                   var cod_desc = cf.Values[0];
                   $('#code-description').val(cod_desc);
               }
+          }
+
+
+          //index file
+          if (urls.indexOf('/index.php') >= 0) {
+                   if (cf.Name == 'is_cod_enabled' && cf.Code.startsWith(customFieldPrefix)) {
+                  var code_status = cf.Values[0];
+                  var code_status = cf.Values[0];
+                  if (code_status == 'true') {
+                     // codCheckBox.checked = true;
+                  } else {
+                      $('#payment-cod-indicator').removeClass('payment-status-color2').addClass('payment-status-color1');
+                      $('.payment-status-cod').text('Not Added');
+                    
+                  }
+              }
+              
           }
 
       });    

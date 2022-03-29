@@ -148,6 +148,7 @@ function cache_save_job()
         jQuery('.jobform-tab .nav-tabs li').addClass('check');
         jQuery('.jobform-tab .nav-tabs li').prevAll().addClass('check');
         jQuery('.jobform-tab .nav-tabs li').removeClass('active');
+
         setTimeout(function(){ 
         window.location.href = "lodged.html";
         },1000);
@@ -329,7 +330,6 @@ const jobData = new Vue({
             }
         },
 
-
         async getContactDetailsFields()
         {                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
             try {
@@ -353,7 +353,6 @@ const jobData = new Vue({
             }
         },
 
-      
         async getAllTabs()
             {
                
@@ -424,16 +423,16 @@ const jobData = new Vue({
                                         <label for="paymentMethod">Payment Method</label>
                                         <select class="form-control required" name="payment" id="paymentScheme">
                                             <option selected="" value="stripe">Stripe</option>
-                                            
+                                            <option selected="" value="cod">Cash on Delivery</option>
                                         </select>
                                         </div>
 
                                         <div class="common-text">
-                                        <p>You will be charged $${formatter.format(vm.jobListCharge)} to list this job</p>
+                                        <p>You will be charged $ <span id="charge-amount">${formatter.format(vm.jobListCharge)} </span> to list this job</p>
                                         <p>Upon clicking the Pay button, you will be re-directed to the Payment Gateway to continue with your transaction</p>
                                         
                                         </div>
-                                        <div id="card-element"> </div>
+                                        <div id="card-element" style="display:none"> </div>
                                                 <!-- Used to display Element errors. -->
                                                 <div id="card-errors" role="alert"></div>
                                                 <p id="card-errors" style="margin-bottom: 10px; line-height: inherit; color: #eb1c26; font-weight: bold;"></p>
@@ -757,7 +756,7 @@ const jobData = new Vue({
        async charge(token, amount)
        { 
            vm = this;
-           amount = 2000;
+            amount = Math.round(amount * 100)
             var apiUrl = packagePath + '/stripe_charge.php';
             var data = { token, amount }
                 $.ajax({
@@ -789,8 +788,134 @@ const jobData = new Vue({
 			}
 		});
 	
-    }
+        },
+       
+       async  createStripeMember(card, stripe)
+       {
+           
+           vm = this;
+            //var addressInfo = JSON.parse(localStorage.getItem("address")) != null ? JSON.parse(localStorage.getItem("address")) : null;
+        //console.log((addressInfo));
+            var apiUrl = packagePath + '/createMember.php';
+            var data = {
+                'full_name': $('#name').val(),
+                'email': $('#email').val(),
+                'contact_number': $('#contact_number').val(),
+                'line1':  '',
+                'city':   '' , 
+                'country':  '',
+                'state':  '',
+                'postal_code':'' 
+                }
+                $.ajax({
+                    url: apiUrl,
+                    
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(data),
+                    success: function(result) {
+                        result = JSON.parse(result);    
+                        var customerId = result.result
+                        localStorage.setItem('stripe_payment_id', customerId);
+
+                        vm.createPaymentMethod(customerId, card, stripe)
+            
+                    },
+                    error: function(jqXHR, status, err) {
+                    //	toastr.error('Error!');
+                    }
+                });
+            
+        },
+       
+
+        async createPaymentMethod(customerId, card, stripe)
+    {
+            vm = this;
+        // const customerId = custom  er_id;
+        // Set up payment method for recurring usage
+        //var quotes = $.parseJSON(localStorage.getItem('quote_details'))
+        let billingName = $('#name').val();
         
+        stripe
+            .createPaymentMethod({
+            type: 'card',
+            card: card,
+            billing_details: {
+                name: billingName,
+            },
+            })
+            .then((result) => {
+            if (result.error) {
+                displayError(result);
+            } else {
+                // console.log(result.paymentMethod.id);
+                console.log({ customerId })
+
+                console.log(result.paymentMethod.id);
+                vm.createSubscription(
+                customerId, result.paymentMethod.id);
+            }
+            });
+        },
+            
+        async createSubscription(customerId, paymentId)
+        {
+                var apiUrl = packagePath + '/createSubscription_buyer.php';
+                var data = { 'customer_id': customerId,  'payment_id' : paymentId}
+                $.ajax({
+                    url: apiUrl,
+                    
+                method: 'POST',
+                    contentType: 'application/json',
+                        data: JSON.stringify(data),
+                success: function(result) {
+                    result = JSON.parse(result);
+                    console.log({result})
+                    
+
+                },
+                error: function(jqXHR, status, err) {
+                //	toastr.error('Error!');
+                }
+            });
+        },
+
+        async chargeCustomer(customerId, amount)
+        {
+        vm = this;
+        amount = Math.round(amount * 100)
+        var apiUrl = packagePath + '/stripe_charge_customer.php';
+        var data = { customerId, amount }
+            $.ajax({
+                url: apiUrl,
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: function (result)
+                {
+                result = JSON.parse(result);
+
+                console.log({ result });
+                if (result) {
+
+                    cache_save_job();  
+                   
+
+                
+                }
+
+
+                },
+                error: function (jqXHR, status, err)
+                {
+                //	toastr.error('Error!');
+                }
+            });
+
+        }
+        
+
 
     },
     beforeMount() {
@@ -1167,7 +1292,7 @@ $(document).ready(function ()
         }
     });
 
- waitForElement('#payment', function ()
+    waitForElement('#payment', function ()
     {
     var script = document.createElement('script');
     script.onload = function ()
@@ -1205,28 +1330,45 @@ $(document).ready(function ()
                 {
                     event.preventDefault();
                     $("#paynowPackage").attr("disabled", "disabled");
-                    stripe.createToken(card).then(function (result)
-                    {
-                        if (result.error) {
-                            // Inform the user if there was an error
-                            var errorElement = document.getElementById('card-errors');
-                            errorElement.textContent = result.error.message;
-    
-                            // $("#payNowButton").removeAttr("disabled");
-                        } else {
 
-                            console.log({ result })
-                            jobData.charge(result.token);
-                            $("#paynowPackage").prop("disabled", true);
-                                 
-                                  
-                            //subscribe(card, stripe)
-                                  
-    
-                            // Send the result.token.id to a php file and use the token to create the subscription
-                            // SubscriptionManager.PayNowSubmit(result.token.id, e);
-                        }
-                    });
+                     if ($('option:selected', $('#paymentScheme')).text() == 'Cash on Delivery'){
+                        console.log('cod');
+                           cache_save_job();  
+                     } else {
+
+                         if ($('#stripe-id').val() != null && $('#stripe-id').val() != '') {
+                            console.log('you will be charge on your default payment method')
+                             jobData.chargeCustomer($('#stripe-id').val(), $('#charge-amount').text());
+                             $("#paynowPackageChargeQuote").prop("disabled", true);
+                         } else {
+                             jobData.createStripeMember(card, stripe)
+                            stripe.createToken(card).then(function (result)
+                            {
+                                if (result.error) {
+                                    // Inform the user if there was an error
+                                    var errorElement = document.getElementById('card-errors');
+                                    errorElement.textContent = result.error.message;
+            
+                                    // $("#payNowButton").removeAttr("disabled");
+                                } else {
+
+                                    console.log({ result })
+                                    jobData.charge(result.token,$('#charge-amount').text() );
+                                    $("#paynowPackage").prop("disabled", true);
+                                        
+                                    //subscribe(card, stripe)
+                                    
+                                    // Send the result.token.id to a php file and use the token to create the subscription
+                                    // SubscriptionManager.PayNowSubmit(result.token.id, e);
+                                }
+                            });
+                             
+                         }
+                        
+                     }
+
+
+                 
     
                 });
         }
@@ -1244,7 +1386,31 @@ $(document).ready(function ()
 
                   // Create an instance of the card Element
             $('#card-element').css("width", "30em");
-})
+    })
+    
+
+    //payment method selection
+      $('body').on('change', "#paymentScheme", function () {
+        $('#charged-default').remove();
+          if ($('option:selected', $(this)).val() == 'stripe') {
+
+              if ($('#stripe-id').val() != null && $('#stripe-id').val() != '') {
+                  $('#card-element-charge').hide();
+                  //if (!$('#charged-default').length) {
+                  $('.common-text').append(`<p id="charged-default"> You will be charged on your default payment method. </p>`);
+                  console.log('you will be charge on your default payment method')
+                  // }
+                
+              } else {
+            
+                  $('#card-element').show()
+                  console.log('Active stripe')
+              }
+          }else {
+            
+            $('#card-element-charge').hide();
+        }
+        });    
            
 
 })

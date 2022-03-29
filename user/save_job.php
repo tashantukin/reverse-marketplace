@@ -73,8 +73,6 @@
 
     //save in job location ct 
 
-
-   
    $location_details = [
          
          "job_title" => "",

@@ -1,0 +1,5 @@
+"{\"result\": {
+    \
+    "id\":\"cus_LPD3fHdZcDUtwv\",\"object\":\"customer\",\"address\":{\"city\":\"\",\"country\":\"\",\"line1\":\"\",\"line2\":null,\"postal_code\":\"\",\"state\":\"\"},\
+    "balance\":0,\"created\":1648497258,\"currency\":null,\"default_source\":null,\"delinquent\":false,\"description\":null,\"discount\":null,\"email\":\"samplemail@gmail.com\",\"invoice_prefix\":\"EBB870B4\",\"invoice_settings\":{\"custom_fields\":null,\"default_payment_method\":\"pm_1KiOdrLQSWMKUO5eDXdGCioo\",\"footer\":null},\
+    "livemode\":false,\"metadata\":[],\"name\":\"b7b13be5-7bb8-4eec-a4b7-37bee2d6fdad\",\"next_invoice_sequence\":1,\"phone\":\"000000\",\"preferred_locales\":[],\"shipping\":null,\"tax_exempt\":\"none\",\"test_clock\":null}}{\"result\":{\"Message\":\"Id is not found\"}}"

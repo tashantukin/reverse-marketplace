@@ -59,7 +59,7 @@
 <div class="page-content" id="payment-custom-content">
 
     <div class="gutter-wrapper">
-        <div class="page-topnav"> <a class="btn-back" href="payments.html"><i class="icon icon-arrowleft"></i> Back</a>
+        <div class="page-topnav"> <a class="btn-back" href="index.php"><i class="icon icon-arrowleft"></i> Back</a>
         </div>
         <div class="panel-box">
             <div class="page-content-top private-setting-container-switch">

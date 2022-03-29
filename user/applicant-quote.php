@@ -41,7 +41,7 @@ else {
  $hourly_amount = $jobDetails['Records'][0]['is_payment_hourly'] == 'True' ? number_format((float)$jobDetails['Records'][0]['payment_amount'],2) : "";
 
 $style = "";
-if ($quotedDetails['Records'][0]['status'] == 'Accepted') {
+if ($quotedDetails['Records'][0]['status'] != 'Quoted') {
     $style =  "style='display:none'";
 }
 

@@ -395,8 +395,13 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div class="payment-status-color2"></div>
-                                                    <div class="payment-status">Active</div>
+
+                                                    <?php 
+
+
+                                                    ?>
+                                                    <div id="payment-cod-indicator" class="payment-status-color2"></div>
+                                                    <div class="payment-status-cod">Active</div>
                                                 </td>
                                                 <td><a href="cod.php"><span class="btn-payment-link">Settings</span></a>
                                                 </td>
@@ -1022,6 +1027,7 @@ $(document).ready(function() {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
 <script type="text/javascript" src="scripts/manage.js"></script>
 <script type="text/javascript" src="scripts/scripts3.js"></script>
+<script type="text/javascript" src="scripts/payments.js"></script>
 
 <!-- end footer -->
 </body>

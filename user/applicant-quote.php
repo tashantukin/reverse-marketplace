@@ -109,6 +109,13 @@ if ($quotedDetails['Records'][0]['status'] != 'Quoted') {
     </style>
 </head>
 
+<?php
+//include 'jobs.php';
+// $user_id = $_GET['userId'];
+// $userDetails = getFreelancerDetails($user_id);
+
+?>
+
 <body class="seller-items">
 
     <div class="main">
@@ -440,14 +447,16 @@ if ($quotedDetails['Records'][0]['status'] != 'Quoted') {
                 <div class="modal-body">
 
                     <div id="payment" class="payment-con clearfix">
-
+                        <input type="hidden" id="stripe-pay-id"
+                            value=<?php  echo $userDetails['Records'][0]['stripe_payment_id'] ?>>
                         <h3>Payment</h3>
                         <div class="payment-middle-con ">
 
                             <div class="form-group">
                                 <label for="paymentMethod">Payment Method</label>
                                 <select class="form-control required" name="payment" id="paymentScheme">
-                                    <option selected value="stripe">Stripe</option>
+                                    <option value="stripe">Stripe</option>
+                                    <option selected value="cod">Cash on Delivery</option>
 
                                 </select>
                             </div>
@@ -493,9 +502,6 @@ if ($quotedDetails['Records'][0]['status'] != 'Quoted') {
         </div>
     </div>
 
-
-
-
     <div class="modal fade payment-modal" id="paymentModalComplete" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
@@ -505,24 +511,26 @@ if ($quotedDetails['Records'][0]['status'] != 'Quoted') {
                         value="<?php echo $quotedDetails['Records'][0]['all_total'] ?>">
 
                     <div id="payment" class="payment-con clearfix">
-
+                        <input type="hidden" id="stripe-pay-id"
+                            value=<?php  echo $userDetails['Records'][0]['stripe_payment_id'] ?>>
                         <h3>Payment</h3>
                         <div class="payment-middle-con ">
 
                             <div class="form-group">
                                 <label for="paymentMethod">Payment Method</label>
-                                <select class="form-control required" name="payment" id="paymentScheme">
-                                    <option selected value="stripe">Stripe</option>
+                                <select class="form-control required" name="payment" id="paymentSchemeCompleted">
+                                    <option value="stripe">Stripe</option>
+                                    <option selected value="cod">Cash on Delivery</option>
 
                                 </select>
                             </div>
 
                             <div class="common-text">
-                                <p>You will be charged $<span id="charge-amount-complete"></span> for a completed task
-                                    and payment for the completed task.</p>
+                                <p>You will be charged $<span id="charge-amount-complete"></span> for marking the job
+                                    complete
+                                    and payment to the freelancer for the completed task.</p>
                                 <p>Upon clicking the Pay button, you will be re-directed to the Payment Gateway to
                                     continue with your transaction</p>
-
                             </div>
 
                             <div id="card-element-complete"> </div>

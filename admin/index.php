@@ -54,7 +54,12 @@
 </head>
 <!-- end header -->
 
+<?php 
 
+include 'callAPI.php';
+
+$baseUrl = getMarketplaceBaseUrl();
+?>
 <div class="page-content">
     <div class="gutter-wrapper">
         <div class="panel-box border-none">
@@ -645,19 +650,19 @@
                                 <li>
                                     <h5> New Freelancer Registration</h5>
                                     <p>Sent to Admin for every new Freelancer sign up.</p> <a
-                                        href="edit_content.php?pageid=9a733374-1e37-47e1-9d96-128eb4bfb15f"
+                                        href="<?php echo $baseUrl ?>/admin/plugins/ed0f2131-3ef2-4ef1-9fb8-e20224eb1887/edit_content.php?pageid=9a733374-1e37-47e1-9d96-128eb4bfb15f"
                                         id="9a733374-1e37-47e1-9d96-128eb4bfb15f" class="action-edit-template">Edit</a>
                                 </li>
                                 <li>
                                     <h5> Quotation Accepted</h5>
                                     <p>Sent to seller once the buyer accepted the quotation.</p> <a
-                                        href="edit_content.php?pageid=4bcfd5ae-712f-434d-83a3-377756e82f41"
+                                        href="<?php echo $baseUrl ?>/admin/plugins/ed0f2131-3ef2-4ef1-9fb8-e20224eb1887/edit_content.php?pageid=4bcfd5ae-712f-434d-83a3-377756e82f41"
                                         id="4bcfd5ae-712f-434d-83a3-377756e82f41" class="action-edit-template">Edit</a>
                                 </li>
                                 <li>
                                     <h5> Quotation Rejected</h5>
                                     <p>Sent to seller once the buyer rejected the quotation.</p> <a
-                                        href="edit_content.php?pageid=ac8c6077-2078-4045-ad71-4ea95c3ca4db"
+                                        href="<?php echo $baseUrl ?>/admin/plugins/ed0f2131-3ef2-4ef1-9fb8-e20224eb1887/edit_content.php?pageid=ac8c6077-2078-4045-ad71-4ea95c3ca4db"
                                         id="ac8c6077-2078-4045-ad71-4ea95c3ca4db" class="action-edit-template">Edit</a>
                                 </li>
                             </ul>

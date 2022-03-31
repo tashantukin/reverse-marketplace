@@ -73,6 +73,7 @@
 
      $quote_id = $quoteDetails['Records'][0]['Id'];
 
+
      $quote_details = [
             
         'status' => 'Quoted'
@@ -80,5 +81,23 @@
     ];
     
     $response = $API->editRowEntry($packageId, 'freelancer_quotes', $quote_id, $quote_details);
+
+  //job quotes
+
+  $templates = array(array('Name' => 'job_id', "Operator" => "equal",'Value' => $content['job_id']), array('Name' => 'freelancer_id', "Operator" => "equal",'Value' => $content['freelancer_id']) );
+     $url =  $baseUrl . '/api/v2/plugins/'. $packageId .'/custom-tables/job_quotes';
+     $quoteDetails =  callAPI("POST", $admin_token, $url, $templates);
+
+     $quote_id = $quoteDetails['Records'][0]['Id'];
+
+
+     $quote_details = [
+            
+        'status' => 'Quoted'
+
+    ];
+    
+    $response = $API->editRowEntry($packageId, 'job_quotes', $quote_id, $quote_details);
+
 
 ?>

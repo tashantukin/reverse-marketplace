@@ -23,6 +23,7 @@
    var lat;
    var long;
    var accuracy;
+   var stripePayId;
    
     //const token = getCookie('webapitoken');
    function distanceBetweenTwoPlace(firstLat, firstLon, secondLat, secondLon, unit) {
@@ -116,7 +117,7 @@
         jQuery('#paymentModalFreelancer').modal('show');
     }
 
-  function charge(token, amount, quoteId, accessUrl)
+   function charge(token, amount, quoteId, accessUrl)
    {
       amount = Math.round(amount * 100)
       var apiUrl = packagePath + '/stripe_charge.php';
@@ -136,6 +137,38 @@
                window.location = accessUrl;
                
             }
+
+
+         },
+         error: function (jqXHR, status, err)
+         {
+            //	toastr.error('Error!');
+         }
+      });
+
+   }
+
+
+   function chargeViewCod(quoteId, accessUrl)
+   {
+      //amount = Math.round(amount * 100)
+      var apiUrl = packagePath + '/charge_cod.php';
+      var data = { quoteId }
+      $.ajax({
+         url: apiUrl,
+         method: 'POST',
+         contentType: 'application/json',
+         data: JSON.stringify(data),
+         success: function (result)
+         {
+            //result = JSON.parse(result);
+           // if (result.id) {
+
+               console.log('charged cod');
+
+               window.location = accessUrl;
+               
+           // }
 
 
          },
@@ -179,8 +212,6 @@
 
    }
 
-  
-
    function chargeQuoteAccept(token, amount, quoteId, accessUrl)
    {
       amount = Math.round(amount * 100)
@@ -203,6 +234,39 @@
                 quote.quoteAction('Accepted', $('#paynowPackage').attr('job-id'), $('#paynowPackage').attr('user-id'), $('#paynowPackage').attr('quote-id'));
                   
             }
+
+
+         },
+         error: function (jqXHR, status, err)
+         {
+            //	toastr.error('Error!');
+         }
+      });
+
+   }
+
+   function chargeQuoteAcceptCod(quoteId, accessUrl)
+   {
+      //amount = Math.round(amount * 100)
+      var apiUrl = packagePath + '/charge_cod.php';
+      var data = { quoteId }
+      $.ajax({
+         url: apiUrl,
+         method: 'POST',
+         contentType: 'application/json',
+         data: JSON.stringify(data),
+         success: function (result)
+         {
+           // result = JSON.parse(result);
+           // if (result.id) {
+
+               console.log('charge');
+               // window.location = $('#access-url').val();
+
+                var quote = quoteData.getInstance();
+                quote.quoteAction('Accepted', $('#paynowPackage').attr('job-id'), $('#paynowPackage').attr('user-id'), $('#paynowPackage').attr('quote-id'));
+                  
+           // }
 
 
          },
@@ -251,16 +315,178 @@
 
    }
 
+    function chargeQuoteCompletedCod(quoteId, accessUrl)
+   {
+      //amount = Math.round($('#charge-amount-complete').text() * 100)
+      var apiUrl = packagePath + '/charge_cod.php';
+      //var merchantToken = $('#merchant-key').val();
+                              
+      //var adminCharge = amount;
+      //var merchantCharge = Math.round($('#merchant-charge').val() * 100)
+      var data = { quoteId }
+      $.ajax({
+         url: apiUrl,
+         method: 'POST',
+         contentType: 'application/json',
+         data: JSON.stringify(data),
+         success: function (result)
+         {
+            //result = JSON.parse(result);
+            //if (result.id) {
+
+               console.log('charge');
+               // window.location = $('#access-url').val();
+
+               var quote = quoteData.getInstance();
+               quote.quoteAction('Completed', $('#paynowPackageComplete').attr('job-id'), $('#paynowPackageComplete').attr('user-id'), $('#paynowPackageComplete').attr('quote-id'));
+                  
+           // }
+
+
+         },
+         error: function (jqXHR, status, err)
+         {
+            //	toastr.error('Error!');
+         }
+      });
+
+   }
+
+  function  createStripeMember(card, stripe)
+       {
+           
+        
+            //var addressInfo = JSON.parse(localStorage.getItem("address")) != null ? JSON.parse(localStorage.getItem("address")) : null;
+        //console.log((addressInfo));
+            var apiUrl = packagePath + '/createMember.php';
+            var data = {
+                'full_name': '---',
+                'email': 'email@email.com',
+                'contact_number': '00000',
+                'line1':  '',
+                'city':   '' , 
+                'country':  '',
+                'state':  '',
+                'postal_code':'' 
+                }
+                $.ajax({
+                    url: apiUrl,
+                    
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(data),
+                    success: function(result) {
+                        result = JSON.parse(result);    
+                        var customerId = result.result
+                        localStorage.setItem('stripe_payment_id', customerId);
+
+                        createPaymentMethod(customerId, card, stripe)
+            
+                    },
+                    error: function(jqXHR, status, err) {
+                    //	toastr.error('Error!');
+                    }
+                });
+            
+        }
+       
+
+   function createPaymentMethod(customerId, card, stripe)
+    {
+      
+        // const customerId = custom  er_id;
+        // Set up payment method for recurring usage
+        //var quotes = $.parseJSON(localStorage.getItem('quote_details'))
+        let billingName = $('----').val();
+        
+        stripe
+            .createPaymentMethod({
+            type: 'card',
+            card: card,
+            billing_details: {
+                name: billingName,
+            },
+            })
+            .then((result) => {
+            if (result.error) {
+                displayError(result);
+            } else {
+                // console.log(result.paymentMethod.id);
+                console.log({ customerId })
+
+                console.log(result.paymentMethod.id);
+                createSubscription(
+                customerId, result.paymentMethod.id);
+            }
+            });
+        }
+            
+   function createSubscription(customerId, paymentId)
+   {
+            var apiUrl = packagePath + '/createSubscription_buyer.php';
+            var data = { 'customer_id': customerId,  'payment_id' : paymentId}
+            $.ajax({
+               url: apiUrl,
+               
+            method: 'POST',
+               contentType: 'application/json',
+                  data: JSON.stringify(data),
+            success: function(result) {
+               result = JSON.parse(result);
+               console.log({result})
+               
+
+            },
+            error: function(jqXHR, status, err) {
+            //	toastr.error('Error!');
+            }
+      });
+   }
+
+   function chargeCustomer(customerId, amount)
+   {
+
+   amount = Math.round(amount * 100)
+   var apiUrl = packagePath + '/stripe_charge_customer.php';
+   var data = { customerId, amount }
+      $.ajax({
+            url: apiUrl,
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (result)
+            {
+            result = JSON.parse(result);
+
+            console.log({ result });
+            if (result) {
+
+               //cache_save_job();  
+               
+
+            
+            }
+
+
+            },
+            error: function (jqXHR, status, err)
+            {
+            //	toastr.error('Error!');
+            }
+      });
+
+   }
+
 
    //creating a stripe member
-    function createStripeMember(card, stripe)
+   function createStripeMember(card, stripe)
   {
     //var addressInfo = JSON.parse(localStorage.getItem("address")) != null ? JSON.parse(localStorage.getItem("address")) : null;
    //console.log((addressInfo));
        var apiUrl = packagePath + '/createMember.php';
        var quotes = $.parseJSON(localStorage.getItem('quote_details'))
       var data = {
-        'full_name': `${quotes.freelancer_id}`,
+        'full_name': `=====`,
         'email': 'samplemail@gmail.com',
         'contact_number': '000000',
         'line1':  '',
@@ -289,13 +515,13 @@
 	
    }
    
-    function createPaymentMethod(customerId, card, stripe)
+   function createPaymentMethod(customerId, card, stripe)
   {
       
       // const customerId = customer_id;
       // Set up payment method for recurring usage
-       var quotes = $.parseJSON(localStorage.getItem('quote_details'))
-      let billingName = `${quotes.freelancer_id}`;
+      // var quotes = $.parseJSON(localStorage.getItem('quote_details'))
+      let billingName = `----`;
     
       stripe
         .createPaymentMethod({
@@ -316,7 +542,7 @@
               customerId,result.paymentMethod.id);
           }
         });
-  }
+   }
    function createSubscription(customerId, paymentId)
    {
          var apiUrl = packagePath + '/createSubscription.php';
@@ -338,10 +564,6 @@
          }
       });
    }
-
-
-
-
 
    function getQuoteData()
    {
@@ -639,51 +861,73 @@
          }
 
          async function getUserStatus(userId)
-        {
-           var data = [{ 'Name': 'user_id', 'Operator': "equal", "Value": userId }
-           ]
-          
-          $.ajax({
+         {
+            var data = [{ 'Name': 'user_id', 'Operator': "equal", "Value": userId }
+            ]
+            
+            $.ajax({
             method: "POST",
             url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/freelancer_details/`,
             headers: {
-              "Content-Type": "application/json"
+               "Content-Type": "application/json"
             },
-          
+            
             data: JSON.stringify(data),
-       
+         
             success: function (response)
             {
-              console.log({ response })
+               console.log({ response })
             
-              const users = response
-              const userDetails = users.Records[0]
-              //if existing user, verify the status
-              if (userDetails) {
+               const users = response
+               const userDetails = users.Records[0]
+               //if existing user, verify the status
+               if (userDetails) {
 
-                
-                
+                  
+                  
                if (userDetails['status'] == 'Approved' && userDetails['approved_confirmed'] == 1) { 
-                
+                  
 
-                 
+                  
                } else {
                   
                   urls = `${protocol}//${baseURL}/subscribe`;
                   window.location.href = urls;
-             }
-                
+               }
+                  
                }
                
-          
-      
+            
+
             }
          })
          }
+
+
+       async  function getUserCustomFields(userGuid, callback){
+
+         var apiUrl = `/api/v2/users/${userGuid}`;
+         // console.log(apiUrl);
+         $.ajax({
+            url: apiUrl,
+            method: "GET",
+            contentType: 'application/json',
+
+            success: function (result)
+            {
+            if (result) {
+               callback(result.CustomFields);
+
+            }
+            },
+         });
+         
+      }
          
           return {
              getUserDetails: getUserDetails,
-             getUserStatus: getUserStatus
+             getUserStatus: getUserStatus,
+             getUserCustomFields: getUserCustomFields
         
           }
           
@@ -1042,6 +1286,7 @@
                                                    <label for="paymentMethod">Payment Method</label>
                                                    <select class="form-control required" name="payment" id="paymentScheme">
                                                       <option selected value="stripe">Stripe</option>
+                                                       <option selected value="cod">Cash on Delivery</option>
                                                    </select>
                                                 </div>
                               
@@ -1722,7 +1967,7 @@
              {
             
                 toastr.success('Successfully accepted the quotation');
-               // window.location = "/";
+               window.location = "/";
 
              //remove the existing job id in localstorage after saving
             
@@ -2145,6 +2390,53 @@
          jobs.getChargeDetails('job_accepted_buyer');
          jobs.getChargeDetails('job_paid_buyer');
 
+         $('body').on('change', "#paymentScheme", function () {
+            $('#charged-default').remove();
+            if ($('option:selected', $(this)).val() == 'stripe') {
+            
+               if ($('#stripe-pay-id').val() != null) {
+
+                  $('#card-element').hide(); 
+                  //if (!$('#charged-default').length) {
+                        $('.common-text').append(`<p id="charged-default"> You will be charged on your default payment method. </p>`);
+                     console.log('you will be charge on your default payment method')
+                  // }
+                  
+               
+               } else {
+                     $('#card-element').show()
+                  console.log('Active')
+               }
+      
+            } else {
+               
+               $('#card-element').hide();
+            }
+         }); 
+         
+         //Mark as complete modal
+           $('body').on('change', "#paymentSchemeCompleted", function () {
+            $('#charged-default').remove();
+            if ($('option:selected', $(this)).val() == 'stripe') {
+            
+               if ($('#stripe-pay-id').val() != null &&  $('#stripe-pay-id').val() != '') {
+
+                  $('#card-element-complete').hide(); 
+                  //if (!$('#charged-default').length) {
+                        $('.common-text').append(`<p id="charged-default"> You will be charged on your default payment method. </p>`);
+                     console.log('you will be charge on your default payment method')
+                  // }
+                  
+               } else {
+                     $('#card-element-complete').show()
+                     console.log('Active')
+               }
+      
+            } else {
+               
+               $('#card-element-complete').hide();
+            }
+         }); 
 
          // waitForElement('#paymentModal', function ()
          // {
@@ -2158,7 +2450,6 @@
             //        stripePubKey = cf.Values[0];
             //       }
             //   })
-
             //if (stripePubKey) {
             //do stuff with the script
             var stripe = Stripe('pk_test_51IDN6ALQSWMKUO5eXiY7nrd6P3dE6oLh42AQpfpUxz64OgHjaSiME8LLPmyWuaPOlUIAT0H0sLjfMkPWd4eBUbxC00gi2lcEOX');
@@ -2185,28 +2476,42 @@
                   {
                      event.preventDefault();
                      $("#paynowPackage").attr("disabled", "disabled");
-                     stripe.createToken(card).then(function (result)
-                     {
-                        if (result.error) {
-                           // Inform the user if there was an error
-                           var errorElement = document.getElementById('card-errors');
-                           errorElement.textContent = result.error.message;
-      
-                           // $("#payNowButton").removeAttr("disabled");
-                        } else {
-
-                           console.log({ result })
-                           chargeQuoteAccept(result.token, $('#charge-amount').text(), $('#quoted-id').val());
+                     if ($('option:selected', $('#paymentScheme')).text() == 'Cash on Delivery') {
+                        console.log('cod');
+                        chargeQuoteAcceptCod($('#quoted-id').val());
+                        $("#paynowPackage").prop("disabled", true);
+                     } else {
+                        //with existing payment method
+                        if ($('#stripe-pay-id').val() != null && $('#stripe-pay-id').val() != '') {
+                           console.log('you will be charge on your default payment method')
+                           chargeCustomer($('#stripe-pay-id').val(), $('#charge-amount').text());
+                           chargeQuoteAcceptCod($('#quoted-id').val());
                            $("#paynowPackage").prop("disabled", true);
-                                    
-                                    
-                           //subscribe(card, stripe)
-                                    
-      
-                           // Send the result.token.id to a php file and use the token to create the subscription
-                           // SubscriptionManager.PayNowSubmit(result.token.id, e);
+                        } else {
+                           createStripeMember(card, stripe)
+                           stripe.createToken(card).then(function (result)
+                           {
+                              if (result.error) {
+                                 // Inform the user if there was an error
+                                 var errorElement = document.getElementById('card-errors');
+                                 errorElement.textContent = result.error.message;
+         
+                                 // $("#payNowButton").removeAttr("disabled");
+                              } else {
+
+                                 console.log({ result })
+                                 chargeQuoteAccept(result.token, $('#charge-amount').text(), $('#quoted-id').val());
+                                 $("#paynowPackage").prop("disabled", true);
+                                       
+                                       
+                                 //subscribe(card, stripe)
+                                 // Send the result.token.id to a php file and use the token to create the subscription
+                                 // SubscriptionManager.PayNowSubmit(result.token.id, e);
+                              }
+                           });
                         }
-                     });
+
+                     }
       
                   });
             }
@@ -2230,7 +2535,7 @@
 
          waitForElement('#paymentModalComplete', function ()
          {
-             var script = document.createElement('script');
+         var script = document.createElement('script');
          script.onload = function ()
          {
             // getMarketplaceCustomFields(function(result) {
@@ -2267,28 +2572,52 @@
                   {
                      event.preventDefault();
                      $("#paynowPackageComplete").attr("disabled", "disabled");
-                     stripe.createToken(card).then(function (result)
-                     {
-                        if (result.error) {
-                           // Inform the user if there was an error
-                           var errorElement = document.getElementById('card-errors');
-                           errorElement.textContent = result.error.message;
-      
-                           // $("#payNowButton").removeAttr("disabled");
-                        } else {
 
-                           console.log({ result })
-                           chargeQuoteCompleted(result.token, $('#charge-amount-completed').text(), $('#quoted-id').val());
+                      if ($('option:selected', $('#paymentSchemeCompleted')).text() == 'Cash on Delivery') {
+                         console.log('cod');
+                         chargeQuoteCompletedCod($('#quoted-id').val());
+                        //chargeQuoteAcceptCod($('#quoted-id').val());
+                        $("#paynowPackageComplete").prop("disabled", true);
+                      } else {
+
+                        if ($('#stripe-pay-id').val() != null && $('#stripe-pay-id').val() != '') {
+                           console.log('you will be charge on your default payment method')
+                            chargeCustomer($('#stripe-pay-id').val(), $('#charge-amount').text());
+                           // chargeQuoteCompleted(result.token, $('#charge-amount-completed').text(), $('#quoted-id').val());
+                            //chargeQuoteCompletedCod($('#quoted-id').val());
+                           //chargeQuoteAcceptCod($('#quoted-id').val());
                            $("#paynowPackageComplete").prop("disabled", true);
-                                    
-                                    
-                           //subscribe(card, stripe)
-                                    
+                        } else {
+                           createStripeMember(card, stripe)
+                           stripe.createToken(card).then(function (result)
+                           {
+                              if (result.error) {
+                                 // Inform the user if there was an error
+                                 var errorElement = document.getElementById('card-errors');
+                                 errorElement.textContent = result.error.message;
       
-                           // Send the result.token.id to a php file and use the token to create the subscription
-                           // SubscriptionManager.PayNowSubmit(result.token.id, e);
+                              } else {
+
+                                 //console.log({ result })
+                                 chargeCustomer($('#stripe-pay-id').val(), $('#charge-amount').text());
+                                 chargeQuoteCompleted(result.token, $('#charge-amount-completed').text(), $('#quoted-id').val());
+                                 $("#paynowPackageComplete").prop("disabled", true);
+                                          
+                                          
+                                 //subscribe(card, stripe)
+                                 // Send the result.token.id to a php file and use the token to create the subscription
+                                 // SubscriptionManager.PayNowSubmit(result.token.id, e);
+                              }
+                           });
+                           
                         }
-                     });
+
+                         
+                      }
+
+
+
+                     
       
                   });
             }
@@ -2324,8 +2653,6 @@
          }      
       })
         
-
-
       //accept button
 
       $('#accept-confirm').on('click', function (event)
@@ -2349,7 +2676,7 @@
       if (document.body.className.includes('page-home')) {
 
         
-          localStorage.removeItem("userID");
+         localStorage.removeItem("userID");
          localStorage.removeItem("stripe-onboarded");
          $('#register-modal-seller').hide();
          $('.cart-menu').hide();
@@ -2376,6 +2703,19 @@
          if ($('#userGuid').length != 0) {
             user.getUserStatus(userId)
             user.getUserDetails(userId)
+            user.getUserCustomFields(userId, function (result)
+            {
+               $.each(result, function (index, cf)
+               {
+                  if (cf.Name == 'stripe_payment_id') {
+
+                  stripePayId = cf.Values[0];
+                  console.log({ stripePayId });
+                  
+                  }
+               })
+
+            })
          }
        
 
@@ -2443,28 +2783,52 @@
                {
                   event.preventDefault();
                   $("#paynowPackage").attr("disabled", "disabled");
-                  stripe.createToken(card).then(function (result)
-                  {
-                     if (result.error) {
-                        // Inform the user if there was an error
-                        var errorElement = document.getElementById('card-errors');
-                        errorElement.textContent = result.error.message;
-    
-                        // $("#payNowButton").removeAttr("disabled");
-                     } else {
+                  if ($('option:selected', $('#paymentScheme')).text() == 'Cash on Delivery') {
+                     console.log('cod');
+                     chargeViewCod($('#quoted-id').val(), $('#access-url').val());
+         
+                  } else {
+                      if (stripePayId != null && stripePayId != '') {
+                           console.log('you will be charge on your default payment method')
+                         //  $('#card-element-charge').hide();
+                          // console.log('you will be charge on your default payment method')
+                         chargeCustomer(stripePayId, $('#charge-amount').text());
+                         chargeViewCod($('#quoted-id').val(), $('#access-url').val());
+                     
+                             $("#paynowPackageChargeQuote").prop("disabled", true);
+                      } else {
+                         createStripeMember(card, stripe)
+                          stripe.createToken(card).then(function (result)
+                           {
+                              if (result.error) {
+                                 // Inform the user if there was an error
+                                 var errorElement = document.getElementById('card-errors');
+                                 errorElement.textContent = result.error.message;
+            
+                                 // $("#payNowButton").removeAttr("disabled");
+                              } else {
 
-                        console.log({ result })
-                        charge(result.token, $('#charge-amount').text(), $('#quoted-id').val(), $('#access-url').val());
-                        $(" #paynowPackage").prop("disabled", true);
-                                 
-                                  
-                        //subscribe(card, stripe)
-                                  
-    
-                        // Send the result.token.id to a php file and use the token to create the subscription
-                        // SubscriptionManager.PayNowSubmit(result.token.id, e);
-                     }
-                  });
+                                 console.log({ result })
+                                 charge(result.token, $('#charge-amount').text(), $('#quoted-id').val(), $('#access-url').val());
+                                 $(" #paynowPackage").prop("disabled", true);
+                                          
+                                          
+                                 //subscribe(card, stripe)
+                                          
+            
+                                 // Send the result.token.id to a php file and use the token to create the subscription
+                                 // SubscriptionManager.PayNowSubmit(result.token.id, e);
+                              }
+                           });
+                         
+                        }
+
+                     
+
+                      
+                  }
+
+                 
     
                });
          }
@@ -2485,12 +2849,6 @@
  
       });
          
-
-
-
-
-
-
 
       // freelancer charges
        waitForElement('#paymentModalFreelancer', function ()
@@ -2573,10 +2931,37 @@
  
       });
 
+     
+      $('body').on('change', "#paymentScheme", function () {
+              $('#charged-default').remove();
+            if ($('option:selected', $(this)).val() == 'stripe') {
+             
+               if (stripePayId != null && stripePayId != '') {
+
+                  $('#card-element').hide(); 
+                  //if (!$('#charged-default').length) {
+                      $('.common-text').append(`<p id="charged-default"> You will be charged on your default payment method. </p>`);
+                   console.log('you will be charge on your default payment method')
+                 // }
+                 
+               
+               } else {
+                   $('#card-element').show()
+                  console.log('Active')
+              }
+         
+        } else {
+            
+            $('#card-element').hide();
+        }
+        });    
+
+
+
+
       }
        
      
-   
 
       //stripe
    

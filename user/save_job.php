@@ -1,5 +1,6 @@
 <?php
     require 'api.php';
+    require 'callAPI.php';
     $API = new API();
 
     $contentBodyJson = file_get_contents('php://input');
@@ -15,6 +16,7 @@
         'is_remote_work' => $content['is_remote_work'],
         'is_in_person_work' => $content['is_inperson_work'],
         'in_person_work_address' => $content['in_person_work_address'],
+        'in_person_work_coords' => $content['in_person_work_coords'],
 
 
         //job type
@@ -84,5 +86,193 @@
 
     
    $response = $API->createRowEntry($packageId, 'job_locations', $location_details);
+
+
+   //send edms for registered freelancers
+   // search all freelancers with approved status
+     $baseUrl = $API->getMarketplaceBaseUrl();
+    $admin_token = $API->AdminToken();
+
+    $templates = array(array('Name' => 'status', "Operator" => "equal",'Value' => 'Approved'));
+    $url =  $baseUrl . '/api/v2/plugins/'. $packageId .'/custom-tables/freelancer_details';
+    $merchantDetails =  callAPI("POST", $admin_token, $url, $templates);
+
+   // error_log(json_encode($quoteDetails));
+
+    $url = $baseUrl . '/api/v2/users/';
+    $result = callAPI("GET", $admin_token, $url, false);
+    $admin_id = $result['ID'];
+
+     $url = $baseUrl . '/api/v2/marketplaces/';
+    $marketplaceInfo = callAPI("GET", null, $url, false);
+
+    $protocol = stripos($_SERVER['SERVER_PROTOCOL'],'https') === 0 ? 'https://' : 'http://';
+    $mplink =  $protocol .= $marketplaceInfo['DefaultDomain'];
+    $mplogo1 = $marketplaceInfo['LogoUrl'];
+    $mpname =   $marketplaceInfo['Name'];
+    $mpEmail =  $marketplaceInfo['Owner']['Email'];
+    $admin_name = $marketplaceInfo['Owner']['FirstName'];
+    $lat = $content['in_person_work_coords'][0];
+    $long = $content['in_person_work_coords'][1];
+
+
+
+    $tempoId = 'ed0f2131-3ef2-4ef1-9fb8-e20224eb1887';
+    $templates = array(array('Name' => 'Id', "Operator" => "in",'Value' => '267348f3-9a39-4f36-9091-0854179cb682'));
+    $url =  $baseUrl . '/api/v2/plugins/'. $tempoId .'/custom-tables/Templates';
+  
+
+    $templateDetails =  callAPI("POST", $admin_token, $url, $templates);
+
+
+    $content = $templateDetails['Records'][0]['contents'];
+
+
+     foreach( $merchantDetails['Records'] as $merchant) {
+
+         $merchant_email =  $merchant['email'];
+        
+            
+        if ( $content['is_inperson_work'] == true ) {
+             $coordinates =  json_decode($merchant['servicing_area_coords'], TRUE);
+                error_log('coord 0' . $coordinates[0]);
+                error_log('coords ' . json_encode($coordinates));
+             try {
+                if ($coordinates) {
+                    $distance = distance($coordinates[0], $coordinates[1], (int)$lat, (int)$long, "K");
+                    error_log('dist ' . $distance);
+                    if ($distance < 100) {
+                    error_log('within 100 km');
+
+                    $token = array(
+                    'Logo'  => $mplogo1,
+                    'MarketplaceUrl' => $mplink,
+                    'MarketName' => $mpname,
+                    'AdminName' => $admin_name,
+                    'CompanyName' => $merchant['company_name'],);
+
+                        $pattern = '{{ %s }}';
+                    
+                        foreach ($token as $key => $val) {
+                            $varMap[sprintf($pattern, $key)] = $val;
+                        }
+
+                        $emailContent = strtr($content, $varMap);
+
+
+                        //send EDM
+                        $subject = $templateDetails['Records'][0]['subject'];
+                        $data = [
+                            'From' => $mpEmail,
+                            'To' => $merchant_email,
+                            'CC' =>  '',
+                            'BCC' =>  '', 
+                            'Subject' => $subject,
+                            'Body' =>  $emailContent 
+
+                        ];
+
+                        $url =  $baseUrl . '/api/v2/admins/' . $admin_id .'/emails';
+                        $sendEDM = callAPI("POST", $admin_token, $url, $data);
+                        error_log('within ' . $sendEDM);
+
+                                        
+                                    
+                        } else {
+                            error_log('ouitside 100 km');
+                            // echo "Outside 100 kilometer radius";
+                                }
+                }
+                            
+            }catch (Exception $ex) {
+                    error_log($ex);
+            }    
+        }else {
+
+            //send to everyone if the work is remote
+              $token = array(
+                'Logo'  => $mplogo1,
+                'MarketplaceUrl' => $mplink,
+                'MarketName' => $mpname,
+                'AdminName' => $admin_name,
+                'CompanyName' => $merchant['company_name'],);
+
+                    $pattern = '{{ %s }}';
+                
+                    foreach ($token as $key => $val) {
+                        $varMap[sprintf($pattern, $key)] = $val;
+                    }
+
+                    $emailContent = strtr($content, $varMap);
+
+
+                    //send EDMS
+                    $subject = $templateDetails['Records'][0]['subject'];
+                    $data = [
+                        'From' => $mpEmail,
+                        'To' => $merchant_email,
+                        'CC' =>  '',
+                        'BCC' =>  '', 
+                        'Subject' => $subject,
+                        'Body' =>  $emailContent 
+
+                    ];
+
+                    $url =  $baseUrl . '/api/v2/admins/' . $admin_id .'/emails';
+                    $sendEDM = callAPI("POST", $admin_token, $url, $data);
+
+            
+        }
+                    
+                    
+      //echo json_encode(['result' => $sendEDM]);
+
+         
+     }
+
+
+            function getDistance($latitude1, $longitude1, $latitude2, $longitude2) {  
+            $earth_radius = 6371;
+
+            $dLat = deg2rad($latitude2 - $latitude1);  
+            $dLon = deg2rad($longitude2 - $longitude1);  
+
+            $a = sin($dLat/2) * sin($dLat/2) + cos(deg2rad($latitude1)) * cos(deg2rad($latitude2)) * sin($dLon/2) * sin($dLon/2);  
+            $c = 2 * asin(sqrt($a));  
+            $d = $earth_radius * $c;  
+
+            return $d;  
+            }
+
+            $distance = getDistance(56.130366, -106.34677099999, 57.223366, -106.34675644699);
+            if ($distance < 100) {
+            //echo "Within 100 kilometer radius";
+            } else {
+           // echo "Outside 100 kilometer radius";
+            }
+
+
+
+            function distance($lat1, $lon1, $lat2, $lon2, $unit) {
+            if (($lat1 == $lat2) && ($lon1 == $lon2)) {
+                return 0;
+            } else {
+                $theta = $lon1 - $lon2;
+                $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+                $dist = acos($dist);
+                $dist = rad2deg($dist);
+                $miles = $dist * 60 * 1.1515;
+                $unit = strtoupper($unit);
+
+                if ($unit == "K") {
+                return ($miles * 1.609344);
+                } else if ($unit == "N") {
+                return ($miles * 0.8684);
+                } else {
+                return $miles;
+                }
+            }
+            }
+   
 
 ?>

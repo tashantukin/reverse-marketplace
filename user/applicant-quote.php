@@ -468,7 +468,7 @@ if ($quotedDetails['Records'][0]['status'] != 'Quoted') {
 
                             </div>
 
-                            <div id="card-element"> </div>
+                            <div id="card-element" style="display:none"> </div>
                             <!-- Used to display Element errors. -->
                             <div id="card-errors" role="alert"></div>
                             <p id="card-errors"
@@ -533,7 +533,7 @@ if ($quotedDetails['Records'][0]['status'] != 'Quoted') {
                                     continue with your transaction</p>
                             </div>
 
-                            <div id="card-element-complete"> </div>
+                            <div id="card-element-complete" style="display:none"> </div>
                             <!-- Used to display Element errors. -->
                             <div id="card-errors" role="alert"></div>
                             <p id="card-errors"

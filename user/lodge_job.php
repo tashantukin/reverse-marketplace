@@ -109,6 +109,8 @@ foreach($merchant['CustomFields'] as $cf) {
 <div class="content-pages">
     <div class="container ">
         <div class="freelancer-content-main">
+            <input type="hidden" id="address-lat">
+            <input type="hidden" id="address-long">
             <input type="hidden" id="stripe-id" value=<?php echo $stripe_payment_id ?>>
             <div class="lodge-tab-design ">
                 <div class="jobform-tab">
@@ -388,7 +390,58 @@ function jobTabTimeline() {
         'px !important;} .lodge-tab-design .jobform-tab .nav-tabs>li.active>a:after{width: ' + width +
         'px !important;} </style>');
 }
+
+function initialize() {
+    var address = (document.getElementById('location_details'));
+    var autocomplete = new google.maps.places.Autocomplete(address);
+    autocomplete.setTypes(['geocode']);
+    google.maps.event.addListener(autocomplete, 'place_changed', function() {
+        var place = autocomplete.getPlace();
+        if (!place.geometry) {
+            return;
+        }
+
+        var address = '';
+        if (place.address_components) {
+            address = [
+                (place.address_components[0] && place.address_components[0].short_name || ''),
+                (place.address_components[1] && place.address_components[1].short_name || ''),
+                (place.address_components[2] && place.address_components[2].short_name || '')
+            ].join(' ');
+        }
+    });
+}
+
+
+function codeAddress() {
+    geocoder = new google.maps.Geocoder();
+    var address = document.getElementById("location_details").value;
+    geocoder.geocode({
+        'address': address
+    }, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            $('#address-lat').val(results[0].geometry.location.lat());
+            $('#address-long').val(results[0].geometry.location.lng());
+
+            console.log("Latitude: " + results[0].geometry.location.lat());
+            console.log("Longitude: " + results[0].geometry.location.lng());
+        } else {
+            console.log("Geocode was not successful for the following reason: " + status);
+        }
+    });
+}
+
+
 jQuery(document).ready(function() {
+
+
+    waitForElement('#location_details', function() {
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+        //google.maps.event.addDomListener(window, 'load', initialize_service_area);
+    })
+
+
 
 
     jobTabTimeline();
@@ -1258,6 +1311,11 @@ jQuery(document).ready(function() {
 
 
 
+
+
+<script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbYXf7DUOc-j2QwGgtXcFp4fpGMD4Q59o&libraries=places">
+</script>
 
 
 

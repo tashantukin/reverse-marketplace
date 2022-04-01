@@ -246,47 +246,78 @@
         }, 500);
     }
 
-    function initialize() {
-        var address = (document.getElementById('address'));
-        var autocomplete = new google.maps.places.Autocomplete(address);
-        autocomplete.setTypes(['geocode']);
-        google.maps.event.addListener(autocomplete, 'place_changed', function() {
-            var place = autocomplete.getPlace();
-            if (!place.geometry) {
-                return;
-            }
+    // function initialize() {
+    //     var address = (document.getElementById('address'));
+    //     var autocomplete = new google.maps.places.Autocomplete(address);
+    //     autocomplete.setTypes(['geocode']);
+    //     google.maps.event.addListener(autocomplete, 'place_changed', function() {
+    //         var place = autocomplete.getPlace();
+    //         if (!place.geometry) {
+    //             return;
+    //         }
 
-            var address = '';
-            if (place.address_components) {
-                address = [
-                    (place.address_components[0] && place.address_components[0].short_name || ''),
-                    (place.address_components[1] && place.address_components[1].short_name || ''),
-                    (place.address_components[2] && place.address_components[2].short_name || '')
-                ].join(' ');
-            }
-        });
-    }
+    //         var address = '';
+    //         if (place.address_components) {
+    //             address = [
+    //                 (place.address_components[0] && place.address_components[0].short_name || ''),
+    //                 (place.address_components[1] && place.address_components[1].short_name || ''),
+    //                 (place.address_components[2] && place.address_components[2].short_name || '')
+    //             ].join(' ');
+    //         }
+    //     });
+    // }
 
 
     function initialize_service_area() {
-        var address = (document.getElementById('location_details'));
-        var autocomplete = new google.maps.places.Autocomplete(address);
-        autocomplete.setTypes(['geocode']);
-        google.maps.event.addListener(autocomplete, 'place_changed', function() {
-            var place = autocomplete.getPlace();
-            if (!place.geometry) {
-                return;
-            }
-
-            var address = '';
-            if (place.address_components) {
-                address = [
-                    (place.address_components[0] && place.address_components[0].short_name || ''),
-                    (place.address_components[1] && place.address_components[1].short_name || ''),
-                    (place.address_components[2] && place.address_components[2].short_name || '')
-                ].join(' ');
-            }
+        var places = new google.maps.places.Autocomplete(document.getElementById('address'));
+        google.maps.event.addListener(places, 'place_changed', function() {
+            var place = places.getPlace();
+            var address = place.formatted_address;
+            var latitude = place.geometry.location.lat();
+            var longitude = place.geometry.location.lng();
+            var latlng = new google.maps.LatLng(latitude, longitude);
+            var geocoder = geocoder = new google.maps.Geocoder();
+            geocoder.geocode({
+                'latLng': latlng
+            }, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[0]) {
+                        var address = results[0].formatted_address;
+                        var pin = results[0].address_components[results[0].address_components
+                            .length - 1].long_name;
+                        var country = results[0].address_components[results[0]
+                            .address_components
+                            .length - 2].long_name;
+                        var state = results[0].address_components[results[0].address_components
+                            .length - 3].long_name;
+                        var city = results[0].address_components[results[0].address_components
+                            .length - 4].long_name;
+                        document.getElementById('country').value = country;
+                        document.getElementById('state').value = state;
+                        document.getElementById('city').value = city;
+                        document.getElementById('postal_code').value = pin;
+                    }
+                }
+            });
         });
+        // var address = (document.getElementById('location_details'));
+        // var autocomplete = new google.maps.places.Autocomplete(address);
+        // autocomplete.setTypes(['geocode']);
+        // google.maps.event.addListener(autocomplete, 'place_changed', function() {
+        //     var place = autocomplete.getPlace();
+        //     if (!place.geometry) {
+        //         return;
+        //     }
+
+        //     var address = '';
+        //     if (place.address_components) {
+        //         address = [
+        //             (place.address_components[0] && place.address_components[0].short_name || ''),
+        //             (place.address_components[1] && place.address_components[1].short_name || ''),
+        //             (place.address_components[2] && place.address_components[2].short_name || '')
+        //         ].join(' ');
+        //     }
+        // });
     }
 
     function codeAddress() {
@@ -325,6 +356,41 @@
         });
     }
 
+
+
+    // google.maps.event.addDomListener(window, 'load', function() {
+    //     var places = new google.maps.places.Autocomplete(document.getElementById('address'));
+    //     google.maps.event.addListener(places, 'place_changed', function() {
+    //         var place = places.getPlace();
+    //         var address = place.formatted_address;
+    //         var latitude = place.geometry.location.lat();
+    //         var longitude = place.geometry.location.lng();
+    //         var latlng = new google.maps.LatLng(latitude, longitude);
+    //         var geocoder = geocoder = new google.maps.Geocoder();
+    //         geocoder.geocode({
+    //             'latLng': latlng
+    //         }, function(results, status) {
+    //             if (status == google.maps.GeocoderStatus.OK) {
+    //                 if (results[0]) {
+    //                     var address = results[0].formatted_address;
+    //                     var pin = results[0].address_components[results[0].address_components
+    //                         .length - 1].long_name;
+    //                     var country = results[0].address_components[results[0]
+    //                         .address_components
+    //                         .length - 2].long_name;
+    //                     var state = results[0].address_components[results[0].address_components
+    //                         .length - 3].long_name;
+    //                     var city = results[0].address_components[results[0].address_components
+    //                         .length - 4].long_name;
+    //                     document.getElementById('country').value = country;
+    //                     document.getElementById('state').value = state;
+    //                     document.getElementById('city').value = city;
+    //                     document.getElementById('postal_code').value = pin;
+    //                 }
+    //             }
+    //         });
+    //     });
+    // });
 
 
 
@@ -459,8 +525,9 @@
     jQuery(document).ready(function() {
         waitForElement('#address', function() {
 
-            google.maps.event.addDomListener(window, 'load', initialize);
+            // google.maps.event.addDomListener(window, 'load', initialize);
             google.maps.event.addDomListener(window, 'load', initialize_service_area);
+
         })
         jobTabTimeline();
 
@@ -1349,8 +1416,10 @@
     </script>
 
 
-    <script type="text/javascript"
+    <!-- <script type="text/javascript"
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbYXf7DUOc-j2QwGgtXcFp4fpGMD4Q59o&libraries=places">
+    </script> -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbYXf7DUOc-j2QwGgtXcFp4fpGMD4Q59o&libraries=places">
     </script>
     <script type="text/javascript" src="subscribe/8e94739d-b260-41ec-9496-dfa98bb8cdc0/scripts/jquery.mapael.js">
     </script>

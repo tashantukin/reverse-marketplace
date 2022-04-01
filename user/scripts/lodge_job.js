@@ -10,8 +10,6 @@ var packagePath = scriptSrc.replace("/scripts/lodge_job.js", "").trim();
 var payment_enabled;
 
 // Add an instance of the card Element into the `card-element` <div>.
-
-
 //document upload vars
 var allFiles = [];
 var allTasks = [];
@@ -24,7 +22,6 @@ const formatter = new Intl.NumberFormat("en-US", {
       
 });
     
-
  function displayError(event) {
   // changeLoadingStatePrices(false);
     let displayError = document.getElementById('card-errors');
@@ -85,6 +82,7 @@ function cache_save_job()
         "is_remote_work": $("#remote_work")[0].checked,
         "is_inperson_work": $("#in_person_work")[0].checked,
         "in_person_work_address": $("#location_details").val(),
+        'in_person_work_coords' : Array($("#address-lat").val(),$("#address-long").val()),
 
 
         //job type
@@ -150,7 +148,7 @@ function cache_save_job()
         jQuery('.jobform-tab .nav-tabs li').removeClass('active');
 
         setTimeout(function(){ 
-        window.location.href = "lodged.html";
+         window.location.href = "lodged.html";
         },1000);
        // document.cookie = "jobID: " + response.Id 
     });
@@ -652,7 +650,7 @@ const jobData = new Vue({
                             
                             <div class="form-group">
                                     <label for="location_details">Location Details</label>
-                                    <input type="text" class="form-control" name="location_details" id="location_details" placeholder="" value="Sample Address 13, SY123">
+                                    <input type="text" class="form-control" name="location_details" id="location_details" onfocusout="codeAddress()" placeholder="" value="Sample Address 13, SY123">
                                     </div>
                             <div class="mapcontainer">
                                 <div id="map">
@@ -926,7 +924,6 @@ const jobData = new Vue({
     }
 
 })
-
 
 //document upload func
 

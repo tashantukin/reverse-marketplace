@@ -150,10 +150,6 @@ else {
                                
 
                                  ?>
-
-
-
-
                                         </div>
                                     </div>
                                 </div>
@@ -284,14 +280,14 @@ else {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="checkbox-row-flex">
+                                        <!-- <div class="checkbox-row-flex">
                                             <div class="checkbox-width ">
                                                 <div class="fancy-checkbox checkbox-sm">
                                                     <input checked type="checkbox" name="paypal" id="paypal">
                                                     <label for="paypal"><span>PayPal</span></label>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
 
                                     </div>
                                 </div>

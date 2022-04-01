@@ -353,45 +353,87 @@
    }
 
   function  createStripeMember(card, stripe)
-       {
-           
-        
-            //var addressInfo = JSON.parse(localStorage.getItem("address")) != null ? JSON.parse(localStorage.getItem("address")) : null;
-        //console.log((addressInfo));
-            var apiUrl = packagePath + '/createMember.php';
-            var data = {
-                'full_name': '---',
-                'email': 'email@email.com',
-                'contact_number': '00000',
-                'line1':  '',
-                'city':   '' , 
-                'country':  '',
-                'state':  '',
-                'postal_code':'' 
-                }
-                $.ajax({
-                    url: apiUrl,
-                    
-                    method: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify(data),
-                    success: function(result) {
-                        result = JSON.parse(result);    
-                        var customerId = result.result
-                        localStorage.setItem('stripe_payment_id', customerId);
+   {
+       var quotes = $.parseJSON(localStorage.getItem('quote_details'))
+         console.log(quotes);
+         
+         console.log(quotes.freelancer_id);
+   
+      //var addressInfo = JSON.parse(localStorage.getItem("address")) != null ? JSON.parse(localStorage.getItem("address")) : null;
+   //console.log((addressInfo));
+      var apiUrl = packagePath + '/createMember.php';
+      var data = {
+            'full_name': quotes.freelancer_id,
+            'email': 'email@email.com',
+            'contact_number': '00000',
+            'line1':  '',
+            'city':   '' , 
+            'country':  '',
+            'state':  '',
+            'postal_code':'' 
+            }
+            $.ajax({
+               url: apiUrl,
+               
+               method: 'POST',
+               contentType: 'application/json',
+               data: JSON.stringify(data),
+               success: function(result) {
+                  result = JSON.parse(result);    
+                  var customerId = result.result
+                  localStorage.setItem('stripe_payment_id', customerId);
 
-                        createPaymentMethod(customerId, card, stripe)
-            
-                    },
-                    error: function(jqXHR, status, err) {
-                    //	toastr.error('Error!');
-                    }
-                });
-            
-        }
+                  createPaymentMethod(customerId, card, stripe)
+      
+               },
+               error: function(jqXHR, status, err) {
+               //	toastr.error('Error!');
+               }
+            });
+      
+   }
+
+
+     function  createStripeMemberBuyer(card, stripe)
+   {
+      
+   
+      //var addressInfo = JSON.parse(localStorage.getItem("address")) != null ? JSON.parse(localStorage.getItem("address")) : null;
+   //console.log((addressInfo));
+      var apiUrl = packagePath + '/createMember.php';
+      var data = {
+            'full_name': '---',
+            'email': 'email@email.com',
+            'contact_number': '00000',
+            'line1':  '',
+            'city':   '' , 
+            'country':  '',
+            'state':  '',
+            'postal_code':'' 
+            }
+            $.ajax({
+               url: apiUrl,
+               
+               method: 'POST',
+               contentType: 'application/json',
+               data: JSON.stringify(data),
+               success: function(result) {
+                  result = JSON.parse(result);    
+                  var customerId = result.result
+                  localStorage.setItem('stripe_payment_id', customerId);
+
+                  createPaymentMethodBuyer(customerId, card, stripe)
+      
+               },
+               error: function(jqXHR, status, err) {
+               //	toastr.error('Error!');
+               }
+            });
+      
+   }
        
 
-   function createPaymentMethod(customerId, card, stripe)
+   function createPaymentMethodBuyer(customerId, card, stripe)
     {
       
         // const customerId = custom  er_id;
@@ -415,13 +457,13 @@
                 console.log({ customerId })
 
                 console.log(result.paymentMethod.id);
-                createSubscription(
+                createSubscriptionBuyer(
                 customerId, result.paymentMethod.id);
             }
             });
         }
             
-   function createSubscription(customerId, paymentId)
+   function createSubscriptionBuyer(customerId, paymentId)
    {
             var apiUrl = packagePath + '/createSubscription_buyer.php';
             var data = { 'customer_id': customerId,  'payment_id' : paymentId}
@@ -521,7 +563,11 @@
       // const customerId = customer_id;
       // Set up payment method for recurring usage
       // var quotes = $.parseJSON(localStorage.getItem('quote_details'))
-      let billingName = `----`;
+       var quotes = $.parseJSON(localStorage.getItem('quote_details'))
+         console.log(quotes);
+         
+         console.log(quotes.freelancer_id);
+      let billingName = quotes.freelancer_id;
     
       stripe
         .createPaymentMethod({
@@ -544,9 +590,14 @@
         });
    }
    function createSubscription(customerId, paymentId)
+   
    {
+        var quotes = $.parseJSON(localStorage.getItem('quote_details'))
+         console.log(quotes);
+         
+         console.log(quotes.freelancer_id);
          var apiUrl = packagePath + '/createSubscription.php';
-         var data = { 'customer_id': customerId,  'payment_id' : paymentId}
+         var data = { 'customer_id': customerId,  'payment_id' : paymentId, 'freelancer_id' : quotes.freelancer_id }
          $.ajax({
             url: apiUrl,
             
@@ -586,7 +637,7 @@
             "total": $(".qq-total").find('span b').text(),
             "all_discount": $(".qq-discount .qq-option").find('span b').text(),
             "all_total": $(".qq-subtotal").find('span b').text(),
-            "quoted-by" : '--',
+            "quoted-by" : $('#quoted-by').text(),
             
             "job_completion": $("#completion").text(),
             "availability_date": $("#availability").val(),
@@ -602,7 +653,7 @@
 
             "payment_cod": $("#COD")[0].checked,
             "payment_credit_card": $("#credit_card")[0].checked,
-            "payment_paypal": $("#paypal")[0].checked,
+            //"payment_paypal": $("#paypal")[0].checked,
             
          };
       localStorage.setItem('quote_details', JSON.stringify(quote_details))
@@ -822,13 +873,7 @@
                                     </tr>
                                  </thead>
                                  <tbody>
-                                 <tr>
-                                 <td></td>
-                                 <td></td>
-                                 <td></td>
-                                 <td><span class="no-lodge">No lodge job/quote here</span></td>
-                              </tr>
-                                    
+                               
                                  </tbody>
                               </table>
                            </div>
@@ -1085,7 +1130,7 @@
                             break;
 
 
-                         case '#tab-interested' || '#tab-quoted':
+                         case '#tab-interested' || '#tab-quoted' || '#tab-completed':
                             allJobs = `<tr data-id="${job['Id']}" user-id="${userId}"> </td>
                            <td> <a href="${protocol}//${baseURL}/user/plugins/${packageId}/${page}.php?jobId=${job['Id']}&userId=${userId}">${job['job_validity']}</a></td>
                            <td>${job['buyer_email']}</td>
@@ -1138,7 +1183,8 @@
                                                             <div class="form-group">
                                                                <label for="paymentMethod">Payment Method</label>
                                                                <select class="form-control required" name="payment" id="paymentScheme">
-                                                                  <option selected value="stripe">Stripe</option>
+                                                                  <option value="stripe">Stripe</option>
+                                                                  <option selected value="cod">Cash on Delivery</option>
                                                                </select>
                                                             </div>
                                           
@@ -1148,7 +1194,7 @@
                                                             
                                                             </div>
 
-                                                            <div id="card-element"> </div>
+                                                            <div id="card-element" style="display:none"> </div>
                                                             <!-- Used to display Element errors. -->
                                                             <div id="card-errors" role="alert"></div>
                                                             <p id="card-errors"
@@ -1285,7 +1331,7 @@
                                                 <div class="form-group">
                                                    <label for="paymentMethod">Payment Method</label>
                                                    <select class="form-control required" name="payment" id="paymentScheme">
-                                                      <option selected value="stripe">Stripe</option>
+                                                      <option value="stripe">Stripe</option>
                                                        <option selected value="cod">Cash on Delivery</option>
                                                    </select>
                                                 </div>
@@ -1296,7 +1342,7 @@
                                                 
                                                 </div>
 
-                                                <div id="card-element"> </div>
+                                                <div id="card-element" style="display:none"> </div>
                                                 <!-- Used to display Element errors. -->
                                                 <div id="card-errors" role="alert"></div>
                                                 <p id="card-errors"
@@ -1377,7 +1423,7 @@
               $.ajax({
 
                   method: "GET",
-                  url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_locations?pageSize=1000`,
+                  url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_list?pageSize=1000`,
                   headers: {
                   "Content-Type": "application/json"
                  },
@@ -1389,19 +1435,26 @@
 
                   $.each(locations.Records, function (index, coords)
                   {
-                        var location_list = JSON.parse(coords['location_list'])
-
-                        $.each(location_list, function (index, loc)
-                        {
-
-                           if (distanceBetweenTwoPlace(lat, long, loc['lat'], loc['lng'], "K") <= 1000) {
-                              console.log(coords['job_id']);
+                     var location_list = JSON.parse(coords['in_person_work_coords'])
+                     console.log({ location_list });
+                     
+                     if (distanceBetweenTwoPlace(lat, long, location_list[0], location_list[1], "K") <= 1000) {
+                              console.log(coords['Id']);
                               
-                              getJobDetail(coords['job_id'],'#tab-all','freelancer_quote', coords['CreatedDateTime']);
+                              getJobDetail(coords['Id'],'#tab-all','freelancer_quote', coords['CreatedDateTime']);
                            }
 
+                        // $.each(location_list, function (index, loc)
+                        // {
+
+                        //    if (distanceBetweenTwoPlace(lat, long, loc['lat'], loc['lng'], "K") <= 1000) {
+                        //       console.log(coords['job_id']);
+                              
+                        //       getJobDetail(coords['job_id'],'#tab-all','freelancer_quote', coords['CreatedDateTime']);
+                        //    }
+
                            
-                        })
+                        // })
                   })
 
                  }
@@ -1480,7 +1533,9 @@
           }
 
           // get all available jobs
-          async function getInterestedJobs(){
+           async function getInterestedJobs()
+           {
+             $('#tab-interested table tr').remove();
             var data = [{ 'Name': 'status', 'Operator': "equal", "Value": 'Interested' }, { 'Name': 'freelancer_id', 'Operator': "equal", "Value": $('#userGuid').val() }]
             
             $.ajax({
@@ -1593,6 +1648,46 @@
               }
             })
            }
+
+           async function getCompletedJobs(){
+            var data = [{ 'Name': 'status', 'Operator': "equal", "Value": 'Completed' }, { 'Name': 'freelancer_id', 'Operator': "equal", "Value": $('#userGuid').val() }]
+            
+            $.ajax({
+              method: "POST",
+              url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/freelancer_quotes/`,
+              headers: {
+                "Content-Type": "application/json"
+              },
+            
+              data: JSON.stringify(data),
+         
+              success: function (response)
+              {
+                console.log({ response })
+              
+                const jobs = response
+                const jobDetails = jobs.Records
+                //if existing user, verify the status
+                if (jobDetails.length != 0) {
+
+                  jobDetails.forEach(function (job, i)
+                  {
+
+                     getJobDetail(job['job_id'],'#tab-completed','freelancer_quoted', job['CreatedDateTime'],job['seller_view_paid'],job['Id']);
+                   
+                 
+                  })
+                  
+                 
+                  
+                }
+               
+        
+              }
+            })
+           }
+
+         
 
            //rejected
 
@@ -1733,7 +1828,9 @@
               }
               $.ajax(settings).done(function(response){
                   
-                 
+                 if (el.val() == 'Interested') {
+                   getInterestedJobs(); 
+                 }
               
               });
       
@@ -1895,7 +1992,8 @@
              getUserJobList: getUserJobList,
              getAcceptedJobs: getAcceptedJobs,
              getRejectedJobs: getRejectedJobs,
-             getChargeDetails:  getChargeDetails
+             getChargeDetails: getChargeDetails,
+             getCompletedJobs : getCompletedJobs
             
           }
           
@@ -2028,7 +2126,7 @@
               $('#charged-default').remove();
             if ($('option:selected', $(this)).val() == 'stripe') {
              
-               if ($('#stripe-pay-id').val() != null) {
+               if ($('#stripe-pay-id').val() != null &&  $('#stripe-pay-id').val() != '') {
 
                   $('#card-element-charge').hide(); 
                   //if (!$('#charged-default').length) {
@@ -2236,7 +2334,7 @@
                            quote.quoteJob();
                      } else {
 
-                        if ($('#stripe-pay-id').val() != null) {
+                        if ($('#stripe-pay-id').val() != null && $('#stripe-pay-id').val() != '') {
                            console.log('you will be charge on your default payment method')
                          //  $('#card-element-charge').hide();
                           // console.log('you will be charge on your default payment method')
@@ -2394,7 +2492,7 @@
             $('#charged-default').remove();
             if ($('option:selected', $(this)).val() == 'stripe') {
             
-               if ($('#stripe-pay-id').val() != null) {
+               if ($('#stripe-pay-id').val() != null && $('#stripe-pay-id').val() != '') {
 
                   $('#card-element').hide(); 
                   //if (!$('#charged-default').length) {
@@ -2488,7 +2586,7 @@
                            chargeQuoteAcceptCod($('#quoted-id').val());
                            $("#paynowPackage").prop("disabled", true);
                         } else {
-                           createStripeMember(card, stripe)
+                           createStripeMemberBuyer(card, stripe)
                            stripe.createToken(card).then(function (result)
                            {
                               if (result.error) {
@@ -2588,7 +2686,7 @@
                            //chargeQuoteAcceptCod($('#quoted-id').val());
                            $("#paynowPackageComplete").prop("disabled", true);
                         } else {
-                           createStripeMember(card, stripe)
+                           createStripeMemberBuyer(card, stripe)
                            stripe.createToken(card).then(function (result)
                            {
                               if (result.error) {
@@ -2697,8 +2795,9 @@
          jobs.getRejectedJobs()
          jobs.getJobLodges()
          jobs.getUserJobList()
+         jobs.getCompletedJobs()
          
-        
+      
          
          if ($('#userGuid').length != 0) {
             user.getUserStatus(userId)
@@ -2718,7 +2817,6 @@
             })
          }
        
-
          var buttons = `
             <div class="btnjob"><a href="${protocol}//${baseURL}/user/plugins/${packageId}/lodge_job.php" class="btn btn-lodge">Lodge a Job</a>
             <a href="/subscribe" class="btn btn-freelancer">I am a Freelancer</a>
@@ -2743,6 +2841,7 @@
             var jobs = jobData.getInstance();
             var $this = $(this);
             jobs.saveStatus($this);
+            
          });
 
       waitForElement('#paymentModal', function ()

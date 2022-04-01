@@ -19,6 +19,7 @@ $customFieldPrefix = getCustomFieldPrefix();
 
 $customer_id = $content['customer_id'];
 $payment_id = $content['payment_id'];
+$freelancer_id = $content['freelancer_id'];
 //$coupon_id = $content['coupon_id'];
 // Query to get marketplace id
 $url = $baseUrl . '/api/v2/marketplaces/';
@@ -58,7 +59,7 @@ require_once('stripe-php/init.php');
   echo json_encode(['result' =>  $update]);
 
 
-   $freelancer_id = $update->name;
+   //$freelancer_id = $update->name;
 
 
      $templates = array(array('Name' => 'user_id', "Operator" => "in",'Value' =>  $freelancer_id));

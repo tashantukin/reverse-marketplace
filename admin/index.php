@@ -651,26 +651,58 @@ $baseUrl = getMarketplaceBaseUrl();
                                     <h5> New Freelancer Registration</h5>
                                     <p>Sent to Admin for every new Freelancer sign up.</p> <a
                                         href="<?php echo $baseUrl ?>/admin/plugins/ed0f2131-3ef2-4ef1-9fb8-e20224eb1887/edit_content.php?pageid=9a733374-1e37-47e1-9d96-128eb4bfb15f"
-                                        id="9a733374-1e37-47e1-9d96-128eb4bfb15f" class="action-edit-template">Edit</a>
+                                        id="9a733374-1e37-47e1-9d96-128eb4bfb15f" class="action-edit-template"
+                                        target="_blank">Edit</a>
                                 </li>
+
+
+                                <li>
+                                    <h5> Freelancer / Applicant Registration approved</h5>
+                                    <p>Sent to applicants once their application has been approved.</p>
+                                    <a href="<?php echo $baseUrl ?>/admin/plugins/ed0f2131-3ef2-4ef1-9fb8-e20224eb1887/edit_content.php?pageid=bd61f087-b718-4396-b947-534ab382f3c0"
+                                        id="bd61f087-b718-4396-b947-534ab382f3c0" class="action-edit-template"
+                                        target="_blank">Edit</a>
+                                </li>
+
+                                <li>
+                                    <h5> Freelancer / Applicant Registration rejected</h5>
+                                    <p>Sent to applicants once their application has been rejected.</p> <a
+                                        href="<?php echo $baseUrl ?>/admin/plugins/ed0f2131-3ef2-4ef1-9fb8-e20224eb1887/edit_content.php?pageid=0f3e3f4b-80f6-423f-b8c4-d3b16f3afae7"
+                                        id="0f3e3f4b-80f6-423f-b8c4-d3b16f3afae7" class="action-edit-template"
+                                        target="_blank">Edit</a>
+                                </li>
+
+
+                                <li>
+                                    <h5> New Job Lodged</h5>
+                                    <p>Sent to freelancers once a new job has been added.</p> <a
+                                        href=" <?php echo $baseUrl ?>/admin/plugins/ed0f2131-3ef2-4ef1-9fb8-e20224eb1887/edit_content.php?pageid=267348f3-9a39-4f36-9091-0854179cb682"
+                                        id="267348f3-9a39-4f36-9091-0854179cb682" class="action-edit-template"
+                                        target="_blank">Edit</a>
+                                </li>
+
+
                                 <li>
                                     <h5> Quotation Accepted</h5>
                                     <p>Sent to seller once the buyer accepted the quotation.</p> <a
                                         href="<?php echo $baseUrl ?>/admin/plugins/ed0f2131-3ef2-4ef1-9fb8-e20224eb1887/edit_content.php?pageid=4bcfd5ae-712f-434d-83a3-377756e82f41"
-                                        id="4bcfd5ae-712f-434d-83a3-377756e82f41" class="action-edit-template">Edit</a>
+                                        id="4bcfd5ae-712f-434d-83a3-377756e82f41" class="action-edit-template"
+                                        target="_blank">Edit</a>
                                 </li>
                                 <li>
                                     <h5> Quotation Rejected</h5>
                                     <p>Sent to seller once the buyer rejected the quotation.</p> <a
                                         href="<?php echo $baseUrl ?>/admin/plugins/ed0f2131-3ef2-4ef1-9fb8-e20224eb1887/edit_content.php?pageid=ac8c6077-2078-4045-ad71-4ea95c3ca4db"
-                                        id="ac8c6077-2078-4045-ad71-4ea95c3ca4db" class="action-edit-template">Edit</a>
+                                        id="ac8c6077-2078-4045-ad71-4ea95c3ca4db" class="action-edit-template"
+                                        target="_blank">Edit</a>
                                 </li>
+
                             </ul>
                         </ul>
                     </div>
                 </div>
 
-                <div class="panel-box panel-style-ab">
+                <!-- <div class="panel-box panel-style-ab">
                     <div class="panel-box-title">
                         <h3>User Account</h3>
                         <div class="pull-right"><a class="panel-toggle" href="javascript:void(0);"><i
@@ -682,8 +714,8 @@ $baseUrl = getMarketplaceBaseUrl();
 
                         </ul>
                     </div>
-                </div>
-                <div class="panel-box panel-style-ab">
+                </div> -->
+                <!-- <div class="panel-box panel-style-ab">
                     <div class="panel-box-title">
                         <h3>Bookings</h3>
                         <div class="pull-right"><a class="panel-toggle" href="javascript:void(0);"><i
@@ -693,10 +725,10 @@ $baseUrl = getMarketplaceBaseUrl();
                     <div class="panel-box-content">
                         <ul>
 
-                            <!-- These 3 only available for spacetime -->
+                          
                         </ul>
                     </div>
-                </div>
+                </div> -->
 
 
 

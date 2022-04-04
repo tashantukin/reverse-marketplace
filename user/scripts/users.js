@@ -944,7 +944,7 @@ sellerFields = new Vue({
                            </div>
                             <div class="form-group">
                                     <label for="location_details">Servicing Area</label>
-                                    <input type="text" class="form-control" name="location_details" id="location_details" onfocusout="codeAddress_servicing()" placeholder="" value="">
+                                    <input type="text" class="form-control" name="location_details" id="location_details" onfocusout="codeAddress_servicing()" onchange="codeAddress_servicing()" placeholder="" value="">
                             </div>
 
                             <div class="location-map-hide-show" style="display: none;">

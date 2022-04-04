@@ -38,8 +38,7 @@
     </script>
     <!-- bootbox js -->
     <script src="js/bootbox.min.js" type="text/javascript">
-    <!-- custom js 
-    -->
+   
     <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/custom.js"></script>
     <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/jquery.ddslick.js"></script>
 
@@ -51,8 +50,12 @@
 
     <script type="text/javascript" src="subscribe/8e94739d-b260-41ec-9496-dfa98bb8cdc0/scripts/users.js"></script>
 
-    <!-- leaflet css  -->
+  
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+    //  <script src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCbYXf7DUOc-j2QwGgtXcFp4fpGMD4Q59o&libraries=places"></script>
+       <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
 
 
     <style>
@@ -69,7 +72,7 @@
 
 
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
-   <script src="https://unpkg.com/vue/dist/vue.min.js"></script> -->
+   <script src="https://unpkg.com/vue/dist/vue.min.js"></script> 
 
     <!-- bootstrap style -->
     <link href="https://bootstrap.arcadier.com/spacetime/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -246,26 +249,26 @@
         }, 500);
     }
 
-    // function initialize() {
-    //     var address = (document.getElementById('address'));
-    //     var autocomplete = new google.maps.places.Autocomplete(address);
-    //     autocomplete.setTypes(['geocode']);
-    //     google.maps.event.addListener(autocomplete, 'place_changed', function() {
-    //         var place = autocomplete.getPlace();
-    //         if (!place.geometry) {
-    //             return;
-    //         }
+    function initialize() {
+        var address = (document.getElementById('location_details'));
+        var autocomplete = new google.maps.places.Autocomplete(address);
+        autocomplete.setTypes(['geocode']);
+        google.maps.event.addListener(autocomplete, 'place_changed', function() {
+            var place = autocomplete.getPlace();
+            if (!place.geometry) {
+                return;
+            }
 
-    //         var address = '';
-    //         if (place.address_components) {
-    //             address = [
-    //                 (place.address_components[0] && place.address_components[0].short_name || ''),
-    //                 (place.address_components[1] && place.address_components[1].short_name || ''),
-    //                 (place.address_components[2] && place.address_components[2].short_name || '')
-    //             ].join(' ');
-    //         }
-    //     });
-    // }
+            var address = '';
+            if (place.address_components) {
+                address = [
+                    (place.address_components[0] && place.address_components[0].short_name || ''),
+                    (place.address_components[1] && place.address_components[1].short_name || ''),
+                    (place.address_components[2] && place.address_components[2].short_name || '')
+                ].join(' ');
+            }
+        });
+    }
 
 
     function initialize_service_area() {
@@ -296,10 +299,13 @@
                         document.getElementById('state').value = state;
                         document.getElementById('city').value = city;
                         document.getElementById('postal_code').value = pin;
+                        $('#location_details').val(city);
                     }
                 }
             });
         });
+
+
         // var address = (document.getElementById('location_details'));
         // var autocomplete = new google.maps.places.Autocomplete(address);
         // autocomplete.setTypes(['geocode']);
@@ -523,894 +529,286 @@
     }
 
     jQuery(document).ready(function() {
-        waitForElement('#address', function() {
-
-            // google.maps.event.addDomListener(window, 'load', initialize);
-            google.maps.event.addDomListener(window, 'load', initialize_service_area);
-
-        })
-        jobTabTimeline();
-
-        $(window).on('resize', jobTabTimeline);
-
-        jQuery('body').on('change', '#servicing_area_all', function(event) {
-            if ($(this).is(':checked')) {
-                //  $('.location-map-hide-show').fadeIn('slow');
-                // newMapSelectedAll();
-            } else {
-                // newMap();
-                //  $('.location-map-hide-show').fadeOut('slow');
-            }
-        });
-
-        jQuery('body').on('change', '#servicing_area_remote', function(event) {
-            if ($(this).is(':checked')) {
-                //  $('.location-map-hide-show').fadeIn('slow');
-                //     newMap();
-            } else {
-                //   newMap();
-                //  $('.location-map-hide-show').fadeOut('slow');
-            }
-        });
-        jQuery('#datepicker').datetimepicker({
-            viewMode: 'years',
-            format: 'MM/YYYY'
-        });
-
-        $('#credit_card').change(function() {
-            $('.credit_card_input input').removeClass("error-con");
-            if ($(this).is(':checked')) {
-                $('.credit_card_input input').prop("disabled", true);
-                $('.credit_card_input input').removeClass("required");
-            } else {
-                $('.credit_card_input input').prop("disabled", false);
-                // $('.credit_card_input input').addClass("required");
-            }
-        }).trigger('change');
 
 
+    waitForElement('#address', function() {
+         var script = document.createElement('script');
+        script.onload = function ()
+      {
+        google.maps.event.addDomListener(window, 'load', initialize);
+        google.maps.event.addDomListener(window, 'load', initialize_service_area);
+      }
 
-        $('#certificate_currency').change(function() {
-            $('.certificate_currency_input input').removeClass("error-con");
-            if ($(this).is(':checked')) {
-                $('.certificate_currency_input').fadeIn();
-                $('.certificate_currency_input input').addClass("required");
-                $('.certificate_currency_input input').prop("disabled", false);
-            } else {
-                $('.certificate_currency_input').fadeOut();
-                $('.certificate_currency_input input').prop("disabled", true);
-                $('.certificate_currency_input input').removeClass("required");
-            }
-        }).trigger('change');
+       script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCbYXf7DUOc-j2QwGgtXcFp4fpGMD4Q59o&libraries=places";
 
-        $('#driver_license_director').change(function() {
-            $('.driver_license_director_input input').removeClass("error-con");
-            if ($(this).is(':checked')) {
-                $('.driver_license_director_input').fadeIn();
-                $('.driver_license_director_input input').prop("disabled", false);
-                $('.driver_license_director_input input').addClass("required");
-            } else {
-                $('.driver_license_director_input').fadeOut();
-                $('.driver_license_director_input input').prop("disabled", true);
-                $('.driver_license_director_input input').removeClass("required");
-            }
-        }).trigger('change');
+        document.head.appendChild(script); 
+    // google.maps.event.addDomListener(window, 'load', initialize);
+   
 
-        $('#same_address').change(function() {
-            $('.same_address_input input').removeClass("error-con");
-            if ($(this).is(':checked')) {
-                $('.same_address_input input').prop("disabled", true);
-                $('.same_address_input input').removeClass("required");
-            } else {
-                $('.same_address_input input').prop("disabled", false);
-                $('.same_address_input input').addClass("required");;
-            }
-        }).trigger('change');
-        jQuery('.jobform-tab .nav-tabs a').on('show.bs.tab', function(event) {
-            var tab = jQuery(".jobform-tab li.active a").attr('href');
-            if (validateTab(tab) == 0 || jQuery(".jobform-tab").hasClass('prevTab')) {
-                jQuery(".jobform-tab").removeClass('prevTab');
-                $(this).parent().addClass('check');
-                $(this).parent().prevAll().addClass('check');
-                $(this).parent().nextAll().removeClass('check');
-                return true;
-            } else {
-                return false
-            }
-        });
-        $('.jobform-tab .nav-tabs a').on('shown.bs.tab', function() {
-            if (jQuery(".jobform-tab li.active a").attr('href') == '#verification-details') {
-                // $('.cmaphilight').maphilight({
-                //    fill: true,
-                //    fillColor: '000000',
-                //    fillOpacity: 0.2,
-                //    stroke: true,
-                //    strokeColor: 'ff0000',
-                //    strokeOpacity: 1,
-                //    strokeWidth: 1,
-                //    fade: true,
-                //    alwaysOn: false,
-                //    neverOn: false,
-                //    groupBy: false,
-                //    wrapClass: true,
-                //    shadow: false,
-                //    shadowX: 0,
-                //    shadowY: 0,
-                //    shadowRadius: 6,
-                //    shadowColor: '000000',
-                //    shadowOpacity: 0.8,
-                //    shadowPosition: 'outside',
-                //    shadowFrom: false,
-                // });
-            }
+    })
+    jobTabTimeline();
 
-        });
+    $(window).on('resize', jobTabTimeline);
 
+    jQuery('body').on('change', '#servicing_area_all', function(event) {
+    if ($(this).is(':checked')) {
+    // $('.location-map-hide-show').fadeIn('slow');
+    // newMapSelectedAll();
+    } else {
+    // newMap();
+    // $('.location-map-hide-show').fadeOut('slow');
+    }
+    });
 
-        jQuery("#mobi-search").click(function() {
-            jQuery(".search-bar").slideToggle();
-            if (jQuery("#mobile-menu").is(":visible")) {
-                jQuery("#mobile-menu").hide();
-            }
-            if (jQuery(".category-menu").is(":visible")) {
-                jQuery(".category-menu").hide();
-            }
-        });
+    jQuery('body').on('change', '#servicing_area_remote', function(event) {
+    if ($(this).is(':checked')) {
+    // $('.location-map-hide-show').fadeIn('slow');
+    // newMap();
+    } else {
+    // newMap();
+    // $('.location-map-hide-show').fadeOut('slow');
+    }
+    });
+    jQuery('#datepicker').datetimepicker({
+    viewMode: 'years',
+    format: 'MM/YYYY'
+    });
 
-        /*nice scroll */
-        jQuery("#mobile-menu > ul").niceScroll({
-            cursorcolor: "#000",
-            cursorwidth: "6px",
-            cursorborderradius: "5px",
-            cursorborder: "1px solid transparent",
-            touchbehavior: true
-        });
-
-        jQuery("#menu-toggle").click(function() {
-            var target = jQuery(".category-items");
-            var parent = jQuery(".category-menu");
-            jQuery(parent).show();
-            jQuery(target).slideToggle();
-            if (jQuery("#mobile-menu").is(":visible")) {
-                jQuery("#mobile-menu").hide();
-            }
-        });
-
-        jQuerymodal = jQuery('.modal-frame');
-        jQueryoverlay = jQuery('.modal-overlay');
-        jQuerymodal.bind('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e) {
-            if (jQuerymodal.hasClass('state-leave')) {
-                jQuerymodal.removeClass('state-leave');
-            }
-        });
-        jQuery('.close').on('click', function() {
-            jQueryoverlay.removeClass('state-show');
-            jQuerymodal.removeClass('state-appear').addClass('state-leave');
-            jQuery('body').removeClass('modal-open')
-        });
-        jQuery('#register-modal').on('click', function() {
-            jQueryoverlay.addClass('state-show');
-            jQuerymodal.removeClass('state-leave').addClass('state-appear');
-            jQuery('html, body').animate({
-                scrollTop: 0
-            }, 0);
-            jQuery('body').addClass('modal-open');
-
-        });
+    $('#credit_card').change(function() {
+    $('.credit_card_input input').removeClass("error-con");
+    if ($(this).is(':checked')) {
+    $('.credit_card_input input').prop("disabled", true);
+    $('.credit_card_input input').removeClass("required");
+    } else {
+    $('.credit_card_input input').prop("disabled", false);
+    // $('.credit_card_input input').addClass("required");
+    }
+    }).trigger('change');
 
 
 
-        // jQuery('#address').on('focusout', function() {
+    $('#certificate_currency').change(function() {
+    $('.certificate_currency_input input').removeClass("error-con");
+    if ($(this).is(':checked')) {
+    $('.certificate_currency_input').fadeIn();
+    $('.certificate_currency_input input').addClass("required");
+    $('.certificate_currency_input input').prop("disabled", false);
+    } else {
+    $('.certificate_currency_input').fadeOut();
+    $('.certificate_currency_input input').prop("disabled", true);
+    $('.certificate_currency_input input').removeClass("required");
+    }
+    }).trigger('change');
+
+    $('#driver_license_director').change(function() {
+    $('.driver_license_director_input input').removeClass("error-con");
+    if ($(this).is(':checked')) {
+    $('.driver_license_director_input').fadeIn();
+    $('.driver_license_director_input input').prop("disabled", false);
+    $('.driver_license_director_input input').addClass("required");
+    } else {
+    $('.driver_license_director_input').fadeOut();
+    $('.driver_license_director_input input').prop("disabled", true);
+    $('.driver_license_director_input input').removeClass("required");
+    }
+    }).trigger('change');
+
+    $('#same_address').change(function() {
+    $('.same_address_input input').removeClass("error-con");
+    if ($(this).is(':checked')) {
+    $('.same_address_input input').prop("disabled", true);
+    $('.same_address_input input').removeClass("required");
+    } else {
+    $('.same_address_input input').prop("disabled", false);
+    $('.same_address_input input').addClass("required");;
+    }
+    }).trigger('change');
+    jQuery('.jobform-tab .nav-tabs a').on('show.bs.tab', function(event) {
+    var tab = jQuery(".jobform-tab li.active a").attr('href');
+    if (validateTab(tab) == 0 || jQuery(".jobform-tab").hasClass('prevTab')) {
+    jQuery(".jobform-tab").removeClass('prevTab');
+    $(this).parent().addClass('check');
+    $(this).parent().prevAll().addClass('check');
+    $(this).parent().nextAll().removeClass('check');
+    return true;
+    } else {
+    return false
+    }
+    });
+    $('.jobform-tab .nav-tabs a').on('shown.bs.tab', function() {
+    if (jQuery(".jobform-tab li.active a").attr('href') == '#verification-details') {
+    // $('.cmaphilight').maphilight({
+    // fill: true,
+    // fillColor: '000000',
+    // fillOpacity: 0.2,
+    // stroke: true,
+    // strokeColor: 'ff0000',
+    // strokeOpacity: 1,
+    // strokeWidth: 1,
+    // fade: true,
+    // alwaysOn: false,
+    // neverOn: false,
+    // groupBy: false,
+    // wrapClass: true,
+    // shadow: false,
+    // shadowX: 0,
+    // shadowY: 0,
+    // shadowRadius: 6,
+    // shadowColor: '000000',
+    // shadowOpacity: 0.8,
+    // shadowPosition: 'outside',
+    // shadowFrom: false,
+    // });
+    }
+
+    });
 
 
+    jQuery("#mobi-search").click(function() {
+    jQuery(".search-bar").slideToggle();
+    if (jQuery("#mobile-menu").is(":visible")) {
+    jQuery("#mobile-menu").hide();
+    }
+    if (jQuery(".category-menu").is(":visible")) {
+    jQuery(".category-menu").hide();
+    }
+    });
 
+    /*nice scroll */
+    jQuery("#mobile-menu > ul").niceScroll({
+    cursorcolor: "#000",
+    cursorwidth: "6px",
+    cursorborderradius: "5px",
+    cursorborder: "1px solid transparent",
+    touchbehavior: true
+    });
 
-        // });
+    jQuery("#menu-toggle").click(function() {
+    var target = jQuery(".category-items");
+    var parent = jQuery(".category-menu");
+    jQuery(parent).show();
+    jQuery(target).slideToggle();
+    if (jQuery("#mobile-menu").is(":visible")) {
+    jQuery("#mobile-menu").hide();
+    }
+    });
 
-
+    jQuerymodal = jQuery('.modal-frame');
+    jQueryoverlay = jQuery('.modal-overlay');
+    jQuerymodal.bind('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e) {
+    if (jQuerymodal.hasClass('state-leave')) {
+    jQuerymodal.removeClass('state-leave');
+    }
+    });
+    jQuery('.close').on('click', function() {
+    jQueryoverlay.removeClass('state-show');
+    jQuerymodal.removeClass('state-appear').addClass('state-leave');
+    jQuery('body').removeClass('modal-open')
+    });
+    jQuery('#register-modal').on('click', function() {
+    jQueryoverlay.addClass('state-show');
+    jQuerymodal.removeClass('state-leave').addClass('state-appear');
+    jQuery('html, body').animate({
+    scrollTop: 0
+    }, 0);
+    jQuery('body').addClass('modal-open');
 
     });
 
 
 
-    function newMapSelectedAll() {
-        $(".mapcontainer").mapael({
-            map: {
-                name: "usa_states",
-                zoom: {
-                    enabled: true
-                },
-                defaultArea: {
-                    attrs: {
-                        fill: "#00c8b2",
-                        stroke: "#99c7ff",
-                        cursor: "pointer"
-                    },
-                    attrsHover: {
-                        animDuration: 0
-                    },
-                    text: {
-                        attrs: {
-                            cursor: "pointer",
-                            "font-size": 10,
-                            fill: "#000"
-                        },
-                        attrsHover: {
-                            animDuration: 0
-                        }
-                    },
-                    //  eventHandlers: {
-                    //      click: function (e, id, mapElem, textElem) {
-                    //          var newData = {
-                    //              'areas': {}
-                    //          };
-                    //          if (mapElem.originalAttrs.fill == "#5ba4ff") {
-                    //              newData.areas[id] = {
-                    //                  attrs: {
-                    //                      fill: "#00c8b2"
-                    //                  }
-                    //              };
-                    //          } else {
-                    //              newData.areas[id] = {
-                    //                  attrs: {
-                    //                      fill: "#5ba4ff"
-                    //                  }
-                    //              };
-                    //          }
-                    //          $(".mapcontainer").trigger('update', [{mapOptions: newData}]);
-                    //      }
-                    //  }
-                }
-            },
-            areas: {
-                "HI": {
-                    text: {
-                        content: "Hawaii",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Hawaii"
-                    }
-                },
+    // jQuery('#address').on('focusout', function() {
 
-                "AK": {
-                    text: {
-                        content: "Alaska",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Alaska"
-                    }
-                },
-                "FL": {
-                    text: {
-                        content: "Florida",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Florida"
-                    }
-                },
-                "NH": {
-                    text: {
-                        content: "New Hampshire",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "New Hampshire"
-                    }
-                },
-                "MI": {
-                    text: {
-                        content: "Michigan",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Michigan"
-                    }
-                },
-                "VT": {
-                    text: {
-                        content: "Vermont",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Vermont"
-                    }
-                },
-                "ME": {
-                    text: {
-                        content: "Maine",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Maine"
-                    }
-                },
-                "RI": {
-                    text: {
-                        content: "Rhode Island",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Rhode Island"
-                    }
-                },
-                "NY": {
-                    text: {
-                        content: "New York",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "New York"
-                    }
-                },
-                "PA": {
-                    text: {
-                        content: "Pennsylvania",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Pennsylvania"
-                    }
-                },
-                "NJ": {
-                    text: {
-                        content: "New Jersey",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "New Jersey"
-                    }
-                },
-                "DE": {
-                    text: {
-                        content: "Delaware",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Delaware"
-                    }
-                },
-                "MD": {
-                    text: {
-                        content: "Maryland",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Maryland"
-                    }
-                },
-                "VA": {
-                    text: {
-                        content: "Virginia",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Virginia"
-                    }
-                },
-                "WV": {
-                    text: {
-                        content: "West Virginia",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "West Virginia"
-                    }
-                },
-                "OH": {
-                    text: {
-                        content: "Ohio",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Ohio"
-                    }
-                },
-                "IN": {
-                    text: {
-                        content: "Indiana",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Indiana"
-                    }
-                },
-                "IL": {
-                    text: {
-                        content: "Illinois",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Illinois"
-                    }
-                },
-                "CT": {
-                    text: {
-                        content: "Connecticut",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Connecticut"
-                    }
-                },
-                "WI": {
-                    text: {
-                        content: "Wisconsin",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Wisconsin"
-                    }
-                },
-                "NC": {
-                    text: {
-                        content: "North Carolina",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "North Carolina"
-                    }
-                },
-                "DC": {
-                    text: {
-                        content: "District of Columbia",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "District of Columbia"
-                    }
-                },
-                "MA": {
-                    text: {
-                        content: "Massachusetts",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Massachusetts"
-                    }
-                },
-                "TN": {
-                    text: {
-                        content: "Tennessee",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Tennessee"
-                    }
-                },
-                "AR": {
-                    text: {
-                        content: "Arkansas",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Arkansas"
-                    }
-                },
-                "MO": {
-                    text: {
-                        content: "Missouri",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Missouri"
-                    }
-                },
-                "GA": {
-                    text: {
-                        content: "Georgia",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Georgia"
-                    }
-                },
-                "SC": {
-                    text: {
-                        content: "South Carolina",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "South Carolina"
-                    }
-                },
-                "KY": {
-                    text: {
-                        content: "Kentucky",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Kentucky"
-                    }
-                },
-                "AL": {
-                    text: {
-                        content: "Alabama",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Alabama"
-                    }
-                },
-                "LA": {
-                    text: {
-                        content: "Louisiana",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Louisiana"
-                    }
-                },
-                "MS": {
-                    text: {
-                        content: "Mississippi",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Mississippi"
-                    }
-                },
-                "IA": {
-                    text: {
-                        content: "Iowa",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Iowa"
-                    }
-                },
-                "MN": {
-                    text: {
-                        content: "Minnesota",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Minnesota"
-                    }
-                },
-                "OK": {
-                    text: {
-                        content: "Oklahoma",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Oklahoma"
-                    }
-                },
-                "TX": {
-                    text: {
-                        content: "Texas",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Texas"
-                    }
-                },
-                "NM": {
-                    text: {
-                        content: "New Mexico",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "New Mexico"
-                    }
-                },
-                "KS": {
-                    text: {
-                        content: "Kansas",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Kansas"
-                    }
-                },
-                "NE": {
-                    text: {
-                        content: "Nebraska",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Nebraska"
-                    }
-                },
-                "SD": {
-                    text: {
-                        content: "South Dakota",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "South Dakota"
-                    }
-                },
-                "ND": {
-                    text: {
-                        content: "North Dakota",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "North Dakota"
-                    }
-                },
-                "WY": {
-                    text: {
-                        content: "Wyoming",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Wyoming"
-                    }
-                },
-                "MT": {
-                    text: {
-                        content: "Montana",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Montana"
-                    }
-                },
-                "CO": {
-                    text: {
-                        content: "Colorado",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Colorado"
-                    }
-                },
-                "ID": {
-                    text: {
-                        content: "Idaho",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Idaho"
-                    }
-                },
-                "UT": {
-                    text: {
-                        content: "Utah",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Utah"
-                    }
-                },
-                "AZ": {
-                    text: {
-                        content: "Arizona",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Arizona"
-                    }
-                },
-                "NV": {
-                    text: {
-                        content: "Nevada",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Nevada"
-                    }
-                },
-                "OR": {
-                    text: {
-                        content: "Oregon",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Oregon"
-                    }
-                },
-                "WA": {
-                    text: {
-                        content: "Washington",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Washington"
-                    }
-                },
-                "CA": {
-                    text: {
-                        content: "California",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "California"
-                    }
-                }
 
-            }
-        });
-    }
+
+
+    // });
+
+    });
+
 
     function AddPaymentCashOnDelivery(ele)
 
     {
 
-        var $this = jQuery(ele);
+    var $this = jQuery(ele);
 
-        var $verify = $this.attr('data-verify');
+    var $verify = $this.attr('data-verify');
 
-        if ($verify == 'false')
+    if ($verify == 'false')
 
-        {
+    {
 
-            bootbox.confirm({
+    bootbox.confirm({
 
-                message: "By verifying this payment method, all your buyers will be able to checkout your items using Cash on Delivery and settlement has to be handled by you manually if they were to use this payment method.",
+    message: `By verifying this payment method, all your buyers will be able to checkout your items using Cash on
+    Delivery and settlement has to be handled by you manually if they were to use this payment method.`,
 
-                className: "my-confirmmodal",
+    className: "my-confirmmodal",
 
-                buttons: {
+    buttons: {
 
-                    confirm: {
+    confirm: {
 
-                        label: 'Okay',
+    label: 'Okay',
 
-                        className: 'btn-success'
+    className: 'btn-success'
 
-                    },
+    },
 
-                    cancel: {
+    cancel: {
 
-                        label: 'Cancel',
+    label: 'Cancel',
 
-                        className: 'btn-danger'
+    className: 'btn-danger'
 
-                    }
+    }
 
-                },
+    },
 
-                callback: function(result) {
+    callback: function(result) {
 
-                    if (result)
+    if (result)
 
-                    {
+    {
 
-                        $("#CashOnDeliveryPayment").text("").css("color", "#000");
+    $("#CashOnDeliveryPayment").text("").css("color", "#000");
 
-                        var imageUrl = 'images/done.svg';
+    var imageUrl = 'images/done.svg';
 
-                        var warning = $this.parent().siblings('.verified').find('.img-payment-warning');
+    var warning = $this.parent().siblings('.verified').find('.img-payment-warning');
 
-                        var warningspan = $this.parent().siblings('.verified').find('span');
+    var warningspan = $this.parent().siblings('.verified').find('span');
 
-                        warning.css({
-                            'background': 'url(' + imageUrl + ')no-repeat',
-                            'background-color': '#00c8b2',
-                            'border-radius': '30px',
-                            'width': '30px',
-                            'height': '30px',
-                            'margin-top': '5px'
-                        });
+    warning.css({
+    'background': 'url(' + imageUrl + ')no-repeat',
+    'background-color': '#00c8b2',
+    'border-radius': '30px',
+    'width': '30px',
+    'height': '30px',
+    'margin-top': '5px'
+    });
 
-                        warningspan.text("Verified").css('color', '#00c8b2');
+    warningspan.text("Verified").css('color', '#00c8b2');
 
-                        $(".seller-payment-container span.paycashdelivery").css({
-                            'width': 'Calc(100% - 40px)',
-                            'line-height': '40px'
-                        });
+    $(".seller-payment-container span.paycashdelivery").css({
+    'width': 'Calc(100% - 40px)',
+    'line-height': '40px'
+    });
 
-                        $("#BtnCashDelivery").removeClass("error-con");
+    $("#BtnCashDelivery").removeClass("error-con");
 
-                        $this.attr('data-verify', 'true');
+    $this.attr('data-verify', 'true');
 
-                    }
+    }
 
-                }
+    }
 
 
 
-            });
+    });
 
-        }
+    }
 
     }
     </script>
@@ -1419,7 +817,6 @@
     <!-- <script type="text/javascript"
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbYXf7DUOc-j2QwGgtXcFp4fpGMD4Q59o&libraries=places">
     </script> -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbYXf7DUOc-j2QwGgtXcFp4fpGMD4Q59o&libraries=places">
     </script>
     <script type="text/javascript" src="subscribe/8e94739d-b260-41ec-9496-dfa98bb8cdc0/scripts/jquery.mapael.js">
     </script>

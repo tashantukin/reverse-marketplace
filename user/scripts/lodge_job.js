@@ -1138,53 +1138,53 @@ $(document).ready(function ()
 
         waitForElement('#map', function ()
         {
-            map = L.map('map').fitWorld();
-            // L.map('map').setView([0, 0], 6);
+            // map = L.map('map').fitWorld();
+            // // L.map('map').setView([0, 0], 6);
 
-            //osm layer
-            var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            });
-            osm.addTo(map);
+            // //osm layer
+            // var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            //     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            // });
+            // osm.addTo(map);
 
-            // map.on('click', onMapClick);
+            // // map.on('click', onMapClick);
 
-            var markers = new Array();
-
-
-
-            map.addLayer(search_group);
+            // var markers = new Array();
 
 
-            map.on('click', function (e)
-            {
-                var clickPositionMarker = L.marker([e.latlng.lat, e.latlng.lng], {
-                    color: 'red',
-                    fillColor: '#f03',
-                    fillOpacity: 0.5,
-                    radius: 500
-                });
-                clickArr.push(clickPositionMarker);
-                mapLat = e.latlng.lat;
-                mapLon = e.latlng.lng;
-                clickPositionMarker.addTo(search_group).bindPopup("<a name='removeClickM' id=" + e
-                    .latlng.lat +
-                    "_" + e.latlng.lng + "></a>")
-                    .openPopup();
-                $('.leaflet-popup-close-button').attr('id', e
-                    .latlng.lat +
-                    "_" + e.latlng.lng)
 
-                /*   clickPositionMarker.on('click', function(e) {
-                  markerDelAgain(); 
-                }); */
+            // map.addLayer(search_group);
 
-                locationList.push(e.latlng);
-                console.log({
-                    locationList
-                });
 
-            });
+            // map.on('click', function (e)
+            // {
+            //     var clickPositionMarker = L.marker([e.latlng.lat, e.latlng.lng], {
+            //         color: 'red',
+            //         fillColor: '#f03',
+            //         fillOpacity: 0.5,
+            //         radius: 500
+            //     });
+            //     clickArr.push(clickPositionMarker);
+            //     mapLat = e.latlng.lat;
+            //     mapLon = e.latlng.lng;
+            //     clickPositionMarker.addTo(search_group).bindPopup("<a name='removeClickM' id=" + e
+            //         .latlng.lat +
+            //         "_" + e.latlng.lng + "></a>")
+            //         .openPopup();
+            //     $('.leaflet-popup-close-button').attr('id', e
+            //         .latlng.lat +
+            //         "_" + e.latlng.lng)
+
+            //     /*   clickPositionMarker.on('click', function(e) {
+            //       markerDelAgain(); 
+            //     }); */
+
+            //     locationList.push(e.latlng);
+            //     console.log({
+            //         locationList
+            //     });
+
+            // });
 
             if (!navigator.geolocation) {
                 console.log("Your browser doesn't support geolocation feature!")
@@ -1194,7 +1194,7 @@ $(document).ready(function ()
                 //}, 5000);
             }
 
-            var marker, circle;
+            // var marker, circle;
 
             function getPosition(position)
             {
@@ -1203,24 +1203,27 @@ $(document).ready(function ()
                 var long = position.coords.longitude
                 var accuracy = position.coords.accuracy
 
-                if (marker) {
-                    map.removeLayer(marker)
-                }
+                // if (marker) {
+                //     map.removeLayer(marker)
+                // }
 
-                if (circle) {
-                    map.removeLayer(circle)
-                }
+                // if (circle) {
+                //     map.removeLayer(circle)
+                // }
 
-                marker = L.marker([lat, long])
-                circle = L.circle([lat, long], {
-                    radius: accuracy
-                })
+                // marker = L.marker([lat, long])
+                // circle = L.circle([lat, long], {
+                //     radius: accuracy
+                // })
 
-                var featureGroup = L.featureGroup([marker, circle]).addTo(map)
+                // var featureGroup = L.featureGroup([marker, circle]).addTo(map)
 
-                map.fitBounds(featureGroup.getBounds())
+                // map.fitBounds(featureGroup.getBounds())
 
                 console.log("Your coordinate is: Lat: " + lat + " Long: " + long + " Accuracy: " + accuracy)
+
+
+                
 
             }
 

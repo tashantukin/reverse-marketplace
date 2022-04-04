@@ -49,6 +49,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js" charset="utf-8"></script>
 
     <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
     <!-- <script src="/user/plugins/8e94739d-b260-41ec-9496-dfa98bb8cdc0/scripts/maps/france_departments.js" charset="utf-8"></script>
    <script src="/user/plugins/8e94739d-b260-41ec-9496-dfa98bb8cdc0/scripts/maps/world_countries.js" charset="utf-8"></script>
@@ -430,6 +431,146 @@ function codeAddress() {
         }
     });
 }
+
+ function getPosition(position)
+            {
+                // console.log(position)
+                var lat = position.coords.latitude
+                var long = position.coords.longitude
+                var accuracy = position.coords.accuracy
+
+                // if (marker) {
+                //     map.removeLayer(marker)
+                // }
+
+                // if (circle) {
+                //     map.removeLayer(circle)
+                // }
+
+                // marker = L.marker([lat, long])
+                // circle = L.circle([lat, long], {
+                //     radius: accuracy
+                // })
+
+                // var featureGroup = L.featureGroup([marker, circle]).addTo(map)
+
+                // map.fitBounds(featureGroup.getBounds())
+
+                console.log("Your coordinate is: Lat: " + lat + " Long: " + long + " Accuracy: " + accuracy)
+
+
+                
+
+            }
+
+
+
+
+function initAutocomplete() {
+
+      if (!navigator.geolocation) {
+                console.log("Your browser doesn't support geolocation feature!")
+            } else {
+                //setInterval(() => {
+                navigator.geolocation.getCurrentPosition(getPosition)
+
+                
+                //}, 5000);
+            }
+              waitForElement('#map', function (){
+  const map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: -33.8688, lng: 151.2195 },
+    zoom: 13,
+    mapTypeId: "roadmap",
+  });
+  // Create the search box and link it to the UI element.
+
+                
+    const input = document.getElementById("location_details");
+    const searchBox = new google.maps.places.SearchBox(input);
+ //})
+ // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+  // Bias the SearchBox results towards current map's viewport.
+  map.addListener("bounds_changed", () => {
+    searchBox.setBounds(map.getBounds());
+  });
+
+  let markers = [];
+
+  // Listen for the event fired when the user selects a prediction and retrieve
+  // more details for that place.
+  searchBox.addListener("places_changed", () => {
+    const places = searchBox.getPlaces();
+
+    if (places.length == 0) {
+      return;
+    }
+
+    // Clear out the old markers.
+    markers.forEach((marker) => {
+      marker.setMap(null);
+    });
+    markers = [];
+
+    // For each place, get the icon, name and location.
+    const bounds = new google.maps.LatLngBounds();
+
+    places.forEach((place) => {
+      if (!place.geometry || !place.geometry.location) {
+        console.log("Returned place contains no geometry");
+        return;
+      }
+
+      const icon = {
+        url: place.icon,
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(25, 25),
+      };
+
+      // Create a marker for each place.
+      markers.push(
+        new google.maps.Marker({
+          map,
+          icon,
+          title: place.name,
+          position: place.geometry.location,
+        })
+      );
+      if (place.geometry.viewport) {
+        // Only geocodes have viewport.
+        bounds.union(place.geometry.viewport);
+      } else {
+        bounds.extend(place.geometry.location);
+      }
+    });
+    map.fitBounds(bounds);
+  });
+
+})
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 jQuery(document).ready(function() {
@@ -1313,10 +1454,13 @@ jQuery(document).ready(function() {
 
 
 
-<script type="text/javascript"
+<!-- <script type="text/javascript"
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbYXf7DUOc-j2QwGgtXcFp4fpGMD4Q59o&libraries=places">
-</script>
-
+</script> -->
+ <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbYXf7DUOc-j2QwGgtXcFp4fpGMD4Q59o&callback=initAutocomplete&libraries=places&v=weekly&channel=2"
+      async
+    ></script>
 
 
 

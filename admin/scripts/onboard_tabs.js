@@ -103,7 +103,7 @@
                         $.each(vm.allOnboardTabs, function (index, tab)
                         { 
                             $("#OnboardingSteps .ui-sortable").append(`
-                            <li data-parent="" class="has-subitems" steps-id = ${tab.Id} v-on:click="testdrag" >
+                            <li data-parent="" class="has-subitems" steps-id = ${tab.Id} v-on:click="testdrag">
                                     <div class="row-wrapper main-sub">
                                         <div class="row-details pull-left">
                                             <div>
@@ -141,14 +141,17 @@
                         $.each(vm.allOnboardTabs, function (index, tab)
                         { 
                          if (tab.sort_order == 0) {
-                                 classes = "tab-pane fade in active";
+                             classes = "tab-pane fade in active";
+                             classHeader = 'active';
+
                             
                             } else {
-                                classes = "tab-pane fade";
+                             classes = "tab-pane fade";
+                             classHeader = '';
                             // backbutton =  `<button onclick="j_prevTab();" class="btn btn-jobform-outline">Back</button>`
                             }
                        
-                        $('[role="tablist"]').append(`<li role="presentation"><a href="#${tab.Id}" data-id="${tab.Id}"  aria-controls= ${tab.Id} role="tab" data-toggle="tab"> ${tab.tab_name} </a></li>`);
+                        $('[role="tablist"]').append(`<li role="presentation" class="${classHeader}"><a href="#${tab.Id}" data-id="${tab.Id}"  aria-controls= ${tab.Id} role="tab" data-toggle="tab"> ${tab.tab_name} </a></li>`);
                         
                          $(".tab-content").append(`
                              <div role="tabpanel" class="${classes}" id="${tab.Id}">

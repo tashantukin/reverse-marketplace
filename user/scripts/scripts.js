@@ -115,7 +115,13 @@
    }
      function lockViewFreelancer(x) {
         jQuery('#paymentModalFreelancer').modal('show');
-    }
+   }
+   
+
+   function successfulView(x){
+      jQuery('#paymentModal').modal('hide');
+      jQuery('#paymentSuccessfulModal').modal('show');
+   }
 
    function charge(token, amount, quoteId, accessUrl)
    {
@@ -719,7 +725,7 @@
                            <div class="panel panel-default">
                                <div class="panel-heading" role="tab" id="lodgedJob">
                                    <h4 class="panel-title">
-                                       <a class="" role="button" data-toggle="collapse" href="#lodgedJobOne" aria-expanded="true" aria-controls="lodgedJobOne">Lodged Job</a>
+                                       <a class="" role="button" data-toggle="collapse" href="#lodgedJobOne" aria-expanded="true" aria-controls="lodgedJobOne">Jobs lodged by buyers that I can quote on</a>
                                    </h4>
                                </div>
                                <div id="lodgedJobOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="lodgedJob" aria-expanded="true" style="">
@@ -1225,6 +1231,37 @@
                                        </div>
                                        <div class="modal-overlay"></div>
                                     `
+                               
+                               var paymentSuccessModal = `  <div class="modal fade payment-modal" id="paymentSuccessfulModal" role="dialog">
+                                 <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                       <div class="modal-body">
+                                          
+                                       <div id="paymentSuccessful" class="payment-con clearfix">
+                                          <h3>Payment</h3>
+                                          <div class="payment-middle-con ">
+                                             <div class="common-text">
+                                                   <p><strong>Thank you for your purchase</strong></p>
+                                                   <p>We have successfully received your payment.<br>You can continue on with the process.</p>
+                                             </div>
+                                          </div>
+                                             <div class="payment-bottom-con clearfix">
+                                                <div class="next-tab-area pull-right">
+                                                   <span class="seller-btn"> <a data-dismiss="modal" class="my-btn btn-red" href="javascript:void(0);">Close</a> </span>
+                                                </div>
+                                             </div>
+                                       </div>
+                                          
+                                          
+
+                                       
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>`;
+                               
+
                                var lockFunction = `<script> function lockViewFreelancer(x){
                                        $('#paymentModalFreelancer').modal('show');
                                        $('#quoted-id-fl').val($(x).attr('data-id')); 
@@ -1233,6 +1270,7 @@
                                        console.log($(x).attr('data-id'))
                                     }  </script>`
                                $('.footer').append(paymentModal);
+                               $('.footer').append(paymentSuccessModal);
                                $('body').append(lockFunction);
                               
                             } else {
@@ -1290,7 +1328,7 @@
               
             $.ajax({
               method: "POST",
-              url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_quotes/`,
+              url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_quotes?sort=-CreatedDateTime/`,
               headers: {
                 "Content-Type": "application/json"
               },
@@ -1362,7 +1400,7 @@
                                           <div class="payment-bottom-con clearfix">
                                              <div class="next-tab-area pull-right">
                                                 <span class="seller-btn"> <a  class="my-btn btn-clear" data-dismiss="modal" href="javascript:void(0);">Cancel</a> </span>
-                                                <span class="seller-btn"> <a  class="my-btn btn-red" href="javascript:void(0);" id="paynowPackage">Pay Now</a> </span>
+                                                <span class="seller-btn"> <a onclick="successfulView(this)" class="my-btn btn-red" href="javascript:void(0);" id="paynowPackage">Pay Now</a> </span>
                                              </div>
                                           </div>
                                     </div>
@@ -1380,8 +1418,14 @@
 
                            console.log($(x).attr('data-id'))
                         }  </script>`
+                       
+                       var successModal = `<script>  function successfulView(x){
+                        jQuery('#paymentModal').modal('hide');
+                        jQuery('#paymentSuccessfulModal').modal('show');
+                     }  </script>`
                         $('.footer').append(paymentModal);
-                        $('body').append(lockFunction);
+                       $('body').append(lockFunction);
+                       $('body').append(successModal);
                    
                     } else {
                         viewButtonTd =  `<td class="text-right"><a href="${protocol}//${baseURL}/user/plugins/${packageId}/${page}.php?jobId=${quote['job_id']}&userId=${quote['freelancer_id']}" class="btn btn-jobform-outline">View</a></td>`;
@@ -1856,7 +1900,7 @@
                            <div class="panel-heading" role="tab" id="jobList">
                                <h4 class="panel-title">
                                    <a class="collapsed" role="button" data-toggle="collapse" href="#jobListTwo" aria-expanded="false" aria-controls="jobListTwo">
-                                       Job List
+                                      Jobs I have lodged to be quoted on by freelancers
                                    </a>
                                </h4>
                            </div>
@@ -2031,49 +2075,51 @@
                 "data": localStorage.getItem('quote_details')
             }
             $.ajax(settings).done(function(response){
-               toastr.success('Your quote has been submitted');
+               //toastr.success('Your quote has been submitted');
                 var allresponse = $.parseJSON(response)
                console.log(allresponse);
                urls = `${protocol}//${baseURL}/`;
-               window.location.href = urls;
+
+               $('#paymentSuccessfulModal').modal('show');
                localStorage.removeItem('quote_details');
+               $('#paymentSuccessfulModal #close').attr('href', urls);
+              // window.location.href = urls;
                
-            
             });
          
           }
           
-          function quoteAction(status, jobId, freelancerId, quoteId)
-          {
-            var quote_details = {
+         function quoteAction(status, jobId, freelancerId, quoteId)
+         {
+         var quote_details = {
+   
+            jobId,
+            freelancerId,
+            quoteId,
+            status
+         };
+   
+         console.log({ quote_details });
+         
       
-               jobId,
-               freelancerId,
-               quoteId,
-               status
-            };
-     
-            console.log({ quote_details });
-            
+      var settings = {
+            "url": packagePath + "/update_quotation.php",
+            "method": "POST",
+            "data": JSON.stringify(quote_details )
+      }
+            $.ajax(settings).done(function (response)
+            {
          
-         var settings = {
-             "url": packagePath + "/update_quotation.php",
-             "method": "POST",
-             "data": JSON.stringify(quote_details )
-         }
-             $.ajax(settings).done(function (response)
-             {
-            
-                toastr.success('Successfully accepted the quotation');
-               window.location = "/";
+               toastr.success('Successfully accepted the quotation');
+            window.location = "/";
 
-             //remove the existing job id in localstorage after saving
-            
-             //localStorage.removeItem("jobID"); 
+            //remove the existing job id in localstorage after saving
          
-         });
-             
-          }
+            //localStorage.removeItem("jobID"); 
+      
+      });
+            
+         }
 
          return {
       

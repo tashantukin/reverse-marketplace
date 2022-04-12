@@ -488,8 +488,9 @@ const jobData = new Vue({
                             fieldName = field.name,
                             fieldType = field.type_of_field,
                             fieldId = field.Id 
+                            fieldRequired = field.is_required;
                             var customFieldInput = '';
-                            
+                            var isrequired = fieldRequired == 'True' ? 'required' : "";
                             switch (fieldType) {
                                 case 'search':
 
@@ -506,7 +507,7 @@ const jobData = new Vue({
                                 
                                 case 'textfield':
                             
-                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label>  <input type="text" class="form-control" name="${fieldName}"id="${fieldName.replace(" ","_").toLowerCase()}" placeholder=""></div>`
+                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label>  <input type="text" class="form-control ${isrequired}" name="${fieldName}"id="${fieldName.replace(" ","_").toLowerCase()}" placeholder=""></div>`
                                     break;
                                
                                 case 'dropdown':
@@ -516,7 +517,7 @@ const jobData = new Vue({
                                     {
                                         options += `<option name='${option}' value="${option}">${option}</option>`
                                     });
-                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label> <select id="${fieldId}" class="form-control"  name="${fieldName}" id="${fieldName}" type="dropdown">
+                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label> <select id="${fieldId}" class="form-control ${isrequired}"  name="${fieldName}" id="${fieldName}" type="dropdown">
                                       ${options}
                                     </select> </div>`;
                                     break;    
@@ -527,7 +528,7 @@ const jobData = new Vue({
                                     $.each(JSON.parse(field.values), function (index, option)
                                     {
                                         chkoptions += `<div class="fancy-checkbox checkbox-sm">
-                                        <input type="checkbox" id="${option.replace(" ","_").toLowerCase()}" name="${fieldId}">
+                                        <input type="checkbox" id="${option.replace(" ","_").toLowerCase()}" name="${fieldId}" class="${isrequired}">
                                         <label for="${option.replace(" ","_").toLowerCase()}"><span>${option}</span>
                                         </label>  </div>`
                                     });
@@ -555,12 +556,12 @@ const jobData = new Vue({
                                 
                                 case 'number': 
                             
-                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label>  <input type="number" class="form-control" name="${fieldName}"id="${fieldName}" placeholder=""></div>`
+                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label>  <input type="number" class="form-control ${isrequired}" name="${fieldName}"id="${fieldName}" placeholder=""></div>`
                                     break;
                                
                                 case 'datepicker':
 
-                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}"  custom-type="${fieldType}"><label for=${fieldId}>${fieldName}</label><input type="text" class="form-control datepicker" name="${fieldName}" id="${fieldName.replace(" ","_").toLowerCase()}" placeholder="DD/MM/YYYY"> </div>`
+                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}"  custom-type="${fieldType}"><label for=${fieldId}>${fieldName}</label><input type="text" class="form-control datepicker ${isrequired}" name="${fieldName}" id="${fieldName.replace(" ","_").toLowerCase()}" placeholder="DD/MM/YYYY"> </div>`
                                     jQuery('.datepicker').datetimepicker({
                                     viewMode: 'days',
                                     format: 'DD/MM/YYYY'
@@ -571,7 +572,7 @@ const jobData = new Vue({
                                     
                                     customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}">
                                    <label for=${fieldId}>${fieldName}</label>
-                                    <textarea class="form-control" name="${fieldName}" id="${fieldName.replace(" ","_").toLowerCase()}" rows="5" placeholder=""></textarea>
+                                    <textarea class="form-control ${isrequired}" name="${fieldName}" id="${fieldName.replace(" ","_").toLowerCase()}" rows="5" placeholder=""></textarea>
                                     </div>`
                                     break;
                                
@@ -579,7 +580,7 @@ const jobData = new Vue({
 
                                     customFieldInput = `<div class="form-group custom-fancyjb custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}">
                                     <div class="fancy-checkbox checkbox-sm">
-                                        <input type="checkbox" name="${fieldId}" id="${fieldName.replace(" ","_").toLowerCase()}" class="acknowledge">
+                                        <input type="checkbox" name="${fieldId}" id="${fieldName.replace(" ","_").toLowerCase()}" class="acknowledge ${isrequired}">
                                          <label for="${fieldName.replace(" ","_").toLowerCase()}">${fieldName}</label>
                                     </div>
                                     </div>`
@@ -606,7 +607,7 @@ const jobData = new Vue({
                                                         <div class="browse-btn">
                                                             <input type="file" value="Browse..." multiple
                                                                 onchange="readURL(this);" id="file-doc"
-                                                                upload-name="${fieldName}" field-id="${fieldId}">
+                                                                upload-name="${fieldName}" field-id="${fieldId}" class="${isrequired}">
                                                             <span id="logo_add2">Upload</span>
                                                         </div>
                                                     </a>
@@ -646,7 +647,7 @@ const jobData = new Vue({
                               </div>
                            </div>
 
-                            <div class="location-map-hide-show" style="">
+                            <div class="location-map-hide-show" style="display: none;">
                             
                             <div class="form-group">
                                     <label for="location_details">Location Details</label>
@@ -668,8 +669,7 @@ const jobData = new Vue({
                         
                             $(`.tab-content #${tabId} .jobform-form hr`).before(customField)
 
-                           
-
+                        
                         })
 
                         

@@ -62,17 +62,54 @@ $baseUrl = getMarketplaceBaseUrl();
 ?>
 <div class="page-content">
     <div class="gutter-wrapper">
+
         <div class="panel-box border-none">
+                    <div class="page-content-top">
+                        <div class="row row-center-flex">
+                            <div class="col-sm-5">
+                                <h4>Lodging job field</h4>
+                                <h5>View and add the field for buyer to fill in during lodging job process</h5>
+                            </div>
+                            <div class="col-sm-7">
+                                <div class="auto pull-right text-right">
+                                    <button class="btn cmn-btn-clear" id="btn-add-new-steps" onclick="location.href='job_fields.php?action=edit-steps'" type="button">Add/Edit Steps</button>
+                                    <button class="btn cmn-btn-blue" id="btn-add-new-field" onclick="location.href='job_fields.php?action=add-fields'" type="button">Add new fields</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+        <div class="panel-box border-none ">
+                    <div class="page-content-top">
+                        <div class="row row-center-flex">
+                            <div class="col-sm-7">
+                                <h4>Seller onboarding fields</h4>
+                                <h5>View and add the field for seller to fill in.</h5>
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="auto pull-right text-right">
+                                    <button class="btn cmn-btn-clear" id="btn-add-new-steps"  onclick="location.href='seller_details.php?action=edit-steps'" type="button">Add new steps</button>
+                                    <button class="btn cmn-btn-blue" id="btn-add-new-field"   onclick="location.href='seller_details.php?action=add-fields'" type="button">Add new fields</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+        <div class="panel-box border-none mb-0">
             <div class="page-content-top">
                 <div class="row">
                     <div class="col-sm-12">
                         <h4>Manage your jobs</h4>
                         <h5>Monitor and keep track of the list of jobs available in your marketplace</h5>
 
-                        <div class="pull-right">
+                        <!-- <div class="pull-right">
                             <a class="blue-btn" href="job_fields.php">Customise Job Fields</a>
                             <a class="blue-btn" href="seller_details.php">Customise On-boarding Fields</a>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

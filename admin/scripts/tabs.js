@@ -156,14 +156,16 @@
                         $.each(vm.allTabs, function (index, tab)
                         {
                             if (tab.sort_order == 0) {
-                                 classes = "tab-pane fade in active";
+                                classes = "tab-pane fade in active";
+                                classHeader = 'active';
                             
                             } else {
                                 classes = "tab-pane fade";
+                                classHeader = '';
                             // backbutton =  `<button onclick="j_prevTab();" class="btn btn-jobform-outline">Back</button>`
                             }
                        
-                            $('[role="tablist"]').append(`<li role="presentation"><a href="#${tab.Id}" data-id="${tab.Id}"  aria-controls= ${tab.Id} role="tab" data-toggle="tab"> ${tab.tab_name} </a></li>`);
+                            $('[role="tablist"]').append(`<li role="presentation" class="${classHeader}"><a href="#${tab.Id}" data-id="${tab.Id}"  aria-controls= ${tab.Id} role="tab" data-toggle="tab"> ${tab.tab_name} </a></li>`);
                         
                             $(".tab-content").append(`
                              <div role="tabpanel" class="${classes}" id="${tab.Id}">
@@ -477,7 +479,7 @@
                     vm.fieldType = fieldDetails.type_of_field,
                     vm.fieldId =  fieldDetails.Id
                     
-                    if (vm.fieldType == "checkbox" || vm.fieldType == "dropdown") {
+                    if (vm.fieldType == "checkbox" || vm.fieldType == "dropdown" || vm.fieldType ==  'radiobutton' ) {
                         $('.cstm-fieldpop-optarea').show();
                         $('#dropdown-opt-draggble').remove();
                         $.each(vm.values, function (index, option)
@@ -578,7 +580,10 @@ $(document).ready(function() {
     jQuery('body').on('click', '.btn-edit-onbrdfields', function ()
                 {
 
-                tabs.getFieldDetails('Edit', $(this))
+        $('.cstm-fieldpop-optarea ul').remove();
+         $("#onbrd_field_type").prop("disabled", true);
+       
+        tabs.getFieldDetails('Edit', $(this))
             
     })
 

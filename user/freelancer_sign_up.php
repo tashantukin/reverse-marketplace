@@ -398,27 +398,24 @@
     //     });
     // });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        jQuery('.jobform-tab .nav-tabs a').on('show.bs.tab', function (event) {
+            var tab = jQuery(".jobform-tab li.active a").attr('href');
+            if (validateTab(tab) == 0 || jQuery(".jobform-tab").hasClass('prevTab') ) {
+               jQuery(".jobform-tab").removeClass('prevTab');
+               $(this).parent().addClass('check');
+               $(this).parent().prevAll().addClass('check');
+               $(this).parent().nextAll().removeClass('check');
+               return true;
+            } else {
+               return false
+            }
+         });
 
     function j_nextTab() {
+
+        // if (validateTab(tab)) {
+        //      console.log('missing required fields')
+        // }
         jQuery(".jobform-tab li.active").next('li').children('a').trigger('click');
         console.log('this');
         setTimeout(function() {
@@ -454,24 +451,8 @@
     function validateTab(tab) {
         var validate = 0;
         var target = jQuery(".job-form-tab-design .tab-content " + tab + " ").find('.jobform-form');
-        switch (tab) {
-            case '#registration':
-                /*var nEmail = jQuery("#email");
-                target.find('.required').each(function () {
-                   var val = jQuery(this).val();
-                   if (!jQuery.trim(val)) {
-                      validate = 1;
-                      jQuery(this).addClass('error-con');
-                   }
-                });
-                if (!validateEmail(nEmail.val())) {
-                   validate = 1;
-                   nEmail.addClass('error-con');
-                }*/
-                break;
-            case '#verification-details':
 
-                target.find('.required').each(function() {
+             target.find('.required').each(function() {
                     var val = jQuery(this).val();
                     if (!jQuery.trim(val)) {
                         validate = 1;
@@ -479,36 +460,55 @@
                     }
                 });
 
+        // switch (tab) {
+        //     case '#registration':
+        //         /*var nEmail = jQuery("#email");
+        //         target.find('.required').each(function () {
+        //            var val = jQuery(this).val();
+        //            if (!jQuery.trim(val)) {
+        //               validate = 1;
+        //               jQuery(this).addClass('error-con');
+        //            }
+        //         });
+        //         if (!validateEmail(nEmail.val())) {
+        //            validate = 1;
+        //            nEmail.addClass('error-con');
+        //         }*/
+        //         break;
+        //     case '#verification-details':
 
-                break;
-            case '#verification':
-                target.find('.required').each(function() {
-                    var val = jQuery(this).val();
-                    if (!jQuery.trim(val)) {
-                        validate = 1;
-                        jQuery(this).addClass('error-con');
-                    }
-                });
-                break;
-            case '#approval':
-                target.find('.required').each(function() {
-                    var val = jQuery(this).val();
-                    if (!jQuery.trim(val)) {
-                        validate = 1;
-                        jQuery(this).addClass('error-con');
-                    }
-                });
-                break;
-            case '#start':
-                target.find('.required').each(function() {
-                    var val = jQuery(this).val();
-                    if (!jQuery.trim(val)) {
-                        validate = 1;
-                        jQuery(this).addClass('error-con');
-                    }
-                });
-                break;
-        }
+               
+
+
+        //         break;
+        //     case '#verification':
+        //         target.find('.required').each(function() {
+        //             var val = jQuery(this).val();
+        //             if (!jQuery.trim(val)) {
+        //                 validate = 1;
+        //                 jQuery(this).addClass('error-con');
+        //             }
+        //         });
+        //         break;
+        //     case '#approval':
+        //         target.find('.required').each(function() {
+        //             var val = jQuery(this).val();
+        //             if (!jQuery.trim(val)) {
+        //                 validate = 1;
+        //                 jQuery(this).addClass('error-con');
+        //             }
+        //         });
+        //         break;
+        //     case '#start':
+        //         target.find('.required').each(function() {
+        //             var val = jQuery(this).val();
+        //             if (!jQuery.trim(val)) {
+        //                 validate = 1;
+        //                 jQuery(this).addClass('error-con');
+        //             }
+        //         });
+        //         break;
+        // }
         return validate;
     }
 
@@ -528,6 +528,143 @@
         }
     }
 
+
+function initAutocomplete() {
+
+      if (!navigator.geolocation) {
+                console.log("Your browser doesn't support geolocation feature!")
+            } else {
+                //setInterval(() => {
+              //  navigator.geolocation.getCurrentPosition(getPosition)
+
+                
+                //}, 5000);
+            }
+              waitForElement('#address', function (){
+//   const map = new google.maps.Map(document.getElementById("map"), {
+//     center: { lat: -33.8688, lng: 151.2195 },
+//     zoom: 13,
+//     mapTypeId: "roadmap",
+//   });
+  // Create the search box and link it to the UI element.
+
+                
+    const input = document.getElementById("address");
+    const searchBox = new google.maps.places.SearchBox(input);
+ //})
+ // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+  // Bias the SearchBox results towards current map's viewport.
+//   map.addListener("bounds_changed", () => {
+//     searchBox.setBounds(map.getBounds());
+//   });
+
+  let markers = [];
+
+  // Listen for the event fired when the user selects a prediction and retrieve
+  // more details for that place.
+  searchBox.addListener("places_changed", () => {
+
+
+    //const places = searchBox.getPlaces();
+
+
+     var places = searchBox.getPlaces();
+
+             places.forEach((place) => {
+
+            var address = place.formatted_address;
+            var latitude = place.geometry.location.lat();
+            var longitude = place.geometry.location.lng();
+            var latlng = new google.maps.LatLng(latitude, longitude);
+            var geocoder = geocoder = new google.maps.Geocoder();
+            geocoder.geocode({
+                'latLng': latlng
+            }, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[0]) {
+                        var address = results[0].formatted_address;
+                        var pin = results[0].address_components[results[0].address_components
+                            .length - 1].long_name;
+                        var country = results[0].address_components[results[0]
+                            .address_components
+                            .length - 2].long_name;
+                        var state = results[0].address_components[results[0].address_components
+                            .length - 3].long_name;
+                        var city = results[0].address_components[results[0].address_components
+                            .length - 4].long_name;
+                        document.getElementById('country').value = country;
+                        document.getElementById('state').value = state;
+                        document.getElementById('city').value = city;
+                        document.getElementById('postal_code').value = pin;
+                        $('#location_details').val(city);
+                    }
+                }
+            });
+        })
+
+    if (places.length == 0) {
+      return;
+    }
+
+    // Clear out the old markers.
+    // markers.forEach((marker) => {
+    //   marker.setMap(null);
+    // });
+    // markers = [];
+
+    // For each place, get the icon, name and location.
+    // const bounds = new google.maps.LatLngBounds();
+
+    // places.forEach((place) => {
+    //   if (!place.geometry || !place.geometry.location) {
+    //     console.log("Returned place contains no geometry");
+    //     return;
+    //   }
+
+    //   const icon = {
+    //     url: place.icon,
+    //     size: new google.maps.Size(71, 71),
+    //     origin: new google.maps.Point(0, 0),
+    //     anchor: new google.maps.Point(17, 34),
+    //     scaledSize: new google.maps.Size(25, 25),
+    //   };
+
+    //   // Create a marker for each place.
+    //   markers.push(
+    //     new google.maps.Marker({
+    //       map,
+    //       icon,
+    //       title: place.name,
+    //       position: place.geometry.location,
+    //     })
+    //   );
+    //   if (place.geometry.viewport) {
+    //     // Only geocodes have viewport.
+    //     bounds.union(place.geometry.viewport);
+    //   } else {
+    //     bounds.extend(place.geometry.location);
+    //   }
+    // });
+    // map.fitBounds(bounds);
+  });
+
+})
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     jQuery(document).ready(function() {
 
 
@@ -542,7 +679,7 @@
        script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCbYXf7DUOc-j2QwGgtXcFp4fpGMD4Q59o&libraries=places";
 
         document.head.appendChild(script); 
-    // google.maps.event.addDomListener(window, 'load', initialize);
+    google.maps.event.addDomListener(window, 'load', initialize);
    
 
     })
@@ -813,7 +950,10 @@
     }
     </script>
 
-
+ <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbYXf7DUOc-j2QwGgtXcFp4fpGMD4Q59o&callback=initAutocomplete&libraries=places&v=weekly&channel=2"
+      async
+    ></script>
     <!-- <script type="text/javascript"
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbYXf7DUOc-j2QwGgtXcFp4fpGMD4Q59o&libraries=places">
     </script> -->

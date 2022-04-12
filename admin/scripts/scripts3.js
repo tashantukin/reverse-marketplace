@@ -176,44 +176,79 @@
 
         $('body').on('click', '#btn-save-jobfields', function ()
         {
-            let customName = $('#onbrd_field_name').val();
-            let optionName = $('#optionName').val();
-            let hasOptions = 0;
-            if ($("#onbrd_field_type option:selected").text() == 'Dropdown' || $("#onbrd_field_type option:selected").text() == 'Checkbox') {
-                hasOptions = 1;
-            }
 
+        
+         jQuery('.job-fields-modal .required').removeClass('error-con');
 
-            if ((hasOptions == 1 && optionName != '') || (hasOptions == 0 && customName != '')) {
+         var er = 0;
 
-                jQuery('.cstm-fieldpop-optarea .virtual-table').find('input[type = "text"]').each(function ()
-                {
-                    if (jQuery(this).val() != '') {
+         jQuery('.job-fields-modal .required').each(function(){  
 
-                        let optionText = $(this).val()
-                        let option = optionText;
-                        console.log(option);
-                        optionList.push(option);
-                    }
-                });
+             var tv = jQuery(this).val();
+             //var tv_select =  $("option:selected", jQuery(this)).val();
 
-                let action = $('#field-action').val();
-                if (action != 'edit') {
-                    const generateRandomString = (length = 6) => Math.random().toString(20).substr(2, length)
-                    const cfCode = (`${packageId}-${generateRandomString(10)}-${customName.replace(/\s+/g, '')}-REV_INPUT`)
-                    conf_message = 'Custom field successfully added.';
-                    selectedValue = $("option:selected", $('#onbrd_field_type')).val();
-                    selectedStep = $("option:selected", $('#onbrd_steps')).val();
-                    saveCustomField(cfCode, 'add', $('#onbrd_field_name').val(), selectedValue, selectedStep, optionList, 'Jobs', conf_message, $('#is-required')[0].checked)
-                } else {
-                    const custom_code = $('.custom_id').val();
-                    selectedValue = $("option:selected", $('#onbrd_field_type')).val();
-                    selectedStep = $("option:selected", $('#onbrd_steps')).val();
-                    conf_message = 'Custom field successfully updated.';
-                    saveCustomField(custom_code, action, $('#onbrd_field_name').val(), selectedValue, selectedStep, optionList, 'Jobs', conf_message, $('#is-required')[0].checked)
+            if (tv == '' || tv == null)
+
+            {
+                console.log({tv})
+                console.log(jQuery(this).attr('id'));
+                jQuery(this).addClass('error-con');
+
+                er = 1;
+
+            } 
+
+            });
+
+            console.log({er})
+
+            if (er) {
+
+                return false;
+
+            } else {
+             
+
+        
+                let customName = $('#onbrd_field_name').val();
+                let optionName = $('#optionName').val();
+                let hasOptions = 0;
+                if ($("#onbrd_field_type option:selected").text() == 'Dropdown' || $("#onbrd_field_type option:selected").text() == 'Checkbox') {
+                    hasOptions = 1;
                 }
 
 
+                if ((hasOptions == 1 && optionName != '') || (hasOptions == 0 && customName != '')) {
+
+                    jQuery('.cstm-fieldpop-optarea .virtual-table').find('input[type = "text"]').each(function ()
+                    {
+                        if (jQuery(this).val() != '') {
+
+                            let optionText = $(this).val()
+                            let option = optionText;
+                            console.log(option);
+                            optionList.push(option);
+                        }
+                    });
+
+                    let action = $('#field-action').val();
+                    if (action != 'edit') {
+                        const generateRandomString = (length = 6) => Math.random().toString(20).substr(2, length)
+                        const cfCode = (`${packageId}-${generateRandomString(10)}-${customName.replace(/\s+/g, '')}-REV_INPUT`)
+                        conf_message = 'Custom field successfully added.';
+                        selectedValue = $("option:selected", $('#onbrd_field_type')).val();
+                        selectedStep = $("option:selected", $('#onbrd_steps')).val();
+                        saveCustomField(cfCode, 'add', $('#onbrd_field_name').val(), selectedValue, selectedStep, optionList, 'Jobs', conf_message, $('#is-required')[0].checked)
+                    } else {
+                        const custom_code = $('.custom_id').val();
+                        selectedValue = $("option:selected", $('#onbrd_field_type')).val();
+                        selectedStep = $("option:selected", $('#onbrd_steps')).val();
+                        conf_message = 'Custom field successfully updated.';
+                        saveCustomField(custom_code, action, $('#onbrd_field_name').val(), selectedValue, selectedStep, optionList, 'Jobs', conf_message, $('#is-required')[0].checked)
+                    }
+
+
+                }
             }
 
         });

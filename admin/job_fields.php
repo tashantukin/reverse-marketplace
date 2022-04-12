@@ -17,7 +17,13 @@
 </head>
 <!-- end header -->
 
+<?php
+$action = $_GET['action'];
+?>
+
 <div class="page-content" id="job-fields">
+
+    <input type ="hidden" id="redirect-action" value="<?php echo $action ?>" > 
     <div class="gutter-wrapper">
         <div class="onboarding-backbtnarea">
             <a class="mybtn btn-grey" href="index.php">
@@ -151,7 +157,7 @@
         <div class="popup-header">
             <h4>Add/edit field</h4>
         </div>
-        <div class="popup-demo-content">
+        <div class="popup-demo-content job-fields-modal">
             <div class="form-group">
                 <label>Field Name*</label>
                 <input type="text" :value="fieldName" class="form-control required" name="onbrd_field_name"
@@ -344,6 +350,45 @@
 <script type="text/javascript">
 var tr_row_update = 0;
 jQuery(document).ready(function() {
+
+ waitForElement('#redirect-action', function (){
+
+   console.log($('#redirect-action').val());
+
+    if ( $('#redirect-action').val() == "edit-steps") {
+        
+          //$("#btn-add-new-steps").trigger('click'); 
+        jQuery('#onbrd_tab_name').val('');
+
+        jQuery('#onbrd_field_type').val('Textfield');
+
+        jQuery('#onbrd_steps').val('1. Registration');
+
+        jQuery('#OnboardingSteps').modal('show');
+
+    }else {
+
+         $('#OnboardingFields .popup-header h4').text('Add Field')
+
+         jQuery('#onbrd_field_name').val('');
+
+        jQuery('#onbrd_field_type').val('Textfield');
+
+        jQuery('#onbrd_steps').val('1. Registration');
+
+        jQuery('#OnboardingFields').modal('show');
+    }
+
+})
+
+
+   // if ($('#redirect-action').val = "add-fields") {
+
+        
+
+     //$("#btn-add-new-field").trigger('click'); 
+  //  }
+
     jQuery(window).bind('scroll', function() {
         jQuery(".sidebar").getNiceScroll().resize();
 
@@ -357,6 +402,9 @@ jQuery(document).ready(function() {
     });
 
     jQuery('body').on('click', '#btn-add-new-field', function() {
+
+        $('#OnboardingFields.popup-header h4').text('Add Field')
+         $('.cstm-fieldpop-optarea ul').remove();
         jQuery('#onbrd_field_name').val('');
         jQuery('#onbrd_field_type').val('Textfield');
         jQuery('#onbrd_steps').val('1. Registration');
@@ -365,17 +413,10 @@ jQuery(document).ready(function() {
 
     jQuery('body').on('click', '.btn-edit-onbrdfields', function() {
 
-        // var fn = jQuery(this).closest('.added-description').find('.user-field-name-onbrd').text();
-        // var ft = jQuery(this).closest('.added-description').find('.user-field-type-onbrd').text();
-        // var st = jQuery(this).closest('.added-description').find('.user-field-consumer-onbrd')
-        //     .text();
-
-        // jQuery('#onbrd_field_name').val(fn);
-        // jQuery('#onbrd_field_type').val(ft);
-        // jQuery('#onbrd_steps').val(st);
-
+    
+        $('#OnboardingFields .popup-header h4').text('Edit Field')
         jQuery('#OnboardingFields').modal('show');
-
+      
         // tr_row_update = jQuery(this).closest('.added-description');
 
     });
@@ -476,6 +517,8 @@ jQuery(document).ready(function() {
 
     jQuery('body').on('click', '#btn-add-new-field', function() {
 
+         $('#OnboardingFields .popup-header h4').text('Add Field')
+
         jQuery('#onbrd_field_name').val('');
 
         jQuery('#onbrd_field_type').val('Textfield');
@@ -489,7 +532,7 @@ jQuery(document).ready(function() {
     jQuery('body').on('click', '#btn-add-new-steps', function() {
 
 
-
+       
         jQuery('#onbrd_tab_name').val('');
 
         jQuery('#onbrd_field_type').val('Textfield');
@@ -501,6 +544,16 @@ jQuery(document).ready(function() {
     });
 
 });
+
+   function waitForElement(elementPath, callBack) {
+      window.setTimeout(function () {
+        if ($(elementPath).length) {
+          callBack(elementPath, $(elementPath));
+        } else {
+          waitForElement(elementPath, callBack);
+        }
+      }, 500);
+    }
 
 function popup_close(ele) {
     var that = jQuery(ele);

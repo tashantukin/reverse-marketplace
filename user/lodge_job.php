@@ -113,7 +113,7 @@ foreach($merchant['CustomFields'] as $cf) {
             <input type="hidden" id="address-lat">
             <input type="hidden" id="address-long">
             <input type="hidden" id="stripe-id" value=<?php echo $stripe_payment_id ?>>
-            <div class="lodge-tab-design ">
+            <div class="lodge-tab-design">
                 <div class="jobform-tab">
                     <ul class="nav nav-tabs">
                         <li v-for="tab in allTabs" v-bind:class="{ active: tab.sort_order== 0 }"><a data-toggle="tab"
@@ -311,28 +311,8 @@ function j_disAllTab(target) {
 
 function validateTab(tab) {
     var validate = 0;
-    var target = jQuery(".job-form-tab-design .tab-content " + tab + " ").find('.jobform-form');
-    switch (tab) {
-        case '#select_location':
-            target.find('.required').each(function() {
-                var val = jQuery(this).val();
-                if (!jQuery.trim(val)) {
-                    validate = 1;
-                    jQuery(this).addClass('error-con');
-                }
-            });
-            break;
-        case '#get_quote':
-            target.find('.required').each(function() {
-                var val = jQuery(this).val();
-                if (!jQuery.trim(val)) {
-                    validate = 1;
-                    jQuery(this).addClass('error-con');
-                }
-            });
-            break;
-        case '#time_frame':
-            target.find('.required').each(function() {
+    var target = jQuery(".lodge-tab-design .tab-content " + tab + " ").find('.jobform-form');
+   target.find('.required').each(function() {
                 var val = jQuery(this).val();
                 if (!jQuery.trim(val)) {
                     validate = 1;
@@ -340,28 +320,51 @@ function validateTab(tab) {
                 }
             });
 
-            if (!jQuery(".acknowledge").prop("checked")) {
-                validate = 1;
-                jQuery(".acknowledge").addClass('error-con');
-            }
 
-            break;
-        case '#contact_details':
-            var nEmail = jQuery("#email");
-            target.find('.required').each(function() {
-                var val = jQuery(this).val();
-                if (!jQuery.trim(val)) {
-                    validate = 1;
-                    jQuery(this).addClass('error-con');
-                }
-            });
-            if (!validateEmail(nEmail.val())) {
-                validate = 1;
-                nEmail.addClass('error-con');
-            }
+    // switch (tab) {
+    //     case '#select_location':
+          
+    //         break;
+    //     case '#get_quote':
+    //         target.find('.required').each(function() {
+    //             var val = jQuery(this).val();
+    //             if (!jQuery.trim(val)) {
+    //                 validate = 1;
+    //                 jQuery(this).addClass('error-con');
+    //             }
+    //         });
+    //         break;
+    //     case '#time_frame':
+    //         target.find('.required').each(function() {
+    //             var val = jQuery(this).val();
+    //             if (!jQuery.trim(val)) {
+    //                 validate = 1;
+    //                 jQuery(this).addClass('error-con');
+    //             }
+    //         });
 
-            break;
-    }
+    //         if (!jQuery(".acknowledge").prop("checked")) {
+    //             validate = 1;
+    //             jQuery(".acknowledge").addClass('error-con');
+    //         }
+
+    //         break;
+    //     case '#contact_details':
+    //         var nEmail = jQuery("#email");
+    //         target.find('.required').each(function() {
+    //             var val = jQuery(this).val();
+    //             if (!jQuery.trim(val)) {
+    //                 validate = 1;
+    //                 jQuery(this).addClass('error-con');
+    //             }
+    //         });
+    //         if (!validateEmail(nEmail.val())) {
+    //             validate = 1;
+    //             nEmail.addClass('error-con');
+    //         }
+
+    //         break;
+    // }
     return validate;
 }
 
@@ -432,12 +435,15 @@ function codeAddress() {
     });
 }
 
+   var lat;
+  var long;
+var accuracy;
  function getPosition(position)
             {
                 // console.log(position)
-                var lat = position.coords.latitude
-                var long = position.coords.longitude
-                var accuracy = position.coords.accuracy
+                lat = position.coords.latitude
+                long = position.coords.longitude
+                accuracy = position.coords.accuracy
 
                 // if (marker) {
                 //     map.removeLayer(marker)
@@ -474,12 +480,10 @@ function initAutocomplete() {
                 //setInterval(() => {
                 navigator.geolocation.getCurrentPosition(getPosition)
 
-                
-                //}, 5000);
-            }
-              waitForElement('#map', function (){
+
+                             waitForElement('#map', function (){
   const map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: -33.8688, lng: 151.2195 },
+    center: { lat: lat, lng: long },
     zoom: 13,
     mapTypeId: "roadmap",
   });
@@ -549,6 +553,11 @@ function initAutocomplete() {
   });
 
 })
+
+                
+                //}, 5000);
+            }
+ 
 }
 
 
@@ -583,15 +592,9 @@ jQuery(document).ready(function() {
     })
 
 
-
-
     jobTabTimeline();
 
     $(window).on('resize', jobTabTimeline);
-
-
-
-
 
     jQuery('.jobform-tab .nav-tabs a').on('show.bs.tab', function(event) {
         var tab = jQuery(".jobform-tab li.active a").attr('href');
@@ -606,7 +609,6 @@ jQuery(document).ready(function() {
             return false
         }
     });
-
 
     $('input[name="payment_fixed_hourly"]').change(function() {
         $('.payment-hourly').fadeOut();

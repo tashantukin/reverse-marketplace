@@ -139,6 +139,11 @@ $userDetails = getFreelancerDetails($user_id);
     <!-- End Item form-->
     </div>
     </div>
+
+
+
+
+
     <!-- footer -->
 
     <div class="backTop"><a href="javascript:void(0);" onclick="ScrollTop();"><img
@@ -157,6 +162,38 @@ $userDetails = getFreelancerDetails($user_id);
             </div>
         </div>
     </div>
+
+
+
+    
+<div class="modal fade payment-modal" id="paymentSuccessfulModal" role="dialog">
+      <div class="modal-dialog">
+         <!-- Modal content-->
+         <div class="modal-content">
+            <div class="modal-body">
+                
+            <div id="paymentSuccessful" class="payment-con clearfix">
+                <h3>Payment</h3>
+                <div class="payment-middle-con ">
+                    <div class="common-text">
+                        <p><strong>Thank you for your purchase</strong></p>
+                        <p>We have successfully received your payment.<br>You can continue on with the process.</p>
+                    </div>
+                </div>
+                  <div class="payment-bottom-con clearfix">
+                     <div class="next-tab-area pull-right">
+                        <span class="seller-btn"> <a data-dismiss="" class="my-btn btn-red" id="close" href="">Close</a> </span>
+                     </div>
+                  </div>
+            </div>
+                
+                
+
+            
+            </div>
+         </div>
+      </div>
+   </div>
     <!-- footer -->
     <!--modal register-->
 
@@ -168,6 +205,7 @@ $userDetails = getFreelancerDetails($user_id);
 </body>
 
 <!-- begin footer -->
+
 <script type="text/javascript" src="scripts/scripts.js"></script>
 <!-- end footer -->
 

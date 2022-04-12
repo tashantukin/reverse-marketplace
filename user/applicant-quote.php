@@ -198,6 +198,7 @@ if ($quotedDetails['Records'][0]['status'] != 'Quoted') {
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="info-box">
+                                        <h4>Buyer Details</h4>
                                         <p>Email: <?php echo $userDetails['Records'][0]['email'] ?></p>
                                         <p>Name: <?php echo $userDetails['Records'][0]['company_name'] ?></p>
                                         <p>Contact Number: <?php echo $userDetails['Records'][0]['contact_number'] ?>
@@ -286,8 +287,7 @@ if ($quotedDetails['Records'][0]['status'] != 'Quoted') {
                                         </div>
                                         <div class="qq-title"><span class="dash"></span><span class="title">Credit
                                                 Card</span></div>
-                                        <div class="qq-title"><span class="dash"></span><span
-                                                class="title">PayPal</span></div>
+                                       
                                     </div>
                                 </div>
                             </div>
@@ -302,10 +302,12 @@ if ($quotedDetails['Records'][0]['status'] != 'Quoted') {
                                         <label for="read_and_agreed"><span>I have read and agreed to the quote
                                                 presented.</span></label>
                                     </div>
+
+                                   
                                 </div>
                             </div>
                             <div class="navtab-filter">
-                                <button <?php echo $style ?>class="btn btn-quote-cancel btnsubmit" id="accept"
+                                <button <?php echo $style ?>class="btn btn-quote-submit btnsubmit" id="accept"
                                     data-toggle="modal">Accept</button>
                                 <button <?php echo $style ?> class="btn btn-quote-reject btnsubmit" data-toggle="modal"
                                     id="reject">Reject</button>

@@ -104,6 +104,12 @@ $fixed_amount = $jobDetails['Records'][0]['is_payment_fixed'] == 'True' ? number
                         <div class="navtab-flex">
                             <div class="quote-title-design"><?php echo $userDetails['Records'][0]['company_name'] ?></p>
                             </div>
+                            <div class="navtab-filter btn-margin">
+                                 <div  class="wait-buyer-respond-txt">
+                                        You need to wait for the for the buyer to respond
+                                 </div>
+                                <button class="btn btn-quote-cancel" data-toggle="modal" data-target="#cancelModal">Cancel Quote</button>
+                            </div>
                             <!-- <div class="navtab-filter btn-margin">
                                 <a href="/" class="btn btn-quote-cancel">Cancel</a>
                                 <button type="button" class="btn btn-quote-submit">Submit Quote</button>
@@ -117,8 +123,7 @@ $fixed_amount = $jobDetails['Records'][0]['is_payment_fixed'] == 'True' ? number
                                             <h4>1. Job Summary</h4>
                                             <?php
                                foreach(json_decode($quotedDetails['Records'][0]['job_summary'],true) as $task) {
-                                    echo "<div class='qq-title saved'><span class='dash'></span><span class='title'>" . $task['title']. " . </span><div class='qq-option'><span>AUD <b>" . $task['price']. "</b></span><a href='javascript:void(0);' class='edit-link'>Edit</a></div></div>";
-
+                                    echo "<div class='qq-title saved'><span class='dash'></span><span class='title'>" . $task['title']. " . </span><div class='qq-option'><span>AUD <b>" . $task['price']. "</b></span></div></div>";
 
                                }
                             ?>
@@ -143,6 +148,7 @@ $fixed_amount = $jobDetails['Records'][0]['is_payment_fixed'] == 'True' ? number
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="info-box">
+                                        <h4>Buyer Details</h4>
                                         <p>Email: <?php echo $userDetails['Records'][0]['email'] ?></p>
                                         <p>Name: <?php echo $userDetails['Records'][0]['company_name'] ?></p>
                                         <p>Contact Number: <?php echo $userDetails['Records'][0]['contact_number'] ?>
@@ -162,8 +168,7 @@ $fixed_amount = $jobDetails['Records'][0]['is_payment_fixed'] == 'True' ? number
                                         <div class="qq-title qq-discount saved"><span class="dash"></span><span
                                                 class="title">All at once - Discount</span>
                                             <div class="qq-option"><span>AUD
-                                                    <b><?php echo $quotedDetails['Records'][0]['all_discount'] ?></b></span><a
-                                                    href="javascript:void(0);" class="edit-link">Edit</a></div>
+                                                    <b><?php echo $quotedDetails['Records'][0]['all_discount'] ?></b></span> </div>
                                         </div>
                                         <div class="qq-title"><span class="dash"></span><span class="title">All at once
                                                 - Total</span>
@@ -183,15 +188,13 @@ $fixed_amount = $jobDetails['Records'][0]['is_payment_fixed'] == 'True' ? number
                                         <div class="qq-title saved"><span class="dash"></span><span
                                                 class="title">Availability</span>
                                             <div class="qq-option">
-                                                <span><b><?php echo $quotedDetails['Records'][0]['availability_date'] ?></b></span><a
-                                                    href="javascript:void(0);" class="edit-linkdate">Edit</a>
+                                                <span><b><?php echo $quotedDetails['Records'][0]['availability_date'] ?></b></span>
                                             </div>
                                         </div>
                                         <div class="qq-title saved"><span class="dash"></span><span
                                                 class="title">Validity Date</span>
                                             <div class="qq-option">
-                                                <span><b><?php echo $quotedDetails['Records'][0]['validity_date'] ?></b></span><a
-                                                    href="javascript:void(0);" class="edit-linkdate">Edit</a>
+                                                <span><b><?php echo $quotedDetails['Records'][0]['validity_date'] ?></b></span>
                                             </div>
                                         </div>
                                         <!-- <div class="qq-title"><span class="dash"></span><span class="title">Full Time</span></div>
@@ -231,8 +234,7 @@ $fixed_amount = $jobDetails['Records'][0]['is_payment_fixed'] == 'True' ? number
                                                 </div>
                                             </div>
                                             <div class="qq-option"><span>AUD
-                                                    <b><?php echo $quotedDetails['Records'][0]['deposit_amount'] ?></b></span><a
-                                                    href="javascript:void(0);" class="edit-link">Edit</a></div>
+                                                    <b><?php echo $quotedDetails['Records'][0]['deposit_amount'] ?></b></span></div>
                                         </div>
 
                                         <div class="fancy-checkbox checkbox-sm">
@@ -280,29 +282,18 @@ $fixed_amount = $jobDetails['Records'][0]['is_payment_fixed'] == 'True' ? number
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="checkbox-row-flex">
-                                            <div class="checkbox-width ">
-                                                <div class="fancy-checkbox checkbox-sm">
-                                                    <input
-                                                        checked="<?php echo $quotedDetails['Records'][0]['payment_paypal'] ?>"
-                                                        type="checkbox" name="paypal" id="paypal">
-                                                    <label for="paypal"><span>PayPal</span></label>
-                                                </div>
-                                            </div>
-                                        </div>
-
+                                    
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="navtab-flex">
-                            <div class="question-requester-design">Have a question? Ask requester a question <a
-                                    href="#">here</a></div>
-                            <!-- <div class="navtab-filter btn-margin">
-                                <a href="/" class="btn btn-quote-cancel">Cancel</a>
-                                <button type="button" class="btn btn-quote-submit">Submit Quote</button>
-                            </div> -->
+                            <div  class="wait-buyer-respond-txt">
+                                        You need to wait for the for the buyer to respond
+                            </div>
+                           <div class="navtab-filter btn-margin">
+                            <button class="btn btn-quote-cancel" data-toggle="modal" data-target="#cancelModal">Cancel Quote</button>
                         </div>
 
                     </div>
@@ -314,6 +305,37 @@ $fixed_amount = $jobDetails['Records'][0]['is_payment_fixed'] == 'True' ? number
         </div>
         <!-- footer -->
         <!--modal register-->
+
+
+     <div class="modal fade modal-align-center" id="cancelModal" role="dialog">
+      <div class="modal-dialog">
+         <!-- Modal content-->
+         <div class="modal-content">
+            <div class="modal-body">
+                <div class="modal-job-popup">
+                     <div class="modal-title">
+                        <h4>Are you sure you want to cancel this quote?</h4>
+                     </div>
+                     <div class="btn-hbox">
+                        <a class="btn btn-block btn-jobform-fill" href="homepage.html">Yes, Cancel</a>
+                        <button type="button" class="btn btn-block btn-jobform-outline" data-dismiss="modal">No</button>
+                     </div>
+                </div>
+
+            </div>
+         </div>
+      </div>
+   </div>
+
+
+
+
+
+
+
+
+
+
         <div class="modal-frame model-register">
             <div class="mymodal">
                 <div class="modal-inset">

@@ -110,6 +110,7 @@ else {
                         <div class="navtab-flex">
                             <div class="quote-title-design" id="quoted-by">
                                 <?php echo $userDetails['Records'][0]['company_name'] ?></div>
+                            <div class="quote-warning-design">Details of this quote cannot be edited once submitted</div>
                             <div class="navtab-filter btn-margin">
                                 <a href="/" class="btn btn-quote-cancel">Cancel</a>
                                 <button type="button" class="btn btn-quote-submit" id="submit-top">Submit Quote</button>
@@ -155,6 +156,7 @@ else {
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="info-box">
+                                         <h4>Buyer Details</h4>
                                         <p>Email: <?php echo $userDetails['Records'][0]['email'] ?></p>
                                         <p>Name: <?php echo $userDetails['Records'][0]['company_name'] ?></p>
                                         <p>Contact Number: <?php echo $userDetails['Records'][0]['contact_number'] ?>

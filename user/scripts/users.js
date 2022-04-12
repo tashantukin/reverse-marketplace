@@ -568,7 +568,7 @@ sellerFields = new Vue({
                     $.each(vm.allTabs, function (index, tab)
                     {  
                         if (tab.sort_order == 0) {
-                            classes = "tab-pane fade in active";
+                           classes = "tab-pane fade";
                             
                         } else {
                             classes = "tab-pane fade";
@@ -783,7 +783,7 @@ sellerFields = new Vue({
                             fieldName = field.name,
                                 fieldType = field.type_of_field,
                                 fieldId = field.Id
-                            fieldRequired = field.is_required;
+                              fieldRequired = field.is_required;
 
                             var isrequired = fieldRequired == 'True' ? 'required' : "";
                             var customFieldInput = '';
@@ -803,7 +803,7 @@ sellerFields = new Vue({
                                 
                                 case 'textfield':
                             
-                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label>  <input type="text" class="form-control" name="${fieldName}"id="${fieldName}" placeholder=""></div>`
+                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label>  <input type="text" class="form-control ${isrequired}" name="${fieldName}"id="${fieldName}" placeholder=""></div>`
                                     break;
                                
                                 case 'dropdown':
@@ -813,7 +813,7 @@ sellerFields = new Vue({
                                     {
                                         options += `<option name='${option}' value="${option}">${option}</option>`
                                     });
-                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label> <select id="${fieldId}" class="form-control"  name="${fieldName}" id="${fieldName}" type="dropdown">
+                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label> <select id="${fieldId}" class="form-control ${isrequired}"  name="${fieldName}" id="${fieldName}" type="dropdown">
                                       ${options}
                                     </select> </div>`;
                                     break;
@@ -823,7 +823,7 @@ sellerFields = new Vue({
                                     let chkoptions = '';
                                     $.each(JSON.parse(field.values), function (index, option)
                                     {
-                                        chkoptions += `<div class="fancy-checkbox checkbox-sm">
+                                        chkoptions += `<div class="fancy-checkbox checkbox-sm ${isrequired}">
                                         <input type="checkbox" id="${option}" name="${fieldId}">
                                         <label for="${option}"><span>${option}</span>
                                         </label>  </div>`
@@ -838,7 +838,7 @@ sellerFields = new Vue({
                                     let radioOptions = '';
                                     $.each(JSON.parse(field.values), function (index, option)
                                     {
-                                        radioOptions += `<div class="fancy-radio radio-sm">
+                                        radioOptions += `<div class="fancy-radio radio-sm ${isrequired}">
                                         <input type="radio" id="${option}" name="${option}">
                                         <label for="${option}"><span>${option}</span>
                                         </label>  </div>`
@@ -852,12 +852,12 @@ sellerFields = new Vue({
                                 
                                 case 'number':
                             
-                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label>  <input type="number" class="form-control" name="${fieldName}"id="${fieldName}" placeholder=""></div>`
+                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label>  <input type="number" class="form-control ${isrequired}" name="${fieldName}"id="${fieldName}" placeholder=""></div>`
                                     break;
                                
                                 case 'datepicker':
 
-                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}"  custom-type="${fieldType}"><label for=${fieldId}>${fieldName}</label><input type="text" class="form-control datepicker" name="${fieldName}" id="${fieldName}" placeholder="DD/MM/YYYY"> </div>`
+                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}"  custom-type="${fieldType}"><label for=${fieldId}>${fieldName}</label><input type="text" class="form-control datepicker ${isrequired}" name="${fieldName}" id="${fieldName}" placeholder="DD/MM/YYYY"> </div>`
                                     jQuery('.datepicker').datetimepicker({
                                         viewMode: 'days',
                                         format: 'DD/MM/YYYY'
@@ -868,7 +868,7 @@ sellerFields = new Vue({
                                     
                                     customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}">
                                    <label for=${fieldId}>${fieldName}</label>
-                                    <textarea class="form-control" name="${fieldName}" id="${fieldName}" rows="5" placeholder=""></textarea>
+                                    <textarea class="form-control ${isrequired}" name="${fieldName}" id="${fieldName}" rows="5" placeholder=""></textarea>
                                     </div>`
                                     break;
                                
@@ -876,7 +876,7 @@ sellerFields = new Vue({
 
                                     customFieldInput = `<div class="form-group custom-fancyjb custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}">
                                     <div class="fancy-checkbox checkbox-sm">
-                                        <input type="checkbox" name="${fieldId}" id="${fieldName}">
+                                        <input type="checkbox" name="${fieldId}" id="${fieldName}" class="${isrequired}">
                                          <label for=${fieldId}>${fieldName}</label>
                                     </div>
                                     </div>`
@@ -903,7 +903,7 @@ sellerFields = new Vue({
                                                         <div class="browse-btn">
                                                             <input type="file" value="Browse..." multiple
                                                                 onchange="readURL(this);" id="uploads"
-                                                                upload-name="${fieldName}">
+                                                                upload-name="${fieldName}" class="${isrequired}">
                                                             <span id="logo_add2">Upload</span>
                                                         </div>
                                                     </a>

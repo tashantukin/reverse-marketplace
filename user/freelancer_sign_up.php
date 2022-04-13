@@ -53,10 +53,6 @@
   
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 
-    //  <script src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCbYXf7DUOc-j2QwGgtXcFp4fpGMD4Q59o&libraries=places"></script>
-       <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-
-
 
     <style>
     body {
@@ -133,16 +129,16 @@
                                     <h3>Registration</h3>
                                     <div class="form-group">
                                         <label for="email">Email Address</label>
-                                        <input type="text" class="form-control" name="email" id="email" placeholder="">
+                                        <input type="text" class="form-control required" name="email" id="email" placeholder="">
                                     </div>
                                     <div class="form-group">
                                         <label for="password">Set a Password</label>
-                                        <input type="password" class="form-control" name="password" id="password"
+                                        <input type="password" class="form-control required" name="password" id="password"
                                             placeholder="">
                                     </div>
                                     <div class="form-group">
                                         <label for="retype_password">Retype Password</label>
-                                        <input type="password" class="form-control" name="retype_password"
+                                        <input type="password" class="form-control required"  name="retype_password"
                                             id="retype_password" placeholder="">
                                     </div>
 
@@ -398,17 +394,18 @@
     //     });
     // });
 
-        jQuery('.jobform-tab .nav-tabs a').on('show.bs.tab', function (event) {
-            var tab = jQuery(".jobform-tab li.active a").attr('href');
-            if (validateTab(tab) == 0 || jQuery(".jobform-tab").hasClass('prevTab') ) {
-               jQuery(".jobform-tab").removeClass('prevTab');
-               $(this).parent().addClass('check');
-               $(this).parent().prevAll().addClass('check');
-               $(this).parent().nextAll().removeClass('check');
-               return true;
-            } else {
-               return false
-            }
+        jQuery('.jobform-tab .nav-tabs a').on('click', function (event) {
+            // console.log('in here');
+            // var tab = jQuery(".jobform-tab li.active a").attr('href');
+            // if (validateTab(tab) == 0 || jQuery(".jobform-tab").hasClass('prevTab') ) {
+            //    jQuery(".jobform-tab").removeClass('prevTab');
+            //    $(this).parent().addClass('check');
+            //    $(this).parent().prevAll().addClass('check');
+            //    $(this).parent().nextAll().removeClass('check');
+            //    return true;
+            // } else {
+            //    return false
+            // }
          });
 
     function j_nextTab() {
@@ -416,7 +413,24 @@
         // if (validateTab(tab)) {
         //      console.log('missing required fields')
         // }
-        jQuery(".jobform-tab li.active").next('li').children('a').trigger('click');
+
+
+          console.log('in here');
+            var tab = jQuery(".jobform-tab li.active a").attr('href');
+            if (validateTab(tab) == 0 || jQuery(".jobform-tab").hasClass('prevTab') ) {
+                console.log('return true');
+               jQuery(".jobform-tab").removeClass('prevTab');
+               $(this).parent().addClass('check');
+               $(this).parent().prevAll().addClass('check');
+               $(this).parent().nextAll().removeClass('check');
+
+               jQuery(".jobform-tab li.active").next('li').children('a').trigger('click')
+               return true;
+            } else {
+                console.log('in false');
+               return false
+            }
+        //jQuery(".jobform-tab li.active").next('li').children('a').trigger('click');
         console.log('this');
         setTimeout(function() {
             //   newMap();
@@ -459,7 +473,7 @@
                         jQuery(this).addClass('error-con');
                     }
                 });
-
+            console.log({validate});
         // switch (tab) {
         //     case '#registration':
         //         /*var nEmail = jQuery("#email");

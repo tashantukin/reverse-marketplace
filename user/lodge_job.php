@@ -279,7 +279,19 @@ function waitForElement(elementPath, callBack) {
 }
 
 function j_nextTab() {
-    jQuery(".jobform-tab li.active").next('li').children('a').trigger('click');
+
+ var tab = jQuery(".jobform-tab li.active a").attr('href');
+        console.log(tab);
+        if (validateTab(tab) == 0 || jQuery(".jobform-tab").hasClass('prevTab')) {
+            jQuery(".jobform-tab li.active").next('li').children('a').trigger('click');
+            jQuery(".jobform-tab").removeClass('prevTab');
+            $(this).parent().addClass('check');
+            $(this).parent().prevAll().addClass('check');
+            $(this).parent().nextAll().removeClass('check');
+            return true;
+        } else {
+            return false
+        }
 }
 
 function j_finishedTab() {
@@ -312,14 +324,40 @@ function j_disAllTab(target) {
 function validateTab(tab) {
     var validate = 0;
     var target = jQuery(".lodge-tab-design .tab-content " + tab + " ").find('.jobform-form');
-   target.find('.required').each(function() {
+     target.find('.required').each(function() {
                 var val = jQuery(this).val();
+                var isChecked = $(this).is(":checked");
+
                 if (!jQuery.trim(val)) {
                     validate = 1;
                     jQuery(this).addClass('error-con');
                 }
+                if ($(this).is(':checkbox')){
+                    if (!isChecked) {
+                        validate = 1;
+                        jQuery(this).addClass('error-con');
+                    }
+                }
+                
+
+               
             });
 
+         target.find('.req-chkbx').each(function() {
+             
+                 var checked = $(this).find("input:checked").length > 0;
+                if (!checked){
+                    $(this).find('input:first').addClass('error-con');
+                   // alert("Please check at least one checkbox");
+                    validate = 1;
+                    //return false;
+                    
+                }
+            });
+           
+
+        
+        console.log({validate});
 
     // switch (tab) {
     //     case '#select_location':
@@ -365,6 +403,7 @@ function validateTab(tab) {
 
     //         break;
     // }
+
     return validate;
 }
 
@@ -596,19 +635,19 @@ jQuery(document).ready(function() {
 
     $(window).on('resize', jobTabTimeline);
 
-    jQuery('.jobform-tab .nav-tabs a').on('show.bs.tab', function(event) {
-        var tab = jQuery(".jobform-tab li.active a").attr('href');
-        console.log(tab);
-        if (validateTab(tab) == 0 || jQuery(".jobform-tab").hasClass('prevTab')) {
-            jQuery(".jobform-tab").removeClass('prevTab');
-            $(this).parent().addClass('check');
-            $(this).parent().prevAll().addClass('check');
-            $(this).parent().nextAll().removeClass('check');
-            return true;
-        } else {
-            return false
-        }
-    });
+    // jQuery('.jobform-tab .nav-tabs a').on('show.bs.tab', function(event) {
+    //     var tab = jQuery(".jobform-tab li.active a").attr('href');
+    //     console.log(tab);
+    //     if (validateTab(tab) == 0 || jQuery(".jobform-tab").hasClass('prevTab')) {
+    //         jQuery(".jobform-tab").removeClass('prevTab');
+    //         $(this).parent().addClass('check');
+    //         $(this).parent().prevAll().addClass('check');
+    //         $(this).parent().nextAll().removeClass('check');
+    //         return true;
+    //     } else {
+    //         return false
+    //     }
+    // });
 
     $('input[name="payment_fixed_hourly"]').change(function() {
         $('.payment-hourly').fadeOut();
@@ -729,642 +768,6 @@ jQuery(document).ready(function() {
 
         }
     })
-
-
-    function newMap() {
-        var newData = {
-            'areas': {}
-        };
-        $(".mapcontainer").mapael({
-            map: {
-                name: "usa_states",
-                zoom: {
-                    enabled: true
-                },
-                defaultArea: {
-                    attrs: {
-                        fill: "#5ba4ff",
-                        stroke: "#99c7ff",
-                        cursor: "pointer"
-                    },
-                    attrsHover: {
-                        animDuration: 0
-                    },
-                    text: {
-                        attrs: {
-                            cursor: "pointer",
-                            "font-size": 10,
-                            fill: "#000"
-                        },
-                        attrsHover: {
-                            animDuration: 0
-                        }
-                    },
-                    eventHandlers: {
-                        click: function(e, id, mapElem, textElem) {
-                            $.map(newData.areas, function(val, i) {
-                                newData.areas[i] = {
-                                    attrs: {
-                                        fill: "#5ba4ff"
-                                    }
-                                };
-                            });
-
-                            $(".mapcontainer").trigger('update', [{
-                                mapOptions: newData
-                            }]);
-                            newData = {
-                                'areas': {}
-                            };
-
-                            if (mapElem.originalAttrs.fill == "#5ba4ff") {
-                                newData.areas[id] = {
-                                    attrs: {
-                                        fill: "#00c8b2"
-                                    }
-                                };
-                            }
-                            $(".mapcontainer").trigger('update', [{
-                                mapOptions: newData
-                            }]);
-
-                            console.log({
-                                newData
-                            })
-
-                        }
-                    }
-                }
-            },
-            areas: {
-                "HI": {
-                    text: {
-                        content: "Hawaii",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Hawaii"
-                    }
-                },
-
-                "AK": {
-                    text: {
-                        content: "Alaska",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Alaska"
-                    }
-                },
-                "FL": {
-                    text: {
-                        content: "Florida",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Florida"
-                    }
-                },
-                "NH": {
-                    text: {
-                        content: "New Hampshire",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "New Hampshire"
-                    }
-                },
-                "MI": {
-                    text: {
-                        content: "Michigan",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Michigan"
-                    }
-                },
-                "VT": {
-                    text: {
-                        content: "Vermont",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Vermont"
-                    }
-                },
-                "ME": {
-                    text: {
-                        content: "Maine",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Maine"
-                    }
-                },
-                "RI": {
-                    text: {
-                        content: "Rhode Island",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Rhode Island"
-                    }
-                },
-                "NY": {
-                    text: {
-                        content: "New York",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "New York"
-                    }
-                },
-                "PA": {
-                    text: {
-                        content: "Pennsylvania",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Pennsylvania"
-                    }
-                },
-                "NJ": {
-                    text: {
-                        content: "New Jersey",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "New Jersey"
-                    }
-                },
-                "DE": {
-                    text: {
-                        content: "Delaware",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Delaware"
-                    }
-                },
-                "MD": {
-                    text: {
-                        content: "Maryland",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Maryland"
-                    }
-                },
-                "VA": {
-                    text: {
-                        content: "Virginia",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Virginia"
-                    }
-                },
-                "WV": {
-                    text: {
-                        content: "West Virginia",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "West Virginia"
-                    }
-                },
-                "OH": {
-                    text: {
-                        content: "Ohio",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Ohio"
-                    }
-                },
-                "IN": {
-                    text: {
-                        content: "Indiana",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Indiana"
-                    }
-                },
-                "IL": {
-                    text: {
-                        content: "Illinois",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Illinois"
-                    }
-                },
-                "CT": {
-                    text: {
-                        content: "Connecticut",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Connecticut"
-                    }
-                },
-                "WI": {
-                    text: {
-                        content: "Wisconsin",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Wisconsin"
-                    }
-                },
-                "NC": {
-                    text: {
-                        content: "North Carolina",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "North Carolina"
-                    }
-                },
-                "DC": {
-                    text: {
-                        content: "District of Columbia",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "District of Columbia"
-                    }
-                },
-                "MA": {
-                    text: {
-                        content: "Massachusetts",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Massachusetts"
-                    }
-                },
-                "TN": {
-                    text: {
-                        content: "Tennessee",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Tennessee"
-                    }
-                },
-                "AR": {
-                    text: {
-                        content: "Arkansas",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Arkansas"
-                    }
-                },
-                "MO": {
-                    text: {
-                        content: "Missouri",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Missouri"
-                    }
-                },
-                "GA": {
-                    text: {
-                        content: "Georgia",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Georgia"
-                    }
-                },
-                "SC": {
-                    text: {
-                        content: "South Carolina",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "South Carolina"
-                    }
-                },
-                "KY": {
-                    text: {
-                        content: "Kentucky",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Kentucky"
-                    }
-                },
-                "AL": {
-                    text: {
-                        content: "Alabama",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Alabama"
-                    }
-                },
-                "LA": {
-                    text: {
-                        content: "Louisiana",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Louisiana"
-                    }
-                },
-                "MS": {
-                    text: {
-                        content: "Mississippi",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Mississippi"
-                    }
-                },
-                "IA": {
-                    text: {
-                        content: "Iowa",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Iowa"
-                    }
-                },
-                "MN": {
-                    text: {
-                        content: "Minnesota",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Minnesota"
-                    }
-                },
-                "OK": {
-                    text: {
-                        content: "Oklahoma",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Oklahoma"
-                    }
-                },
-                "TX": {
-                    text: {
-                        content: "Texas",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Texas"
-                    }
-                },
-                "NM": {
-                    text: {
-                        content: "New Mexico",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "New Mexico"
-                    }
-                },
-                "KS": {
-                    text: {
-                        content: "Kansas",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Kansas"
-                    }
-                },
-                "NE": {
-                    text: {
-                        content: "Nebraska",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Nebraska"
-                    }
-                },
-                "SD": {
-                    text: {
-                        content: "South Dakota",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "South Dakota"
-                    }
-                },
-                "ND": {
-                    text: {
-                        content: "North Dakota",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "North Dakota"
-                    }
-                },
-                "WY": {
-                    text: {
-                        content: "Wyoming",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Wyoming"
-                    }
-                },
-                "MT": {
-                    text: {
-                        content: "Montana",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Montana"
-                    }
-                },
-                "CO": {
-                    text: {
-                        content: "Colorado",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Colorado"
-                    }
-                },
-                "ID": {
-                    text: {
-                        content: "Idaho",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Idaho"
-                    }
-                },
-                "UT": {
-                    text: {
-                        content: "Utah",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Utah"
-                    }
-                },
-                "AZ": {
-                    text: {
-                        content: "Arizona",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Arizona"
-                    }
-                },
-                "NV": {
-                    text: {
-                        content: "Nevada",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Nevada"
-                    }
-                },
-                "OR": {
-                    text: {
-                        content: "Oregon",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Oregon"
-                    }
-                },
-                "WA": {
-                    text: {
-                        content: "Washington",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "Washington"
-                    }
-                },
-                "CA": {
-                    text: {
-                        content: "California",
-                        attrs: {
-                            "font-size": 14
-                        }
-                    },
-                    tooltip: {
-                        content: "California"
-                    }
-                }
-
-            }
-        });
-    }
-
-
 });
 
 

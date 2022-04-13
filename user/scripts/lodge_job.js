@@ -523,16 +523,16 @@ const jobData = new Vue({
                                     break;    
                                        
                                 case 'checkbox': 
-
-                                    let chkoptions = '';
+                                    isrequired  = isrequired == 'required' ? 'req-chkbx' : '';
+                                    let chkoptions = ''; 
                                     $.each(JSON.parse(field.values), function (index, option)
                                     {
                                         chkoptions += `<div class="fancy-checkbox checkbox-sm">
-                                        <input type="checkbox" id="${option.replace(" ","_").toLowerCase()}" name="${fieldId}" class="${isrequired}">
+                                        <input type="checkbox" id="${option.replace(" ","_").toLowerCase()}" name="${fieldId}" >
                                         <label for="${option.replace(" ","_").toLowerCase()}"><span>${option}</span>
                                         </label>  </div>`
                                     });
-                                    customFieldInput = `<div class="form-group custom-fancyjb custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> 
+                                    customFieldInput = `<div class="form-group custom-fancyjb custom-details ${isrequired}" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> 
                                     <label for=${fieldId}>${fieldName}</label>    
                                     ${chkoptions}
                                     </div>`;
@@ -578,10 +578,10 @@ const jobData = new Vue({
                                
                                 case 'checkconfirm':
 
-                                    customFieldInput = `<div class="form-group custom-fancyjb custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}">
+                                    customFieldInput = `<div class="form-group custom-fancyjb" id="" custom-name="${fieldName}" custom-type="${fieldType}">
                                     <div class="fancy-checkbox checkbox-sm">
-                                        <input type="checkbox" name="${fieldId}" id="${fieldName.replace(" ","_").toLowerCase()}" class="acknowledge ${isrequired}">
-                                         <label for="${fieldName.replace(" ","_").toLowerCase()}">${fieldName}</label>
+                                        <input type="checkbox" name="${fieldId}" id="${fieldId}" class="acknowledge ${isrequired}">
+                                         <label for="${fieldId}"><span>${fieldName}</span></label>
                                     </div>
                                     </div>`
                                     break;

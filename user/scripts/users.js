@@ -561,7 +561,7 @@ sellerFields = new Vue({
                     const tabs = await response
                     vm.allTabs = tabs.data.Records
                     vm.totalTabs = tabs.data.TotalRecords;
-                    var classes = "";
+                    var classes = ""; 
                     var backbutton = "";
                     console.log(vm.allTabs);
                     
@@ -1044,7 +1044,7 @@ sellerFields = new Vue({
             $.ajax(settings).done(function(response){
                 
                // var allresponse = $.parseJSON(response)
-                console.log($.parseJSON(response));
+               // console.log($.parseJSON(response));
                // localStorage.setItem("jobID", allresponse.Id);
         
         
@@ -1567,10 +1567,11 @@ var usersData = (function ()
             $.ajax(settings).done(function(response){
                 
                // var allresponse = $.parseJSON(response)
-                console.log($.parseJSON(response));
+              //  console.log($.parseJSON(response));
                // localStorage.setItem("jobID", allresponse.Id);
                 localStorage.removeItem("userID");
                 localStorage.removeItem("stripe-onboarded");
+                localStorage.removeItem("fieldValues");
 
              
             });
@@ -1939,8 +1940,6 @@ $(document).ready(function ()
 
     
   
-
-
     //seller registration button 
     $('#register-modal-seller').hide();
     $('.cart-menu').hide();
@@ -1949,6 +1948,7 @@ $(document).ready(function ()
     
     $('body').on('click', '.btn-register', function ()
     {
+        console.log('button register');
         $('#email').removeClass('error-con');
         $('#password').removeClass('error-con');
         $('#retype_password').removeClass('error-con');
@@ -2022,7 +2022,7 @@ $(document).ready(function ()
     });
 
       $('body').on('click', '#save', function ()
-    {
+     {
         sellerFields.getAllFieldData($('.tab-content'));
 
       })

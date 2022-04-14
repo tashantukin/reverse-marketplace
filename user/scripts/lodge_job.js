@@ -605,7 +605,7 @@ const jobData = new Vue({
                                                     <a class="model-btn">
                                                         <input type="text" class="form-control" value="">
                                                         <div class="browse-btn">
-                                                            <input type="file" value="Browse..." multiple
+                                                            <input type="file" value="Browse..."
                                                                 onchange="readURL(this);" id="file-doc"
                                                                 upload-name="${fieldName}" field-id="${fieldId}" class="${isrequired}">
                                                             <span id="logo_add2">Upload</span>
@@ -942,7 +942,7 @@ var documentData = (function ()
                 console.log({ totalfiles });
                 var fieldId = el.attr('field-id');
                 var tabId =  el.parents('.tab-pane').attr('id');
-    
+                var fileId =  Math.floor( Math.random() * 1000 ) + Date.now();
                 var fileList = [];
 
                 if (totalfiles > 5) {
@@ -955,7 +955,7 @@ var documentData = (function ()
                 
                 fileList.forEach( function (file, i) {
                 
-                    sendFile(file, fieldId, tabId, i);
+                    sendFile(file, fieldId, tabId, fileId, i);
                     console.log({ i });
                 
                 })
@@ -967,7 +967,7 @@ var documentData = (function ()
             } 
         }
 
-        function sendFile(file, fId, tId, i)
+        function sendFile(file, fId, tId, fileId, i)
         {
             
             var apiUrl = packagePath + '/get_token.php';
@@ -1006,12 +1006,12 @@ var documentData = (function ()
                         success: function success(result)
                         {
                             console.log(result);
-                            taskFiles.push({ 'URL': result[0]['SourceUrl'], 'name': result[0]['Filename'], 'field-id': fId, 'tab-id': tId });
+                            taskFiles.push({ 'Id': fileId, 'URL': result[0]['SourceUrl'], 'name': result[0]['Filename'], 'field-id': fId, 'tab-id': tId });
                             console.log({taskFiles})
                         // allFiles.forEach(function (filename, i)
                         // {
-                            $('.table-document tbody').append(`<tr>
-                            <td class="action-icondelete"><a class="delete-cat" href="javascript:void(0)"><i class="icon icon-ndelete"></i></a></td>
+                            $('.table-document tbody').append(`<tr id = ${fileId}>
+                            <td class="action-icondelete"><a class="delete-cat" id="delete-file" href="javascript:void(0)"><i class="icon icon-ndelete"></i></a></td>
                             <td>${result[0]['Filename']}</td>
                             <td><div class="text-right document-action"><a href="${result[0]['SourceUrl']}" target="_blank">View</a>|<a href="${result[0]['SourceUrl']}" target="_blank">Download</a></div></td>
                             </tr>`);
@@ -1106,11 +1106,28 @@ var documentData = (function ()
 
         }
 
+
+        function deleteFile(el)
+        {
+            
+            var id = el.parents('tr').attr('id');
+
+            console.log({id})
+            
+            taskFiles = taskFiles.filter((file) => file.Id !== parseInt(id));
+
+            el.parents('tr').remove();
+
+            console.log({ taskFiles });
+        }
+
+
       return {
         sendFile: sendFile,
         getFile: getFile,
         saveFiles: saveFiles,
-        saveTask :saveTask
+        saveTask: saveTask,
+        deleteFile: deleteFile
       }
     }
       return {
@@ -1243,6 +1260,15 @@ $(document).ready(function ()
         documents.getFile($(this));
         
     })
+
+    //delete an uploaded file from fe
+    $('body').on('click', '#delete-file', function ()
+        {
+            var documents = documentData.getInstance();
+            documents.deleteFile($(this));
+        
+        })
+
     
     $('body').on('click', '.btn-quote-submit', function ()
     {

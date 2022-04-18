@@ -70,7 +70,6 @@ $action = $_GET['action'];
 
                             <ul class="nav nav-tabs" role="tablist">
 
-
                             </ul>
 
                         </div>
@@ -121,18 +120,81 @@ $action = $_GET['action'];
             <div class="tab-content">
 
 
-
+               
             </div>
 
+       
 
-
-        </div>
+    
 
 
 
 
 
     </div>
+
+
+
+      <div class="custom_list_wrapper">
+
+                    <ul class="custom-listing-table-onbrd row-height-50">
+
+                    
+                        <!-- <li class="all-cat added-description">
+                            <div class="custom-list-box-onbrd">
+                                <div class="cursor-sec cursor-repositioning-onbrd">
+                                    <div class="repositioning-icon-onbrd">
+                                    </div>
+                                </div>
+                                <div class="user-field-name-onbrd">Cancel</div>
+                                <div class="user-field-type-onbrd">Button</div>
+                                <div class="user-field-consumer-onbrd">
+                                   
+                                </div>
+
+                                <div class="user-field-action-onbrd">
+                                    <div class="row-action">
+                                        <a href="javascript:void(0);" class="btn-edit-onbrdfields">
+                                            <i class="icon icon-edit-2"></i>
+                                        </a>       
+                                    </div>            
+                                </div>            
+                                <div class="clearfix">
+                                </div>
+                            </div>
+                        </li> -->
+
+
+                        <li class="all-cat added-description">
+                            <div class="custom-list-box-onbrd">
+                                <div class="cursor-sec cursor-repositioning-onbrd">
+                                    <div class="repositioning-icon-onbrd">
+                                    </div>
+                                </div>
+                                <div class="user-field-name-onbrd">Save</div>
+                                <div class="user-field-type-onbrd">Button</div>
+                                <div class="user-field-consumer-onbrd">
+                                    <!-- 2. Verification Details -->
+                                </div>
+
+                                <div class="user-field-action-onbrd">
+                                    <div class="row-action">
+                                        <a href="javascript:void(0);" class="btn-edit-text">
+                                            <i class="icon icon-edit-2"></i>
+                                        </a>
+                                                
+                                    </div>            
+                                </div>            
+                                <div class="clearfix">
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+                
+                </div>
+
+                <div class="clearfix">
 
 </div>
 
@@ -327,8 +389,133 @@ $action = $_GET['action'];
 
     </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </div>
-</div>
+
+<div class="popup popup-onbrd-fields" id="savebuttontext">
+
+    <div class="popup-wrapper">
+
+        <div class="pull-right">
+
+            <a class="close-popup" data-dismiss="modal" href="javascript:void(0)">
+
+                <i class="icon icon-close">
+
+                </i>
+
+            </a>
+
+        </div>
+
+        <div class="popup-header">
+
+            <h4>Edit button text</h4>
+
+        </div>
+
+        <div class="popup-demo-content">
+
+            <div class="form-group">
+
+                <label>Button text</label>
+
+                <div class="form-input-button-combo">
+                    <input type="text" class="form-control required" name="save_button_text" id="save-text">
+                    <a href="#"  class="blue-btn pull-right" id="btn-save-txt">Save</a>
+                </div>
+
+
+            </div>
+
+            
+        </div>
+
+        <div class="popup-footer">
+
+            <a class="mybtn btn-grey" data-dismiss="modal" onclick="stepCloseMenu()"
+                href="javascript:void(0);">Close</a>
+
+
+
+        </div>
+
+    </div>
+
+ </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <!-- End popup-->
 
@@ -345,6 +532,9 @@ $action = $_GET['action'];
         </a>
     </div>
 </div>
+
+
+
 
 <!-- begin footer -->
 <script type="text/javascript">
@@ -542,6 +732,15 @@ jQuery(document).ready(function() {
         jQuery('#OnboardingSteps').modal('show');
 
     });
+
+    jQuery('body').on('click', '.btn-edit-text', function() {
+
+
+        jQuery('#savebuttontext').modal('show');
+
+    });
+
+
 
 });
 

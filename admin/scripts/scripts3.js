@@ -3,6 +3,7 @@
     const scriptSrc = document.currentScript.src;
     const re = /([a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12})/i;
     const packageId = re.exec(scriptSrc.toLowerCase())[1];
+    var customFieldPrefix = packageId.replace(/-/g, "");
     const packagePath = scriptSrc.replace('/scripts/scripts3.js', '').trim();
     var accessToken = 'Bearer ' + getCookie('webapitoken');
     let optionList = [];
@@ -10,6 +11,7 @@
     let conf_message = '';
     let custom_id = '';
     var token = commonModule.getCookie('webapitoken');
+    var urls = window.location.href.toLowerCase();
 
     const baseURL = window.location.hostname;
     const protocol = window.location.protocol;
@@ -17,17 +19,8 @@
  //run on creation page only
  
 
-
-
-
-
-
-
-
     $(document).ready(function ()
     {
-
-
 
         getMarketplaceCustomFields(function (result)
         {
@@ -42,7 +35,48 @@
                 savePluginId(packageId);
             }
             
-          });
+        });
+        
+
+    
+        getMarketplaceCustomFields(function(result) {
+            $.each(result, function(index, cf) {
+        
+    
+          //code settings
+            if (urls.indexOf('/job_fields.php') >= 0) {
+                if (cf.Name == 'job_onboard_savebutton_text' && cf.Code.startsWith(customFieldPrefix)) {
+                    var button_text = cf.Values[0];
+                    $('#save-text').val(button_text);
+                    
+                }
+                
+            }
+
+          //index file
+         
+            });   
+         });   
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         $('#onbrd_field_type').on('change', function ()
@@ -319,8 +353,16 @@
             
         });
 
-        
 
+        $('#btn-save-txt').click(function ()
+        {
+            
+            saveButtonText();
+
+            
+        });
+
+        
     });
 
     //MAIN CRUD
@@ -481,6 +523,32 @@
             }
         });
     }
+
+
+      function saveButtonText() {
+        var data = {  'text': $('#save-text').val() };
+         var apiUrl = packagePath + '/save_button_txt.php';
+        $.ajax({
+            url: apiUrl,          
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function(response) {
+              
+              
+            },
+            error: function (jqXHR, status, err) {
+                //  toastr.error('---');
+            }
+        });
+    }
+
+
+
+
+
+
+
 
     function updatePluginStatus() {
         var data = { 'userId': userId };

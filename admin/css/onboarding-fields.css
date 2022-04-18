@@ -29,9 +29,6 @@
 }
 
 
-
-
-
 .cursor-sec.cursor-repositioning-onbrd {
 
     width: 180px;
@@ -213,7 +210,8 @@
 
 
 #OnboardingFields,
-#OnboardingSteps
+#OnboardingSteps,
+#savebuttontext
 
 {
 
@@ -248,7 +246,9 @@
 
 
 #OnboardingFields .popup-wrapper,
-#OnboardingSteps .popup-wrapper {
+#OnboardingSteps .popup-wrapper,
+#savebuttontext .popup-wrapper
+ {
 
     padding: 15px 30px 30px;
 
@@ -789,7 +789,16 @@
     justify-content: center;
 }
 
+#savebuttontext .popup-footer {
+    justify-content: center;
+}
+
 #OnboardingSteps .popup-footer .mybtn {
+    border: 1px solid #50C8FF;
+    color: #50C8FF;
+}
+
+#savebuttontext .popup-footer .mybtn {
     border: 1px solid #50C8FF;
     color: #50C8FF;
 }

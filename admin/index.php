@@ -222,7 +222,7 @@ $baseUrl = getMarketplaceBaseUrl();
 
                                             <td data-th="Availability"><a href=""><span
                                                         class="text-danger">{{ job.job_validity}}</span></a></td>
-                                            <td data-th="No.of Quote"><a href="">{{ job.no_of_quotes}}</a></td>
+                                            <td data-th="No.of Quote"><a :href="'quote-details.php?jobId=' + job.Id">{{ job.no_of_quotes}}</a></td>
                                             <td data-th="Status"><a href="">{{ job.status}}</a></td>
                                         </tr>
 

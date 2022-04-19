@@ -426,6 +426,7 @@ sellerFields = new Vue({
             uploadCustomFields: [],
             url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/freelancer_form?sort=ModifiedDateTime`,
             registrationStatus: 'Pending',
+            confirmed: '',
             adminComment: '',
             companyName: '',
             address: '',
@@ -495,16 +496,26 @@ sellerFields = new Vue({
                         vm.isEdit = 1;
                         vm.adminComment = userDetails['admin_comment']
                         vm.registrationStatus = userDetails['status']
+                        vm.confirmed =  userDetails['approved_confirmed']
                         $('.comment-desc').text(vm.adminComment);
 
                         $('.nav-tabs li:nth-child(1)').removeClass('active');
                         $('.nav-tabs #verification-tab').addClass('active');
                         $('#registration').removeClass('active in');
-                        if (vm.registrationStatus == 'Approved') {
+                        if (vm.registrationStatus == 'Approved' && vm.confirmed == null) {
                             $('.nav-tabs #approval-tab').addClass('active');
                             $('.nav-tabs #verification').removeClass('active');
                             $('#approval').addClass('active in'); 
-                        } else {
+                        } else if (vm.registrationStatus == 'Approved' && vm.confirmed == '1') {
+                            $('.tab-content div:nth-child(2)').addClass('active in');
+                            $("input[name='Company Name']").val(userDetails['company_name'])
+                            $("input[name='address']").val(userDetails['full_address']);
+                            $("input[name='Contact Number']").val(userDetails['contact_number']);
+                            $("input[name='location_details']").val(userDetails['servicing_area']);
+                             $('#postal_code').val( userDetails['postal_code']);
+                        }
+                        
+                        else {
                             $('#verification').addClass('active in');
                         }
                        
@@ -516,7 +527,7 @@ sellerFields = new Vue({
                         $('#city').val( userDetails['city']);
                         $('#state').val( userDetails['state']);
                         $('#country').val(userDetails['country']);
-                        $('#postal-code').val( userDetails['postal_code']);
+                        $('#postal_code').val( userDetails['postal_code']);
                         $('#phone').val(userDetails['contact_number']);
 
                         //files 
@@ -576,7 +587,7 @@ sellerFields = new Vue({
                         }
 
                          //if last tab, text is Save, else, Next
-                        var buttonText = vm.totalTabs == (index + 1) ? 'Save' : 'Next'
+                        var buttonText = vm.totalTabs == (index + 1) ? $('#button-text').val() : 'Next'
                         var buttonId = vm.totalTabs == (index + 1) ? 'save' : ""
                         console.log( `${vm.totalTabs}  ${(index + 1)}` )
                         $(".tab-content").append(`
@@ -1244,9 +1255,6 @@ payments = new Vue({
             stripePubKey: "",
             stripeClientId: "",
             stripeOnboardingLink: ""
-
-            
-           
 
         }
     },

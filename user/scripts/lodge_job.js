@@ -382,7 +382,7 @@ const jobData = new Vue({
                             backbutton = `<button onclick="j_prevTab();" class="btn btn-jobform-outline">Back</button>`
                         }
                         //if last tab, text is Save, else, Next
-                        var buttonText = (vm.totalTabs == (index + 1) && vm.jobChargeEnabled == 'False') ? 'Save' : 'Next'
+                        var buttonText = (vm.totalTabs == (index + 1) && vm.jobChargeEnabled == 'False') ? $('#button-text').val() : 'Next'
                         console.log(vm.jobChargeEnabled)
                         var buttonId = vm.totalTabs == (index + 1) ? 'save' : ""
                         console.log(`${vm.totalTabs}  ${(index + 1)}`)

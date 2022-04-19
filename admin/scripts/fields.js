@@ -19,7 +19,6 @@
     var isEdit = false;
 
   
-
     //run on creation page only
     new Vue({
         el: "#main",

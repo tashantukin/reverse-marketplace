@@ -934,11 +934,12 @@
                //if existing user, verify the status
                if (userDetails) {
 
-                  
-                  
+               
                if (userDetails['status'] == 'Approved' && userDetails['approved_confirmed'] == 1) { 
-                  
+                  //alter the user settings link to navigate to /subscribe.php
 
+                  $('.login-nav li:nth-child(2) a').attr('href', '/subscribe');
+      
                   
                } else {
                   

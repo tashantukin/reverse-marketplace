@@ -1,9 +1,30 @@
 <!DOCTYPE html
     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+<?php
+include 'callAPI.php';
+include 'admin_token.php';
+$contentBodyJson = file_get_contents('php://input');
+$content = json_decode($contentBodyJson, true);
+$userId = $content['userId'];
+$plugin_id = $content['id'];
+$baseUrl = getMarketplaceBaseUrl();
+$admin_token = getAdminToken();
+$customFieldPrefix = getCustomFieldPrefix();
+// Query to get marketplace id
+$url = $baseUrl . '/api/v2/marketplaces/';
+$marketplaceInfo = callAPI("GET", null, $url, false);
+// $url = $baseUrl . '/api/developer-packages/custom-fields?packageId=' . getPackageID();
+// $packageCustomFields = callAPI("GET", null, $url, false);
 
-
-<!-- begin headerr -->
+$save_button_text = '';
+foreach ($marketplaceInfo['CustomFields'] as $cf) {
+    if ($cf['Name'] == 'freelancer_onboard_savebutton_text' && substr($cf['Code'], 0, strlen($customFieldPrefix)) == $customFieldPrefix) {
+           $save_button_text = $cf['Values'][0];
+    }
+}
+?>
+<!-- begin header -->
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -95,6 +116,7 @@
     <div class="main">
         <div class="content-pages">
             <div class="container">
+                <input type="hidden" id="button-text"value="<?php echo $save_button_text ?>">
                 <input type="hidden" id="address-lat">
                 <input type="hidden" id="address-long">
                 <input type="hidden" id="servicing-lat">
@@ -357,8 +379,6 @@
             }
         });
     }
-
-
 
     // google.maps.event.addDomListener(window, 'load', function() {
     //     var places = new google.maps.places.Autocomplete(document.getElementById('address'));

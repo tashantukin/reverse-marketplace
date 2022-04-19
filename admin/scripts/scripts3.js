@@ -52,6 +52,16 @@
                 }
                 
             }
+                
+            if (urls.indexOf('/seller_details.php') >= 0) {
+                if (cf.Name == 'freelancer_onboard_savebutton_text' && cf.Code.startsWith(customFieldPrefix)) {
+                    var button_text = cf.Values[0];
+                    $('#freelancer-save-text').val(button_text);
+                    
+                }
+                
+            }
+
 
           //index file
          
@@ -362,6 +372,15 @@
             
         });
 
+
+         $('#freelancer-btn-save-txt').click(function ()
+        {
+            
+            saveButtonTextFreelancer();
+
+            
+        });
+
         
     });
 
@@ -528,6 +547,24 @@
       function saveButtonText() {
         var data = {  'text': $('#save-text').val() };
          var apiUrl = packagePath + '/save_button_txt.php';
+        $.ajax({
+            url: apiUrl,          
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function(response) {
+              
+              
+            },
+            error: function (jqXHR, status, err) {
+                //  toastr.error('---');
+            }
+        });
+    }
+
+      function saveButtonTextFreelancer() {
+        var data = {  'text': $('#freelancer-save-text').val() };
+         var apiUrl = packagePath + '/freelancer_save_button_txt.php';
         $.ajax({
             url: apiUrl,          
             method: 'POST',

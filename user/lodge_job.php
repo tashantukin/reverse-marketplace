@@ -76,6 +76,7 @@
 </head>
 <!-- end header -->
 
+
 <?php
 include 'callAPI.php';
 include 'admin_token.php';
@@ -106,12 +107,26 @@ foreach($merchant['CustomFields'] as $cf) {
      }
 }
 
+
+$url = $baseUrl . '/api/v2/marketplaces/';
+$marketplaceInfo = callAPI("GET", null, $url, false);
+// $url = $baseUrl . '/api/developer-packages/custom-fields?packageId=' . getPackageID();
+// $packageCustomFields = callAPI("GET", null, $url, false);
+
+$save_button_text = '';
+foreach ($marketplaceInfo['CustomFields'] as $cf) {
+    if ($cf['Name'] == 'job_onboard_savebutton_text' && substr($cf['Code'], 0, strlen($customFieldPrefix)) == $customFieldPrefix) {
+           $save_button_text = $cf['Values'][0];
+    }
+}
+
 ?>
 <div class="content-pages">
     <div class="container ">
         <div class="freelancer-content-main">
             <input type="hidden" id="address-lat">
             <input type="hidden" id="address-long">
+            <input type="hidden" id="button-text"value="<?php echo $save_button_text ?>">
             <input type="hidden" id="stripe-id" value=<?php echo $stripe_payment_id ?>>
             <div class="lodge-tab-design">
                 <div class="jobform-tab">

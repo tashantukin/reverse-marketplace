@@ -136,7 +136,7 @@
                         
                           //index list
                         $('[role="tablist"]').empty();
-                        $('.custom-listing-table-onbrd').empty();
+                        $('.tab-content .custom-listing-table-onbrd').empty();
                         
                         $.each(vm.allOnboardTabs, function (index, tab)
                         { 

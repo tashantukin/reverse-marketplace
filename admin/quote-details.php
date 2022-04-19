@@ -257,7 +257,6 @@ else {
 
              <?php  
             foreach($quoteDetails['Records']  as $quote) {
-               
                  ?>
                 <?php  $userDetails = getFreelancerDetails($quote['freelancer_id']);  ?>
                  <div class="blue-tabdesign">

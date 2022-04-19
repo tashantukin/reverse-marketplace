@@ -169,7 +169,7 @@ foreach ($marketplaceInfo['CustomFields'] as $cf) {
                                         <p>To be verified, please have a copy of the following documents ready. </p>
                                         <p>Current ABN and Current Insurance Certificate.</p>
                                     </div>
-
+                                    
                                     <div class="register-btn">
                                         <button onclick="j_nextTab();" class="btn btn-register">Register</button>
 

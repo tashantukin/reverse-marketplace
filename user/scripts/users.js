@@ -423,6 +423,7 @@ sellerFields = new Vue({
             totalTabs: 0,
             fieldDetails: [],
             taskOption: [],
+            freelancerId: '',
             uploadCustomFields: [],
             url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/freelancer_form?sort=ModifiedDateTime`,
             registrationStatus: 'Pending',
@@ -494,6 +495,7 @@ sellerFields = new Vue({
               
                     if (userDetails) {
                         vm.isEdit = 1;
+                        vm.freelancerId = userDetails['Id'];
                         vm.adminComment = userDetails['admin_comment']
                         vm.registrationStatus = userDetails['status']
                         vm.confirmed =  userDetails['approved_confirmed']
@@ -750,8 +752,7 @@ sellerFields = new Vue({
                         }
 
 
-                        
-
+                    
                     })
 
                   
@@ -1022,6 +1023,7 @@ sellerFields = new Vue({
         async  saveUser(cf,location,files)
         {
            // customfield_data, $('#location').val(), allFiles
+            vm = this;
             var user_details = {
 
                 "user_id": localStorage.getItem('userID'),
@@ -1041,8 +1043,13 @@ sellerFields = new Vue({
                 'country':  $('#country').val(),
                 'state' :$('#state').val(),
                 'city' : $('#city').val(),
-                'postal-code': $('#postal-code').val(),
+                'postal-code': $('#postal_code').val(),
                 'contact-number': $("input[name='Contact Number']").val(),
+                'userguid' : $("#userGuid").val(),
+                
+                'action': vm.isEdit == 1 ? 'edit' : 'add',
+                'freelancer_id' : vm.freelancerId
+
                 
             };
         
@@ -1052,7 +1059,21 @@ sellerFields = new Vue({
                 "method": "POST",
                 "data": JSON.stringify(user_details)
             }
-            $.ajax(settings).done(function(response){
+            $.ajax(settings).done(function (response)
+            {
+                localStorage.removeItem("userID");
+                localStorage.removeItem("stripe-onboarded");
+                localStorage.removeItem("fieldValues");
+
+                
+                if (vm.isEdit == 1) {
+               
+
+                    window.location.href = "/";
+                
+                } 
+
+
                 
                // var allresponse = $.parseJSON(response)
                // console.log($.parseJSON(response));

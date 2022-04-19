@@ -60,7 +60,20 @@
                     
                 }
                 
-            }
+                }
+                
+               //  if (urls.indexOf('/index.php') >= 0 ) {
+                if (cf.Name == 'Settings Status' && cf.Code.startsWith(customFieldPrefix)) {
+                    var settings_status = cf.Values[0];
+                    
+                    if (settings_status != 'true') {
+                            $(".settings-div").addClass("disabledbutton");
+                    }
+                   // $('#freelancer-save-text').val(button_text);
+                    
+                }
+                
+               /// } 
 
 
           //index file

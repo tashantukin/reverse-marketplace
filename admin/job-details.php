@@ -207,20 +207,20 @@ else {
 
 
                     <?php
-                            //    try {
-                            //     foreach(json_decode($jobFiles['Records'][0]['all_tasks'],true) as $custom_task) {
-                            //         //   echo "<div class='qq-title'><span class='dash'></span><span class='title'>$task</span><div class='qq-option'><input type='text' class='numbersOnlyD' placeholder='AUD 0.00' value=''><a href='javascript:void(0);' class='save-link'>Save</a>|<a href='javascript:void(0);' class='cancel-link'>Cancel</a></div></div>";
+                               try {
+                                foreach(json_decode($jobDetails['Records'][0]['document_list'], true) as $custom_task) {
+                                    //   echo "<div class='qq-title'><span class='dash'></span><span class='title'>$task</span><div class='qq-option'><input type='text' class='numbersOnlyD' placeholder='AUD 0.00' value=''><a href='javascript:void(0);' class='save-link'>Save</a>|<a href='javascript:void(0);' class='cancel-link'>Cancel</a></div></div>";
                                      
-                            //         echo "<div class='other-main'>
-                            //         <p>-" .  $custom_task['task_name'] . "(<a class='hide-show-other-file' href='". substr($custom_task['files'][0]['name'], 36) . "'>View Files</a>)</p> </div>";
+                                    // echo "<div class='other-main'>
+                                    // <p>-" .  $custom_task['name'] . "(<a class='hide-show-other-file' href='". substr($custom_task['name'], 36) . "'>View Files</a>)</p> </div>";
                                    
                             
-                            //         //echo "<div class='qq-title'><span class='dash'></span><span class='title'>" .  $custom_task['task_name'] . "  </span><p>".  substr($custom_task['files'][0]['name'], 36) . "  | <a href=" . $custom_task['files'][0]['URL'] . ">Download File</a></p>  </div>";
-                            //        }
+                                    echo "<div class='qq-title'><span class='dash'></span><span class='title'>" .  substr($custom_task['name'], 36) . "  </span><p>".  substr($custom_task['name'], 36) . "  | <a href=" . $custom_task['URL'] . ">Download File</a></p>  </div>";
+                                   }
 
-                            //    }catch(Exception $e) {
-                            //   //  echo 'Message: ' .$e->getMessage();
-                            //    } ?>
+                               }catch(Exception $e) {
+                              //  echo 'Message: ' .$e->getMessage();
+                               } ?>
 
 
                 </li>

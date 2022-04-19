@@ -63,7 +63,7 @@ $baseUrl = getMarketplaceBaseUrl();
 <div class="page-content">
     <div class="gutter-wrapper">
 
-        <div class="panel-box border-none">
+        <div class="panel-box border-none settings-div">
                     <div class="page-content-top">
                         <div class="row row-center-flex">
                             <div class="col-sm-5">
@@ -81,7 +81,7 @@ $baseUrl = getMarketplaceBaseUrl();
                 </div>
 
 
-        <div class="panel-box border-none ">
+        <div class="panel-box border-none settings-div">
                     <div class="page-content-top">
                         <div class="row row-center-flex">
                             <div class="col-sm-7">

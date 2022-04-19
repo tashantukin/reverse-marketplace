@@ -2806,6 +2806,10 @@
          var quote = quoteData.getInstance();
          quote.quoteAction('Accepted', $(this).attr('job-id'), $(this).attr('user-id'), $(this).attr('quote-id'));
       })
+
+
+
+
        
       //reject confirm
       $('#reject-confirm').on('click', function (event)
@@ -2814,6 +2818,17 @@
          var quote = quoteData.getInstance();
          quote.quoteAction('Rejected', $(this).attr('job-id'), $(this).attr('user-id'), $(this).attr('quote-id'));
       })
+
+
+      //cancel quote
+
+       $('#cancel-quote').on('click', function (event)
+      {
+         
+         var quote = quoteData.getInstance();
+         quote.quoteAction('Cancelled', $(this).attr('job-id'), $(this).attr('user-id'), $(this).attr('quote-id'));
+      })
+
 
 
       //home page

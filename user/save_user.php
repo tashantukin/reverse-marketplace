@@ -32,12 +32,43 @@
         
     ];
 
-    $response = $API->createRowEntry($packageId, 'freelancer_details', $freelancer_details);
+ $freelancer_details_edit = [
+        'user_id' => $content['userguid'],
+        'custom_fields' => $content['custom_fields'],
+        'servicing_area' => $content['servicing_area'],
+        'status' => 'Approved',
+        'attached_files' => $content['files'],
 
-    echo json_encode($response);
+        'stripe_key' => $content['stripe_key'],
+        'location_coordinates' => $content['location_coordinates'],
+        'servicing_area_coords' => $content['servicing_coords'],
+        'is_payment_onboarded' => $content['is_payment_onboarded'],
+        
+
+        'full_address' => $content['full_address'],
+        //'email'=> $content['email'], 
+        'company_name' => $content['company_name'],  
+        'country' => $content['country'] ,
+        'state' => $content['state'],
+        'city' => $content['city'],
+        'postal_code' => $content['postal-code'],
+        'contact_number' => $content['contact-number']
+        
+    ];
 
 
-    //edm to the admin
+
+  if ($content['action'] == 'edit') {
+
+       $API->editRowEntry($packageId, 'freelancer_details', $content['freelancer_id'], $freelancer_details_edit);
+       echo json_encode($response);
+  }else {
+     $response = $API->createRowEntry($packageId, 'freelancer_details', $freelancer_details);
+
+     echo json_encode($response);
+
+
+//edm to the admin
 
     $admin_token = $API->AdminToken();
     $baseUrl = $API->getMarketplaceBaseUrl();
@@ -107,6 +138,38 @@
       $url =  $baseUrl . '/api/v2/admins/' . $admin_id .'/emails';
       $sendEDM = callAPI("POST", $admin_token, $url, $data);
       echo json_encode(['result' => $sendEDM]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  }
+
+
+    // $response = $API->createRowEntry($packageId, 'freelancer_details', $freelancer_details);
+
+    // echo json_encode($response);
+
+
+    
 
 
 //     $emailContent = "<div style=\"max-width:700px; width:100%; margin:0 auto; border:1px solid #ddd; color:#999; font-size:16px; font-family:sans-serif; line-height:25px;\">

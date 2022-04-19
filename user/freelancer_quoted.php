@@ -94,8 +94,6 @@ $fixed_amount = $jobDetails['Records'][0]['is_payment_fixed'] == 'True' ? number
     <div class="main">
         <div class="content-pages">
             <div class="freelancer-content-main">
-
-
                 <div class="container">
                     <div class="page-reverse-title">
                         <h1>Quote</h1>
@@ -105,11 +103,12 @@ $fixed_amount = $jobDetails['Records'][0]['is_payment_fixed'] == 'True' ? number
                             <div class="quote-title-design"><?php echo $userDetails['Records'][0]['company_name'] ?></p>
                             </div>
                             <div class="navtab-filter btn-margin">
-                                 <div  class="wait-buyer-respond-txt">
-                                        You need to wait for the for the buyer to respond
+                                 <div  class="wait-buyer-respond-txt mr-3">
+                                        <!-- You need to wait for the for the buyer to respond -->
                                  </div>
                                 <button class="btn btn-quote-cancel" data-toggle="modal" data-target="#cancelModal">Cancel Quote</button>
                             </div>
+                        </div>
                             <!-- <div class="navtab-filter btn-margin">
                                 <a href="/" class="btn btn-quote-cancel">Cancel</a>
                                 <button type="button" class="btn btn-quote-submit">Submit Quote</button>
@@ -313,11 +312,12 @@ $fixed_amount = $jobDetails['Records'][0]['is_payment_fixed'] == 'True' ? number
          <div class="modal-content">
             <div class="modal-body">
                 <div class="modal-job-popup">
-                     <div class="modal-title">
+                     <div class="modal-title">                     
                         <h4>Are you sure you want to cancel this quote?</h4>
+                        <?php echo $quotedDetails['Records'][0]['Id'] ?>
                      </div>
                      <div class="btn-hbox">
-                        <a class="btn btn-block btn-jobform-fill" href="homepage.html">Yes, Cancel</a>
+                        <a class="btn btn-block btn-jobform-fill" id="cancel-quote" job-id="<?php echo $job_id ?>" user-id="<?php echo $user_id ?>" quote-id="<?php echo $quotedDetails['Records'][0]['Id'] ?>"  href="/">Yes, Cancel</a>
                         <button type="button" class="btn btn-block btn-jobform-outline" data-dismiss="modal">No</button>
                      </div>
                 </div>

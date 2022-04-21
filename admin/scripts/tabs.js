@@ -155,6 +155,8 @@
                         
                         $.each(vm.allTabs, function (index, tab)
                         {
+                           
+
                             if (tab.sort_order == 0) {
                                 classes = "tab-pane fade in active";
                                 classHeader = 'active';
@@ -217,18 +219,61 @@
                                
                                 
                                 `);
-                        
+                             if (tab.sort_order == vm.allTabs.length - 1) {
+                            //append the save button text settings below
+                            var saveSettingsContainer =  `<div class="custom_list_wrapper">
+
+                                    <ul class="custom-listing-table-onbrd custom row-height-50">
+
+                                        <li class="all-cat added-description">
+                                            <div class="custom-list-box-onbrd custom">
+                                                <div class="cursor-sec cursor-repositioning-onbrd">
+                                                    <div class="repositioning-icon-onbrd">
+                                                    </div>
+                                                </div>
+                                                <div class="user-field-name-onbrd">Save</div>
+                                                <div class="user-field-type-onbrd">Button</div>
+                                                <div class="user-field-consumer-onbrd">
+                                                    <!-- 2. Verification Details -->
+                                                </div>
+
+                                                <div class="user-field-action-onbrd">
+                                                    <div class="row-action">
+                                                        <a href="javascript:void(0);" class="btn-edit-text">
+                                                            <i class="icon icon-edit-2"></i>
+                                                        </a>
+                                                                
+                                                    </div>            
+                                                </div>            
+                                                <div class="clearfix">
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                
+                                </div>
+
+                                <div class="clearfix">
+
+                            </div>`
+
+                            $(`#${tab.Id} .custom_list_wrapper`).last().after(saveSettingsContainer);
+                        }
+
                             waitForElement('.custom-listing-table-onbrd', function ()
                             {
                                 vm.getAllFields(tab.Id);
                             
                             })
+
+                           
                         })
-                   
+
+                        
                     }
                        
                     
-    
                 } catch (error) {
                     console.log("error", error);
                 }
@@ -293,7 +338,7 @@
                             fieldType = field.type_of_field,
                             fieldId = field.Id 
                             
-                            $(`.tab-content #${tabId} .custom-listing-table-onbrd`).append(`
+                            $(`.tab-content #${tabId} .custom-listing-table-onbrd:not(.custom)`).append(`
 
                                             
                                                 <li class="all-cat added-description" data-id="${fieldId}">

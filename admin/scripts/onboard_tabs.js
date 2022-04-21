@@ -201,6 +201,78 @@
 
                                 </div>
                                 </div>`);
+                            
+                            console.log(` 1 ${tab.sort_order} - ${vm.allOnboardTabs.length  - 1}`)
+                            if (tab.sort_order == vm.allOnboardTabs.length  - 1) {
+                                console.log(` 2 ${tab.sort_order} - ${vm.allOnboardTabs.length  - 1}`)
+                                 var saveSettingsContainer = `<div class="custom_list_
+                                 wrapper">
+
+                                                <ul class="custom-listing-table-onbrd custom row-height-50">
+
+                                                    <!-- <li class="all-cat added-description">
+                                                        <div class="custom-list-box-onbrd custom">
+                                                            <div class="cursor-sec cursor-repositioning-onbrd">
+                                                                <div class="repositioning-icon-onbrd">
+                                                                </div>
+                                                            </div>
+                                                            <div class="user-field-name-onbrd">Cancel</div>
+                                                            <div class="user-field-type-onbrd">Button</div>
+                                                            <div class="user-field-consumer-onbrd">
+                                                            
+                                                            </div>
+
+                                                            <div class="user-field-action-onbrd">
+                                                                <div class="row-action">
+                                                                    <a href="javascript:void(0);" class="btn-edit-onbrdfields">
+                                                                        <i class="icon icon-edit-2"></i>
+                                                                    </a>       
+                                                                </div>            
+                                                            </div>            
+                                                            <div class="clearfix">
+                                                            </div>
+                                                        </div>
+                                                    </li> -->
+
+
+                                                    <li class="all-cat added-description">
+                                                        <div class="custom-list-box-onbrd">
+                                                            <div class="cursor-sec cursor-repositioning-onbrd">
+                                                                <div class="repositioning-icon-onbrd">
+                                                                </div>
+                                                            </div>
+                                                            <div class="user-field-name-onbrd">Save</div>
+                                                            <div class="user-field-type-onbrd">Button</div>
+                                                            <div class="user-field-consumer-onbrd">
+                                                                <!-- 2. Verification Details -->
+                                                            </div>
+
+                                                            <div class="user-field-action-onbrd">
+                                                                <div class="row-action">
+                                                                    <a href="javascript:void(0);" class="btn-edit-text">
+                                                                        <i class="icon icon-edit-2"></i>
+                                                                    </a>
+                                                                            
+                                                                </div>            
+                                                            </div>            
+                                                            <div class="clearfix">
+                                                            </div>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                    </li>
+
+                                                </ul>
+                                            
+                                            </div>
+
+                                            <div class="clearfix"> </div>
+
+
+                                <!-- </div> -->
+
+                                    </div> `        
+                                $(`#${tab.Id} .custom_list_wrapper`).last().after(saveSettingsContainer);
+                            }
                         
                     
                         vm.getAllFields(tab.Id);
@@ -274,9 +346,8 @@
                             fieldType = field.type_of_field,
                             fieldId = field.Id 
                             
-                            $(`.tab-content #${tabId} .custom-listing-table-onbrd`).append(`
+                            $(`.tab-content #${tabId} .custom-listing-table-onbrd:not(.custom)`).append(`
             
-                                                
                                                 <li class="all-cat added-description" data-id="${fieldId}">
             
                                                     <div class="custom-list-box-onbrd">
@@ -354,7 +425,7 @@
             
                                                 </li>
             
-                                          ` )
+                            ` )
     
                         })
 
@@ -428,53 +499,53 @@
                 
                 })
             },
-             async getFieldDetails(action, e){
-                vm = this;
-            var data = [{ 'Name': 'Id', 'Operator': "equal", "Value": e.attr('data-id') }]
-            
-            $('#field-id').val(e.attr('data-id'));
-            $('#field-action').val('edit');
-            $.ajax({
-                method: "POST",
-                url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/freelancer_form/`,
-                headers: {
-                    "Content-Type": "application/json"
-                },
+            async getFieldDetails(action, e){
+                    vm = this;
+                var data = [{ 'Name': 'Id', 'Operator': "equal", "Value": e.attr('data-id') }]
                 
-                data: JSON.stringify(data),
-                //  })
-                success: function (response)
-                {
-                    console.log({ response })
-                
-                    const fields = response
-                    const fieldDetails = fields.Records[0]
-
-                    vm.fieldName = fieldDetails.name;
-                    vm.fieldDescription = fieldDetails.text,
-                    vm.fieldType = fieldDetails.type_of_field,
-                    vm.placeholder = fieldDetails.placeholder,
-                        vm.values = JSON.parse(fieldDetails.values)   
-                    vm.classification = fieldDetails.classification
+                $('#field-id').val(e.attr('data-id'));
+                $('#field-action').val('edit');
+                $.ajax({
+                    method: "POST",
+                    url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/freelancer_form/`,
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
                     
-                    if (vm.fieldType == "checkbox" || vm.fieldType == "dropdown") {
-                        $('.cstm-fieldpop-optarea').show();
-                        $('#dropdown-opt-draggble').remove();
-                        $.each(vm.values, function (index, option)
-                        {
-                         $('.cstm-fieldpop-optarea .addOpt').before(`<ul id="dropdown-opt-draggble" class="ui-sortable"><li class="maindiv ui-sortable-handle"><div class="virtual-table"><div class="virtual-table-cell"><a href="#" class="cursor-move"><i class="icon icon-draggble"></i></a></div> <div class="virtual-table-cell"><input type="text" value="${option}" name="checkbox-opt[]" id="optionName" class="required"></div> <div class="virtual-table-cell"><a href="#"  class="delete-opt"><i class="icon icon-delete"></i></a></div></div></li></ul>`)  
-                        })
+                    data: JSON.stringify(data),
+                    //  })
+                    success: function (response)
+                    {
+                        console.log({ response })
+                    
+                        const fields = response
+                        const fieldDetails = fields.Records[0]
+
+                        vm.fieldName = fieldDetails.name;
+                        vm.fieldDescription = fieldDetails.text,
+                        vm.fieldType = fieldDetails.type_of_field,
+                        vm.placeholder = fieldDetails.placeholder,
+                            vm.values = JSON.parse(fieldDetails.values)   
+                        vm.classification = fieldDetails.classification
                         
-                    }
+                        if (vm.fieldType == "checkbox" || vm.fieldType == "dropdown") {
+                            $('.cstm-fieldpop-optarea').show();
+                            $('#dropdown-opt-draggble').remove();
+                            $.each(vm.values, function (index, option)
+                            {
+                            $('.cstm-fieldpop-optarea .addOpt').before(`<ul id="dropdown-opt-draggble" class="ui-sortable"><li class="maindiv ui-sortable-handle"><div class="virtual-table"><div class="virtual-table-cell"><a href="#" class="cursor-move"><i class="icon icon-draggble"></i></a></div> <div class="virtual-table-cell"><input type="text" value="${option}" name="checkbox-opt[]" id="optionName" class="required"></div> <div class="virtual-table-cell"><a href="#"  class="delete-opt"><i class="icon icon-delete"></i></a></div></div></li></ul>`)  
+                            })
+                            
+                        }
+                        
                     
-                 
-                }
-            
-            
-            })
-            },
+                    }
+                
+                
+                })
+                },
 
-        },
+            },
     
         computed: {
            

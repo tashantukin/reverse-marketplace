@@ -146,7 +146,8 @@ function cache_save_job()
         jQuery('.jobform-tab .nav-tabs li').addClass('check');
         jQuery('.jobform-tab .nav-tabs li').prevAll().addClass('check');
         jQuery('.jobform-tab .nav-tabs li').removeClass('active');
-
+        $('#register-account').attr('href', `${protocol}//${baseURL}/user/marketplace/customlogin?isSeller=false&returnUrl=${baseURL}`)
+        $('#sign-up').attr('href',`${protocol}//${baseURL}/user/marketplace/customlogin?isSeller=false&returnUrl=${baseURL}`)
         setTimeout(function(){ 
          window.location.href = "lodged.html";
         },1000);
@@ -1317,6 +1318,35 @@ $(document).ready(function ()
             $('.location-map-hide-show').fadeIn('slow');
         }
     });
+
+
+    //Redirection
+
+     $('body').on('click', '#register-account', function ()
+     {
+         
+         console.log('click')
+         window.location =  `${protocol}//${baseURL}/user/marketplace/customlogin?isSeller=false&returnUrl=${baseURL}`;
+          // $('#register-account').attr('href',`${protocol}//${baseURL}/user/marketplace/customlogin?isSeller=false&returnUrl=${baseURL}`)
+        
+     })
+
+
+        $('body').on('click', '#sign-up', function ()
+        {
+           
+            window.location =  `${protocol}//${baseURL}/user/marketplace/customlogin?isSeller=false&returnUrl=${baseURL}`;
+           //$('#register-account').attr('href',`${protocol}//${baseURL}/user/marketplace/customlogin?isSeller=false&returnUrl=${baseURL}`)
+        
+  
+           // window.location =  `${protocol}//${baseURL}/user/marketplace/customlogin?isSeller=false&returnUrl=${baseURL}`;
+           //$('#register-account').attr('href',`${protocol}//${baseURL}/user/marketplace/customlogin?isSeller=false&returnUrl=${baseURL}`)
+        
+     })
+
+
+
+
 
     waitForElement('#payment', function ()
     {

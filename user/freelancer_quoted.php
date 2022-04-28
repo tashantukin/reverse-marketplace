@@ -198,7 +198,7 @@ $fixed_amount = $jobDetails['Records'][0]['is_payment_fixed'] == 'True' ? number
                                         </div>
                                         <!-- <div class="qq-title"><span class="dash"></span><span class="title">Full Time</span></div>
                            <div class="qq-title"><span class="dash"></span><span class="title">Contract</span></div> -->
-                                        <?php echo $job_type ?>
+                                       - <?php echo $job_type ?>
 
                                         <div class="qq-title"><span class="dash"></span><span
                                                 class="title">Hourly</span><span>AUD
@@ -314,7 +314,7 @@ $fixed_amount = $jobDetails['Records'][0]['is_payment_fixed'] == 'True' ? number
                 <div class="modal-job-popup">
                      <div class="modal-title">                     
                         <h4>Are you sure you want to cancel this quote?</h4>
-                        <?php echo $quotedDetails['Records'][0]['Id'] ?>
+                     
                      </div>
                      <div class="btn-hbox">
                         <a class="btn btn-block btn-jobform-fill" id="cancel-quote" job-id="<?php echo $job_id ?>" user-id="<?php echo $user_id ?>" quote-id="<?php echo $quotedDetails['Records'][0]['Id'] ?>"  href="/">Yes, Cancel</a>

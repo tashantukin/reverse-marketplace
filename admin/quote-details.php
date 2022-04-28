@@ -100,7 +100,7 @@ else {
 </head>
 
 <!-- <div class="col-sm-9 main-content" id="main"> -->
-<div class="page-header">
+<!-- <div class="page-header">
     <div class="pull-left">
         <div class="wrapper">
             <div class="mb-0 navigation-bar page-topnav">
@@ -110,237 +110,54 @@ else {
     </div>
     <div class="clearfix">
     </div>
-</div>
+</div> -->
 
 <div class="page-content">
 
 
-    <div class="row wrap-panel">
+    <div class="gutter-wrapper">
+        <div class="navigation-bar page-topnav">
+            <a href="index.php" class="mybtn btn-back"><img src="images/back.svg" alt="Back">Back</a>
+        </div>
 
+        <div class="panel-box">
+            <div class="merchant-commission-table">
+                <table class="table scheduler-tbl" id="quotes-table">
+                    <thead>
+                        <tr>
+                            <th>Quoted by</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Availability</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <?php  
+                             foreach($quoteDetails['Records']  as $quote) {
+                             ?>
+                             <?php  $userDetails = getFreelancerDetails($quote['freelancer_id']);  ?>
+                          <tr class="border-hover"> 
+                            <td data-th="Quoted by"><a href="quoted-details.php?jobId=<?php echo $job_id ?> &userId=<?php echo $quote['freelancer_id'] ?>">  <?php echo $userDetails['Records'][0]['company_name'] ?> </a></td>
+                            <td data-th="Date"><?php echo $quote['CreatedDateTime'] ?></td>
+                            <td data-th="Amount">AUD <?php echo $quote['total'] ?></td>
+                            <td data-th="Availability"><?php echo $quote['availability_date'] ?></td>
+                            <td data-th="Status">Available until <?php echo $quote['validity_date'] ?> </td>
+                        </tr>
+                         <?php  } ?>
+                    </tbody>
 
-        <div class="col-sm-12 col-md-12">
+                </table>
 
-            <!-- <div class="w-panel-box panel-height-auto">
-                  <ul class="w-list-items">
-                  <li>
-                      <label>Accounting Firm Info</label>
-                      <div>
-                          <p>Sample Company Name One</p>
-                          <p>company@gmail.com</p>
-                          <p>99999999</p>
-                      </div>
-                  </li>
-              </ul>
-              </div> -->
+            </div>
 
         </div>
-        <div class="clearfix"></div>
-    </div>
-
-    <div class="row wrap-panel row-flex">
-        <div class="col-sm-6 col-md-6">
-            <!-- <div class="w-panel-box panel-height-auto">
-  <ul class="w-list-items">
-      <li>
-          <label>Date</label>
-          <p></p>
-      </li>
-      <li>
-          <label>Amount</label>
-          <p>$1500</p>
-      </li>
-      <li>
-          <label>Availability</label>
-          <p>DD/MM/YYYY</p>
-      </li>
-      <li>
-          <label>Status</label>
-          <p>Valid to DD/MM/YYYY</p>
-      </li>
-  </ul>
-</div> -->
-        </div>
-        <!--
-<div class="col-sm-6 col-md-6">
-<div class="w-panel-box panel-height-auto">
-  <ul class="w-list-items">
-      <li>
-          <label>Deposit required</label>
-          <p>7 Days, AUD $0.00</p>
-      </li>
-
-      <li>
-          <label>Date Payment Method</label>
-          <p>- COD</p>
-          <p>- Credit Card</p>
-          <p>- Paypal</p>
-      </li>
-      <li class="text-scroll">
-          <label>Comments on Payment Terms</label>
-          <div class="text-area">
-              <p>Estore parum hitias cus quae nosamus esti dolorerum imporro in poremquam, imil ea por re voloreribus maio temqui nate se suntotatiis ut ma sequos nos volupta tatemporrum que aut et omnis voluptas millam aliquam, si dit eiumquid quisitatem exped es eaquas quatemp erestio reperem etus exera quiassite et quia eria non eatur restis eumenda vendant volor magnis re, nonsene vit que doles est aliquuntur audiaes ad quis necupta testestion enem quae il eum invelle catenditibus el molorro mo et eos et exerorum qui utem cus mi, offic tem duciend ellatiunt ex elic tem ium intem ut et andae soluptat</p>
-          </div>
-          
-      </li>
-  </ul>
-</div>
-</div>
--->
-        <div class="clearfix"></div>
-    </div>
-
-    <div class="wrap-panel job-summary-sec">
-        <div class="custom-user-field-sec">
-            <ul class="w-list-items">
-                <li class="job-content-height">
-                    <label>Job Summary</label>
-                    <?php 
-                       foreach(json_decode($jobDetails['Records'][0]['task_type_list'],true) as $task) {
-                        echo "<p>-" .  $task . "</p>";
-                      //  <div class='qq-title'><span class='dash'></span><span class='title'>$task</span></div>";
-                   
-                     }
-
-                    ?>
-
-                    <!-- <p>- BAS Agent</p>
-                      <p>- Tax</p>
-                      <p>- Audit</p>
-                      <p>- Book-keeping</p>
-                      <p>- Payroll</p>
-                      <p>- Finance</p> -->
 
 
-                    <?php
-                            //    try {
-                            //     foreach(json_decode($jobFiles['Records'][0]['all_tasks'],true) as $custom_task) {
-                            //         //   echo "<div class='qq-title'><span class='dash'></span><span class='title'>$task</span><div class='qq-option'><input type='text' class='numbersOnlyD' placeholder='AUD 0.00' value=''><a href='javascript:void(0);' class='save-link'>Save</a>|<a href='javascript:void(0);' class='cancel-link'>Cancel</a></div></div>";
-                                     
-                            //         echo "<div class='other-main'>
-                            //         <p>-" .  $custom_task['task_name'] . "(<a class='hide-show-other-file' href='". substr($custom_task['files'][0]['name'], 36) . "'>View Files</a>)</p> </div>";
-                                   
-                            
-                            //         //echo "<div class='qq-title'><span class='dash'></span><span class='title'>" .  $custom_task['task_name'] . "  </span><p>".  substr($custom_task['files'][0]['name'], 36) . "  | <a href=" . $custom_task['files'][0]['URL'] . ">Download File</a></p>  </div>";
-                            //        }
 
-                            //    }catch(Exception $e) {
-                            //   //  echo 'Message: ' .$e->getMessage();
-                            //    } ?>
-
-
-                </li>
-                <li class="job-content-height">
-                    <label>Job to be completed by: <span
-                            class="text-danger"><?php echo $job_completion ?></span></label>
-                    <p>- Availability: <?php echo $jobDetails['Records'][0]['job_validity'] ?></p>
-                    <?php echo $job_type; 
-                   
-                    ?>
-
-
-                    <p>- Hourly: <span>AUD
-                            <?php  echo $hourly_amount?></span>
-                    </p>
-                    <p>- Fixed Price: <span>AUD
-                            <?php echo $fixed_amount ?></span>
-                    </p>
-                </li>
-
-                <!-- <li class="text-scroll">
-                    <label>Comments on Applicant</label>
-                    <div class="text-area">
-                        <p><?php echo $jobDetails['Records'][0]['comments'] ?></p>
-                    </div>
-                </li> -->
-            </ul>
-
-
-             <?php  
-            foreach($quoteDetails['Records']  as $quote) {
-                 ?>
-                <?php  $userDetails = getFreelancerDetails($quote['freelancer_id']);  ?>
-                 <div class="blue-tabdesign">
-                        <div class="navtab-flex">
-                            <div class="quote-title-design"><?php echo $userDetails['Records'][0]['company_name'] ?></p>
-                            </div>
-                          
-                            <!-- <div class="navtab-filter btn-margin">
-                                <a href="/" class="btn btn-quote-cancel">Cancel</a>
-                                <button type="button" class="btn btn-quote-submit">Submit Quote</button>
-                            </div> -->
-                        </div>
-                        <div class="quote-question-main">
-                            <div class="row">
-                                <div class="col-sm-8">
-                                    <div class="quote-question-section">
-                                        <div class="qq-total-sum">
-                                            <!-- <h4>1. Job Summary</h4> -->
-                                            <?php
-                               foreach(json_decode($quote['job_summary'],true) as $task) {
-                                    echo "<div class='qq-title saved'><span class='dash'></span><span class='title'>" . $task['title']. " . </span><div class='qq-option'><span>AUD <b>" . $task['price']. "</b></span></div></div>";
-
-                               }
-                            ?>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="info-box">
-                                        <h4>Buyer Details</h4>
-                                        <p>Email: <?php echo $userDetails['Records'][0]['email'] ?></p>
-                                        <p>Name: <?php echo $userDetails['Records'][0]['company_name'] ?></p>
-                                        <p>Contact Number: <?php echo $userDetails['Records'][0]['contact_number'] ?>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="quote-question-section">
-                                        <div class="qq-title"><span class="dash"></span><span class="title">Total</span>
-                                            <div class="qq-option qq-total"><span class="">AUD
-                                                    <b><?php echo $quote['total'] ?></b></span>
-                                            </div>
-                                        </div>
-                                        <div class="qq-title qq-discount saved"><span class="dash"></span><span
-                                                class="title">All at once - Discount</span>
-                                            <div class="qq-option"><span>AUD
-                                                    <b><?php echo $quote['all_discount'] ?></b></span> </div>
-                                        </div>
-                                        <div class="qq-title"><span class="dash"></span><span class="title">All at once
-                                                - Total</span>
-                                            <div class="qq-option qq-subtotal"><span>AUD
-                                                    <b><?php echo $quote['all_total'] ?></b></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                
-                
-                
-
-
-            <?php  } ?>
-        </div>
-    </div>
-           
-           
            
 
-
-
-
-
-
-
-
-
-
-
-</div>
+    </div>
 </div>
 <div class="clearfix"></div>
 <!-- </div> -->

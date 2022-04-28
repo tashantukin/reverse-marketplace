@@ -1049,7 +1049,6 @@ sellerFields = new Vue({
                 
                 'action': vm.isEdit == 1 ? 'edit' : 'add',
                 'freelancer_id' : vm.freelancerId
-
                 
             };
         
@@ -1150,7 +1149,6 @@ sellerFields = new Vue({
             this.saveUser(vm.allFreelancerCustomDetails, $('#location_details').val(), allFiles);
 
 
-        
     
         }, 
           
@@ -1648,8 +1646,6 @@ var usersData = (function ()
             saveUser(customfield_data, $('#location').val(), allFiles);
            // saveCustomFiedldValues(customfield_data);
         }
-
-
         function confirmRegistration()
         {
             var details = {
@@ -1986,8 +1982,7 @@ $(document).ready(function ()
         })
     }
 
-    
-  
+
     //seller registration button 
     $('#register-modal-seller').hide();
     $('.cart-menu').hide();
@@ -2049,12 +2044,9 @@ $(document).ready(function ()
                     $('#BtnStripeLinked').parents(".seller-payment-container").find("span.stripe").css({'width': 'Calc(100% - 40px)', 'line-height' : '40px'});
         }
 
-
-        
-        var users = usersData.getInstance();
-        users.getCustomFieldValues();
-        
-
+       var users = usersData.getInstance();
+       users.getCustomFieldValues();
+    
     })
 
     $('body').on('click', '#start .seller-btn .my-btn', function ()
@@ -2064,7 +2056,6 @@ $(document).ready(function ()
     })
 
 
-      
     $('body').on('focus',".datepicker", function(){
             $(this).datetimepicker({
                 viewMode: 'days',
@@ -2072,12 +2063,29 @@ $(document).ready(function ()
             })
     });
 
-      $('body').on('click', '#save', function ()
-     {
-        sellerFields.getAllFieldData($('.tab-content'));
+    $('body').on('click', '#save', function ()
+    {
 
-      })
+    var validate = 0;
+        var target = $(this).parents('.tab-content').find('.jobform-form');
+
+            target.find('.required').each(function() {
+                var val = jQuery(this).val();
+                if (!jQuery.trim(val)) {
+                    validate = 1;
+                    jQuery(this).addClass('error-con');
+                }
+            });
+        
+    //   if (validate == 1) {
+    //       console.log('we dont do that here')
+    //   } else {
+    //          sellerFields.getAllFieldData($('.tab-content'));
+    //   }           
     
+
+    })
+
 
     $('body').on('change', '#in_person_work', function() {
     console.log('in person click')
@@ -2202,10 +2210,7 @@ $(document).ready(function ()
             }
     });
 
-  
-   
    //PAYMENT
-    
     
     //STRIPE LINK
     $('body').on('click', '#BtnStripeLinked', function ()
@@ -2222,7 +2227,7 @@ $(document).ready(function ()
             var documents = documentData.getInstance();
             documents.deleteFile($(this));
         
-        })
+    })
    
 
 })

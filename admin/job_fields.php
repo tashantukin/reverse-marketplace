@@ -197,7 +197,7 @@ $action = $_GET['action'];
                             <div class="virtual-table-cell"><a href="#" class="cursor-move"><i
                                         class="icon icon-draggble"></i></a></div>
                             <div class="virtual-table-cell"><input type="text" value="" name="checkbox-opt[]"
-                                    id="optionName" class="required" class="txt"></div>
+                                    id="optionName" class="" class="txt"></div>
                             <div class="virtual-table-cell"><a href="#" class="delete-opt"><i
                                         class="icon icon-delete"></i></a></div>
                         </div>

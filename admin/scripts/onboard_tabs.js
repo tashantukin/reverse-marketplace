@@ -24,7 +24,7 @@
 
     //run on creation page only
   var tabs =  new Vue({
-        el: "#main",
+        el: "#seller-fields",
         data() {
             return {
             allOnboardTabs : [],
@@ -267,18 +267,20 @@
 
                                             <div class="clearfix"> </div>
 
-
-                                <!-- </div> -->
-
-                                    </div> `        
+                                    </div>`        
                                 $(`#${tab.Id} .custom_list_wrapper`).last().after(saveSettingsContainer);
                             }
                         
                     
-                        vm.getAllFields(tab.Id);
-                    })
+                           // vm.getAllFields(tab.Id);
+                             waitForElement('.custom-listing-table-onbrd', function ()
+                            {
+                                vm.getAllFields(tab.Id);
+                            
+                            })
+                         })
                    
-                    }
+                     }
                        
                     
     

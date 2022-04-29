@@ -35,7 +35,7 @@
 
     //run on creation page only
     var tabs = new Vue({
-        el: "#main",
+        el: "#job-fields",
         data()
         {
             return {
@@ -418,7 +418,7 @@
             
                                                 </li>
             
-                                        ` )
+                            ` )
     
                         })
 
@@ -483,7 +483,7 @@
                             e.parents("li").find(".row-action .delete-cat").removeClass("hide");
                             e.parents("li").find(".row-action .blue-btn").addClass("hide");
 
-                        vm.getAllTabs("modal");
+                        vm.getAllTabs("modal"); 
                         vm.getAllTabs("list");
                     
 
@@ -623,7 +623,7 @@ $(document).ready(function() {
 
 
     jQuery('body').on('click', '.btn-edit-onbrdfields', function ()
-                {
+    {
 
         $('.cstm-fieldpop-optarea ul').remove();
          $("#onbrd_field_type").prop("disabled", true);

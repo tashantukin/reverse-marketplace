@@ -202,6 +202,7 @@
                                 </div>
                                 </div>`);
 <<<<<<< HEAD
+<<<<<<< HEAD
                             
                             console.log(` 1 ${tab.sort_order} - ${vm.allOnboardTabs.length  - 1}`)
                             if (tab.sort_order == vm.allOnboardTabs.length  - 1) {
@@ -271,6 +272,8 @@
                                     </div>`        
                                 $(`#${tab.Id} .custom_list_wrapper`).last().after(saveSettingsContainer);
                             }
+=======
+>>>>>>> parent of a778bc1 (fix default save button settings on last tab)
 =======
 >>>>>>> parent of a778bc1 (fix default save button settings on last tab)
                         

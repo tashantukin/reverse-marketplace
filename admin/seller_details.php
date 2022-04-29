@@ -20,7 +20,7 @@
 $action = $_GET['action'];
 ?>
 <div class="page-content" id="seller-fields">
-     <input type ="hidden" id="redirect-action" value="<?php echo $action ?>" > 
+    <input type="hidden" id="redirect-action" value="<?php echo $action ?>">
     <div class="gutter-wrapper">
         <div class="onboarding-backbtnarea">
             <a class="mybtn btn-grey" href="index.php">
@@ -125,419 +125,380 @@ $action = $_GET['action'];
 
         </div>
 
-</div>
+    </div>
 
-<div class="clearfix">
-
-</div>
-
-<div class="popup popup-onbrd-fields" id="OnboardingFields">
-    <input type="hidden" id="field-id">
-    <input type="hidden" id="field-action">
-    <div class="popup-wrapper">
-        <div class="pull-right">
-            <a class="close-popup" data-dismiss="modal" href="javascript:void(0)">
-                <i class="icon icon-close">
-                </i>
-            </a>
-        </div>
-        <div class="popup-header">
-            <h4>Add/edit field</h4>
-        </div>
-        <div class="popup-demo-content ">
-            <div class="form-group">
-                <label>Field Name*</label>
-                <input :value="fieldName" type="text" class="form-control required" name="onbrd_field_name"
-                    id="onbrd_field_name">
+    <div class="clearfix"> </div>
+    <!-- Start popup-->
+    <div class="popup popup-onbrd-fields" id="OnboardingFields">
+        <input type="hidden" id="field-id">
+        <input type="hidden" id="field-action">
+        <div class="popup-wrapper">
+            <div class="pull-right">
+                <a class="close-popup" data-dismiss="modal" href="javascript:void(0)">
+                    <i class="icon icon-close">
+                    </i>
+                </a>
             </div>
-
-            <div class="form-group">
-                <label>Field Description*</label>
-                <input :value="fieldDescription" type="text" class="form-control required" name="onbrd_field_text"
-                    id="onbrd_field_text">
+            <div class="popup-header">
+                <h4>Add/edit field</h4>
             </div>
+            <div class="popup-demo-content ">
+                <div class="form-group">
+                    <label>Field Name*</label>
+                    <input :value="fieldName" type="text" class="form-control required" name="onbrd_field_name"
+                        id="onbrd_field_name">
+                </div>
 
-            <div class="form-group">
-                <label>Field Type*</label>
-                <select class="form-control required" name="onbrd_field_type" id="onbrd_field_type" :value="fieldType">
-                    <option value="textfield">Textfield</option>
-                    <option value="textarea">Textarea</option>
-                    <option value="number">Number</option>
-                    <option value="checkbox">Checkbox</option>
-                    <option value="checkconfirm">Checkbox Confirmation</option>
-                    <option value="note">Note</option>
-                    <option value="dropdown">Dropdown</option>
-                    <option value="radiobutton">Radiobutton</option>
-                    <option value="datepicker">Date Picker</option>
-                    <option value="file">File Upload</option>
-                    <option value="location">Location</option>
-                    <option value="address-fields">Address Fields</option>
-                </select>
-            </div>
+                <div class="form-group">
+                    <label>Field Description*</label>
+                    <input :value="fieldDescription" type="text" class="form-control required" name="onbrd_field_text"
+                        id="onbrd_field_text">
+                </div>
+
+                <div class="form-group">
+                    <label>Field Type*</label>
+                    <select class="form-control required" name="onbrd_field_type" id="onbrd_field_type"
+                        :value="fieldType">
+                        <option value="textfield">Textfield</option>
+                        <option value="textarea">Textarea</option>
+                        <option value="number">Number</option>
+                        <option value="checkbox">Checkbox</option>
+                        <option value="checkconfirm">Checkbox Confirmation</option>
+                        <option value="note">Note</option>
+                        <option value="dropdown">Dropdown</option>
+                        <option value="radiobutton">Radiobutton</option>
+                        <option value="datepicker">Date Picker</option>
+                        <option value="file">File Upload</option>
+                        <option value="location">Location</option>
+                        <option value="address-fields">Address Fields</option>
+                    </select>
+                </div>
 
 
-            <div class="form-element options cstm-fieldpop-optarea" style="display:none;">
-                <label>Options</label>
-                <ul class="ui-sortable" id="dropdown-opt-draggble">
-                    <li class="maindiv ui-sortable-handle">
-                        <div class="virtual-table">
-                            <div class="virtual-table-cell"><a href="#" class="cursor-move"><i
-                                        class="icon icon-draggble"></i></a></div>
-                            <div class="virtual-table-cell"><input type="text" value="" name="checkbox-opt[]"
-                                    id="optionName" class="required" class="txt"></div>
-                            <div class="virtual-table-cell"><a href="#" class="delete-opt" onclick="delete_opt(this)"><i
-                                        class="icon icon-delete"></i></a></div>
+                <div class="form-element options cstm-fieldpop-optarea" style="display:none;">
+                    <label>Options</label>
+                    <ul class="ui-sortable" id="dropdown-opt-draggble">
+                        <li class="maindiv ui-sortable-handle">
+                            <div class="virtual-table">
+                                <div class="virtual-table-cell"><a href="#" class="cursor-move"><i
+                                            class="icon icon-draggble"></i></a></div>
+                                <div class="virtual-table-cell"><input type="text" value="" name="checkbox-opt[]"
+                                        id="optionName" class="required" class="txt"></div>
+                                <div class="virtual-table-cell"><a href="#" class="delete-opt"
+                                        onclick="delete_opt(this)"><i class="icon icon-delete"></i></a></div>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                    <span class="addOpt"><i class="fa fa-plus"></i>Add Option</span>
+                </div>
+
+                <div class="form-group">
+                    <label>Placeholder</label>
+                    <input :value="placeholder" type="text" class="form-control" name="onbrd_field_placeholder"
+                        id="onbrd_field_placeholder">
+                </div>
+
+                <div class="form-group">
+                    <label>This field is shown in step:</label>
+                    <select class="form-control required" name="onbrd_steps" id="onbrd_steps" :value="classification">
+                        <option v-for="tab in allOnboardTabs" :value=tab.Id>{{tab.tab_name}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <div class="meta-item-checkbox">
+
+                        <div class="fancy-checkbox checkbox-sm">
+
+                            <input type="checkbox" value="blank_page" class="radio-ccheckbox" name="guest_user"
+                                id="is-required">
+
+                            <label for="is-required"><span>
+                                    <note>Require field</note>
+                                </span></label>
+
                         </div>
-                    </li>
-
-                </ul>
-
-                <span class="addOpt"><i class="fa fa-plus"></i>Add Option</span>
-            </div>
-
-            <div class="form-group">
-                <label>Placeholder</label>
-                <input :value="placeholder" type="text" class="form-control" name="onbrd_field_placeholder"
-                    id="onbrd_field_placeholder">
-            </div>
-
-            <div class="form-group">
-                <label>This field is shown in step:</label>
-                <select class="form-control required" name="onbrd_steps" id="onbrd_steps" :value="classification">
-                    <option v-for="tab in allOnboardTabs" :value=tab.Id>{{tab.tab_name}}</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <div class="meta-item-checkbox">
-
-                    <div class="fancy-checkbox checkbox-sm">
-
-                        <input type="checkbox" value="blank_page" class="radio-ccheckbox" name="guest_user"
-                            id="is-required">
-
-                        <label for="is-required"><span>
-                                <note>Require field</note>
-                            </span></label>
 
                     </div>
-
                 </div>
+
+
             </div>
-
-
-        </div>
-        <div class="popup-footer">
-            <a class="mybtn btn-grey" data-dismiss="modal" href="javascript:void(0);">Cancel</a>
-            <a class="mybtn btn-blue" id="btn-save-onbrdfields" href="javascript:void(0);">Save</a>
+            <div class="popup-footer">
+                <a class="mybtn btn-grey" data-dismiss="modal" href="javascript:void(0);">Cancel</a>
+                <a class="mybtn btn-blue" id="btn-save-onbrdfields" href="javascript:void(0);">Save</a>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="popup popup-onbrd-fields" id="OnboardingSteps">
+    <div class="popup popup-onbrd-fields" id="OnboardingSteps">
 
-    <div class="popup-wrapper">
+        <div class="popup-wrapper">
 
-        <div class="pull-right">
+            <div class="pull-right">
 
-            <a class="close-popup" data-dismiss="modal" href="javascript:void(0)">
+                <a class="close-popup" data-dismiss="modal" href="javascript:void(0)">
 
-                <i class="icon icon-close">
+                    <i class="icon icon-close">
 
-                </i>
+                    </i>
 
-            </a>
-
-        </div>
-
-        <div class="popup-header">
-
-            <h4>Edit steps in onboarding process</h4>
-
-        </div>
-
-        <div class="popup-demo-content ">
-
-            <div class="form-group">
-
-                <label>Add new steps</label>
-
-                <div class="form-input-button-combo">
-                    <input type="text" class="form-control required" name="onbrd_tab_name" id="onbrd_tab_name">
-                    <a href="#" v-on:click="saveNewTab('POST', $event)" class="blue-btn pull-right">Add</a>
-                </div>
-
+                </a>
 
             </div>
 
-            <div class="form-group">
+            <div class="popup-header">
 
-                <label>Steps</label>
+                <h4>Edit steps in onboarding process</h4>
 
-                <ul class="ui-sortable sortable-list">
-                    <li data-parent="1" class="has-subitems ui-sortable-handle">
-                        <div class="row-wrapper main-sub">
-                            <div class="row-details pull-left">
-                                <div>
-                                    <i class="icon icon-arrange-icon"></i>
+            </div>
+
+            <div class="popup-demo-content ">
+
+                <div class="form-group">
+
+                    <label>Add new steps</label>
+
+                    <div class="form-input-button-combo">
+                        <input type="text" class="form-control required" name="onbrd_tab_name" id="onbrd_tab_name">
+                        <a href="#" v-on:click="saveNewTab('POST', $event)" class="blue-btn pull-right">Add</a>
+                    </div>
+
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Steps</label>
+
+                    <ul class="ui-sortable sortable-list">
+                        <li data-parent="1" class="has-subitems ui-sortable-handle">
+                            <div class="row-wrapper main-sub">
+                                <div class="row-details pull-left">
+                                    <div>
+                                        <i class="icon icon-arrange-icon"></i>
+
+                                    </div>
+                                    <!-- added cursor for demo -->
+                                    <!-- end -->
+                                    <div class="name-area"><span class="item-name">Registration</span></div>
 
                                 </div>
-                                <!-- added cursor for demo -->
-                                <!-- end -->
-                                <div class="name-area"><span class="item-name">Registration</span></div>
-
-                            </div>
-                            <div class="row-action pull-right">
-                                <div>
-                                    <!-- <a href="javascript:void(0)" id="cat_edit"><i class="icon icon-edit-2"></i></a> -->
+                                <div class="row-action pull-right">
+                                    <div>
+                                        <!-- <a href="javascript:void(0)" id="cat_edit"><i class="icon icon-edit-2"></i></a> -->
+                                    </div>
+                                    <div><a class="delete-cat" href="javascript:void(0)" onclick="deleteSteps(this)"
+                                            id="cat_delete"><i class="icon icon-delete-btn-user"></i></a></div>
                                 </div>
-                                <div><a class="delete-cat" href="javascript:void(0)" onclick="deleteSteps(this)"
-                                        id="cat_delete"><i class="icon icon-delete-btn-user"></i></a></div>
+                                <div class="clearfix"></div>
                             </div>
-                            <div class="clearfix"></div>
-                        </div>
 
-                    </li>
+                        </li>
 
 
-                </ul>
+                    </ul>
+
+                </div>
+
+
+
+
 
             </div>
 
+            <div class="popup-footer">
+
+                <a class="mybtn btn-grey" data-dismiss="modal" onclick="stepCloseMenu()"
+                    href="javascript:void(0);">Close</a>
 
 
 
-
-        </div>
-
-        <div class="popup-footer">
-
-            <a class="mybtn btn-grey" data-dismiss="modal" onclick="stepCloseMenu()"
-                href="javascript:void(0);">Close</a>
-
-
+            </div>
 
         </div>
 
     </div>
 
-</div>
+
+    <div class="popup popup-onbrd-fields" id="savebuttontext">
+
+        <div class="popup-wrapper">
+
+            <div class="pull-right">
+
+                <a class="close-popup" data-dismiss="modal" href="javascript:void(0)">
+
+                    <i class="icon icon-close">
+
+                    </i>
+
+                </a>
+
+            </div>
+
+            <div class="popup-header">
+
+                <h4>Edit button text</h4>
+
+            </div>
+
+            <div class="popup-demo-content">
+
+                <div class="form-group">
+
+                    <label>Button text</label>
+
+                    <div class="form-input-button-combo">
+                        <input type="text" class="form-control required" name="save_button_text"
+                            id="freelancer-save-text">
+                        <a href="#" class="blue-btn pull-right" id="freelancer-btn-save-txt">Save</a>
+                    </div>
 
 
-<div class="popup popup-onbrd-fields" id="savebuttontext">
-
-    <div class="popup-wrapper">
-
-        <div class="pull-right">
-
-            <a class="close-popup" data-dismiss="modal" href="javascript:void(0)">
-
-                <i class="icon icon-close">
-
-                </i>
-
-            </a>
-
-        </div>
-
-        <div class="popup-header">
-
-            <h4>Edit button text</h4>
-
-        </div>
-
-        <div class="popup-demo-content">
-
-            <div class="form-group">
-
-                <label>Button text</label>
-
-                <div class="form-input-button-combo">
-                    <input type="text" class="form-control required" name="save_button_text" id="freelancer-save-text">
-                    <a href="#"  class="blue-btn pull-right" id="freelancer-btn-save-txt">Save</a>
                 </div>
 
 
             </div>
 
-            
-        </div>
+            <div class="popup-footer">
 
-        <div class="popup-footer">
-
-            <a class="mybtn btn-grey" data-dismiss="modal" onclick="stepCloseMenu()"
-                href="javascript:void(0);">Close</a>
+                <a class="mybtn btn-grey" data-dismiss="modal" onclick="stepCloseMenu()"
+                    href="javascript:void(0);">Close</a>
 
 
+
+            </div>
 
         </div>
 
     </div>
+    <!-- End popup-->
+    <div class="clearfix"></div>
 
- </div>
-
- <div class="clearfix"></div>
-
-
+    <!-- </div> -->
 
 
+    <div id="cover"></div>
 
-
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div id="cover"></div>
-
-<div id="removecatok" class="popup popup-removecat">
-    <div class="popup-wrapper">
-        <div class="popup-body">Are you sure you want to delete this?</div>
-        <div class="popup-footer">
-            <input onclick="popup_close(this);" class="mybtn btn-grey" type="button" value="Cancel" name="cancel">
-            <input class="mybtn btn-blue" type="button" value="Okay" name="cancel" id="seller-delete">
+    <div id="removecatok" class="popup popup-removecat">
+        <div class="popup-wrapper">
+            <div class="popup-body">Are you sure you want to delete this?</div>
+            <div class="popup-footer">
+                <input onclick="popup_close(this);" class="mybtn btn-grey" type="button" value="Cancel" name="cancel">
+                <input class="mybtn btn-blue" type="button" value="Okay" name="cancel" id="seller-delete">
+            </div>
+            <a href="javascript:void(0)" class="close-popup" onclick="popup_close(this)"><i class="icon icon-close"></i>
+            </a>
         </div>
-        <a href="javascript:void(0)" class="close-popup" onclick="popup_close(this)"><i class="icon icon-close"></i>
-        </a>
     </div>
-</div>
 
-<!-- begin footer -->
-<script type="text/javascript">
-var tr_row_update = 0;
-jQuery(document).ready(function() {
-
-
- waitForElement('#redirect-action', function (){
-
-   console.log($('#redirect-action').val());
-
-    if ( $('#redirect-action').val() == "edit-steps") {
-
-          //$("#btn-add-new-steps").trigger('click'); 
-        jQuery('#onbrd_tab_name').val('');
-
-        jQuery('#onbrd_field_type').val('Textfield');
-
-        jQuery('#onbrd_steps').val('1. Registration');
-
-        jQuery('#OnboardingSteps').modal('show');
+    <!-- begin footer -->
+    <script type="text/javascript">
+    var tr_row_update = 0;
+    jQuery(document).ready(function() {
 
 
+        waitForElement('#redirect-action', function() {
 
-    }else {
+            console.log($('#redirect-action').val());
 
-        $('#OnboardingFields .popup-header h4').text('Add Field')
+            if ($('#redirect-action').val() == "edit-steps") {
 
-         jQuery('#onbrd_field_name').val('');
+                //$("#btn-add-new-steps").trigger('click'); 
+                jQuery('#onbrd_tab_name').val('');
 
-        jQuery('#onbrd_field_type').val('Textfield');
+                jQuery('#onbrd_field_type').val('Textfield');
 
-        jQuery('#onbrd_steps').val('1. Registration');
+                jQuery('#onbrd_steps').val('1. Registration');
 
-        jQuery('#OnboardingFields').modal('show');
-    }
-
-})
+                jQuery('#OnboardingSteps').modal('show');
 
 
 
+            } else {
 
+                $('#OnboardingFields .popup-header h4').text('Add Field')
 
+                jQuery('#onbrd_field_name').val('');
 
+                jQuery('#onbrd_field_type').val('Textfield');
 
-    jQuery(window).bind('scroll', function() {
-        jQuery(".sidebar").getNiceScroll().resize();
+                jQuery('#onbrd_steps').val('1. Registration');
 
-    });
-    jQuery(".mobi-header .navbar-toggle").click(function(e) {
-        e.preventDefault();
-        jQuery("body").toggleClass("sidebar-toggled");
-    });
-    jQuery(".navbar-back").click(function() {
-        jQuery(".mobi-header .navbar-toggle").trigger('click');
-    });
-
-    jQuery('body').on('click', '#btn-add-new-field', function() {
-        $('#OnboardingFields .popup-header h4').text('Add Field')
-        jQuery('#onbrd_field_name').val('');
-        jQuery('#onbrd_field_type').val('Textfield');
-        jQuery('#onbrd_steps').val('1. Registration');
-        jQuery('#OnboardingFields').modal('show');
-    });
-
-    jQuery('body').on('click', '.btn-edit-onbrdfields', function() {
-
-        $('#OnboardingFields .popup-header h4').text('Edit Field')
-        jQuery('#OnboardingFields').modal('show');
-
-    });
-
-    jQuery('body').on('click', '#btn-save-onbrdfields', function() {
-
-        var tv_fn = jQuery('#onbrd_field_name').val();
-        var tv_ft = jQuery('#onbrd_field_type').val();
-        var tv_st = jQuery('#onbrd_steps').val();
-        jQuery('.popup-demo-content .required').removeClass('error-con');
-
-        var er = 0;
-        jQuery('.popup-demo-content .required').each(function() {
-            var tv = jQuery(this).val();
-            if (tv == '') {
-                jQuery(this).addClass('error-con');
-                er = 1;
+                jQuery('#OnboardingFields').modal('show');
             }
+
+        })
+
+
+
+
+
+
+
+        jQuery(window).bind('scroll', function() {
+            jQuery(".sidebar").getNiceScroll().resize();
+
+        });
+        jQuery(".mobi-header .navbar-toggle").click(function(e) {
+            e.preventDefault();
+            jQuery("body").toggleClass("sidebar-toggled");
+        });
+        jQuery(".navbar-back").click(function() {
+            jQuery(".mobi-header .navbar-toggle").trigger('click');
         });
 
-        if (er) {
-            return false;
-        }
+        jQuery('body').on('click', '#btn-add-new-field', function() {
+            $('#OnboardingFields .popup-header h4').text('Add Field')
+            jQuery('#onbrd_field_name').val('');
+            jQuery('#onbrd_field_type').val('Textfield');
+            jQuery('#onbrd_steps').val('1. Registration');
+            jQuery('#OnboardingFields').modal('show');
+        });
+
+        jQuery('body').on('click', '.btn-edit-onbrdfields', function() {
+
+            $('#OnboardingFields .popup-header h4').text('Edit Field')
+            jQuery('#OnboardingFields').modal('show');
+
+        });
+
+        jQuery('body').on('click', '#btn-save-onbrdfields', function() {
+
+            var tv_fn = jQuery('#onbrd_field_name').val();
+            var tv_ft = jQuery('#onbrd_field_type').val();
+            var tv_st = jQuery('#onbrd_steps').val();
+            jQuery('.popup-demo-content .required').removeClass('error-con');
+
+            var er = 0;
+            jQuery('.popup-demo-content .required').each(function() {
+                var tv = jQuery(this).val();
+                if (tv == '') {
+                    jQuery(this).addClass('error-con');
+                    er = 1;
+                }
+            });
+
+            if (er) {
+                return false;
+            }
 
 
-        if (tr_row_update) {
-            jQuery(tr_row_update).find('.user-field-name-onbrd').text(tv_fn);
-            jQuery(tr_row_update).find('.user-field-type-onbrd').text(tv_ft);
-            jQuery(tr_row_update).find('.user-field-consumer-onbrd').text(tv_st);
+            if (tr_row_update) {
+                jQuery(tr_row_update).find('.user-field-name-onbrd').text(tv_fn);
+                jQuery(tr_row_update).find('.user-field-type-onbrd').text(tv_ft);
+                jQuery(tr_row_update).find('.user-field-consumer-onbrd').text(tv_st);
 
-            tr_row_update = 0;
-            jQuery('#OnboardingFields').modal('hide');
-            return false;
-        }
+                tr_row_update = 0;
+                jQuery('#OnboardingFields').modal('hide');
+                return false;
+            }
 
-        var row = '';
-        row = `<li class="all-cat added-description">
+            var row = '';
+            row = `<li class="all-cat added-description">
                     <div class="custom-list-box-onbrd">
                         <div class="cursor-sec cursor-repositioning-onbrd">
                             <div class="repositioning-icon-onbrd">
@@ -569,80 +530,80 @@ jQuery(document).ready(function() {
                     </div>
                 </li>`;
 
-        jQuery('.custom-listing-table-onbrd').append(row);
-        jQuery('#OnboardingFields').modal('hide');
+            jQuery('.custom-listing-table-onbrd').append(row);
+            jQuery('#OnboardingFields').modal('hide');
+
+        });
+
+
+        jQuery('body').on('click', '#btn-add-new-steps', function() {
+
+            jQuery('#onbrd_tab_name').val('');
+
+            jQuery('#onbrd_field_type').val('Textfield');
+
+            jQuery('#onbrd_steps').val('1. Registration');
+
+            jQuery('#OnboardingSteps').modal('show');
+
+        });
+
+
+        jQuery('body').on('click', '.btn-edit-text', function() {
+
+
+            jQuery('#savebuttontext').modal('show');
+
+        });
+
+
 
     });
 
 
-    jQuery('body').on('click', '#btn-add-new-steps', function() {
-
-        jQuery('#onbrd_tab_name').val('');
-
-        jQuery('#onbrd_field_type').val('Textfield');
-
-        jQuery('#onbrd_steps').val('1. Registration');
-
-        jQuery('#OnboardingSteps').modal('show');
-
-    });
-
-
-    jQuery('body').on('click', '.btn-edit-text', function() {
-
-
-        jQuery('#savebuttontext').modal('show');
-
-    });
-
-
-
-});
-
-
-function popup_close(ele) {
-    var that = jQuery(ele);
-    that.parents('.popup').fadeOut();
-    jQuery("#cover").fadeOut();
-
-}
-
-function delete_opt(id, ele) {
-    var that = jQuery(ele);
-    var row = that.closest('li');
-    var id = that.attr('data-id');
-    $('#field-id').val(id);
-    console.log({
-        id
-    })
-    jQuery("#removecatok").fadeIn();
-    jQuery("#cover").fadeIn();
-    jQuery("#removecatok .btn-blue").click(function() {
-        row.remove();
-        jQuery("#removecatok").fadeOut();
+    function popup_close(ele) {
+        var that = jQuery(ele);
+        that.parents('.popup').fadeOut();
         jQuery("#cover").fadeOut();
-    });
-}
 
+    }
 
- function waitForElement(elementPath, callBack) {
-      window.setTimeout(function () {
-        if ($(elementPath).length) {
-          callBack(elementPath, $(elementPath));
-        } else {
-          waitForElement(elementPath, callBack);
-        }
-      }, 500);
+    function delete_opt(id, ele) {
+        var that = jQuery(ele);
+        var row = that.closest('li');
+        var id = that.attr('data-id');
+        $('#field-id').val(id);
+        console.log({
+            id
+        })
+        jQuery("#removecatok").fadeIn();
+        jQuery("#cover").fadeIn();
+        jQuery("#removecatok .btn-blue").click(function() {
+            row.remove();
+            jQuery("#removecatok").fadeOut();
+            jQuery("#cover").fadeOut();
+        });
     }
 
 
-function addSteps(x) {
+    function waitForElement(elementPath, callBack) {
+        window.setTimeout(function() {
+            if ($(elementPath).length) {
+                callBack(elementPath, $(elementPath));
+            } else {
+                waitForElement(elementPath, callBack);
+            }
+        }, 500);
+    }
 
-    var that = jQuery(x);
-    var randomListId = Math.random().toString(36).slice(2);
-    var stepsName = that.parents(".form-input-button-combo").find("input").val();
 
-    $("#OnboardingSteps .ui-sortable").append(`
+    function addSteps(x) {
+
+        var that = jQuery(x);
+        var randomListId = Math.random().toString(36).slice(2);
+        var stepsName = that.parents(".form-input-button-combo").find("input").val();
+
+        $("#OnboardingSteps .ui-sortable").append(`
                         <li data-parent="` + randomListId + `" class="has-subitems">
                                 <div class="row-wrapper main-sub">
                                     <div class="row-details pull-left">
@@ -672,11 +633,11 @@ function addSteps(x) {
         
         `);
 
-    $('[role="tablist"]').append(`<li role="presentation"><a href="#` + stepsName + `" aria-controls="` +
-        stepsName +
-        `" role="tab" data-toggle="tab">` + stepsName + `</a></li>`);
+        $('[role="tablist"]').append(`<li role="presentation"><a href="#` + stepsName + `" aria-controls="` +
+            stepsName +
+            `" role="tab" data-toggle="tab">` + stepsName + `</a></li>`);
 
-    $(".tab-content").append(`
+        $(".tab-content").append(`
         <div role="tabpanel" class="tab-pane" id="` + stepsName + `">
                                     <div class="panel-box tabular">
                                         <div class="custom-list-box-heading-onbrd white">
@@ -976,85 +937,85 @@ function addSteps(x) {
         
         `);
 
-}
+    }
 
-function editNameSteps(x) {
-    var that = jQuery(x);
-    var stepsName = that.parents("li").attr('steps-id');
-    that.parents("body").find(`[aria-controls="` + stepsName + `"]`).addClass("step-name-edit");
-    that.parents("body").find(`#` + stepsName).addClass("step-name-edit-tab");
-    that.parents("li").find(".name-area .item-name").addClass("hide");
-    that.parents("li").find(".name-area input").removeClass("hide");
-    that.parents("li").find(".name-area input").val(that.parents("li").find(".name-area .item-name")
-        .text());
-    that.parents("li").find(".row-action #cat_edit").addClass("hide");
-    that.parents("li").find(".row-action .delete-cat").addClass("hide");
-    that.parents("li").find(".row-action .blue-btn").removeClass("hide");
+    function editNameSteps(x) {
+        var that = jQuery(x);
+        var stepsName = that.parents("li").attr('steps-id');
+        that.parents("body").find(`[aria-controls="` + stepsName + `"]`).addClass("step-name-edit");
+        that.parents("body").find(`#` + stepsName).addClass("step-name-edit-tab");
+        that.parents("li").find(".name-area .item-name").addClass("hide");
+        that.parents("li").find(".name-area input").removeClass("hide");
+        that.parents("li").find(".name-area input").val(that.parents("li").find(".name-area .item-name")
+            .text());
+        that.parents("li").find(".row-action #cat_edit").addClass("hide");
+        that.parents("li").find(".row-action .delete-cat").addClass("hide");
+        that.parents("li").find(".row-action .blue-btn").removeClass("hide");
 
-}
+    }
 
-function saveNameSteps(x) {
-    var that = jQuery(x);
-    var stepsName = that.parents("li").find(".name-area input").val();
-    that.parents("body").find(`.step-name-edit`).attr("href", "#" + stepsName);
-    that.parents("body").find(`.step-name-edit`).attr("aria-controls", stepsName);
-    that.parents("body").find(`.step-name-edit`).text(stepsName);
-    that.parents("body").find(`.step-name-edit`).removeClass('step-name-edit');
-    that.parents("body").find(`.step-name-edit-tab`).attr("id", stepsName);
-    that.parents("body").find(`.step-name-edit-tab`).removeClass('step-name-edit-tab');
-    that.parents("li").find(".name-area .item-name").text(stepsName);
-    that.parents("li").find(".name-area .item-name").removeClass("hide");
-    that.parents("li").find(".name-area input").addClass("hide");
-    that.parents("li").find(".row-action #cat_edit").removeClass("hide");
-    that.parents("li").find(".row-action .delete-cat").removeClass("hide");
-    that.parents("li").find(".row-action .blue-btn").addClass("hide");
-
-
-}
-
-function deleteSteps(x) {
-    var that = jQuery(x);
-    var stepsName = that.parents("li").find(".name-area .item-name").text();
-    that.parents("body").find(`[aria-controls="` + stepsName + `"]`).parent("li").remove();
-    that.parents("body").find(`#` + stepsName).remove();
-    that.parents("li").remove();
+    function saveNameSteps(x) {
+        var that = jQuery(x);
+        var stepsName = that.parents("li").find(".name-area input").val();
+        that.parents("body").find(`.step-name-edit`).attr("href", "#" + stepsName);
+        that.parents("body").find(`.step-name-edit`).attr("aria-controls", stepsName);
+        that.parents("body").find(`.step-name-edit`).text(stepsName);
+        that.parents("body").find(`.step-name-edit`).removeClass('step-name-edit');
+        that.parents("body").find(`.step-name-edit-tab`).attr("id", stepsName);
+        that.parents("body").find(`.step-name-edit-tab`).removeClass('step-name-edit-tab');
+        that.parents("li").find(".name-area .item-name").text(stepsName);
+        that.parents("li").find(".name-area .item-name").removeClass("hide");
+        that.parents("li").find(".name-area input").addClass("hide");
+        that.parents("li").find(".row-action #cat_edit").removeClass("hide");
+        that.parents("li").find(".row-action .delete-cat").removeClass("hide");
+        that.parents("li").find(".row-action .blue-btn").addClass("hide");
 
 
+    }
 
-}
-
-function stepCloseMenu() {
-    $('body').find(`.step-name-edit`).removeClass('step-name-edit');
-    $("body").find(`.step-name-edit-tab`).removeClass('step-name-edit-tab');
-    $('body').find(".name-area .item-name").removeClass("hide");
-    $('body').find(".name-area input").addClass("hide");
-    $('body').find(".row-action #cat_edit").removeClass("hide");
-    $('body').find(".row-action .delete-cat").removeClass("hide");
-    $('body').find(".row-action .blue-btn").addClass("hide");
-
-
-}
+    function deleteSteps(x) {
+        var that = jQuery(x);
+        var stepsName = that.parents("li").find(".name-area .item-name").text();
+        that.parents("body").find(`[aria-controls="` + stepsName + `"]`).parent("li").remove();
+        that.parents("body").find(`#` + stepsName).remove();
+        that.parents("li").remove();
 
 
 
+    }
 
-jQuery(function() {
-    jQuery(".sortable-list").sortable();
+    function stepCloseMenu() {
+        $('body').find(`.step-name-edit`).removeClass('step-name-edit');
+        $("body").find(`.step-name-edit-tab`).removeClass('step-name-edit-tab');
+        $('body').find(".name-area .item-name").removeClass("hide");
+        $('body').find(".name-area input").addClass("hide");
+        $('body').find(".row-action #cat_edit").removeClass("hide");
+        $('body').find(".row-action .delete-cat").removeClass("hide");
+        $('body').find(".row-action .blue-btn").addClass("hide");
 
 
-    jQuery('input[name="bannerimg_on_cat"]').change(function() {
-        if (jQuery('input[name="bannerimg_on_cat"]:checked').val() == 'Yes') {
-            jQuery('.addcategory-banner-area').show();
-        } else {
-            jQuery('.addcategory-banner-area').hide();
-        }
+    }
+
+
+
+
+    jQuery(function() {
+        jQuery(".sortable-list").sortable();
+
+
+        jQuery('input[name="bannerimg_on_cat"]').change(function() {
+            if (jQuery('input[name="bannerimg_on_cat"]:checked').val() == 'Yes') {
+                jQuery('.addcategory-banner-area').show();
+            } else {
+                jQuery('.addcategory-banner-area').hide();
+            }
+        });
     });
-});
-</script>
-<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
-<script type="text/javascript" src="scripts/scripts3.js"></script>
-<script type="text/javascript" src="scripts/seller.js"></script>
-<script type="text/javascript" src="scripts/onboard_tabs.js"></script>
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
+    <script type="text/javascript" src="scripts/scripts3.js"></script>
+    <!-- <script type="text/javascript" src="scripts/seller.js"></script> -->
+    <script type="text/javascript" src="scripts/onboard_tabs.js"></script>
 
-<!-- end footer -->
+    <!-- end footer -->

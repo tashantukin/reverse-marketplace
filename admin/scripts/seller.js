@@ -20,7 +20,7 @@
   
 
     //run on creation page only
-    new Vue({
+  var seller1 =  new Vue({
         el: ".page-content",
         data() {
             return {

@@ -125,6 +125,74 @@ $action = $_GET['action'];
 
         </div>
 
+
+          <div class="custom_list_wrapper">
+
+                    <ul class="custom-listing-table-onbrd row-height-50">
+
+                    
+                        <!-- <li class="all-cat added-description">
+                            <div class="custom-list-box-onbrd">
+                                <div class="cursor-sec cursor-repositioning-onbrd">
+                                    <div class="repositioning-icon-onbrd">
+                                    </div>
+                                </div>
+                                <div class="user-field-name-onbrd">Cancel</div>
+                                <div class="user-field-type-onbrd">Button</div>
+                                <div class="user-field-consumer-onbrd">
+                                   
+                                </div>
+
+                                <div class="user-field-action-onbrd">
+                                    <div class="row-action">
+                                        <a href="javascript:void(0);" class="btn-edit-onbrdfields">
+                                            <i class="icon icon-edit-2"></i>
+                                        </a>       
+                                    </div>            
+                                </div>            
+                                <div class="clearfix">
+                                </div>
+                            </div>
+                        </li> -->
+
+
+                        <li class="all-cat added-description">
+                            <div class="custom-list-box-onbrd">
+                                <div class="cursor-sec cursor-repositioning-onbrd">
+                                    <div class="repositioning-icon-onbrd">
+                                    </div>
+                                </div>
+                                <div class="user-field-name-onbrd">Save</div>
+                                <div class="user-field-type-onbrd">Button</div>
+                                <div class="user-field-consumer-onbrd">
+                                    <!-- 2. Verification Details -->
+                                </div>
+
+                                <div class="user-field-action-onbrd">
+                                    <div class="row-action">
+                                        <a href="javascript:void(0);" class="btn-edit-text">
+                                            <i class="icon icon-edit-2"></i>
+                                        </a>
+                                                
+                                    </div>            
+                                </div>            
+                                <div class="clearfix">
+                                </div>
+                            </div>
+                             <div class="clearfix"></div>
+                        </li>
+
+                    </ul>
+                
+                </div>
+
+                <div class="clearfix"> </div>
+
+
+    <!-- </div> -->
+
+</div>
+
 </div>
 
 <div class="clearfix">

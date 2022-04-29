@@ -201,6 +201,7 @@
 
                                 </div>
                                 </div>`);
+<<<<<<< HEAD
                             
                             console.log(` 1 ${tab.sort_order} - ${vm.allOnboardTabs.length  - 1}`)
                             if (tab.sort_order == vm.allOnboardTabs.length  - 1) {
@@ -270,6 +271,8 @@
                                     </div>`        
                                 $(`#${tab.Id} .custom_list_wrapper`).last().after(saveSettingsContainer);
                             }
+=======
+>>>>>>> parent of a778bc1 (fix default save button settings on last tab)
                         
                     
                            // vm.getAllFields(tab.Id);
@@ -348,8 +351,9 @@
                             fieldType = field.type_of_field,
                             fieldId = field.Id 
                             
-                            $(`.tab-content #${tabId} .custom-listing-table-onbrd:not(.custom)`).append(`
+                            $(`.tab-content #${tabId} .custom-listing-table-onbrd`).append(`
             
+                                                
                                                 <li class="all-cat added-description" data-id="${fieldId}">
             
                                                     <div class="custom-list-box-onbrd">
@@ -427,7 +431,7 @@
             
                                                 </li>
             
-                            ` )
+                                          ` )
     
                         })
 
@@ -501,53 +505,53 @@
                 
                 })
             },
-            async getFieldDetails(action, e){
-                    vm = this;
-                var data = [{ 'Name': 'Id', 'Operator': "equal", "Value": e.attr('data-id') }]
-                
-                $('#field-id').val(e.attr('data-id'));
-                $('#field-action').val('edit');
-                $.ajax({
-                    method: "POST",
-                    url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/freelancer_form/`,
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    
-                    data: JSON.stringify(data),
-                    //  })
-                    success: function (response)
-                    {
-                        console.log({ response })
-                    
-                        const fields = response
-                        const fieldDetails = fields.Records[0]
-
-                        vm.fieldName = fieldDetails.name;
-                        vm.fieldDescription = fieldDetails.text,
-                        vm.fieldType = fieldDetails.type_of_field,
-                        vm.placeholder = fieldDetails.placeholder,
-                            vm.values = JSON.parse(fieldDetails.values)   
-                        vm.classification = fieldDetails.classification
-                        
-                        if (vm.fieldType == "checkbox" || vm.fieldType == "dropdown") {
-                            $('.cstm-fieldpop-optarea').show();
-                            $('#dropdown-opt-draggble').remove();
-                            $.each(vm.values, function (index, option)
-                            {
-                            $('.cstm-fieldpop-optarea .addOpt').before(`<ul id="dropdown-opt-draggble" class="ui-sortable"><li class="maindiv ui-sortable-handle"><div class="virtual-table"><div class="virtual-table-cell"><a href="#" class="cursor-move"><i class="icon icon-draggble"></i></a></div> <div class="virtual-table-cell"><input type="text" value="${option}" name="checkbox-opt[]" id="optionName" class="required"></div> <div class="virtual-table-cell"><a href="#"  class="delete-opt"><i class="icon icon-delete"></i></a></div></div></li></ul>`)  
-                            })
-                            
-                        }
-                        
-                    
-                    }
-                
-                
-                })
+             async getFieldDetails(action, e){
+                vm = this;
+            var data = [{ 'Name': 'Id', 'Operator': "equal", "Value": e.attr('data-id') }]
+            
+            $('#field-id').val(e.attr('data-id'));
+            $('#field-action').val('edit');
+            $.ajax({
+                method: "POST",
+                url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/freelancer_form/`,
+                headers: {
+                    "Content-Type": "application/json"
                 },
+                
+                data: JSON.stringify(data),
+                //  })
+                success: function (response)
+                {
+                    console.log({ response })
+                
+                    const fields = response
+                    const fieldDetails = fields.Records[0]
 
+                    vm.fieldName = fieldDetails.name;
+                    vm.fieldDescription = fieldDetails.text,
+                    vm.fieldType = fieldDetails.type_of_field,
+                    vm.placeholder = fieldDetails.placeholder,
+                        vm.values = JSON.parse(fieldDetails.values)   
+                    vm.classification = fieldDetails.classification
+                    
+                    if (vm.fieldType == "checkbox" || vm.fieldType == "dropdown") {
+                        $('.cstm-fieldpop-optarea').show();
+                        $('#dropdown-opt-draggble').remove();
+                        $.each(vm.values, function (index, option)
+                        {
+                         $('.cstm-fieldpop-optarea .addOpt').before(`<ul id="dropdown-opt-draggble" class="ui-sortable"><li class="maindiv ui-sortable-handle"><div class="virtual-table"><div class="virtual-table-cell"><a href="#" class="cursor-move"><i class="icon icon-draggble"></i></a></div> <div class="virtual-table-cell"><input type="text" value="${option}" name="checkbox-opt[]" id="optionName" class="required"></div> <div class="virtual-table-cell"><a href="#"  class="delete-opt"><i class="icon icon-delete"></i></a></div></div></li></ul>`)  
+                        })
+                        
+                    }
+                    
+                 
+                }
+            
+            
+            })
             },
+
+        },
     
         computed: {
            

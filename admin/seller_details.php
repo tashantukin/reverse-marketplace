@@ -418,7 +418,7 @@ $action = $_GET['action'];
 
 
 
-            } else {
+            } else if ($('#redirect-action').val() == "add-fields") {
 
                 $('#OnboardingFields .popup-header h4').text('Add Field')
 
@@ -429,6 +429,8 @@ $action = $_GET['action'];
                 jQuery('#onbrd_steps').val('1. Registration');
 
                 jQuery('#OnboardingFields').modal('show');
+            } else {
+
             }
 
         })

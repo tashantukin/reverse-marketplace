@@ -59,8 +59,9 @@ foreach ($marketplaceInfo['CustomFields'] as $cf) {
     </script>
     <!-- bootbox js -->
     <script src="js/bootbox.min.js" type="text/javascript">
-   
-    <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/custom.js"></script>
+    < script type = "text/javascript"
+    src = "https://bootstrap.arcadier.com/spacetime/js/custom.js" >
+    </script>
     <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/jquery.ddslick.js"></script>
 
 
@@ -71,7 +72,7 @@ foreach ($marketplaceInfo['CustomFields'] as $cf) {
 
     <script type="text/javascript" src="subscribe/8e94739d-b260-41ec-9496-dfa98bb8cdc0/scripts/users.js"></script>
 
-  
+
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 
 
@@ -116,7 +117,7 @@ foreach ($marketplaceInfo['CustomFields'] as $cf) {
     <div class="main">
         <div class="content-pages">
             <div class="container">
-                <input type="hidden" id="button-text"value="<?php echo $save_button_text ?>">
+                <input type="hidden" id="button-text" value="<?php echo $save_button_text ?>">
                 <input type="hidden" id="address-lat">
                 <input type="hidden" id="address-long">
                 <input type="hidden" id="servicing-lat">
@@ -151,16 +152,17 @@ foreach ($marketplaceInfo['CustomFields'] as $cf) {
                                     <h3>Registration</h3>
                                     <div class="form-group">
                                         <label for="email">Email Address</label>
-                                        <input type="text" class="form-control required" name="email" id="email" placeholder="">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="password">Set a Password</label>
-                                        <input type="password" class="form-control required" name="password" id="password"
+                                        <input type="text" class="form-control required" name="email" id="email"
                                             placeholder="">
                                     </div>
                                     <div class="form-group">
+                                        <label for="password">Set a Password</label>
+                                        <input type="password" class="form-control required" name="password"
+                                            id="password" placeholder="">
+                                    </div>
+                                    <div class="form-group">
                                         <label for="retype_password">Retype Password</label>
-                                        <input type="password" class="form-control required"  name="retype_password"
+                                        <input type="password" class="form-control required" name="retype_password"
                                             id="retype_password" placeholder="">
                                     </div>
 
@@ -169,7 +171,7 @@ foreach ($marketplaceInfo['CustomFields'] as $cf) {
                                         <p>To be verified, please have a copy of the following documents ready. </p>
                                         <p>Current ABN and Current Insurance Certificate.</p>
                                     </div>
-                                    
+
                                     <div class="register-btn">
                                         <button onclick="j_nextTab();" class="btn btn-register">Register</button>
 
@@ -414,19 +416,19 @@ foreach ($marketplaceInfo['CustomFields'] as $cf) {
     //     });
     // });
 
-        jQuery('.jobform-tab .nav-tabs a').on('click', function (event) {
-            // console.log('in here');
-            // var tab = jQuery(".jobform-tab li.active a").attr('href');
-            // if (validateTab(tab) == 0 || jQuery(".jobform-tab").hasClass('prevTab') ) {
-            //    jQuery(".jobform-tab").removeClass('prevTab');
-            //    $(this).parent().addClass('check');
-            //    $(this).parent().prevAll().addClass('check');
-            //    $(this).parent().nextAll().removeClass('check');
-            //    return true;
-            // } else {
-            //    return false
-            // }
-         });
+    jQuery('.jobform-tab .nav-tabs a').on('click', function(event) {
+        // console.log('in here');
+        // var tab = jQuery(".jobform-tab li.active a").attr('href');
+        // if (validateTab(tab) == 0 || jQuery(".jobform-tab").hasClass('prevTab') ) {
+        //    jQuery(".jobform-tab").removeClass('prevTab');
+        //    $(this).parent().addClass('check');
+        //    $(this).parent().prevAll().addClass('check');
+        //    $(this).parent().nextAll().removeClass('check');
+        //    return true;
+        // } else {
+        //    return false
+        // }
+    });
 
     function j_nextTab() {
 
@@ -435,21 +437,22 @@ foreach ($marketplaceInfo['CustomFields'] as $cf) {
         // }
 
 
-          console.log('in here');
-            var tab = jQuery(".jobform-tab li.active a").attr('href');
-            if (validateTab(tab) == 0 || jQuery(".jobform-tab").hasClass('prevTab') ) {
-                console.log('return true');
-               jQuery(".jobform-tab").removeClass('prevTab');
-               $(this).parent().addClass('check');
-               $(this).parent().prevAll().addClass('check');
-               $(this).parent().nextAll().removeClass('check');
+        console.log('j_nexttab');
 
-               jQuery(".jobform-tab li.active").next('li').children('a').trigger('click')
-               return true;
-            } else {
-                console.log('in false');
-               return false
-            }
+        var tab = jQuery(".jobform-tab li.active a").attr('href');
+        if (validateTab(tab) == 0 || jQuery(".jobform-tab").hasClass('prevTab')) {
+            console.log('return true');
+            jQuery(".jobform-tab").removeClass('prevTab');
+            $(this).parent().addClass('check');
+            $(this).parent().prevAll().addClass('check');
+            $(this).parent().nextAll().removeClass('check');
+
+            jQuery(".jobform-tab li.active").next('li').children('a').trigger('click')
+            return true;
+        } else {
+            console.log('in false');
+            return false
+        }
         //jQuery(".jobform-tab li.active").next('li').children('a').trigger('click');
         console.log('this');
         setTimeout(function() {
@@ -486,14 +489,16 @@ foreach ($marketplaceInfo['CustomFields'] as $cf) {
         var validate = 0;
         var target = jQuery(".job-form-tab-design .tab-content " + tab + " ").find('.jobform-form');
 
-             target.find('.required').each(function() {
-                    var val = jQuery(this).val();
-                    if (!jQuery.trim(val)) {
-                        validate = 1;
-                        jQuery(this).addClass('error-con');
-                    }
-                });
-            console.log({validate});
+        target.find('.required').each(function() {
+            var val = jQuery(this).val();
+            if (!jQuery.trim(val)) {
+                validate = 1;
+                jQuery(this).addClass('error-con');
+            }
+        });
+        console.log({
+            validate
+        });
         // switch (tab) {
         //     case '#registration':
         //         /*var nEmail = jQuery("#email");
@@ -511,7 +516,7 @@ foreach ($marketplaceInfo['CustomFields'] as $cf) {
         //         break;
         //     case '#verification-details':
 
-               
+
 
 
         //         break;
@@ -563,127 +568,130 @@ foreach ($marketplaceInfo['CustomFields'] as $cf) {
     }
 
 
-function initAutocomplete() {
+    function initAutocomplete() {
 
-      if (!navigator.geolocation) {
-                console.log("Your browser doesn't support geolocation feature!")
-            } else {
-                //setInterval(() => {
-              //  navigator.geolocation.getCurrentPosition(getPosition)
-
-                
-                //}, 5000);
-            }
-              waitForElement('#address', function (){
-//   const map = new google.maps.Map(document.getElementById("map"), {
-//     center: { lat: -33.8688, lng: 151.2195 },
-//     zoom: 13,
-//     mapTypeId: "roadmap",
-//   });
-  // Create the search box and link it to the UI element.
-
-                
-    const input = document.getElementById("address");
-    const searchBox = new google.maps.places.SearchBox(input);
- //})
- // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-  // Bias the SearchBox results towards current map's viewport.
-//   map.addListener("bounds_changed", () => {
-//     searchBox.setBounds(map.getBounds());
-//   });
-
-  let markers = [];
-
-  // Listen for the event fired when the user selects a prediction and retrieve
-  // more details for that place.
-  searchBox.addListener("places_changed", () => {
+        if (!navigator.geolocation) {
+            console.log("Your browser doesn't support geolocation feature!")
+        } else {
+            //setInterval(() => {
+            //  navigator.geolocation.getCurrentPosition(getPosition)
 
 
-    //const places = searchBox.getPlaces();
+            //}, 5000);
+        }
+        waitForElement('#address', function() {
+            //   const map = new google.maps.Map(document.getElementById("map"), {
+            //     center: { lat: -33.8688, lng: 151.2195 },
+            //     zoom: 13,
+            //     mapTypeId: "roadmap",
+            //   });
+            // Create the search box and link it to the UI element.
 
 
-     var places = searchBox.getPlaces();
+            const input = document.getElementById("address");
+            const searchBox = new google.maps.places.SearchBox(input);
+            //})
+            // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+            // Bias the SearchBox results towards current map's viewport.
+            //   map.addListener("bounds_changed", () => {
+            //     searchBox.setBounds(map.getBounds());
+            //   });
 
-             places.forEach((place) => {
+            let markers = [];
 
-            var address = place.formatted_address;
-            var latitude = place.geometry.location.lat();
-            var longitude = place.geometry.location.lng();
-            var latlng = new google.maps.LatLng(latitude, longitude);
-            var geocoder = geocoder = new google.maps.Geocoder();
-            geocoder.geocode({
-                'latLng': latlng
-            }, function(results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    if (results[0]) {
-                        var address = results[0].formatted_address;
-                        var pin = results[0].address_components[results[0].address_components
-                            .length - 1].long_name;
-                        var country = results[0].address_components[results[0]
-                            .address_components
-                            .length - 2].long_name;
-                        var state = results[0].address_components[results[0].address_components
-                            .length - 3].long_name;
-                        var city = results[0].address_components[results[0].address_components
-                            .length - 4].long_name;
-                        document.getElementById('country').value = country;
-                        document.getElementById('state').value = state;
-                        document.getElementById('city').value = city;
-                        document.getElementById('postal_code').value = pin;
-                        $('#location_details').val(city);
-                    }
+            // Listen for the event fired when the user selects a prediction and retrieve
+            // more details for that place.
+            searchBox.addListener("places_changed", () => {
+
+
+                //const places = searchBox.getPlaces();
+
+
+                var places = searchBox.getPlaces();
+
+                places.forEach((place) => {
+
+                    var address = place.formatted_address;
+                    var latitude = place.geometry.location.lat();
+                    var longitude = place.geometry.location.lng();
+                    var latlng = new google.maps.LatLng(latitude, longitude);
+                    var geocoder = geocoder = new google.maps.Geocoder();
+                    geocoder.geocode({
+                        'latLng': latlng
+                    }, function(results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            if (results[0]) {
+                                var address = results[0].formatted_address;
+                                var pin = results[0].address_components[results[0]
+                                    .address_components
+                                    .length - 1].long_name;
+                                var country = results[0].address_components[results[0]
+                                    .address_components
+                                    .length - 2].long_name;
+                                var state = results[0].address_components[results[0]
+                                    .address_components
+                                    .length - 3].long_name;
+                                var city = results[0].address_components[results[0]
+                                    .address_components
+                                    .length - 4].long_name;
+                                document.getElementById('country').value = country;
+                                document.getElementById('state').value = state;
+                                document.getElementById('city').value = city;
+                                document.getElementById('postal_code').value = pin;
+                                $('#location_details').val(city);
+                            }
+                        }
+                    });
+                })
+
+                if (places.length == 0) {
+                    return;
                 }
+
+                // Clear out the old markers.
+                // markers.forEach((marker) => {
+                //   marker.setMap(null);
+                // });
+                // markers = [];
+
+                // For each place, get the icon, name and location.
+                // const bounds = new google.maps.LatLngBounds();
+
+                // places.forEach((place) => {
+                //   if (!place.geometry || !place.geometry.location) {
+                //     console.log("Returned place contains no geometry");
+                //     return;
+                //   }
+
+                //   const icon = {
+                //     url: place.icon,
+                //     size: new google.maps.Size(71, 71),
+                //     origin: new google.maps.Point(0, 0),
+                //     anchor: new google.maps.Point(17, 34),
+                //     scaledSize: new google.maps.Size(25, 25),
+                //   };
+
+                //   // Create a marker for each place.
+                //   markers.push(
+                //     new google.maps.Marker({
+                //       map,
+                //       icon,
+                //       title: place.name,
+                //       position: place.geometry.location,
+                //     })
+                //   );
+                //   if (place.geometry.viewport) {
+                //     // Only geocodes have viewport.
+                //     bounds.union(place.geometry.viewport);
+                //   } else {
+                //     bounds.extend(place.geometry.location);
+                //   }
+                // });
+                // map.fitBounds(bounds);
             });
+
         })
-
-    if (places.length == 0) {
-      return;
     }
-
-    // Clear out the old markers.
-    // markers.forEach((marker) => {
-    //   marker.setMap(null);
-    // });
-    // markers = [];
-
-    // For each place, get the icon, name and location.
-    // const bounds = new google.maps.LatLngBounds();
-
-    // places.forEach((place) => {
-    //   if (!place.geometry || !place.geometry.location) {
-    //     console.log("Returned place contains no geometry");
-    //     return;
-    //   }
-
-    //   const icon = {
-    //     url: place.icon,
-    //     size: new google.maps.Size(71, 71),
-    //     origin: new google.maps.Point(0, 0),
-    //     anchor: new google.maps.Point(17, 34),
-    //     scaledSize: new google.maps.Size(25, 25),
-    //   };
-
-    //   // Create a marker for each place.
-    //   markers.push(
-    //     new google.maps.Marker({
-    //       map,
-    //       icon,
-    //       title: place.name,
-    //       position: place.geometry.location,
-    //     })
-    //   );
-    //   if (place.geometry.viewport) {
-    //     // Only geocodes have viewport.
-    //     bounds.union(place.geometry.viewport);
-    //   } else {
-    //     bounds.extend(place.geometry.location);
-    //   }
-    // });
-    // map.fitBounds(bounds);
-  });
-
-})
-}
 
 
 
@@ -702,198 +710,198 @@ function initAutocomplete() {
     jQuery(document).ready(function() {
 
 
-    waitForElement('#address', function() {
-         var script = document.createElement('script');
-        script.onload = function ()
-      {
-        google.maps.event.addDomListener(window, 'load', initialize);
-        google.maps.event.addDomListener(window, 'load', initialize_service_area);
-      }
+        waitForElement('#address', function() {
+            var script = document.createElement('script');
+            script.onload = function() {
+                google.maps.event.addDomListener(window, 'load', initialize);
+                google.maps.event.addDomListener(window, 'load', initialize_service_area);
+            }
 
-       script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCbYXf7DUOc-j2QwGgtXcFp4fpGMD4Q59o&libraries=places";
+            script.src =
+                "https://maps.googleapis.com/maps/api/js?key=AIzaSyCbYXf7DUOc-j2QwGgtXcFp4fpGMD4Q59o&libraries=places";
 
-        document.head.appendChild(script); 
-    google.maps.event.addDomListener(window, 'load', initialize);
-   
-
-    })
-    jobTabTimeline();
-
-    $(window).on('resize', jobTabTimeline);
-
-    jQuery('body').on('change', '#servicing_area_all', function(event) {
-    if ($(this).is(':checked')) {
-    // $('.location-map-hide-show').fadeIn('slow');
-    // newMapSelectedAll();
-    } else {
-    // newMap();
-    // $('.location-map-hide-show').fadeOut('slow');
-    }
-    });
-
-    jQuery('body').on('change', '#servicing_area_remote', function(event) {
-    if ($(this).is(':checked')) {
-    // $('.location-map-hide-show').fadeIn('slow');
-    // newMap();
-    } else {
-    // newMap();
-    // $('.location-map-hide-show').fadeOut('slow');
-    }
-    });
-    jQuery('#datepicker').datetimepicker({
-    viewMode: 'years',
-    format: 'MM/YYYY'
-    });
-
-    $('#credit_card').change(function() {
-    $('.credit_card_input input').removeClass("error-con");
-    if ($(this).is(':checked')) {
-    $('.credit_card_input input').prop("disabled", true);
-    $('.credit_card_input input').removeClass("required");
-    } else {
-    $('.credit_card_input input').prop("disabled", false);
-    // $('.credit_card_input input').addClass("required");
-    }
-    }).trigger('change');
+            document.head.appendChild(script);
+            google.maps.event.addDomListener(window, 'load', initialize);
 
 
+        })
+        jobTabTimeline();
 
-    $('#certificate_currency').change(function() {
-    $('.certificate_currency_input input').removeClass("error-con");
-    if ($(this).is(':checked')) {
-    $('.certificate_currency_input').fadeIn();
-    $('.certificate_currency_input input').addClass("required");
-    $('.certificate_currency_input input').prop("disabled", false);
-    } else {
-    $('.certificate_currency_input').fadeOut();
-    $('.certificate_currency_input input').prop("disabled", true);
-    $('.certificate_currency_input input').removeClass("required");
-    }
-    }).trigger('change');
+        $(window).on('resize', jobTabTimeline);
 
-    $('#driver_license_director').change(function() {
-    $('.driver_license_director_input input').removeClass("error-con");
-    if ($(this).is(':checked')) {
-    $('.driver_license_director_input').fadeIn();
-    $('.driver_license_director_input input').prop("disabled", false);
-    $('.driver_license_director_input input').addClass("required");
-    } else {
-    $('.driver_license_director_input').fadeOut();
-    $('.driver_license_director_input input').prop("disabled", true);
-    $('.driver_license_director_input input').removeClass("required");
-    }
-    }).trigger('change');
+        jQuery('body').on('change', '#servicing_area_all', function(event) {
+            if ($(this).is(':checked')) {
+                // $('.location-map-hide-show').fadeIn('slow');
+                // newMapSelectedAll();
+            } else {
+                // newMap();
+                // $('.location-map-hide-show').fadeOut('slow');
+            }
+        });
 
-    $('#same_address').change(function() {
-    $('.same_address_input input').removeClass("error-con");
-    if ($(this).is(':checked')) {
-    $('.same_address_input input').prop("disabled", true);
-    $('.same_address_input input').removeClass("required");
-    } else {
-    $('.same_address_input input').prop("disabled", false);
-    $('.same_address_input input').addClass("required");;
-    }
-    }).trigger('change');
-    jQuery('.jobform-tab .nav-tabs a').on('show.bs.tab', function(event) {
-    var tab = jQuery(".jobform-tab li.active a").attr('href');
-    if (validateTab(tab) == 0 || jQuery(".jobform-tab").hasClass('prevTab')) {
-    jQuery(".jobform-tab").removeClass('prevTab');
-    $(this).parent().addClass('check');
-    $(this).parent().prevAll().addClass('check');
-    $(this).parent().nextAll().removeClass('check');
-    return true;
-    } else {
-    return false
-    }
-    });
-    $('.jobform-tab .nav-tabs a').on('shown.bs.tab', function() {
-    if (jQuery(".jobform-tab li.active a").attr('href') == '#verification-details') {
-    // $('.cmaphilight').maphilight({
-    // fill: true,
-    // fillColor: '000000',
-    // fillOpacity: 0.2,
-    // stroke: true,
-    // strokeColor: 'ff0000',
-    // strokeOpacity: 1,
-    // strokeWidth: 1,
-    // fade: true,
-    // alwaysOn: false,
-    // neverOn: false,
-    // groupBy: false,
-    // wrapClass: true,
-    // shadow: false,
-    // shadowX: 0,
-    // shadowY: 0,
-    // shadowRadius: 6,
-    // shadowColor: '000000',
-    // shadowOpacity: 0.8,
-    // shadowPosition: 'outside',
-    // shadowFrom: false,
-    // });
-    }
+        jQuery('body').on('change', '#servicing_area_remote', function(event) {
+            if ($(this).is(':checked')) {
+                // $('.location-map-hide-show').fadeIn('slow');
+                // newMap();
+            } else {
+                // newMap();
+                // $('.location-map-hide-show').fadeOut('slow');
+            }
+        });
+        jQuery('#datepicker').datetimepicker({
+            viewMode: 'years',
+            format: 'MM/YYYY'
+        });
 
-    });
-
-
-    jQuery("#mobi-search").click(function() {
-    jQuery(".search-bar").slideToggle();
-    if (jQuery("#mobile-menu").is(":visible")) {
-    jQuery("#mobile-menu").hide();
-    }
-    if (jQuery(".category-menu").is(":visible")) {
-    jQuery(".category-menu").hide();
-    }
-    });
-
-    /*nice scroll */
-    jQuery("#mobile-menu > ul").niceScroll({
-    cursorcolor: "#000",
-    cursorwidth: "6px",
-    cursorborderradius: "5px",
-    cursorborder: "1px solid transparent",
-    touchbehavior: true
-    });
-
-    jQuery("#menu-toggle").click(function() {
-    var target = jQuery(".category-items");
-    var parent = jQuery(".category-menu");
-    jQuery(parent).show();
-    jQuery(target).slideToggle();
-    if (jQuery("#mobile-menu").is(":visible")) {
-    jQuery("#mobile-menu").hide();
-    }
-    });
-
-    jQuerymodal = jQuery('.modal-frame');
-    jQueryoverlay = jQuery('.modal-overlay');
-    jQuerymodal.bind('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e) {
-    if (jQuerymodal.hasClass('state-leave')) {
-    jQuerymodal.removeClass('state-leave');
-    }
-    });
-    jQuery('.close').on('click', function() {
-    jQueryoverlay.removeClass('state-show');
-    jQuerymodal.removeClass('state-appear').addClass('state-leave');
-    jQuery('body').removeClass('modal-open')
-    });
-    jQuery('#register-modal').on('click', function() {
-    jQueryoverlay.addClass('state-show');
-    jQuerymodal.removeClass('state-leave').addClass('state-appear');
-    jQuery('html, body').animate({
-    scrollTop: 0
-    }, 0);
-    jQuery('body').addClass('modal-open');
-
-    });
+        $('#credit_card').change(function() {
+            $('.credit_card_input input').removeClass("error-con");
+            if ($(this).is(':checked')) {
+                $('.credit_card_input input').prop("disabled", true);
+                $('.credit_card_input input').removeClass("required");
+            } else {
+                $('.credit_card_input input').prop("disabled", false);
+                // $('.credit_card_input input').addClass("required");
+            }
+        }).trigger('change');
 
 
 
-    // jQuery('#address').on('focusout', function() {
+        $('#certificate_currency').change(function() {
+            $('.certificate_currency_input input').removeClass("error-con");
+            if ($(this).is(':checked')) {
+                $('.certificate_currency_input').fadeIn();
+                $('.certificate_currency_input input').addClass("required");
+                $('.certificate_currency_input input').prop("disabled", false);
+            } else {
+                $('.certificate_currency_input').fadeOut();
+                $('.certificate_currency_input input').prop("disabled", true);
+                $('.certificate_currency_input input').removeClass("required");
+            }
+        }).trigger('change');
+
+        $('#driver_license_director').change(function() {
+            $('.driver_license_director_input input').removeClass("error-con");
+            if ($(this).is(':checked')) {
+                $('.driver_license_director_input').fadeIn();
+                $('.driver_license_director_input input').prop("disabled", false);
+                $('.driver_license_director_input input').addClass("required");
+            } else {
+                $('.driver_license_director_input').fadeOut();
+                $('.driver_license_director_input input').prop("disabled", true);
+                $('.driver_license_director_input input').removeClass("required");
+            }
+        }).trigger('change');
+
+        $('#same_address').change(function() {
+            $('.same_address_input input').removeClass("error-con");
+            if ($(this).is(':checked')) {
+                $('.same_address_input input').prop("disabled", true);
+                $('.same_address_input input').removeClass("required");
+            } else {
+                $('.same_address_input input').prop("disabled", false);
+                $('.same_address_input input').addClass("required");;
+            }
+        }).trigger('change');
+        jQuery('.jobform-tab .nav-tabs a').on('show.bs.tab', function(event) {
+            var tab = jQuery(".jobform-tab li.active a").attr('href');
+            if (validateTab(tab) == 0 || jQuery(".jobform-tab").hasClass('prevTab')) {
+                jQuery(".jobform-tab").removeClass('prevTab');
+                $(this).parent().addClass('check');
+                $(this).parent().prevAll().addClass('check');
+                $(this).parent().nextAll().removeClass('check');
+                return true;
+            } else {
+                return false
+            }
+        });
+        $('.jobform-tab .nav-tabs a').on('shown.bs.tab', function() {
+            if (jQuery(".jobform-tab li.active a").attr('href') == '#verification-details') {
+                // $('.cmaphilight').maphilight({
+                // fill: true,
+                // fillColor: '000000',
+                // fillOpacity: 0.2,
+                // stroke: true,
+                // strokeColor: 'ff0000',
+                // strokeOpacity: 1,
+                // strokeWidth: 1,
+                // fade: true,
+                // alwaysOn: false,
+                // neverOn: false,
+                // groupBy: false,
+                // wrapClass: true,
+                // shadow: false,
+                // shadowX: 0,
+                // shadowY: 0,
+                // shadowRadius: 6,
+                // shadowColor: '000000',
+                // shadowOpacity: 0.8,
+                // shadowPosition: 'outside',
+                // shadowFrom: false,
+                // });
+            }
+
+        });
+
+
+        jQuery("#mobi-search").click(function() {
+            jQuery(".search-bar").slideToggle();
+            if (jQuery("#mobile-menu").is(":visible")) {
+                jQuery("#mobile-menu").hide();
+            }
+            if (jQuery(".category-menu").is(":visible")) {
+                jQuery(".category-menu").hide();
+            }
+        });
+
+        /*nice scroll */
+        jQuery("#mobile-menu > ul").niceScroll({
+            cursorcolor: "#000",
+            cursorwidth: "6px",
+            cursorborderradius: "5px",
+            cursorborder: "1px solid transparent",
+            touchbehavior: true
+        });
+
+        jQuery("#menu-toggle").click(function() {
+            var target = jQuery(".category-items");
+            var parent = jQuery(".category-menu");
+            jQuery(parent).show();
+            jQuery(target).slideToggle();
+            if (jQuery("#mobile-menu").is(":visible")) {
+                jQuery("#mobile-menu").hide();
+            }
+        });
+
+        jQuerymodal = jQuery('.modal-frame');
+        jQueryoverlay = jQuery('.modal-overlay');
+        jQuerymodal.bind('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e) {
+            if (jQuerymodal.hasClass('state-leave')) {
+                jQuerymodal.removeClass('state-leave');
+            }
+        });
+        jQuery('.close').on('click', function() {
+            jQueryoverlay.removeClass('state-show');
+            jQuerymodal.removeClass('state-appear').addClass('state-leave');
+            jQuery('body').removeClass('modal-open')
+        });
+        jQuery('#register-modal').on('click', function() {
+            jQueryoverlay.addClass('state-show');
+            jQuerymodal.removeClass('state-leave').addClass('state-appear');
+            jQuery('html, body').animate({
+                scrollTop: 0
+            }, 0);
+            jQuery('body').addClass('modal-open');
+
+        });
+
+
+
+        // jQuery('#address').on('focusout', function() {
 
 
 
 
-    // });
+        // });
 
     });
 
@@ -902,92 +910,91 @@ function initAutocomplete() {
 
     {
 
-    var $this = jQuery(ele);
+        var $this = jQuery(ele);
 
-    var $verify = $this.attr('data-verify');
+        var $verify = $this.attr('data-verify');
 
-    if ($verify == 'false')
+        if ($verify == 'false')
 
-    {
+        {
 
-    bootbox.confirm({
+            bootbox.confirm({
 
-    message: `By verifying this payment method, all your buyers will be able to checkout your items using Cash on
+                message: `By verifying this payment method, all your buyers will be able to checkout your items using Cash on
     Delivery and settlement has to be handled by you manually if they were to use this payment method.`,
 
-    className: "my-confirmmodal",
+                className: "my-confirmmodal",
 
-    buttons: {
+                buttons: {
 
-    confirm: {
+                    confirm: {
 
-    label: 'Okay',
+                        label: 'Okay',
 
-    className: 'btn-success'
+                        className: 'btn-success'
 
-    },
+                    },
 
-    cancel: {
+                    cancel: {
 
-    label: 'Cancel',
+                        label: 'Cancel',
 
-    className: 'btn-danger'
+                        className: 'btn-danger'
 
-    }
+                    }
 
-    },
+                },
 
-    callback: function(result) {
+                callback: function(result) {
 
-    if (result)
+                    if (result)
 
-    {
+                    {
 
-    $("#CashOnDeliveryPayment").text("").css("color", "#000");
+                        $("#CashOnDeliveryPayment").text("").css("color", "#000");
 
-    var imageUrl = 'images/done.svg';
+                        var imageUrl = 'images/done.svg';
 
-    var warning = $this.parent().siblings('.verified').find('.img-payment-warning');
+                        var warning = $this.parent().siblings('.verified').find('.img-payment-warning');
 
-    var warningspan = $this.parent().siblings('.verified').find('span');
+                        var warningspan = $this.parent().siblings('.verified').find('span');
 
-    warning.css({
-    'background': 'url(' + imageUrl + ')no-repeat',
-    'background-color': '#00c8b2',
-    'border-radius': '30px',
-    'width': '30px',
-    'height': '30px',
-    'margin-top': '5px'
-    });
+                        warning.css({
+                            'background': 'url(' + imageUrl + ')no-repeat',
+                            'background-color': '#00c8b2',
+                            'border-radius': '30px',
+                            'width': '30px',
+                            'height': '30px',
+                            'margin-top': '5px'
+                        });
 
-    warningspan.text("Verified").css('color', '#00c8b2');
+                        warningspan.text("Verified").css('color', '#00c8b2');
 
-    $(".seller-payment-container span.paycashdelivery").css({
-    'width': 'Calc(100% - 40px)',
-    'line-height': '40px'
-    });
+                        $(".seller-payment-container span.paycashdelivery").css({
+                            'width': 'Calc(100% - 40px)',
+                            'line-height': '40px'
+                        });
 
-    $("#BtnCashDelivery").removeClass("error-con");
+                        $("#BtnCashDelivery").removeClass("error-con");
 
-    $this.attr('data-verify', 'true');
+                        $this.attr('data-verify', 'true');
 
-    }
+                    }
 
-    }
+                }
 
 
 
-    });
+            });
 
-    }
+        }
 
     }
     </script>
 
- <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbYXf7DUOc-j2QwGgtXcFp4fpGMD4Q59o&callback=initAutocomplete&libraries=places&v=weekly&channel=2"
-      async
-    ></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbYXf7DUOc-j2QwGgtXcFp4fpGMD4Q59o&callback=initAutocomplete&libraries=places&v=weekly&channel=2"
+        async></script>
     <!-- <script type="text/javascript"
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbYXf7DUOc-j2QwGgtXcFp4fpGMD4Q59o&libraries=places">
     </script> -->

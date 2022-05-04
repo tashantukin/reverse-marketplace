@@ -1032,7 +1032,7 @@ sellerFields = new Vue({
                 'location_coordinates':  JSON.stringify(Array($('#address-lat').val(), $('#address-long').val())),
                 'servicing_coords': JSON.stringify(Array($('#servicing-lat').val(), $('#servicing-long').val())),
                 "status": "Pending",
-                'files': files,
+                'files': JSON.stringify(taskFiles),
                 'stripe_key': localStorage.getItem('stripe_acc_id'),
                 'is_payment_onboarded' : localStorage.getItem('stripe_acc_id') == null ? false : true,
 
@@ -1764,7 +1764,7 @@ var documentData = (function ()
                     success: function success(result)
                     {
                         console.log(result);
-                        taskFiles.push({ 'Id': fileId, 'URL': result[0]['SourceUrl'], 'name': result[0]['Filename'] });
+                        taskFiles.push({ 'Id': fileId, 'URL': result[0]['SourceUrl'], 'name': category });
                         console.log({ taskFiles });
 
                         // allFiles.forEach(function (filename, i)
@@ -2044,8 +2044,9 @@ $(document).ready(function ()
                     $('#BtnStripeLinked').parents(".seller-payment-container").find("span.stripe").css({'width': 'Calc(100% - 40px)', 'line-height' : '40px'});
         }
 
-       var users = usersData.getInstance();
-       users.getCustomFieldValues();
+       // var users = usersData.getInstance();
+        sellerFields.getAllFieldData($('.tab-content'));
+     //  users.getCustomFieldValues();
     
     })
 
@@ -2080,7 +2081,7 @@ $(document).ready(function ()
     //   if (validate == 1) {
     //       console.log('we dont do that here')
     //   } else {
-    //          sellerFields.getAllFieldData($('.tab-content'));
+            // sellerFields.getAllFieldData($('.tab-content'));
     //   }           
     
 

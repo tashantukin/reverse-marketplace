@@ -261,7 +261,7 @@ $baseUrl = getMarketplaceBaseUrl();
                                             <th>Address</th>
                                             <th>Servicing Area</th>
                                             <!-- dynamic file upload headers -->
-                                            <th v-for="field in uploadCustomFields"> {{  field['name'] }}</th>
+                                            <!-- <th v-for="field in uploadCustomFields"> {{  field['name'] }}</th> -->
                                             <th>Comment</th>
                                             <th>Approval Status</th>
                                             <th></th>
@@ -287,9 +287,9 @@ $baseUrl = getMarketplaceBaseUrl();
                                                     <!-- <span data-toggle="tooltip" title="AA, BB, CC" class="txt-green">3
                                                         More</span></td> -->
 
-                                            <td v-for="fields in uploadCustomFields" :data-th="fields.name"><a
+                                                    <!-- <td v-for="fields in uploadCustomFields" :data-th="fields.name"><a
                                                     :href="'freelancer_details.php?customid=' + field.Id"><span
-                                                        class="txt-green">1 File(s)</span></a></td>
+                                                        class="txt-green">1 File(s)</span></a></td> -->
 
                                             <td data-th="Comment">
                                                 <a href="javascript:void(0);" onclick="openComment(this);"

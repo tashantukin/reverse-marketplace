@@ -749,6 +749,7 @@
                                        <li class=""><a data-toggle="tab" href="#tab-quoted" aria-expanded="false">Quoted</a></li>
                                        <li class=""><a data-toggle="tab" href="#tab-accepted" aria-expanded="false">Accepted</a></li>
                                        <li class=""><a data-toggle="tab" href="#tab-rejected" aria-expanded="false">Rejected</a></li>
+                                       <li class=""><a data-toggle="tab" href="#tab-cancelled" aria-expanded="false">Cancelled</a></li>
                                        <li class=""><a data-toggle="tab" href="#tab-completed" aria-expanded="false">Completed</a></li>
                                  </ul>
                               </div>
@@ -863,6 +864,27 @@
                         </div>
                         </div>
 
+
+                         <div id="tab-cancelled" class="tab-pane fade active in">
+                           <div class="scroll-table-container">
+                              <table class="table table-freelancer scroll-table">
+                              <thead>
+                                 <tr>
+                                    <td>Job ID</td>
+                                    <td>Date</td>
+                                    <td>Email</td>
+                                    <td>Contact No.</td>
+                                    <td>Location</td>
+                                    <td>Quoted Date</td>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                              
+                                 
+                              </tbody>
+                           </table>
+                        </div>
+                        </div>
 
 
                            <div id="tab-completed" class="tab-pane fade">
@@ -1115,7 +1137,12 @@
                            }else if (job['status'] == 'Completed') {
                            status =`<td>Completed</td>`
 
-                        } else {
+                        }else if (job['status'] == 'Cancelled') {
+                           status =`<td>Cancelled</td>`
+
+                        }
+                        
+                        else {
                            status =`<td>--</td>`
                         }
                       switch (el) {
@@ -1137,7 +1164,7 @@
                             break;
 
 
-                         case '#tab-interested' || '#tab-quoted' || '#tab-completed':
+                         case '#tab-interested' || '#tab-quoted' || '#tab-completed' || '#tab-cancelled':
                             allJobs = `<tr data-id="${job['Id']}" user-id="${userId}"> </td>
                            <td> <a href="${protocol}//${baseURL}/user/plugins/${packageId}/${page}.php?jobId=${job['Id']}&userId=${userId}">${job['job_validity']}</a></td>
                            <td>${job['buyer_email']}</td>
@@ -1774,6 +1801,51 @@
             })
            }
 
+           
+         //cancelled jobs
+           
+           async function getCancelledJobs(){
+            var data = [{ 'Name': 'status', 'Operator': "equal", "Value": 'Cancelled' }, { 'Name': 'freelancer_id', 'Operator': "equal", "Value": $('#userGuid').val() }]
+            
+            $.ajax({
+              method: "POST",
+              url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/freelancer_quotes/`,
+              headers: {
+                "Content-Type": "application/json"
+              },
+            
+              data: JSON.stringify(data),
+         
+              success: function (response)
+              {
+                console.log({ response })
+              
+                const jobs = response
+                const jobDetails = jobs.Records
+                //if existing user, verify the status
+                if (jobDetails.length != 0) {
+
+                  jobDetails.forEach(function (job, i)
+                  {
+
+                     getJobDetail(job['job_id'],'#tab-cancelled','freelancer_quoted', job['CreatedDateTime']);
+                   
+                 
+                  })
+                  
+                 
+                  
+                }
+               
+        
+              }
+            })
+           }
+
+
+
+
+
            function getJobLodges()
            {
               var jobId = localStorage.getItem("jobID"); 
@@ -2038,7 +2110,8 @@
              getAcceptedJobs: getAcceptedJobs,
              getRejectedJobs: getRejectedJobs,
              getChargeDetails: getChargeDetails,
-             getCompletedJobs : getCompletedJobs
+             getCompletedJobs: getCompletedJobs,
+             getCancelledJobs : getCancelledJobs
             
           }
           

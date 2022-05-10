@@ -2964,7 +2964,7 @@
        
          var buttons = `
             <div class="btnjob"><a href="${protocol}//${baseURL}/user/plugins/${packageId}/lodge_job.php" class="btn btn-lodge">Lodge a Job</a>
-            <a href="/subscribe" class="btn btn-freelancer">I am a Freelancer</a>
+            <a href="/subscribe" class="btn btn-freelancer">I am a Merchant</a>
              </div>`
 
          $('.home-banner').addClass('reverse-slider');

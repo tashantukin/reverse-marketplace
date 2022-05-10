@@ -33,10 +33,10 @@ $action = $_GET['action'];
                 <div class="row">
                     <div class="col-sm-8">
                         <h4>
-                            Seller onboarding fields
+                           Merchant onboarding fields
                         </h4>
                         <h5>
-                            View and add the field for seller to fill in.
+                            View and add the field for merchant to fill in.
                         </h5>
                     </div>
                     <div class="col-sm-4">

@@ -24,6 +24,7 @@
    var long;
    var accuracy;
    var stripePayId;
+   var quoted = 0;
    
     //const token = getCookie('webapitoken');
    function distanceBetweenTwoPlace(firstLat, firstLon, secondLat, secondLon, unit) {
@@ -2143,6 +2144,7 @@
         
          function quoteJob()
          {
+             quoted = 1;
             var settings = {
                 "url": packagePath + "/save_quote.php",
                 "method": "POST",
@@ -2150,9 +2152,10 @@
             }
             $.ajax(settings).done(function(response){
                //toastr.success('Your quote has been submitted');
+              
                 var allresponse = $.parseJSON(response)
-               console.log(allresponse);
-               urls = `${protocol}//${baseURL}/`;
+                console.log(allresponse);
+                urls = `${protocol}//${baseURL}/`;
 
                $('#paymentSuccessfulModal').modal('show');
                localStorage.removeItem('quote_details');
@@ -2440,18 +2443,27 @@
             }
     
             // Create a token or display an error the form is submitted.
-            var submitButton = document.getElementById('paynowPackageChargeQuote');
-            if (submitButton) {
-               submitButton.addEventListener('click',
+            var submitButtonCharge = document.getElementById('paynowPackageChargeQuote');
+            if (submitButtonCharge) {
+               submitButtonCharge.addEventListener('click',
                   function (event)
                   {
-                     event.preventDefault();
+                    
+                     console.log({quoted})
+                     event.stopPropagation();
+                     console.log("click");
+                    // event.preventDefault();
                      $("#paynowPackageChargeQuote").attr("disabled", "disabled");
 
-                     if ($('option:selected', $('#paymentScheme')).text() == 'Cash on Delivery'){
-                        console.log('cod');
+                     if ($('option:selected', $('#paymentScheme')).text() == 'Cash on Delivery') { 
+                        if (quoted == 0) {
+                            quoted = 1;
+                           console.log('cod');
                           var quote = quoteData.getInstance();
                            quote.quoteJob();
+                            // not working it's for bubbled events
+                        }
+                        
                      } else {
 
                         if ($('#stripe-pay-id').val() != null && $('#stripe-pay-id').val() != '') {
@@ -2488,9 +2500,6 @@
                         console.log('stripe')
                      }
                   
-
-                     
-    
                   });
             }
               
@@ -2584,20 +2593,20 @@
       
          })
 
-         $('#submit-bottom').on('click', function (event)
-         {
-            event.stopPropagation();
-            event.stopImmediatePropagation();
-            getQuoteData();
+         // $('#submit-bottom').on('click', function (event)
+         // {
+         //    event.stopPropagation();
+         //    event.stopImmediatePropagation();
+         //    getQuoteData();
 
-            if (chargeEnabled == 'True') {
-               window.location = packagePath + `/charge_quote.php?userId=${$('#user-id').val()}`
-            } else {
-               var quote = quoteData.getInstance();
-               quote.quoteJob();
-            }
+         //    if (chargeEnabled == 'True') {
+         //       window.location = packagePath + `/charge_quote.php?userId=${$('#user-id').val()}`
+         //    } else {
+         //       var quote = quoteData.getInstance();
+         //       quote.quoteJob();
+         //    }
          
-         })
+         // })
       }
 
        //quotation page
@@ -2695,7 +2704,7 @@
                      event.preventDefault();
                      $("#paynowPackage").attr("disabled", "disabled");
                      if ($('option:selected', $('#paymentScheme')).text() == 'Cash on Delivery') {
-                        console.log('cod');
+                        console.log('cod applicant quote');
                         chargeQuoteAcceptCod($('#quoted-id').val());
                         $("#paynowPackage").prop("disabled", true);
                      } else {
@@ -2931,6 +2940,7 @@
          jobs.getJobLodges()
          jobs.getUserJobList()
          jobs.getCompletedJobs()
+         jobs.getCancelledJobs()
          
       
          

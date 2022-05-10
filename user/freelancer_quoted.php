@@ -38,6 +38,12 @@ else {
 
 $fixed_amount = $jobDetails['Records'][0]['is_payment_fixed'] == 'True' ? number_format((float)$jobDetails['Records'][0]['payment_amount'],2)  : "";
  $hourly_amount = $jobDetails['Records'][0]['is_payment_hourly'] == 'True' ? number_format((float)$jobDetails['Records'][0]['payment_amount'],2) : "";
+
+
+ $style = "";
+if ($quotedDetails['Records'][0]['status'] != 'Quoted') {
+    $style =  "style='display:none'";
+}
 ?>
 
 <!DOCTYPE html
@@ -103,31 +109,32 @@ $fixed_amount = $jobDetails['Records'][0]['is_payment_fixed'] == 'True' ? number
                             <div class="quote-title-design"><?php echo $userDetails['Records'][0]['company_name'] ?></p>
                             </div>
                             <div class="navtab-filter btn-margin">
-                                 <div  class="wait-buyer-respond-txt mr-3">
-                                        <!-- You need to wait for the for the buyer to respond -->
-                                 </div>
-                                <button class="btn btn-quote-cancel" data-toggle="modal" data-target="#cancelModal">Cancel Quote</button>
+                                <div class="wait-buyer-respond-txt mr-3">
+                                    <!-- You need to wait for the for the buyer to respond -->
+                                </div>
+                                <button <?php echo $style ?> class="btn btn-quote-cancel " data-toggle="modal"
+                                    data-target="#cancelModal">Cancel Quote</button>
                             </div>
                         </div>
-                            <!-- <div class="navtab-filter btn-margin">
+                        <!-- <div class="navtab-filter btn-margin">
                                 <a href="/" class="btn btn-quote-cancel">Cancel</a>
                                 <button type="button" class="btn btn-quote-submit">Submit Quote</button>
                             </div> -->
-                        </div>
-                        <div class="quote-question-main">
-                            <div class="row">
-                                <div class="col-sm-8">
-                                    <div class="quote-question-section">
-                                        <div class="qq-total-sum">
-                                            <h4>1. Job Summary</h4>
-                                            <?php
+                    </div>
+                    <div class="quote-question-main">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <div class="quote-question-section">
+                                    <div class="qq-total-sum">
+                                        <h4>1. Job Summary</h4>
+                                        <?php
                                foreach(json_decode($quotedDetails['Records'][0]['job_summary'],true) as $task) {
                                     echo "<div class='qq-title saved'><span class='dash'></span><span class='title'>" . $task['title']. " . </span><div class='qq-option'><span>AUD <b>" . $task['price']. "</b></span></div></div>";
 
                                }
                             ?>
 
-                                            <!-- <div class="qq-title saved"><span class="dash"></span><span class="title">BAS Agent</span><div class="qq-option"><span>AUD <b>0.00</b></span><a href="javascript:void(0);" class="edit-link">Edit</a></div></div>
+                                        <!-- <div class="qq-title saved"><span class="dash"></span><span class="title">BAS Agent</span><div class="qq-option"><span>AUD <b>0.00</b></span><a href="javascript:void(0);" class="edit-link">Edit</a></div></div>
                                <div class="qq-title saved"><span class="dash"></span><span class="title">Tax</span><div class="qq-option"><span>AUD <b>0.00</b></span><a href="javascript:void(0);" class="edit-link">Edit</a></div></div>
                                <div class="qq-title saved"><span class="dash"></span><span class="title">Audit</span><div class="qq-option"><span>AUD <b>0.00</b></span><a href="javascript:void(0);" class="edit-link">Edit</a></div></div>
                                <div class="qq-title saved"><span class="dash"></span><span class="title">Book-keeping</span><div class="qq-option"><span>AUD <b>0.00</b></span><a href="javascript:void(0);" class="edit-link">Edit</a></div></div>
@@ -135,164 +142,168 @@ $fixed_amount = $jobDetails['Records'][0]['is_payment_fixed'] == 'True' ? number
                                <div class="qq-title saved"><span class="dash"></span><span class="title">Finance</span><div class="qq-option"><span>AUD <b>0.00</b></span><a href="javascript:void(0);" class="edit-link">Edit</a></div></div> -->
 
 
-                                            <!-- <div class="qq-title saved"><span class="dash"></span><span>Other Jobs 1</span>
+                                        <!-- <div class="qq-title saved"><span class="dash"></span><span>Other Jobs 1</span>
                                   <p>  File 1 | <a href="#">Download File</a></p>
                                   <div class="qq-option"><span>AUD <b>0.00</b></span><a href="javascript:void(0);" class="edit-link">Edit</a></div>
                                </div>
                                <div class="qq-title saved"><span class="dash"></span><span>Other Jobs 2</span><p>  File 2 | <a href="#">Download File</a></p>
                                    <div class="qq-option"><span>AUD <b>0.00</b></span><a href="javascript:void(0);" class="edit-link">Edit</a></div>
                                </div> -->
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="info-box">
-                                        <h4>Buyer Details</h4>
-                                        <p>Email: <?php echo $userDetails['Records'][0]['email'] ?></p>
-                                        <p>Name: <?php echo $userDetails['Records'][0]['company_name'] ?></p>
-                                        <p>Contact Number: <?php echo $userDetails['Records'][0]['contact_number'] ?>
-                                        </p>
                                     </div>
                                 </div>
                             </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="quote-question-section">
-                                        <div class="qq-title"><span class="dash"></span><span class="title">Total</span>
-                                            <div class="qq-option qq-total"><span class="">AUD
-                                                    <b><?php echo $quotedDetails['Records'][0]['total'] ?></b></span>
-                                            </div>
+                            <div class="col-sm-4">
+                                <div class="info-box">
+                                    <h4>Buyer Details</h4>
+                                    <p>Email: <?php echo $userDetails['Records'][0]['email'] ?></p>
+                                    <p>Name: <?php echo $userDetails['Records'][0]['company_name'] ?></p>
+                                    <p>Contact Number: <?php echo $userDetails['Records'][0]['contact_number'] ?>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="quote-question-section">
+                                    <div class="qq-title"><span class="dash"></span><span class="title">Total</span>
+                                        <div class="qq-option qq-total"><span class="">AUD
+                                                <b><?php echo $quotedDetails['Records'][0]['total'] ?></b></span>
                                         </div>
-                                        <div class="qq-title qq-discount saved"><span class="dash"></span><span
-                                                class="title">All at once - Discount</span>
-                                            <div class="qq-option"><span>AUD
-                                                    <b><?php echo $quotedDetails['Records'][0]['all_discount'] ?></b></span> </div>
+                                    </div>
+                                    <div class="qq-title qq-discount saved"><span class="dash"></span><span
+                                            class="title">All at once - Discount</span>
+                                        <div class="qq-option"><span>AUD
+                                                <b><?php echo $quotedDetails['Records'][0]['all_discount'] ?></b></span>
                                         </div>
-                                        <div class="qq-title"><span class="dash"></span><span class="title">All at once
-                                                - Total</span>
-                                            <div class="qq-option qq-subtotal"><span>AUD
-                                                    <b><?php echo $quotedDetails['Records'][0]['all_total'] ?></b></span>
-                                            </div>
+                                    </div>
+                                    <div class="qq-title"><span class="dash"></span><span class="title">All at once
+                                            - Total</span>
+                                        <div class="qq-option qq-subtotal"><span>AUD
+                                                <b><?php echo $quotedDetails['Records'][0]['all_total'] ?></b></span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="quote-question-section">
-                                        <div class="qq-title">Job to be completed by: <span class="danger">
-                                                <?php echo  $job_completion ?> </span></div>
-                                        <div class="qq-title saved"><span class="dash"></span><span
-                                                class="title">Availability</span>
-                                            <div class="qq-option">
-                                                <span><b><?php echo $quotedDetails['Records'][0]['availability_date'] ?></b></span>
-                                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="quote-question-section">
+                                    <div class="qq-title">Job to be completed by: <span class="danger">
+                                            <?php echo  $job_completion ?> </span></div>
+                                    <div class="qq-title saved"><span class="dash"></span><span
+                                            class="title">Availability</span>
+                                        <div class="qq-option">
+                                            <span><b><?php echo $quotedDetails['Records'][0]['availability_date'] ?></b></span>
                                         </div>
-                                        <div class="qq-title saved"><span class="dash"></span><span
-                                                class="title">Validity Date</span>
-                                            <div class="qq-option">
-                                                <span><b><?php echo $quotedDetails['Records'][0]['validity_date'] ?></b></span>
-                                            </div>
+                                    </div>
+                                    <div class="qq-title saved"><span class="dash"></span><span class="title">Validity
+                                            Date</span>
+                                        <div class="qq-option">
+                                            <span><b><?php echo $quotedDetails['Records'][0]['validity_date'] ?></b></span>
                                         </div>
-                                        <!-- <div class="qq-title"><span class="dash"></span><span class="title">Full Time</span></div>
+                                    </div>
+                                    <!-- <div class="qq-title"><span class="dash"></span><span class="title">Full Time</span></div>
                            <div class="qq-title"><span class="dash"></span><span class="title">Contract</span></div> -->
-                                       - <?php echo $job_type ?>
+                                    - <?php echo $job_type ?>
 
-                                        <div class="qq-title"><span class="dash"></span><span
-                                                class="title">Hourly</span><span>AUD
-                                                <?php echo $hourly_amount ?></span>
-                                        </div>
-                                        <div class="qq-title"><span class="dash"></span><span class="title">Fixed
-                                                Price</span><span>AUD
-                                                <?php echo $fixed_amount ?></span>
-                                        </div>
+                                    <div class="qq-title"><span class="dash"></span><span
+                                            class="title">Hourly</span><span>AUD
+                                            <?php echo $hourly_amount ?></span>
+                                    </div>
+                                    <div class="qq-title"><span class="dash"></span><span class="title">Fixed
+                                            Price</span><span>AUD
+                                            <?php echo $fixed_amount ?></span>
+                                    </div>
 
-                                        <div class="form-group">
-                                            <label for="comments">Comments to applicant:</label>
-                                            <div class="comment-desc">
-                                                <?php echo $jobDetails['Records'][0]['comments'] ?></div>
-                                        </div>
+                                    <div class="form-group">
+                                        <label for="comments">Comments to applicant:</label>
+                                        <div class="comment-desc">
+                                            <?php echo $jobDetails['Records'][0]['comments'] ?></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="quote-question-main">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="quote-question-section custom-fancyjb">
-                                        <h4>2. Your Payment</h4>
-                                        <div class="checkbox-row-flex">
-                                            <div class="checkbox-width ">
-                                                <div class="fancy-checkbox checkbox-sm">
-                                                    <input
-                                                        checked="<?php echo $quotedDetails['Records'][0]['deposit_required'] ?>"
-                                                        type="checkbox" name="deposit_required" id="deposit_required">
-                                                    <label for="deposit_required"><span>Deposit Required</span></label>
-                                                </div>
+                    </div>
+                    <div class="quote-question-main">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="quote-question-section custom-fancyjb">
+                                    <h4>2. Your Payment</h4>
+                                    <div class="checkbox-row-flex">
+                                        <div class="checkbox-width ">
+                                            <div class="fancy-checkbox checkbox-sm">
+                                                <input
+                                                    checked="<?php echo $quotedDetails['Records'][0]['deposit_required'] ?>"
+                                                    type="checkbox" name="deposit_required" id="deposit_required">
+                                                <label for="deposit_required"><span>Deposit Required</span></label>
                                             </div>
-                                            <div class="qq-option"><span>AUD
-                                                    <b><?php echo $quotedDetails['Records'][0]['deposit_amount'] ?></b></span></div>
                                         </div>
-
-                                        <div class="fancy-checkbox checkbox-sm">
-                                            <input checked="<?php echo $quotedDetails['Records'][0]['for_7_days'] ?>"
-                                                type="checkbox" name="7_days" id="7_days">
-                                            <label for="7_days"><span>For 7 days</span></label>
-                                        </div>
-
-                                        <div class="fancy-checkbox checkbox-sm">
-                                            <input checked="<?php echo $quotedDetails['Records'][0]['for_30_days'] ?>"
-                                                type="checkbox" name="30_days" id="30_days">
-                                            <label for="30_days"><span>For 30 days</span></label>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="payment_comments">Comments on payment terms:</label>
-                                            <textarea id="payment_comments" name="payment_comments" class="form-control"
-                                                rows="5"><?php echo $quotedDetails['Records'][0]['comments_on_terms'] ?></textarea>
+                                        <div class="qq-option"><span>AUD
+                                                <b><?php echo $quotedDetails['Records'][0]['deposit_amount'] ?></b></span>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="quote-question-section custom-fancyjb">
-                                        <label>Payment method:</label>
-                                        <div class="checkbox-row-flex">
-                                            <div class="checkbox-width ">
-                                                <div class="fancy-checkbox checkbox-sm">
-                                                    <input
-                                                        checked="<?php echo $quotedDetails['Records'][0]['payment_cod'] ?>"
-                                                        type="checkbox" name="COD" id="COD">
-                                                    <label for="COD"><span>COD</span></label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="checkbox-row-flex">
-                                            <div class="checkbox-width ">
-                                                <div class="fancy-checkbox checkbox-sm">
-                                                    <input
-                                                        checked="<?php echo $quotedDetails['Records'][0]['payment_credit_card'] ?>"
-                                                        type="checkbox" name="credit_card" id="credit_card">
-                                                    <label for="credit_card"><span>Credit Card</span></label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    
+
+                                    <div class="fancy-checkbox checkbox-sm">
+                                        <input checked="<?php echo $quotedDetails['Records'][0]['for_7_days'] ?>"
+                                            type="checkbox" name="7_days" id="7_days">
+                                        <label for="7_days"><span>For 7 days</span></label>
+                                    </div>
+
+                                    <div class="fancy-checkbox checkbox-sm">
+                                        <input checked="<?php echo $quotedDetails['Records'][0]['for_30_days'] ?>"
+                                            type="checkbox" name="30_days" id="30_days">
+                                        <label for="30_days"><span>For 30 days</span></label>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="payment_comments">Comments on payment terms:</label>
+                                        <textarea id="payment_comments" name="payment_comments" class="form-control"
+                                            rows="5"><?php echo $quotedDetails['Records'][0]['comments_on_terms'] ?></textarea>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="quote-question-section custom-fancyjb">
+                                    <label>Payment method:</label>
+                                    <div class="checkbox-row-flex">
+                                        <div class="checkbox-width ">
+                                            <div class="fancy-checkbox checkbox-sm">
+                                                <input
+                                                    checked="<?php echo $quotedDetails['Records'][0]['payment_cod'] ?>"
+                                                    type="checkbox" name="COD" id="COD">
+                                                <label for="COD"><span>COD</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="checkbox-row-flex">
+                                        <div class="checkbox-width ">
+                                            <div class="fancy-checkbox checkbox-sm">
+                                                <input
+                                                    checked="<?php echo $quotedDetails['Records'][0]['payment_credit_card'] ?>"
+                                                    type="checkbox" name="credit_card" id="credit_card">
+                                                <label for="credit_card"><span>Credit Card</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                        <div class="navtab-flex">
-                            <div  class="wait-buyer-respond-txt">
-                                        You need to wait for the for the buyer to respond
+                                </div>
                             </div>
-                           <div class="navtab-filter btn-margin">
-                            <button class="btn btn-quote-cancel" data-toggle="modal" data-target="#cancelModal">Cancel Quote</button>
+                        </div>
+                    </div>
+
+                    <div class="navtab-flex">
+                        <div class="wait-buyer-respond-txt">
+                            You need to wait for the for the buyer to respond
+                        </div>
+                        <div class="navtab-filter btn-margin">
+                            <button <?php echo $style ?> class="btn btn-quote-cancel" data-toggle="modal"
+                                data-target="#cancelModal">Cancel
+                                Quote</button>
                         </div>
 
                     </div>
@@ -306,26 +317,29 @@ $fixed_amount = $jobDetails['Records'][0]['is_payment_fixed'] == 'True' ? number
         <!--modal register-->
 
 
-     <div class="modal fade modal-align-center" id="cancelModal" role="dialog">
-      <div class="modal-dialog">
-         <!-- Modal content-->
-         <div class="modal-content">
-            <div class="modal-body">
-                <div class="modal-job-popup">
-                     <div class="modal-title">                     
-                        <h4>Are you sure you want to cancel this quote?</h4>
-                     
-                     </div>
-                     <div class="btn-hbox">
-                        <a class="btn btn-block btn-jobform-fill" id="cancel-quote" job-id="<?php echo $job_id ?>" user-id="<?php echo $user_id ?>" quote-id="<?php echo $quotedDetails['Records'][0]['Id'] ?>"  href="/">Yes, Cancel</a>
-                        <button type="button" class="btn btn-block btn-jobform-outline" data-dismiss="modal">No</button>
-                     </div>
-                </div>
+        <div class="modal fade modal-align-center" id="cancelModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="modal-job-popup">
+                            <div class="modal-title">
+                                <h4>Are you sure you want to cancel this quote?</h4>
 
+                            </div>
+                            <div class="btn-hbox">
+                                <a class="btn btn-block btn-jobform-fill" id="cancel-quote"
+                                    job-id="<?php echo $job_id ?>" user-id="<?php echo $user_id ?>"
+                                    quote-id="<?php echo $quotedDetails['Records'][0]['Id'] ?>" href="/">Yes, Cancel</a>
+                                <button type="button" class="btn btn-block btn-jobform-outline"
+                                    data-dismiss="modal">No</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
-         </div>
-      </div>
-   </div>
+        </div>
 
 
 

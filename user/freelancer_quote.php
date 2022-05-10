@@ -61,6 +61,11 @@ else {
 
  $fixed_amount = $jobDetails['Records'][0]['is_payment_fixed'] == 'True' ? number_format((float)$jobDetails['Records'][0]['payment_amount'],2) : "";
  $hourly_amount = $jobDetails['Records'][0]['is_payment_hourly'] == 'True' ? number_format((float)$jobDetails['Records'][0]['payment_amount'],2) : "";
+
+
+
+
+
 ?>
 
 
@@ -110,7 +115,8 @@ else {
                         <div class="navtab-flex">
                             <div class="quote-title-design" id="quoted-by">
                                 <?php echo $userDetails['Records'][0]['company_name'] ?></div>
-                            <div class="quote-warning-design">Details of this quote cannot be edited once submitted</div>
+                            <div class="quote-warning-design">Details of this quote cannot be edited once submitted
+                            </div>
                             <div class="navtab-filter btn-margin">
                                 <a href="/" class="btn btn-quote-cancel">Cancel</a>
                                 <button type="button" class="btn btn-quote-submit" id="submit-top">Submit Quote</button>
@@ -156,7 +162,7 @@ else {
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="info-box">
-                                         <h4>Buyer Details</h4>
+                                        <h4>Buyer Details</h4>
                                         <p>Email: <?php echo $userDetails['Records'][0]['email'] ?></p>
                                         <p>Name: <?php echo $userDetails['Records'][0]['company_name'] ?></p>
                                         <p>Contact Number: <?php echo $userDetails['Records'][0]['contact_number'] ?>
@@ -318,6 +324,37 @@ else {
     </div>
     </div>
     <!-- footer -->
+
+    <div class="modal fade payment-modal" id="paymentSuccessfulModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-body">
+
+                    <div id="paymentSuccessful" class="payment-con clearfix">
+                        <h3>Payment</h3>
+                        <div class="payment-middle-con ">
+                            <div class="common-text">
+                                <p><strong>Thank you for your purchase</strong></p>
+                                <p>We have successfully received your payment.<br>You can continue on with the process.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="payment-bottom-con clearfix">
+                            <div class="next-tab-area pull-right">
+                                <span class="seller-btn"> <a data-dismiss="" class="my-btn btn-red" id="close"
+                                        href="">Close</a> </span>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- footer -->
     <!--modal register-->

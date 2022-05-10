@@ -166,6 +166,12 @@ $action = $_GET['action'];
                 </div>
 
                 <div class="form-group">
+                    <label>Field Description*</label>
+                    <input :value="fieldDescription" type="text" class="form-control required" name="onbrd_field_text"
+                        id="onbrd_field_text">
+                </div>
+
+                <div class="form-group">
                     <label>Placeholder</label>
                     <input :value="placeholder" type="text" class="form-control" name="onbrd_field_placeholder"
                         id="onbrd_field_placeholder">

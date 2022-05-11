@@ -83,8 +83,8 @@
                     {
                         console.log({ response })
 
-                        vm.getAllTabs("modal");
-                        vm.getAllTabs("list");
+                        vm.getAllTabs("modal","");
+                        vm.getAllTabs("list", "new");
                     
 
                     }
@@ -93,7 +93,7 @@
                 })
             },
 
-            async getAllTabs(page)
+            async getAllTabs(page, cond)
             {
                
                 try {
@@ -152,6 +152,7 @@
                         //index list
                         $('[role="tablist"]').empty();
                         $('.tab-content .custom-listing-table-onbrd').empty();
+                        // $('.tab-content .custom-list-box-onbrd').empty();
                         
                         $.each(vm.allTabs, function (index, tab)
                         {
@@ -168,7 +169,9 @@
                             }
                        
                             $('[role="tablist"]').append(`<li role="presentation" class="${classHeader}"><a href="#${tab.Id}" data-id="${tab.Id}"  aria-controls= ${tab.Id} role="tab" data-toggle="tab"> ${tab.tab_name} </a></li>`);
-                        
+                            if (cond == "new") {
+                                //do nothing
+                            }else {
                             $(".tab-content").append(`
                              <div role="tabpanel" class="${classes}" id="${tab.Id}">
                                     <div class="panel-box tabular">
@@ -259,15 +262,20 @@
                             </div>`
 
                             $(`#${tab.Id} .custom_list_wrapper`).last().after(saveSettingsContainer);
+                            }
                         }
-
                             waitForElement('.custom-listing-table-onbrd', function ()
                             {
-                                vm.getAllFields(tab.Id);
+                               // if (cond == "new") {
+                                    //do nothing
+                               // }else {
+                                    vm.getAllFields(tab.Id);
+                                //}
+                                
                             
                             })
 
-                           
+                       // }
                         })
 
                         
@@ -299,7 +307,7 @@
                     {
                         console.log({ response })
                         if (table == 'tabs') {
-                            vm.getAllTabs("list");
+                            vm.getAllTabs("list","");
                         }
                        
                     }
@@ -449,7 +457,7 @@
                     success: function (response)
                     {
                         console.log({ response })
-                        vm.getAllTabs("list");
+                        vm.getAllTabs("list","");
                     }
                 
                 
@@ -483,8 +491,8 @@
                             e.parents("li").find(".row-action .delete-cat").removeClass("hide");
                             e.parents("li").find(".row-action .blue-btn").addClass("hide");
 
-                        vm.getAllTabs("modal"); 
-                        vm.getAllTabs("list");
+                        vm.getAllTabs("modal",""); 
+                        vm.getAllTabs("list","");
                     
 
                     }
@@ -551,7 +559,7 @@
       beforeMount()
       {
             
-        this.getAllTabs("list");
+        this.getAllTabs("list","");
             
       },
     
@@ -578,7 +586,7 @@ $(document).ready(function() {
 
     $('body').on('click', '#btn-add-new-steps', function ()
     {
-        tabs.getAllTabs('modal');
+        tabs.getAllTabs('modal',"");
     })
 
 

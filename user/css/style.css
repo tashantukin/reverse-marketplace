@@ -1,3 +1,4 @@
+@import "pagination.css";
 @media only screen and (min-width: 1500px) {
     .align-center-div {
         height: 100vh;
@@ -492,6 +493,7 @@
     display: none;
 }
 
+.pagination-center{display: flex;align-items: center;justify-content: center;padding-bottom: 30px;}
 
 .blue-tabdesign .paginationjs .paginationjs-pages li.active>a {
     background: var(--user-color);
@@ -1716,3 +1718,6 @@
 
 
 .quote-warning-design {font-size: 14px;font-weight: 400;color: #4D4D4D; margin-left: auto; margin-right: 10px;}
+
+
+

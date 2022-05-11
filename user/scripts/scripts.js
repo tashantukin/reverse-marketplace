@@ -782,7 +782,11 @@
                               </table>
          
                            </div>
+
+                           <div class="pagination-center"><nav class="text-center" id="pagination-container-all" aria-label="Page navigation"><div class="paginationjs"><div class="paginationjs-pages"><ul><li class="paginationjs-prev disabled"><a>«</a></li><li class="paginationjs-page J-paginationjs-page active" data-num="1"><a>1</a></li><li class="paginationjs-page J-paginationjs-page" data-num="2"><a href="">2</a></li><li class="paginationjs-page J-paginationjs-page" data-num="3"><a href="">3</a></li><li class="paginationjs-page J-paginationjs-page" data-num="4"><a href="">4</a></li><li class="paginationjs-page J-paginationjs-page" data-num="5"><a href="">5</a></li><li class="paginationjs-ellipsis disabled"><a>...</a></li><li class="paginationjs-page paginationjs-last J-paginationjs-page" data-num="14"><a href="">14</a></li><li class="paginationjs-next J-paginationjs-next" data-num="2" title="Next page"><a href="">»</a></li></ul></div></div></nav></div>
                            </div>
+
+                           
                            <div id="tab-interested" class="tab-pane fade">
                               <div class="scroll-table-container">
                                  <table class="table table-freelancer scroll-table">
@@ -801,6 +805,7 @@
                                     </tbody>
                                  </table>
                               </div>
+                              <div class="pagination-center"><nav class="text-center" id="pagination-container-interested" aria-label="Page navigation"><div class="paginationjs"><div class="paginationjs-pages"><ul><li class="paginationjs-prev disabled"><a>«</a></li>   <li class="paginationjs-next J-paginationjs-next" data-num="2" title="Next page"><a href="">»</a></li></ul></div></div></nav></div>
                            </div>
                            <div id="tab-quoted" class="tab-pane fade">
                               <div class="scroll-table-container">
@@ -820,6 +825,7 @@
                                  </tbody>
                               </table>
                            </div>
+                           <div class="pagination-center"><nav class="text-center" id="pagination-container-quoted" aria-label="Page navigation"><div class="paginationjs"><div class="paginationjs-pages"><ul><li class="paginationjs-prev disabled"><a>«</a></li>   <li class="paginationjs-next J-paginationjs-next" data-num="2" title="Next page"><a href="">»</a></li></ul></div></div></nav></div>
                            </div>
          
                            <div id="tab-accepted" class="tab-pane fade">
@@ -1510,12 +1516,15 @@
                   {
                      var location_list = JSON.parse(coords['in_person_work_coords'])
                      console.log({ location_list });
-                     
+                     var counter = 0;
                      if (distanceBetweenTwoPlace(lat, long, location_list[0], location_list[1], "K") <= 1000) {
                               console.log(coords['Id']);
                               
                               getJobDetail(coords['Id'],'#tab-all','freelancer_quote', coords['CreatedDateTime']);
-                           }
+                              counter++;
+                     }
+
+                   
 
                         // $.each(location_list, function (index, loc)
                         // {
@@ -1629,12 +1638,33 @@
                 //if existing user, verify the status
                 if (jobDetails.length != 0) {
 
+                  var perPage = 20;
+                  var page= 0
+                  var currentPageAll = 1
+                  var paginationcountAll= Math.ceil(jobs.TotalRecords / jobs.PageSize)
+                  var totalItemsAll= jobs.TotalRecords
+                  console.log({paginationcountAll})
+                  let options='';
+                  for (let i = 1; i <= paginationcountAll; i++) {
+                     // some code
+                   console.log({i})
+                 // $.each(paginationcountAll, function (index, option)
+                  
+                    options += `<li class="paginationjs-page J-paginationjs-page active" data-num="${i}"><a>${i}</a></li>`
+                  };
+                  waitForElement('#pagination-container-interested', function ()
+                  {
+                     
+                  $('#pagination-container-interested .paginationjs-prev').after(options)
+
+                  })
+                   
                   jobDetails.forEach(function (job, i)
                   {
 
                      getJobDetail(job['job_id'],'#tab-interested','freelancer_quote', job['CreatedDateTime']);
-                   
-                 
+                     
+                     
                   })
                   
                  

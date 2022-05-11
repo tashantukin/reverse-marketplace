@@ -202,7 +202,7 @@ $baseUrl = getMarketplaceBaseUrl();
 
                                             <td data-th="Job Type"
                                                 v-if="job.is_job_type_contract=='True' &&  job.is_job_type_fulltime=='True'">
-                                                <a href="freelancer.html">Contract,Full Time</a>
+                                                <a href="">Contract,Full Time</a>
                                             </td>
                                             <td data-th="Job Type" v-else-if="job.is_job_type_contract=='True'"><a
                                                     href="">Contract</a></td>
@@ -1112,7 +1112,7 @@ $(document).ready(function() {
         window.location = 'freelancer.html';
     });
     jQuery('body').on('click', '#approval-table tbody tr', function() {
-        window.location = 'freelancer.html';
+       // window.location = 'freelancer.html';
     });
 
 });

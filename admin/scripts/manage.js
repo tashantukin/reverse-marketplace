@@ -31,8 +31,8 @@
                 chargesListBuyer: [],
                 chargesListSeller: [],
                 perPage: 20,
-                paginationcountJobs: 0,
                 page: 0,
+                paginationcountJobs: 0,
                 currentPageJobs: 1,
                 totalItemsJobs: 0,
 

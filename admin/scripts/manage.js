@@ -31,10 +31,14 @@
                 chargesListBuyer: [],
                 chargesListSeller: [],
                 perPage: 20,
-                paginationcount: 0,
+                paginationcountJobs: 0,
                 page: 0,
-                currentPage: 1,
-                totalItems: 0,
+                currentPageJobs: 1,
+                totalItemsJobs: 0,
+
+                paginationcountApproval: 0,
+                currentPageApproval: 1,
+                totalItemsApproval: 0,
              
             }
         },
@@ -222,7 +226,7 @@
               //this.currentPage = pageNumber
               // this.isActive = !this.isActive;
               this.perPage = pageCount ? pageCount : this.perPage;
-              this.currentPage = value;
+              this.currentPageJobs = value;
               let apiUrl = `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_list?sort=-CreatedDateTime`;
               let actualUrl = apiUrl + `&pageNumber=${value}&pageSize=${this.perPage}`;
              
@@ -240,10 +244,46 @@
                 vm.allJobs = jobs.data.Records
                 
                 console.log( vm.allJobs);
-                vm.totalItems = jobs.data.TotalRecords
-                vm.paginationcount = Math.ceil(jobs.data.TotalRecords / jobs.data.PageSize)
+                vm.totalItemsJobs = jobs.data.TotalRecords
+                vm.paginationcountJobs = Math.ceil(jobs.data.TotalRecords / jobs.data.PageSize)
 
-                console.log(vm.paginationcount);
+                console.log(vm.paginationcountJobs);
+                // return templates
+
+            } catch (error) {
+                console.log("error", error);
+            }
+             
+
+            },
+
+            async fetchDataApprovals(value, pageCount)
+            {
+              //this.currentPage = pageNumber
+              // this.isActive = !this.isActive;
+              this.perPage = pageCount ? pageCount : this.perPage;
+              this.currentPageApproval = value;
+              let apiUrl = `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/freelancer_details?sort=-CreatedDateTime`;
+              let actualUrl = apiUrl + `&pageNumber=${value}&pageSize=${this.perPage}`;
+             
+              try {
+                vm = this;
+                const response = await axios({
+                    method: "GET",
+                    url: actualUrl,
+                    // data: data,
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                const users = await response
+                vm.allFreelancers = users.data.Records
+                
+                console.log( vm.allJobs);
+                vm.totalItemsApproval = users.data.TotalRecords
+                vm.paginationcountApproval = Math.ceil(users.data.TotalRecords / users.data.PageSize)
+
+                console.log(vm.paginationcountApproval);
                 // return templates
 
             } catch (error) {
@@ -263,7 +303,11 @@
       //  
         this.fetchDataJobs().catch(error => {
         console.error(error)
-        })
+        }),
+
+        this.fetchDataApprovals().catch(error => {
+            console.error(error)
+            })
       },
 
  

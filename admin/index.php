@@ -247,8 +247,8 @@ $baseUrl = getMarketplaceBaseUrl();
                     </div>
                     <div class="pagination-center pb-20"><nav class="text-center" id="pagination-container-job" aria-label="Page navigation"><div class="paginationjs"><div class="paginationjs-pages"><ul><li class="paginationjs-prev disabled"><a>«</a></li>
                     
-                    <li v-for="i in paginationcount" v-on:click="fetchDataJobs(i)" :value="i"
-                    :class="{active: i === currentPage}" ><a href="#">{{ i }}</a>
+                    <li v-for="i in paginationcountJobs" v-on:click="fetchDataJobs(i)" :value="i"
+                    :class="{active: i === currentPageJobs}" ><a href="#">{{ i }}</a>
                     </li>
                     <!-- <li class="paginationjs-page J-paginationjs-page active" data-num="1"><a>1</a></li><li class="paginationjs-page J-paginationjs-page" data-num="2"><a href="">2</a></li><li class="paginationjs-page J-paginationjs-page" data-num="3"><a href="">3</a></li><li class="paginationjs-page J-paginationjs-page" data-num="4"><a href="">4</a></li><li class="paginationjs-page J-paginationjs-page" data-num="5"><a href="">5</a></li> -->
                     
@@ -334,9 +334,14 @@ $baseUrl = getMarketplaceBaseUrl();
                             </div>
                         </div>
                     </div>
-                    <div class="pagination-center pb-20">
-                        <nav class="text-center" id="pagination-container-approvals" aria-label="Page navigation"></nav>
-                    </div>
+                    <div class="pagination-center pb-20"><nav class="text-center" id="pagination-container-approvals" aria-label="Page navigation"><div class="paginationjs"><div class="paginationjs-pages"><ul><li class="paginationjs-prev disabled"><a>«</a></li>
+                    
+                    <li v-for="i in paginationcountApproval" v-on:click="fetchDataApprovals(i)" :value="i"
+                    :class="{active: i === currentPageApproval}" ><a href="#">{{ i }}</a>
+                    </li>
+                    <!-- <li class="paginationjs-page J-paginationjs-page active" data-num="1"><a>1</a></li><li class="paginationjs-page J-paginationjs-page" data-num="2"><a href="">2</a></li><li class="paginationjs-page J-paginationjs-page" data-num="3"><a href="">3</a></li><li class="paginationjs-page J-paginationjs-page" data-num="4"><a href="">4</a></li><li class="paginationjs-page J-paginationjs-page" data-num="5"><a href="">5</a></li> -->
+                    
+                    <li class="paginationjs-next J-paginationjs-next" data-num="2" title="Next page"><a href="">»</a></li></ul></div></div></nav></div>
                 </div>
 
                 <div role="tabpanel" class="tab-pane" id="payments">

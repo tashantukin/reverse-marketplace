@@ -245,9 +245,14 @@ $baseUrl = getMarketplaceBaseUrl();
                             </div>
                         </div>
                     </div>
-                    <div class="pagination-center pb-20">
-                        <nav class="text-center" id="pagination-container-job" aria-label="Page navigation"></nav>
-                    </div>
+                    <div class="pagination-center pb-20"><nav class="text-center" id="pagination-container-job" aria-label="Page navigation"><div class="paginationjs"><div class="paginationjs-pages"><ul><li class="paginationjs-prev disabled"><a>«</a></li>
+                    
+                    <li v-for="i in paginationcount" v-on:click="fetchDataJobs(i)" :value="i"
+                    :class="{active: i === currentPage}" ><a href="#">{{ i }}</a>
+                    </li>
+                    <!-- <li class="paginationjs-page J-paginationjs-page active" data-num="1"><a>1</a></li><li class="paginationjs-page J-paginationjs-page" data-num="2"><a href="">2</a></li><li class="paginationjs-page J-paginationjs-page" data-num="3"><a href="">3</a></li><li class="paginationjs-page J-paginationjs-page" data-num="4"><a href="">4</a></li><li class="paginationjs-page J-paginationjs-page" data-num="5"><a href="">5</a></li> -->
+                    
+                    <li class="paginationjs-next J-paginationjs-next" data-num="2" title="Next page"><a href="">»</a></li></ul></div></div></nav></div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="approvals">
                     <div class="panel-box tabular">
@@ -1052,42 +1057,42 @@ $(document).ready(function() {
 
     });
 
-    $('#pagination-container-job').pagination({
-        dataSource: [1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-            4, 4, 4, 4,
-            4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-            4, 4, 4, 4,
-            4, 4, 4, 4, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-            4, 4, 4, 4,
-            4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-            4, 4, 4, 4,
-            4, 4, 4, 4, 4, 4
-        ],
-        //            totalNumber: 5,
-        //            pageSize: 10,
-        //            locator: 'items',
-        callback: function(data, pagination) {
-            $('#job-table').html($('#job-table').html());
-        }
-    });
-    $('#pagination-container-approvals').pagination({
-        dataSource: [1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-            4, 4, 4, 4,
-            4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-            4, 4, 4, 4,
-            4, 4, 4, 4, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-            4, 4, 4, 4,
-            4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-            4, 4, 4, 4,
-            4, 4, 4, 4, 4, 4
-        ],
-        //            totalNumber: 5,
-        //            pageSize: 10,
-        //            locator: 'items',
-        callback: function(data, pagination) {
-            $('#approvals-table').html($('#approvals-table').html());
-        }
-    });
+    // $('#pagination-container-job').pagination({
+    //     dataSource: [1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+    //         4, 4, 4, 4,
+    //         4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+    //         4, 4, 4, 4,
+    //         4, 4, 4, 4, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+    //         4, 4, 4, 4,
+    //         4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+    //         4, 4, 4, 4,
+    //         4, 4, 4, 4, 4, 4
+    //     ],
+    //     //            totalNumber: 5,
+    //     //            pageSize: 10,
+    //     //            locator: 'items',
+    //     callback: function(data, pagination) {
+    //         $('#job-table').html($('#job-table').html());
+    //     }
+    // });
+    // $('#pagination-container-approvals').pagination({
+    //     dataSource: [1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+    //         4, 4, 4, 4,
+    //         4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+    //         4, 4, 4, 4,
+    //         4, 4, 4, 4, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+    //         4, 4, 4, 4,
+    //         4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+    //         4, 4, 4, 4,
+    //         4, 4, 4, 4, 4, 4
+    //     ],
+    //     //            totalNumber: 5,
+    //     //            pageSize: 10,
+    //     //            locator: 'items',
+    //     callback: function(data, pagination) {
+    //         $('#approvals-table').html($('#approvals-table').html());
+    //     }
+    // });
 
     jQuery('body').on('click', '.icon.icon-toggle.arrow-up', function() {
         var current = $(this).closest(".custom-list-box-onbrd").parent('li');

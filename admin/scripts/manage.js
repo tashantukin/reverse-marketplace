@@ -29,8 +29,12 @@
                 uploadCustomFields: [],
                 emailFields: "",
                 chargesListBuyer: [],
-                chargesListSeller: []
-
+                chargesListSeller: [],
+                perPage: 20,
+                paginationcount: 0,
+                page: 0,
+                currentPage: 1,
+                totalItems: 0,
              
             }
         },
@@ -211,11 +215,56 @@
             
             },
 
+            //pagination
+
+            async fetchDataJobs(value, pageCount)
+            {
+              //this.currentPage = pageNumber
+              // this.isActive = !this.isActive;
+              this.perPage = pageCount ? pageCount : this.perPage;
+              this.currentPage = value;
+              let apiUrl = `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_list?sort=-CreatedDateTime`;
+              let actualUrl = apiUrl + `&pageNumber=${value}&pageSize=${this.perPage}`;
+             
+              try {
+                vm = this;
+                const response = await axios({
+                    method: "GET",
+                    url: actualUrl,
+                    // data: data,
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                const jobs = await response
+                vm.allJobs = jobs.data.Records
+                
+                console.log( vm.allJobs);
+                vm.totalItems = jobs.data.TotalRecords
+                vm.paginationcount = Math.ceil(jobs.data.TotalRecords / jobs.data.PageSize)
+
+                console.log(vm.paginationcount);
+                // return templates
+
+            } catch (error) {
+                console.log("error", error);
+            }
+             
+
+            },
+
         },
 
         computed: {
            
           },
+        mounted: function ()
+         {
+      //  
+        this.fetchDataJobs().catch(error => {
+        console.error(error)
+        })
+      },
 
  
         beforeMount() {

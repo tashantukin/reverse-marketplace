@@ -39,7 +39,7 @@ $action = $_GET['action'];
                             Lodging job field
                         </h4>
                         <h5>
-                            View and add the field for buyer to fill in during job lodging process
+                            View and add the field for consumer to fill in during job lodging process
                         </h5>
                     </div>
                     <div class="col-sm-4">

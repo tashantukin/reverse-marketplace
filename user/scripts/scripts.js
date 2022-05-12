@@ -2854,20 +2854,20 @@
       
          })
 
-         // $('#submit-bottom').on('click', function (event)
-         // {
-         //    event.stopPropagation();
-         //    event.stopImmediatePropagation();
-         //    getQuoteData();
+         $('#submit-bottom').on('click', function (event)
+         {
+            event.stopPropagation();
+            event.stopImmediatePropagation();
+            getQuoteData();
 
-         //    if (chargeEnabled == 'True') {
-         //       window.location = packagePath + `/charge_quote.php?userId=${$('#user-id').val()}`
-         //    } else {
-         //       var quote = quoteData.getInstance();
-         //       quote.quoteJob();
-         //    }
+            if (chargeEnabled == 'True') {
+               window.location = packagePath + `/charge_quote.php?userId=${$('#user-id').val()}`
+            } else {
+               var quote = quoteData.getInstance();
+               quote.quoteJob();
+            }
          
-         // })
+         })
       }
 
        //quotation page

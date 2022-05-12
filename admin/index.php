@@ -151,11 +151,11 @@ $baseUrl = getMarketplaceBaseUrl();
                                     <input class="left date-control form-control" placeholder="Search Name or Email"
                                         type="text" name="from-date" id="from-date">
                                 </div>
-                                <div class="left inline-controls">
+                                <!-- <div class="left inline-controls">
                                     <select class="form-control">
                                         <option>All</option>
                                     </select>
-                                </div>
+                                </div> -->
                                 <div class="left inline-controls">
                                     <button class="blue-btn" onclick="tableSearch(this)">Search</button>
                                 </div>

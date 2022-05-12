@@ -171,6 +171,7 @@
                     const charges = await response
                     
                     console.log({charges})
+                    
 
                 } catch (error) {
                     console.log("error", error);
@@ -532,8 +533,10 @@
                 
                 var charge_value = $(this).find('input[type=text]').val();
                 manageFields.saveCharges(charge_id, charge_type, charge_value,status);
+               
 
             })
+            toastr.success('Success! Fee settings was successfully saved.');
           
             
         });

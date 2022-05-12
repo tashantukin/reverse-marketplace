@@ -154,7 +154,7 @@ if ($quotedDetails['Records'][0]['status'] != 'Quoted') {
                             </div>
                             <div class="col-sm-4">
                                 <div class="info-box">
-                                    <h4>Buyer Details</h4>
+                                    <h4>Consumer Details</h4>
                                     <p>Email: <?php echo $userDetails['Records'][0]['email'] ?></p>
                                     <p>Name: <?php echo $userDetails['Records'][0]['company_name'] ?></p>
                                     <p>Contact Number: <?php echo $userDetails['Records'][0]['contact_number'] ?>

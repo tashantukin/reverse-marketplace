@@ -123,7 +123,7 @@ if ($quotedDetails['Records'][0]['status'] != 'Quoted') {
             <div class="freelancer-content-main">
                 <div class="container">
                     <div class="page-reverse-title">
-                        <h1>Applicant's Quote</h1>
+                        <h1>Merchant's Quote</h1>
                     </div>
                     <div class="quote-question-section">
                         <div class="navtab-flex">
@@ -135,7 +135,7 @@ if ($quotedDetails['Records'][0]['status'] != 'Quoted') {
 
 
                         <div class="quote-question-main rm-quote-bottom">
-                            <h4>1. Applicant Details</h4>
+                            <h4>1. Merchant Details</h4>
                             <div class="quotedtitle-flex">
                                 <div class="job-quotedtitle"><span class="qtitle">Quoted by</span><span
                                         class="qdesc"><?php echo $quotedDetails['Records'][0]['quote_by'] ?></span>
@@ -198,7 +198,7 @@ if ($quotedDetails['Records'][0]['status'] != 'Quoted') {
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="info-box">
-                                        <h4>Buyer Details</h4>
+                                        <h4>Consumer Details</h4>
                                         <p>Email: <?php echo $userDetails['Records'][0]['email'] ?></p>
                                         <p>Name: <?php echo $userDetails['Records'][0]['company_name'] ?></p>
                                         <p>Contact Number: <?php echo $userDetails['Records'][0]['contact_number'] ?>

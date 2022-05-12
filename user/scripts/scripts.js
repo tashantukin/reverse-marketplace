@@ -25,8 +25,94 @@
    var accuracy;
    var stripePayId;
    var quoted = 0;
+   var  job_list = [];
+   var sortedArray;
+   var range_list = [];
    
     //const token = getCookie('webapitoken');
+
+
+    function paginator(items, current_page, per_page_items, tab) {
+      let page = current_page || 1,
+      per_page = per_page_items || 20,
+      offset = (page - 1) * per_page,
+     
+  
+      paginatedItems = items.slice(offset).slice(0, per_page_items),
+      total_pages = Math.ceil(items.length / per_page);
+      
+      $(`#${tab} #pagination-container-all`).find('.J-paginationjs-page').remove();
+     
+      //$(`#${tab}`).find('.following-row').remove();
+  
+      var pre_page = page - 1 ? page - 1 : null
+      var next_page = (total_pages > page) ? page + 1 : null
+
+      // $.each(sortedArray, function (index, id)
+      // {
+         //job_list.push(id[2]);
+       //  getJobDetail(id[2],'#tab-all','freelancer_quote', id[3]);
+         //console.log();
+
+      // })
+      
+     // if (tab == "followers") {
+      $('#tab-all table tbody tr').remove();
+        $.each(paginatedItems, function (index, jobId)
+        {
+         var jobs = jobData.getInstance();
+         
+         jobs.getJobDetail(jobId[0],'#tab-all','freelancer_quote', jobId[1]);
+         //  getUserDetails(userId, function (user)
+         //  {
+         //    userRow = `<div class="following-row" data-guid="${user['ID']}">
+         //      <div class="following-image">
+         //      <img src="${user['Media'][0]['MediaUrl']}">
+         //      </div>
+         //      <div class="following-display-name">
+         //      ${user['DisplayName']}
+         //      </div>
+         //    </div>`
+            
+         //      $(`#${tab} .tab-pane .following-row-scroll`).prepend(userRow);
+         //    // i++;
+         //  })
+        })
+     // }
+  
+      
+     
+      var i = 1;
+      var pagination_list= "";
+      while (i <= total_pages) {
+        if (i == 1) {
+          pagination_list += `<li class=" paginationjs-page J-paginationjs-page active list" id="first-page" indx= ${i}><a href="javascript:void(0);">${i}</a></li>`; 
+        } else {
+          pagination_list += `<li indx= ${i}  class="paginationjs-page J-paginationjs-page list" data-num="5"><a href="javascript:void(0);">${i}</a></li>`
+         // `<li indx= ${i} class="list"><a href="javascript:void(0);">${i}</a></li>`
+
+
+        }
+        i++;
+      }
+      console.log(`pages ${pagination_list} `)
+      $(`#${tab} #pagination-container-all #next`).before(pagination_list);
+  
+      $(`#${tab} #pagination-container-all`).find('#previous').attr('indx', pre_page);
+      $(`#${tab} #pagination-container-all`).find('#next').attr('indx', next_page);
+  
+      return {
+          page: page,
+          per_page: per_page,
+          pre_page: page - 1 ? page - 1 : null,
+          next_page: (total_pages > page) ? page + 1 : null,
+          total: items.length,
+          total_pages: total_pages,
+          data: paginatedItems
+      };
+    }
+
+
    function distanceBetweenTwoPlace(firstLat, firstLon, secondLat, secondLon, unit) {
          var firstRadlat = Math.PI * firstLat/180
          var secondRadlat = Math.PI * secondLat/180
@@ -754,9 +840,7 @@
                                        <li class=""><a data-toggle="tab" href="#tab-completed" aria-expanded="false">Completed</a></li>
                                  </ul>
                               </div>
-                              <div class="navtab-filter">
-                                 <label>Results per Page:</label><select class="form-control"><option>10</option><option>20</option><option>30</option><option>40</option></select>
-                              </div>
+                            
                               </div>
                         <div class="tab-content">
                            <div id="tab-all" class="tab-pane fade active in">
@@ -783,7 +867,7 @@
          
                            </div>
 
-                           <div class="pagination-center"><nav class="text-center" id="pagination-container-all" aria-label="Page navigation"><div class="paginationjs"><div class="paginationjs-pages"><ul><li class="paginationjs-prev disabled"><a>«</a></li><li class="paginationjs-page J-paginationjs-page active" data-num="1"><a>1</a></li><li class="paginationjs-page J-paginationjs-page" data-num="2"><a href="">2</a></li><li class="paginationjs-page J-paginationjs-page" data-num="3"><a href="">3</a></li><li class="paginationjs-page J-paginationjs-page" data-num="4"><a href="">4</a></li><li class="paginationjs-page J-paginationjs-page" data-num="5"><a href="">5</a></li><li class="paginationjs-ellipsis disabled"><a>...</a></li><li class="paginationjs-page paginationjs-last J-paginationjs-page" data-num="14"><a href="">14</a></li><li class="paginationjs-next J-paginationjs-next" data-num="2" title="Next page"><a href="">»</a></li></ul></div></div></nav></div>
+                           <div class="pagination-center"><nav class="text-center" id="pagination-container-all" aria-label="Page navigation"><div class="paginationjs"><div class="paginationjs-pages"><ul><li class="paginationjs-prev disabled" id="previous"><a>«</a></li><li class="paginationjs-next J-paginationjs-next" data-num="2" title="Next page" id="next"><a href="">»</a></li></ul></div></div></nav></div>
                            </div>
 
                            
@@ -847,6 +931,7 @@
                                  </tbody>
                               </table>
                            </div>
+                           <div class="pagination-center"><nav class="text-center" id="pagination-container-accepted" aria-label="Page navigation"><div class="paginationjs"><div class="paginationjs-pages"><ul><li class="paginationjs-prev disabled"><a>«</a></li>   <li class="paginationjs-next J-paginationjs-next" data-num="2" title="Next page"><a href="">»</a></li></ul></div></div></nav></div>
                            </div>
 
 
@@ -869,6 +954,7 @@
                               </tbody>
                            </table>
                         </div>
+                        <div class="pagination-center"><nav class="text-center" id="pagination-container-rejected" aria-label="Page navigation"><div class="paginationjs"><div class="paginationjs-pages"><ul><li class="paginationjs-prev disabled"><a>«</a></li>   <li class="paginationjs-next J-paginationjs-next" data-num="2" title="Next page"><a href="">»</a></li></ul></div></div></nav></div>
                         </div>
 
 
@@ -891,6 +977,7 @@
                               </tbody>
                            </table>
                         </div>
+                        <div class="pagination-center"><nav class="text-center" id="pagination-container-cancelled" aria-label="Page navigation"><div class="paginationjs"><div class="paginationjs-pages"><ul><li class="paginationjs-prev disabled"><a>«</a></li>   <li class="paginationjs-next J-paginationjs-next" data-num="2" title="Next page"><a href="">»</a></li></ul></div></div></nav></div>
                         </div>
 
 
@@ -912,6 +999,7 @@
                                  </tbody>
                               </table>
                            </div>
+                           <div class="pagination-center"><nav class="text-center" id="pagination-container-completed" aria-label="Page navigation"><div class="paginationjs"><div class="paginationjs-pages"><ul><li class="paginationjs-prev disabled"><a>«</a></li>   <li class="paginationjs-next J-paginationjs-next" data-num="2" title="Next page"><a href="">»</a></li></ul></div></div></nav></div>
                            </div>
                          
                         </div>
@@ -1102,7 +1190,7 @@
            }
 
 
-          async function getJobDetail(jobId,el,page,date,isPaid,quoteId){
+           function getJobDetail(jobId,el,page,date,isPaid,quoteId){
               var data = [{ 'Name': 'Id', 'Operator': "in", "Value": jobId }]
               
               $.ajax({
@@ -1156,6 +1244,7 @@
 
 
                          case '#tab-all':
+                          
                             allJobs = `<tr data-id="${job['Id']}">
 
                               ${status}
@@ -1378,6 +1467,8 @@
                 const job = jobs.Records
                 //if existing user, verify the status
                  if (job) {
+
+                 
                   
 
                     job.forEach(function (quote, i)
@@ -1511,21 +1602,23 @@
                  { 
 
                     const locations = response;
-
+                  
+                 //var job_list = [];
                   $.each(locations.Records, function (index, coords)
                   {
                      var location_list = JSON.parse(coords['in_person_work_coords'])
                      console.log({ location_list });
-                     var counter = 0;
-                     if (distanceBetweenTwoPlace(lat, long, location_list[0], location_list[1], "K") <= 1000) {
+                     var distance = distanceBetweenTwoPlace(lat, long, location_list[0], location_list[1], "K")
+                     if (distance <= 1000) {
                               console.log(coords['Id']);
+                             
+                              range_list.push([parseFloat(location_list[0]), parseFloat(location_list[1]),coords['Id'],coords['CreatedDateTime'], distance ]);
                               
-                              getJobDetail(coords['Id'],'#tab-all','freelancer_quote', coords['CreatedDateTime']);
-                              counter++;
+                              
+                             
+                              
                      }
-
                    
-
                         // $.each(location_list, function (index, loc)
                         // {
 
@@ -1538,6 +1631,31 @@
                            
                         // })
                   })
+
+                  console.log({range_list});
+                 // var sortedArray = range_list.sort(sortLngLat);
+                 //var  job_list = [];
+                  sortedArray =  range_list.sort(function(a, b){
+                     return a[4] - b[4];
+                   });
+
+
+                  console.log({sortedArray});
+
+                  $.each(sortedArray, function (index, id)
+                  {
+                     job_list.push([id[2], id[3]]);
+                    // getJobDetail(id[2],'#tab-all','freelancer_quote', id[3]);
+                     //console.log();
+
+                  })
+
+                  //pagination
+               
+                  console.log({job_list});
+
+                  paginator(job_list, 1, 20, 'tab-all');
+
 
                  }
               })
@@ -1697,6 +1815,29 @@
                 //if existing user, verify the status
                 if (jobDetails.length != 0) {
 
+
+
+                  var perPage = 20;
+                  var page= 0
+                  var currentPageQuoted = 1
+                  var paginationcountPageQuoted= Math.ceil(jobs.TotalRecords / jobs.PageSize)
+                  var totalItemsPageQuoted= jobs.TotalRecords
+                  console.log({paginationcountPageQuoted})
+                  let options='';
+                  for (let i = 1; i <= paginationcountPageQuoted; i++) {
+                     // some code
+                   console.log({i})
+                 // $.each(paginationcountAll, function (index, option)
+                  
+                    options += `<li class="paginationjs-page J-paginationjs-page active" data-num="${i}"><a>${i}</a></li>`
+                  };
+                  waitForElement('#pagination-container-quoted', function ()
+                  {
+                     
+                  $('#pagination-container-quoted .paginationjs-prev').after(options)
+
+                  })
+
                   jobDetails.forEach(function (job, i)
                   {
 
@@ -1735,6 +1876,29 @@
                 //if existing user, verify the status
                 if (jobDetails.length != 0) {
 
+
+                  var perPage = 20;
+                  var page= 0
+                  var currentPageAccepted = 1
+                  var paginationcountPageAccepted= Math.ceil(jobs.TotalRecords / jobs.PageSize)
+                  var totalItemsPageAccepted= jobs.TotalRecords
+                  console.log({paginationcountPageAccepted})
+                  let options='';
+                  for (let i = 1; i <= paginationcountPageAccepted; i++) {
+                     // some code
+                   console.log({i})
+                 // $.each(paginationcountAll, function (index, option)
+                  
+                    options += `<li class="paginationjs-page J-paginationjs-page active" data-num="${i}"><a>${i}</a></li>`
+                  };
+                  waitForElement('#pagination-container-accepted', function ()
+                  {
+                     
+                  $('#pagination-container-accepted .paginationjs-prev').after(options)
+
+                  })
+
+
                   jobDetails.forEach(function (job, i)
                   {
 
@@ -1772,6 +1936,29 @@
                 const jobDetails = jobs.Records
                 //if existing user, verify the status
                 if (jobDetails.length != 0) {
+
+                  var perPage = 20;
+                  var page= 0
+                  var currentPageCompleted = 1
+                  var paginationcountPageCompleted= Math.ceil(jobs.TotalRecords / jobs.PageSize)
+                  var totalItemsPageCompleted= jobs.TotalRecords
+                  console.log({paginationcountPageCompleted})
+                  let options='';
+                  for (let i = 1; i <= paginationcountPageCompleted; i++) {
+                     // some code
+                   console.log({i})
+                 // $.each(paginationcountAll, function (index, option)
+                  
+                    options += `<li class="paginationjs-page J-paginationjs-page active" data-num="${i}"><a>${i}</a></li>`
+                  };
+                  waitForElement('#pagination-container-completed', function ()
+                  {
+                     
+                  $('#pagination-container-completed .paginationjs-prev').after(options)
+
+                  })
+
+
 
                   jobDetails.forEach(function (job, i)
                   {
@@ -1815,6 +2002,28 @@
                 //if existing user, verify the status
                 if (jobDetails.length != 0) {
 
+
+                  var perPage = 20;
+                  var page= 0
+                  var currentPageRejected = 1
+                  var paginationcountPageRejected= Math.ceil(jobs.TotalRecords / jobs.PageSize)
+                  var totalItemsPageRejected= jobs.TotalRecords
+                  console.log({paginationcountPageRejected})
+                  let options='';
+                  for (let i = 1; i <= paginationcountPageRejected; i++) {
+                     // some code
+                   console.log({i})
+                 // $.each(paginationcountAll, function (index, option)
+                  
+                    options += `<li class="paginationjs-page J-paginationjs-page active" data-num="${i}"><a>${i}</a></li>`
+                  };
+                  waitForElement('#pagination-container-rejected', function ()
+                  {
+                     
+                  $('#pagination-container-rejected .paginationjs-prev').after(options)
+
+                  })
+
                   jobDetails.forEach(function (job, i)
                   {
 
@@ -1855,6 +2064,26 @@
                 const jobDetails = jobs.Records
                 //if existing user, verify the status
                 if (jobDetails.length != 0) {
+                  var perPage = 20;
+                  var page= 0
+                  var currentPageCancelled = 1
+                  var paginationcountPageCancelled= Math.ceil(jobs.TotalRecords / jobs.PageSize)
+                  var totalItemsPageCancelled= jobs.TotalRecords
+                  console.log({paginationcountPageCancelled})
+                  let options='';
+                  for (let i = 1; i <= paginationcountPageCancelled; i++) {
+                     // some code
+                   console.log({i})
+                 // $.each(paginationcountAll, function (index, option)
+                  
+                    options += `<li class="paginationjs-page J-paginationjs-page active" data-num="${i}"><a>${i}</a></li>`
+                  };
+                  waitForElement('#pagination-container-cancelled', function ()
+                  {
+                     
+                  $('#pagination-container-cancelled .paginationjs-prev').after(options)
+
+                  })
 
                   jobDetails.forEach(function (job, i)
                   {
@@ -1872,8 +2101,6 @@
               }
             })
            }
-
-
 
 
 
@@ -3235,9 +3462,24 @@
 
       }
        
-     
+   
+      //pagination
+      $(document).on("click", "#pagination-container-all .list", function() {
+         console.log('paginate please');
 
-      //stripe
+        
+
+         paginator(job_list, parseInt($(this).attr('indx')), 20, 'tab-all');
+
+         waitForElement('#pagination-container-all', function ()
+         {
+
+         $(this).siblings().removeClass('active');
+         $(this).addClass('active');
+
+         })
+
+      })
    
      
    });

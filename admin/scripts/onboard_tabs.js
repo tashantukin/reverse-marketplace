@@ -59,6 +59,8 @@
             {
                 
                 vm = this;
+
+                if ($('#onbrd_tab_name').val()) {
                 var data = { 'tab_name': $('#onbrd_tab_name').val(), 'sort_order' : -1 }
                 console.log({data})
                 $.ajax({
@@ -82,6 +84,10 @@
                 
                 
                 })
+
+            }else {
+                $('#onbrd_tab_name').addClass('error-con')
+            }
             },
 
             async getAllTabs(page)
@@ -686,6 +692,7 @@
       {
             
         this.getAllTabs("list");
+        this.getAllTabs("modal");
         this.getAllSellerFields('GET')   
       },
     
@@ -794,9 +801,11 @@
      })
     
        $('body').on('click', '#save-edit-tab', function ()
-    {    
+    {    if ($('.name-area #onbrd_tab_name').val()){
            tabs.editTab($(this), $(this).attr('tab-id'));
-           
+    } else {
+        $('.name-area #onbrd_tab_name').addClass('error-con');
+    }
          
        }) 
     

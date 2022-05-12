@@ -65,8 +65,14 @@ $action = $_GET['action'];
                 <div class="top-search-menu">
 
                     <div class="row">
+                    <div class="col-md-1">
+                        <div class="tab-title-container">
+                            <h3>Steps:</h3>
+                        </div>
+                        
+                    </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-11">
 
                             <ul class="nav nav-tabs" role="tablist">
 

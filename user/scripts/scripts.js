@@ -2779,6 +2779,10 @@
       //freelancer quote
    
       if (urls.indexOf('/freelancer_quote.php') >= 0) {
+
+
+        
+
           
          const chargeData = new Vue({
             el: "#freelancer-quote",

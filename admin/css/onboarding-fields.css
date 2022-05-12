@@ -806,3 +806,7 @@
 .panel-box.tabular .nav.nav-tabs {
     margin-bottom: 16px;
 }
+
+
+.tab-title-container {display: flex;align-items: center; height: 100%; min-height: 50px;}
+.tab-title-container h3 {font-size: 16px;font-weight: 600;}

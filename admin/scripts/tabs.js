@@ -66,31 +66,34 @@
 
             async saveNewTab(action, e)
             {
-                
-                vm = this;
-                var data = { 'tab_name': $('#onbrd_tab_name').val(), 'sort_order': -1 }
-                console.log({ data })
-                $.ajax({
-                    method: action,
-                    url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_fields_tabs/rows`,
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
+                if ($('#onbrd_tab_name').val()){
+                    var data = { 'tab_name': $('#onbrd_tab_name').val(), 'sort_order': -1 }
+                    console.log({ data })
+                    $.ajax({
+                        method: action,
+                        url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_fields_tabs/rows`,
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        
+                        data: JSON.stringify(data),
+                        //  })
+                        success: function (response)
+                        {
+                            console.log({ response })
+    
+                            vm.getAllTabs("modal","");
+                            vm.getAllTabs("list", "new");
+                        
+    
+                        }
                     
-                    data: JSON.stringify(data),
-                    //  })
-                    success: function (response)
-                    {
-                        console.log({ response })
-
-                        vm.getAllTabs("modal","");
-                        vm.getAllTabs("list", "new");
                     
-
-                    }
-                
-                
-                })
+                    })
+                }else {
+                    $('#onbrd_tab_name').addClass('error-con')
+                }
+              
             },
 
             async getAllTabs(page, cond)
@@ -560,6 +563,7 @@
       {
             
         this.getAllTabs("list","");
+        this.getAllTabs("modal","");
             
       },
     
@@ -598,7 +602,12 @@ $(document).ready(function() {
     
     $('body').on('click', '#save-edit-tab', function ()
 {    
+    if ($('.name-area #onbrd_tab_name').val()){
         tabs.editTab($(this), $(this).attr('tab-id'));
+    }else {
+        $('.name-area #onbrd_tab_name').addClass('error-con');
+    }
+       
         
         
     })

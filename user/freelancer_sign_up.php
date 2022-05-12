@@ -496,6 +496,18 @@ foreach ($marketplaceInfo['CustomFields'] as $cf) {
                 jQuery(this).addClass('error-con');
             }
         });
+
+        //validate payment tab 
+        if (tab == '#payment-acceptance') {
+            console.log('payment tab')
+            
+        if( $('.paycashdelivery').text() != 'Verified') {
+            console.log('not verified')
+                validate = 1;
+        }
+
+
+        }
         console.log({
             validate
         });

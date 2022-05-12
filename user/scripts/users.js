@@ -646,7 +646,7 @@ sellerFields = new Vue({
                                                 Link Account
                                              </div>
                                           </div>
-                                          <div class="col-xs-12 col-sm-12 col-md-12 verified">
+                                          <div class="col-xs-12 col-sm-12 col-md-12">
                                              <div class="img-payment-warning">
                                              </div>
                                              <span class="stripe">
@@ -2045,9 +2045,10 @@ $(document).ready(function ()
         }
 
        // var users = usersData.getInstance();
+       if( $('.paycashdelivery').text() == 'Verified') {
         sellerFields.getAllFieldData($('.tab-content'));
      //  users.getCustomFieldValues();
-    
+       }
     })
 
     $('body').on('click', '#start .seller-btn .my-btn', function ()

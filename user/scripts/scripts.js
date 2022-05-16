@@ -1052,7 +1052,7 @@
                if (userDetails) {
 
                
-               if (userDetails['status'] == 'Approved' && userDetails['approved_confirmed'] == 1) { 
+               if ( (userDetails['status'] == 'Approved' && userDetails['approved_confirmed'] == 1 ) || (userDetails['status'] == 'Rejected') ) { 
                   //alter the user settings link to navigate to /subscribe.php
 
                   $('.login-nav li:nth-child(2) a').attr('href', '/subscribe');

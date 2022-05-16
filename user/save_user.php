@@ -7,6 +7,9 @@
     $content = json_decode($contentBodyJson, true);
     $packageId = $API->getPackageID();
 
+    $status =  $content['current-status'] == 'Rejected' ?  'Pending' : 'Approved';
+
+    
     $freelancer_details = [
         'user_id' => $content['user_id'],
         'custom_fields' => $content['custom_fields'],
@@ -36,7 +39,7 @@
         'user_id' => $content['userguid'],
         'custom_fields' => $content['custom_fields'],
         'servicing_area' => $content['servicing_area'],
-        'status' => 'Approved',
+        'status' => $status,
         'attached_files' => $content['files'],
 
         'stripe_key' => $content['stripe_key'],

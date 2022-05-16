@@ -502,14 +502,28 @@ sellerFields = new Vue({
                         $('.comment-desc').text(vm.adminComment);
 
                         $('.nav-tabs li:nth-child(1)').removeClass('active');
-                        $('.nav-tabs #verification-tab').addClass('active');
+                       // $('.nav-tabs #verification-tab').addClass('active');
                         $('#registration').removeClass('active in');
                         if (vm.registrationStatus == 'Approved' && vm.confirmed == null) {
+                            $('#verification-details .btn-jobform-outline').hide();
                             $('.nav-tabs #approval-tab').addClass('active');
                             $('.nav-tabs #verification').removeClass('active');
                             $('#approval').addClass('active in'); 
                         } else if (vm.registrationStatus == 'Approved' && vm.confirmed == '1') {
+                              $('#verification-details .btn-jobform-outline').hide();
+                             $('.nav-tabs li:nth-child(2)').addClass('active');
                             $('.tab-content div:nth-child(2)').addClass('active in');
+                            $("input[name='Company Name']").val(userDetails['company_name'])
+                            $("input[name='address']").val(userDetails['full_address']);
+                            $("input[name='Contact Number']").val(userDetails['contact_number']);
+                            $("input[name='location_details']").val(userDetails['servicing_area']);
+                             $('#postal_code').val( userDetails['postal_code']);
+                        }
+                        else if (vm.registrationStatus == 'Rejected') {
+
+                            console.log('rejected')
+                                $('.nav-tabs li:nth-child(2)').addClass('active');
+                             $('.tab-content div:nth-child(2)').addClass('active in');
                             $("input[name='Company Name']").val(userDetails['company_name'])
                             $("input[name='address']").val(userDetails['full_address']);
                             $("input[name='Contact Number']").val(userDetails['contact_number']);
@@ -1019,7 +1033,7 @@ sellerFields = new Vue({
             })
         },
 
-
+        //method used
         async  saveUser(cf,location,files)
         {
            // customfield_data, $('#location').val(), allFiles
@@ -1048,7 +1062,8 @@ sellerFields = new Vue({
                 'userguid' : $("#userGuid").val(),
                 
                 'action': vm.isEdit == 1 ? 'edit' : 'add',
-                'freelancer_id' : vm.freelancerId
+                'freelancer_id': vm.freelancerId,
+                'current-status' :  vm.registrationStatus
                 
             };
         
@@ -1083,7 +1098,7 @@ sellerFields = new Vue({
             });
         
         },
-
+        //save/ edit method used
         async getAllFieldData(el)
         {
              vm = this;
@@ -2001,6 +2016,11 @@ $(document).ready(function ()
             $('#password').addClass('error-con');
             $('#retype_password').addClass('error-con')
         } else {
+
+           
+
+
+           // jQuery(".jobform-tab li.active").next('li').children('a').trigger('click')
             var users = usersData.getInstance();
             users.createUser($('#email').val(), $('#password').val(), $('#retype_password').val());
         }

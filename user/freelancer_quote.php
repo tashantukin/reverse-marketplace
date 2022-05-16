@@ -1,4 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
@@ -410,7 +411,7 @@ else {
 
     jQuery(document).ready(function() {
 
-       
+
         jQuery("#mobi-search").click(function() {
             jQuery(".search-bar").slideToggle();
             if (jQuery("#mobile-menu").is(":visible")) {

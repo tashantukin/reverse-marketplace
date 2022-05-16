@@ -173,7 +173,7 @@ foreach ($marketplaceInfo['CustomFields'] as $cf) {
                                     </div>
 
                                     <div class="register-btn">
-                                        <button onclick="j_nextTab();" class="btn btn-register">Register</button>
+                                        <button class="btn btn-register">Register</button>
 
                                     </div>
                                 </div>
@@ -500,11 +500,11 @@ foreach ($marketplaceInfo['CustomFields'] as $cf) {
         //validate payment tab 
         if (tab == '#payment-acceptance') {
             console.log('payment tab')
-            
-        if( $('.paycashdelivery').text() != 'Verified') {
-            console.log('not verified')
+
+            if ($('.paycashdelivery').text() != 'Verified') {
+                console.log('not verified')
                 validate = 1;
-        }
+            }
 
 
         }

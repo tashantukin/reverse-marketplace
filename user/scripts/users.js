@@ -511,7 +511,7 @@ sellerFields = new Vue({
                             $('#approval').addClass('active in'); 
                         } else if (vm.registrationStatus == 'Approved' && vm.confirmed == '1') {
                               $('#verification-details .btn-jobform-outline').hide();
-                             $('.nav-tabs li:nth-child(2)').addClass('active');
+                            $('.nav-tabs li:nth-child(2)').addClass('active');
                             $('.tab-content div:nth-child(2)').addClass('active in');
                             $("input[name='Company Name']").val(userDetails['company_name'])
                             $("input[name='address']").val(userDetails['full_address']);
@@ -1078,6 +1078,7 @@ sellerFields = new Vue({
                 localStorage.removeItem("userID");
                 localStorage.removeItem("stripe-onboarded");
                 localStorage.removeItem("fieldValues");
+                $('#verification-details .btn-jobform-outline').hide();
 
                 
                 if (vm.isEdit == 1) {

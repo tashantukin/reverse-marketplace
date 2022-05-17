@@ -149,7 +149,7 @@ function cache_save_job()
         $('#register-account').attr('href', `${protocol}//${baseURL}/user/marketplace/customlogin?isSeller=false&returnUrl=${baseURL}`)
         $('#sign-up').attr('href', `${protocol}//${baseURL}/user/marketplace/customlogin?isSeller=false&returnUrl=${baseURL}`)
         
-        if ( !$('#userGuid') ) {
+        if ( !$('#userGuid').length ) {
              setTimeout(function(){ 
               window.location.href = "lodged.html";
         },1000);

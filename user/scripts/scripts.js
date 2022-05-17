@@ -733,8 +733,8 @@
             "quoted-by" : $('#quoted-by').text(),
             
             "job_completion": $("#completion").text(),
-            "availability_date": $("#availability").val(),
-            "validity_date": $("#validity").val(),
+            "availability_date": $('.avail-date span b').text(),
+            "validity_date":  $('.valid-date span b').text(),
             
             
             "deposit_required": $("#deposit_required")[0].checked,
@@ -2314,7 +2314,7 @@
                      </tbody>
                      </table>`
                              } else {
-                              jobTable = `<table class="table table-freelancer" id="quoted-table">
+                              jobTable = `<table class="table table-freelancer" id=${job['Id']}>
                               <thead>
                                  <tr>
                                     <th colspan="5">Job #${job['Id']}</th>
@@ -2336,9 +2336,9 @@
                                 
                     
                              })
-                             waitForElement('#quoted-table', function ()
+                             waitForElement(`#${job['Id']}`, function ()
                              {
-                             getQuotedJobDetails(job['Id'], '#quoted-table', 'applicant-quote')
+                             getQuotedJobDetails(job['Id'], `#${job['Id']}`, 'applicant-quote')
                              })
                             
                           })
@@ -2671,9 +2671,9 @@
 
          //waitForElement('#payment', function ()
          // {
-         var script = document.createElement('script');
-         script.onload = function ()
-         {
+        // var script = document.createElement('script');
+        // script.onload = function ()
+         //{
             // getMarketplaceCustomFields(function(result) {
             //   $.each(result, function(index, cf) {
             
@@ -2758,7 +2758,7 @@
                      }
                   
                   });
-            }
+           // }
               
             card.on('change', function (event)
             {
@@ -2767,9 +2767,9 @@
             //  }
             //});
          }
-         script.src = "https://js.stripe.com/v3/";
+        // script.src = "https://js.stripe.com/v3/";
 
-         document.head.appendChild(script); //or something of the likes
+        // document.head.appendChild(script); //or something of the likes
 
          // Create an instance of the card Element
          $('#card-element').css("width", "30em");

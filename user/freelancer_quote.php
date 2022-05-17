@@ -20,6 +20,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <script src="https://js.stripe.com/v3/"> </script>
 
     <?php 
 include 'jobs.php';
@@ -199,17 +200,17 @@ else {
                                                 id="completion"> <?php echo $job_completion ?> </span></div>
                                         <div class="qq-title"><span class="dash"></span><span
                                                 class="title">Availability</span>
-                                            <div class="qq-option"><input type="text" id="availability"
+                                            <div class="qq-option avail-date"><input type="text" id="availability"
                                                     class="datepicker" placeholder="DD/MM/YYYY" value=""><a
                                                     href="javascript:void(0);" class="save-linkdate">Save</a>|<a
                                                     href="javascript:void(0);" class="cancel-linkdate">Cancel</a></div>
                                         </div>
                                         <div class="qq-title"><span class="dash"></span><span class="title">Validity
                                                 Date</span>
-                                            <div class="qq-option"><input type="text" id="validity" class="datepicker"
-                                                    placeholder="DD/MM/YYYY" value=""><a href="javascript:void(0);"
-                                                    class="save-linkdate">Save</a>|<a href="javascript:void(0);"
-                                                    class="cancel-linkdate">Cancel</a></div>
+                                            <div class="qq-option valid-date"><input type="text" id="validity"
+                                                    class="datepicker" placeholder="DD/MM/YYYY" value=""><a
+                                                    href="javascript:void(0);" class="save-linkdate">Save</a>|<a
+                                                    href="javascript:void(0);" class="cancel-linkdate">Cancel</a></div>
                                         </div>
                                         <?php echo $job_type; ?>
                                         <div class="qq-title"><span class="dash"></span><span
@@ -411,6 +412,11 @@ else {
 
     jQuery(document).ready(function() {
 
+
+        jQuery('.datepicker').datetimepicker({
+            viewMode: 'days',
+            format: 'DD/MM/YYYY'
+        });
 
         jQuery("#mobi-search").click(function() {
             jQuery(".search-bar").slideToggle();

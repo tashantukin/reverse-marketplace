@@ -32,6 +32,7 @@
     <script src="js/maps/france_departments.js" charset="utf-8"></script>
     <script src="js/maps/world_countries.js" charset="utf-8"></script>
     <script src="js/maps/usa_states.js" charset="utf-8"></script>
+    <script src="https://js.stripe.com/v3/"> </script>
 
     <!-- custom js -->
     <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/custom.js"></script>

@@ -108,8 +108,8 @@
 
 }else {
 
-
-    $templates = array(array('Name' => 'Id', "Operator" => "in",'Value' => '0f3e3f4b-80f6-423f-b8c4-d3b16f3afae7'));
+  error_log('company name ' . $name);
+    $templates = array(array('Name' => 'Id', "Operator" => "in",'Value' => 'ac8c6077-2078-4045-ad71-4ea95c3ca4db'));
     $url =  $baseUrl . '/api/v2/plugins/'. $tempoId .'/custom-tables/Templates';
   
     $templateDetails =  callAPI("POST", $admin_token, $url, $templates);

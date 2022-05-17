@@ -147,10 +147,16 @@ function cache_save_job()
         jQuery('.jobform-tab .nav-tabs li').prevAll().addClass('check');
         jQuery('.jobform-tab .nav-tabs li').removeClass('active');
         $('#register-account').attr('href', `${protocol}//${baseURL}/user/marketplace/customlogin?isSeller=false&returnUrl=${baseURL}`)
-        $('#sign-up').attr('href',`${protocol}//${baseURL}/user/marketplace/customlogin?isSeller=false&returnUrl=${baseURL}`)
-        setTimeout(function(){ 
-         window.location.href = "lodged.html";
+        $('#sign-up').attr('href', `${protocol}//${baseURL}/user/marketplace/customlogin?isSeller=false&returnUrl=${baseURL}`)
+        
+        if ( !$('#userGuid') ) {
+             setTimeout(function(){ 
+              window.location.href = "lodged.html";
         },1000);
+        } else {
+            window.location.href = '/'
+        }
+       
        // document.cookie = "jobID: " + response.Id 
     });
 

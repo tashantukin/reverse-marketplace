@@ -2279,7 +2279,7 @@
             
                  $.ajax({
                     method: "POST",
-                    url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_list/`,
+                    url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_list?pageSize=1000`,
                     headers: {
                        "Content-Type": "application/json"
                     },

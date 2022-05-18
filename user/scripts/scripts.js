@@ -3140,6 +3140,21 @@
              jQuery('#acceptModal').modal('show');
          }      
       })
+
+
+
+
+      //reject modal
+
+       $('#reject').on('click', function (event)
+      {
+        /// if (buyerAcceptBidChargeEnabled == "True") {
+         //   lockView();
+
+       //  } else {
+             jQuery('#rejectModal').modal('show');
+        // }      
+      })
         
       //accept button
 

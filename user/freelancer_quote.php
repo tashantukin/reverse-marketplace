@@ -550,13 +550,15 @@ else {
         var totalSum = 0;
         $(".qq-total-sum .qq-title").each(function(index) {
             if ($(this).find('.qq-option').find('b').length > 0) {
-                totalSum += parseFloat($(this).find('.qq-option').find('b').text());
+                // parseInt($(this).find('.qq-option').find('b').text());
+                totalSum += parseInt($(this).find('.qq-option').find('b').text().replace(/,/g, ''), 10)
             }
         });
         $('.qq-total span b').text(number_format(totalSum, 2));
         var discount = 0;
         if ($('.qq-title.qq-discount').find('span').find('b').length > 0) {
-            discount = parseFloat($('.qq-title.qq-discount').find('span').find('b').text());
+            //parseInt($('.qq-title.qq-discount').find('span').find('b').text());
+            discount = parseInt($('.qq-title.qq-discount').find('span').find('b').text().replace(/,/g, ''), 10)
         }
         var subtotal = totalSum - discount;
         $('.qq-subtotal span b').text(number_format(subtotal, 2));

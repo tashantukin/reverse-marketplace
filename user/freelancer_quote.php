@@ -30,6 +30,7 @@ $user_id = $_GET['userId'];
 $jobDetails = getContent($job_id);
 $jobFiles = getFiles($job_id);
 $userDetails = getFreelancerDetails($user_id);
+$
 
 $job_completion = '';
 $job_type = '';
@@ -130,7 +131,7 @@ else {
                                         <div class="qq-total-sum">
                                             <h4>1. Job Summary</h4>
                                             <?php
-                               foreach(json_decode($jobDetails['Records'][0]['task_type_list'],true) as $task) {
+                                 foreach(json_decode($jobDetails['Records'][0]['task_type_list'],true) as $task) {
                                      echo "<div class='qq-title'><span class='dash'></span><span class='title'>$task</span><div class='qq-option'><input type='text' class='numbersOnlyD' placeholder='AUD 0.00' value=''><a href='javascript:void(0);' class='save-link'>Save</a>|<a href='javascript:void(0);' class='cancel-link'>Cancel</a></div></div>";
                                 
                                  }
@@ -146,15 +147,35 @@ else {
                                -->
 
                                             <?php
-                               try {
-                                foreach(json_decode($jobFiles['Records'][0]['all_tasks'],true) as $custom_task) {
+
+                                 try {
+                                foreach(json_decode($jobDetails['Records'][0]['document_list'], true) as $custom_task) {
                                     //   echo "<div class='qq-title'><span class='dash'></span><span class='title'>$task</span><div class='qq-option'><input type='text' class='numbersOnlyD' placeholder='AUD 0.00' value=''><a href='javascript:void(0);' class='save-link'>Save</a>|<a href='javascript:void(0);' class='cancel-link'>Cancel</a></div></div>";
-                                      echo "<div class='qq-title'><span class='dash'></span><span class='title'>" .  $custom_task['task_name'] . "  </span><p>".  substr($custom_task['files'][0]['name'], 36) . "  | <a href=" . $custom_task['files'][0]['URL'] . ">Download File</a></p> <div class='qq-option'><input type='text' class='numbersOnlyD' placeholder='AUD 0.00' value=''><a href='javascript:void(0);' class='save-link'>Save</a>|<a href='javascript:void(0);' class='cancel-link'>Cancel</a></div> </div>";
+                                     
+                                    // echo "<div class='other-main'>
+                                    // <p>-" .  $custom_task['name'] . "(<a class='hide-show-other-file' href='". substr($custom_task['name'], 36) . "'>View Files</a>)</p> </div>";
+                                   
+                            
+                                    echo "<div class='qq-title'><span class='dash'></span><span class='title'>" .  substr($custom_task['name'], 36) . "  </span><p>".  substr($custom_task['name'], 36) . "  | <a href=" . $custom_task['URL'] . ">Download File</a></p>  </div>";
                                    }
 
                                }catch(Exception $e) {
                               //  echo 'Message: ' .$e->getMessage();
-                              }
+                               }
+
+
+
+
+
+                            //    try {
+                            //     foreach(json_decode($jobFiles['Records'][0]['all_tasks'],true) as $custom_task) {
+                            //         //   echo "<div class='qq-title'><span class='dash'></span><span class='title'>$task</span><div class='qq-option'><input type='text' class='numbersOnlyD' placeholder='AUD 0.00' value=''><a href='javascript:void(0);' class='save-link'>Save</a>|<a href='javascript:void(0);' class='cancel-link'>Cancel</a></div></div>";
+                            //           echo "<div class='qq-title'><span class='dash'></span><span class='title'>" .  $custom_task['task_name'] . "  </span><p>".  substr($custom_task['files'][0]['name'], 36) . "  | <a href=" . $custom_task['files'][0]['URL'] . ">Download File</a></p> <div class='qq-option'><input type='text' class='numbersOnlyD' placeholder='AUD 0.00' value=''><a href='javascript:void(0);' class='save-link'>Save</a>|<a href='javascript:void(0);' class='cancel-link'>Cancel</a></div> </div>";
+                            //        }
+
+                            //    }catch(Exception $e) {
+                            //   //  echo 'Message: ' .$e->getMessage();
+                            //   }
                                
 
                                  ?>
@@ -164,9 +185,9 @@ else {
                                 <div class="col-sm-4">
                                     <div class="info-box">
                                         <h4>Buyer Details</h4>
-                                        <p>Email: <?php echo $userDetails['Records'][0]['email'] ?></p>
-                                        <p>Name: <?php echo $userDetails['Records'][0]['company_name'] ?></p>
-                                        <p>Contact Number: <?php echo $userDetails['Records'][0]['contact_number'] ?>
+                                        <p>Email: <?php echo $jobDetails['Records'][0]['buyer_email'] ?></p>
+                                        <p>Name: <?php echo $jobDetails['Records'][0]['buyer_name'] ?></p>
+                                        <p>Contact Number: <?php echo $jobDetails['Records'][0]['buyer_contact'] ?>
                                         </p>
                                     </div>
                                 </div>

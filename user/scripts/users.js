@@ -1043,27 +1043,28 @@ sellerFields = new Vue({
                 "user_id": localStorage.getItem('userID'),
                 "custom_fields": cf,
                 "servicing_area": location,
-                'location_coordinates':  JSON.stringify(Array($('#address-lat').val(), $('#address-long').val())),
+                'location_coordinates': JSON.stringify(Array($('#address-lat').val(), $('#address-long').val())),
                 'servicing_coords': JSON.stringify(Array($('#servicing-lat').val(), $('#servicing-long').val())),
                 "status": "Pending",
                 'files': JSON.stringify(taskFiles),
                 'stripe_key': localStorage.getItem('stripe_acc_id'),
-                'is_payment_onboarded' : localStorage.getItem('stripe_acc_id') == null ? false : true,
+                'is_payment_onboarded': localStorage.getItem('stripe_acc_id') == null ? false : true,
 
                  
                 'full_address': `${$('#address').val()} ${$('#city').val()}  ${$('#country').val()} ${$('#state').val()}`,
                 'email': $('#email').val(),
                 'company_name': $("input[name='Company Name']").val(), //$('#company-name').val(),
-                'country':  $('#country').val(),
-                'state' :$('#state').val(),
-                'city' : $('#city').val(),
+                'country': $('#country').val(),
+                'state': $('#state').val(),
+                'city': $('#city').val(),
                 'postal-code': $('#postal_code').val(),
                 'contact-number': $("input[name='Contact Number']").val(),
-                'userguid' : $("#userGuid").val(),
+                'userguid': $("#userGuid").val(),
                 
                 'action': vm.isEdit == 1 ? 'edit' : 'add',
                 'freelancer_id': vm.freelancerId,
-                'current-status' :  vm.registrationStatus
+                'current-status': vm.registrationStatus
+               
                 
             };
         

@@ -48,6 +48,25 @@ function getFreelancerDetails($userId) {
 }
 
 
+
+function getBuyerDetails($jobId) {
+
+    $baseUrl = getMarketplaceBaseUrl();
+    $admin_token = getAdminToken();
+    $customFieldPrefix = getCustomFieldPrefix();
+ 
+    //$url = $baseUrl . '/api/v2/plugins/'.$packageId.'/custom-tables/Templates/'.$pageID; 
+
+    $user = array(array('Name' => 'Id', "Operator" => "in",'Value' => $jobId));
+    $url =  $baseUrl . '/api/v2/plugins/'. getPackageID() .'/custom-tables/job_list';
+    $userDetails =  callAPI("POST", $admin_token['access_token'], $url, $user);
+    
+    return $userDetails;
+}
+
+
+
+
 function getQuoted($jobId, $freelancerId) {
     $baseUrl = getMarketplaceBaseUrl();
     $admin_token = getAdminToken();

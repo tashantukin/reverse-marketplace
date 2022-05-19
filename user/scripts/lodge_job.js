@@ -104,7 +104,8 @@ function cache_save_job()
         "time_frame_date": $("#job_completion_specify_date")[0].checked,
         "completion_date" : $("#completion_date").val(),
         "job_validity" : $("#job_validity").val(), 
-        'comments': $("#comments_to_the_applicant").val(), 
+        //'comments': $("#comments_to_the_applicant").val(), 
+         "comments" : $("textarea[name='Comments to the applicant']").val(),
         
         //contact info
 

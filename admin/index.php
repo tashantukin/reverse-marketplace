@@ -63,7 +63,7 @@ $baseUrl = getMarketplaceBaseUrl();
 <div class="page-content">
     <div class="gutter-wrapper">
 
-        <div class="panel-box border-none settings-div">
+        <div class="panel-box border-none settings-div panel-remove-margin panel-content-gutter-half">
             <div class="page-content-top">
                 <div class="row row-center-flex">
                     <div class="col-sm-5">
@@ -87,7 +87,7 @@ $baseUrl = getMarketplaceBaseUrl();
         </div>
 
 
-        <div class="panel-box border-none settings-div">
+        <div class="panel-box border-none settings-div panel-remove-margin panel-content-gutter-half">
             <div class="page-content-top">
                 <div class="row row-center-flex">
                     <div class="col-sm-7"><a href="job_fields.php?action=none">
@@ -109,6 +109,45 @@ $baseUrl = getMarketplaceBaseUrl();
                 </div>
             </div>
         </div>
+
+
+        <div class="panel-box border-none panel-remove-margin panel-content-gutter-half">
+            <div class="page-content-top">
+                <div class="row row-center-flex">
+                    <div class="col-sm-7">
+                        <h4>Email Template</h4>
+                        <h5>Customize the email and html for your notifications sent to your users</h5>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="auto pull-right text-right">
+                            <a href="email-template.php" class="btn cmn-btn-clear" id="" type="button">View Setting</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="panel-box border-none panel-content-gutter-half">
+            <div class="page-content-top">
+
+                <div class="row row-center-flex">
+                    <div class="col-sm-7">
+                        <h4>Payment Settings</h4>
+                        <h5>Setup your payment method and customise your fee</h5>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="auto pull-right text-right">
+                            <a href="payment-settings.php" class="btn cmn-btn-clear" id="" type="button">View
+                                Setting</a>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
 
 
         <div class="panel-box border-none mb-0">
@@ -139,10 +178,10 @@ $baseUrl = getMarketplaceBaseUrl();
                                         data-toggle="tab">Jobs</a></li>
                                 <li role="presentation"><a href="#approvals" aria-controls="approvals" role="tab"
                                         data-toggle="tab">Approvals</a></li>
-                                <li role="presentation"><a href="#payments" aria-controls="payments" role="tab"
+                                <!-- <li role="presentation"><a href="#payments" aria-controls="payments" role="tab"
                                         data-toggle="tab">Payments</a></li>
                                 <li role="presentation"><a href="#tab_email" aria-controls="tab_email" role="tab"
-                                        data-toggle="tab">Email</a></li>
+                                        data-toggle="tab">Email</a></li> -->
                             </ul>
                         </div>
                         <div class="topnav-right">
@@ -245,14 +284,25 @@ $baseUrl = getMarketplaceBaseUrl();
                             </div>
                         </div>
                     </div>
-                    <div class="pagination-center pb-20"><nav class="text-center" id="pagination-container-job" aria-label="Page navigation"><div class="paginationjs"><div class="paginationjs-pages"><ul><li class="paginationjs-prev disabled"><a>«</a></li>
-                    
-                    <li v-for="i in paginationcountJobs" v-on:click="fetchDataJobs(i)" :value="i"
-                    :class="{active: i === currentPageJobs}" ><a href="#">{{ i }}</a>
-                    </li>
-                    <!-- <li class="paginationjs-page J-paginationjs-page active" data-num="1"><a>1</a></li><li class="paginationjs-page J-paginationjs-page" data-num="2"><a href="">2</a></li><li class="paginationjs-page J-paginationjs-page" data-num="3"><a href="">3</a></li><li class="paginationjs-page J-paginationjs-page" data-num="4"><a href="">4</a></li><li class="paginationjs-page J-paginationjs-page" data-num="5"><a href="">5</a></li> -->
-                    
-                    <li class="paginationjs-next J-paginationjs-next" data-num="2" title="Next page"><a href="">»</a></li></ul></div></div></nav></div>
+                    <div class="pagination-center pb-20">
+                        <nav class="text-center" id="pagination-container-job" aria-label="Page navigation">
+                            <div class="paginationjs">
+                                <div class="paginationjs-pages">
+                                    <ul>
+                                        <li class="paginationjs-prev disabled"><a>«</a></li>
+
+                                        <li v-for="i in paginationcountJobs" v-on:click="fetchDataJobs(i)" :value="i"
+                                            :class="{active: i === currentPageJobs}"><a href="#">{{ i }}</a>
+                                        </li>
+                                        <!-- <li class="paginationjs-page J-paginationjs-page active" data-num="1"><a>1</a></li><li class="paginationjs-page J-paginationjs-page" data-num="2"><a href="">2</a></li><li class="paginationjs-page J-paginationjs-page" data-num="3"><a href="">3</a></li><li class="paginationjs-page J-paginationjs-page" data-num="4"><a href="">4</a></li><li class="paginationjs-page J-paginationjs-page" data-num="5"><a href="">5</a></li> -->
+
+                                        <li class="paginationjs-next J-paginationjs-next" data-num="2"
+                                            title="Next page"><a href="">»</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="approvals">
                     <div class="panel-box tabular">
@@ -334,14 +384,26 @@ $baseUrl = getMarketplaceBaseUrl();
                             </div>
                         </div>
                     </div>
-                    <div class="pagination-center pb-20"><nav class="text-center" id="pagination-container-approvals" aria-label="Page navigation"><div class="paginationjs"><div class="paginationjs-pages"><ul><li class="paginationjs-prev disabled"><a>«</a></li>
-                    
-                    <li v-for="i in paginationcountApproval" v-on:click="fetchDataApprovals(i)" :value="i"
-                    :class="{active: i === currentPageApproval}" ><a href="#">{{ i }}</a>
-                    </li>
-                    <!-- <li class="paginationjs-page J-paginationjs-page active" data-num="1"><a>1</a></li><li class="paginationjs-page J-paginationjs-page" data-num="2"><a href="">2</a></li><li class="paginationjs-page J-paginationjs-page" data-num="3"><a href="">3</a></li><li class="paginationjs-page J-paginationjs-page" data-num="4"><a href="">4</a></li><li class="paginationjs-page J-paginationjs-page" data-num="5"><a href="">5</a></li> -->
-                    
-                    <li class="paginationjs-next J-paginationjs-next" data-num="2" title="Next page"><a href="">»</a></li></ul></div></div></nav></div>
+                    <div class="pagination-center pb-20">
+                        <nav class="text-center" id="pagination-container-approvals" aria-label="Page navigation">
+                            <div class="paginationjs">
+                                <div class="paginationjs-pages">
+                                    <ul>
+                                        <li class="paginationjs-prev disabled"><a>«</a></li>
+
+                                        <li v-for="i in paginationcountApproval" v-on:click="fetchDataApprovals(i)"
+                                            :value="i" :class="{active: i === currentPageApproval}"><a
+                                                href="#">{{ i }}</a>
+                                        </li>
+                                        <!-- <li class="paginationjs-page J-paginationjs-page active" data-num="1"><a>1</a></li><li class="paginationjs-page J-paginationjs-page" data-num="2"><a href="">2</a></li><li class="paginationjs-page J-paginationjs-page" data-num="3"><a href="">3</a></li><li class="paginationjs-page J-paginationjs-page" data-num="4"><a href="">4</a></li><li class="paginationjs-page J-paginationjs-page" data-num="5"><a href="">5</a></li> -->
+
+                                        <li class="paginationjs-next J-paginationjs-next" data-num="2"
+                                            title="Next page"><a href="">»</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
                 </div>
 
                 <div role="tabpanel" class="tab-pane" id="payments">
@@ -385,68 +447,7 @@ $baseUrl = getMarketplaceBaseUrl();
                                                     <div class="animation-svg"><a href="stripe.php"></a></div>
                                                 </td>
                                             </tr>
-                                            <!-- <tr>
-                                                <td>
-                                                    <div class="payment-paypal"></div>
-                                                </td>
-                                                <td>
-                                                    <div class="onoffswitch">
-                                                        <input type="checkbox" name="onoffswitch"
-                                                            class="onoffswitch-checkbox" id="myonoffswitch2p"
-                                                            checked="">
-                                                        <label class="onoffswitch-label" for="myonoffswitch2p"> <span
-                                                                class="onoffswitch-inner"></span> <span
-                                                                class="onoffswitch-switch"></span> </label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="payment-status-color2"></div>
-                                                    <div class="payment-status">Active</div>
-                                                </td>
-                                                <td><a href="/adminportal/pay_paypal.html"><span
-                                                            class="btn-payment-link">Link Account</span></a></td>
-                                            </tr> -->
-                                            <!-- <tr>
-                                                <td>
-                                                    <div class="payment-omise"></div>
-                                                </td>
-                                                <td>
-                                                    <div class="onoffswitch">
-                                                        <input type="checkbox" name="onoffswitch"
-                                                            class="onoffswitch-checkbox" id="myonoffswitch2" checked="">
-                                                        <label class="onoffswitch-label" for="myonoffswitch2"> <span
-                                                                class="onoffswitch-inner"></span> <span
-                                                                class="onoffswitch-switch"></span> </label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="payment-status-color1"></div>
-                                                    <div class="payment-status not-added">Not Added</div>
-                                                </td>
-                                                <td><a href="/adminportal/pay_omise.html"><span
-                                                            class="btn-payment-link">Link Account</span></a></td>
-                                            </tr> -->
-                                            <!-- <tr>
-                                                <td>
-                                                    <div class="payment-stripe"></div>
-                                                    <div><b>Holding Funds</b></div>
-                                                </td>
-                                                <td>
-                                                    <div class="onoffswitch">
-                                                        <input type="checkbox" name="onoffswitch"
-                                                            class="onoffswitch-checkbox" id="myonoffswitchshf">
-                                                        <label class="onoffswitch-label" for="myonoffswitchshf"> <span
-                                                                class="onoffswitch-inner"></span> <span
-                                                                class="onoffswitch-switch"></span> </label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="payment-status-color1"></div>
-                                                    <div class="payment-status not-added">Not Added</div>
-                                                </td>
-                                                <td><a href="/adminportal/stripe-holding-funds.html"><span
-                                                            class="btn-payment-link">Settings</span></a></td>
-                                            </tr> -->
+
                                             <tr>
                                                 <td>
                                                     <div><b>Cash on delivery*</b></div>
@@ -473,46 +474,7 @@ $baseUrl = getMarketplaceBaseUrl();
                                                 </td>
                                             </tr>
 
-                                            <!-- <tr>
-                                                <td>
-                                                    <div class="offline-payment-img"><a
-                                                            href="/adminportal/payment_custom.html"><img
-                                                                src="images/paymill.jpg"></a></div>
-                                                </td>
-                                                <td>
-                                                    <div class="onoffswitch">
-                                                        <input type="checkbox" name="onoffswitch"
-                                                            class="onoffswitch-checkbox" id="myonoffswitch3" checked="">
-                                                        <label class="onoffswitch-label" for="myonoffswitch3"> <span
-                                                                class="onoffswitch-inner"></span> <span
-                                                                class="onoffswitch-switch"></span> </label>
-                                                    </div>
-                                                </td> -->
-                                            <!-- <td>
-                                                    <div class="payment-status-color2"></div>
-                                                    <div class="payment-status">Active</div>
-                                                </td>
-                                                <td><a href="/adminportal/payment_custom.html"><span
-                                                            class="btn-payment-link">Settings</span></a><a
-                                                        href="javascript:void(0);"
-                                                        onclick="DeleteCustomMethod(this)"><img
-                                                            src="images/delete.svg"></a></td> -->
-                                            <!-- </tr> -->
-                                            <!-- Last TR afer all data to add new custom payment method-->
-                                            <!-- <tr>
-                                                <td colspan="4">
-                                                    <div class="add-custom-method-sec">
-                                                        <a href="/adminportal/payment_custom.html"><img
-                                                                src="images/plus-add-sign.svg"> Add a custom payment
-                                                            method</a>
-                                                        <div id="toolTip" class="payment-tooltip hide">
-                                                            <p>Select the preferred payment method for your marketplace
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr> -->
-                                            <!-- End last TR after all custom data-->
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -1112,7 +1074,7 @@ $(document).ready(function() {
         window.location = 'freelancer.html';
     });
     jQuery('body').on('click', '#approval-table tbody tr', function() {
-       // window.location = 'freelancer.html';
+        // window.location = 'freelancer.html';
     });
 
 });

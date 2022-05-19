@@ -94,7 +94,7 @@
     $admin_token = $API->AdminToken();
 
     $templates = array(array('Name' => 'status', "Operator" => "equal",'Value' => 'Approved'));
-    $url =  $baseUrl . '/api/v2/plugins/'. $packageId .'/custom-tables/freelancer_details';
+    $url =  $baseUrl . '/api/v2/plugins/'. $packageId .'/custom-tables/freelancer_details?pageSize=1000';
     $merchantDetails =  callAPI("POST", $admin_token, $url, $templates);
 
    // error_log(json_encode($quoteDetails));

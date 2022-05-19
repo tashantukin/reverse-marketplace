@@ -1401,7 +1401,7 @@
                                viewButtonTd = `<td class="text-right"><a href="${protocol}//${baseURL}/user/plugins/${packageId}/${page}.php?jobId=${job['Id']}&userId=${userId}" class="btn btn-jobform-outline">View</a></td>`;
                             }
                             allJobs = `<tr data-id="${job['Id']}" user-id="${userId}"> </td>
-                              <td> <a href="${protocol}//${baseURL}/user/plugins/${packageId}/${page}.php?jobId=${job['Id']}&userId=${userId}">${job['job_validity']}</a></td>
+                              <td> <a href="#">${job['job_validity']}</a></td>
                               <td>${job['buyer_email']}</td>
                            
                               <td>${job['buyer_contact']}</td>

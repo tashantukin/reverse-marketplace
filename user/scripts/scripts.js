@@ -28,20 +28,21 @@
    var  job_list = [];
    var sortedArray;
    var range_list = [];
+   var totalFilteredJobs;
    
     //const token = getCookie('webapitoken');
 
 
     function paginator(items, current_page, per_page_items, tab) {
       let page = current_page || 1,
-      per_page = per_page_items || 20,
+      per_page = per_page_items || 10,
       offset = (page - 1) * per_page,
      
   
       paginatedItems = items.slice(offset).slice(0, per_page_items),
       total_pages = Math.ceil(items.length / per_page);
       
-      $(`#${tab} #pagination-container-all`).find('.J-paginationjs-page').remove();
+     //$(`#${tab} #pagination-container-all`).find('.J-paginationjs-page').remove();
      
       //$(`#${tab}`).find('.following-row').remove();
   
@@ -50,7 +51,7 @@
 
       // $.each(sortedArray, function (index, id)
       // {
-         //job_list.push(id[2]);
+         //job_list.push(id[2]);s
        //  getJobDetail(id[2],'#tab-all','freelancer_quote', id[3]);
          //console.log();
 
@@ -63,43 +64,30 @@
          var jobs = jobData.getInstance();
          
          jobs.getJobDetail(jobId[0],'#tab-all','freelancer_quote', jobId[1]);
-         //  getUserDetails(userId, function (user)
-         //  {
-         //    userRow = `<div class="following-row" data-guid="${user['ID']}">
-         //      <div class="following-image">
-         //      <img src="${user['Media'][0]['MediaUrl']}">
-         //      </div>
-         //      <div class="following-display-name">
-         //      ${user['DisplayName']}
-         //      </div>
-         //    </div>`
-            
-         //      $(`#${tab} .tab-pane .following-row-scroll`).prepend(userRow);
-         //    // i++;
-         //  })
+        
         })
      // }
-  
-      
      
-      var i = 1;
-      var pagination_list= "";
-      while (i <= total_pages) {
-        if (i == 1) {
-          pagination_list += `<li class=" paginationjs-page J-paginationjs-page active list" id="first-page" indx= ${i}><a href="javascript:void(0);">${i}</a></li>`; 
-        } else {
-          pagination_list += `<li indx= ${i}  class="paginationjs-page J-paginationjs-page list" data-num="5"><a href="javascript:void(0);">${i}</a></li>`
-         // `<li indx= ${i} class="list"><a href="javascript:void(0);">${i}</a></li>`
+
+     
+      // var i = 1;
+      // var pagination_list= "";
+      // while (i <= total_pages) {
+      //   if (i == 1) {
+      //     pagination_list += `<li class=" paginationjs-page J-paginationjs-page active list" id="first-page" indx= ${i}><a href="javascript:void(0);">${i}</a></li>`; 
+      //   } else {
+      //     pagination_list += `<li indx= ${i}  class="paginationjs-page J-paginationjs-page list" data-num="5"><a href="javascript:void(0);">${i}</a></li>`
+      //    // `<li indx= ${i} class="list"><a href="javascript:void(0);">${i}</a></li>`
 
 
-        }
-        i++;
-      }
-      console.log(`pages ${pagination_list} `)
-      $(`#${tab} #pagination-container-all #next`).before(pagination_list);
+      //   }
+      //   i++;
+      // }
+      // console.log(`pages ${pagination_list} `)
+      // $(`#${tab} #pagination-container-all #next`).before(pagination_list);
   
-      $(`#${tab} #pagination-container-all`).find('#previous').attr('indx', pre_page);
-      $(`#${tab} #pagination-container-all`).find('#next').attr('indx', next_page);
+      // $(`#${tab} #pagination-container-all`).find('#previous').attr('indx', pre_page);
+      // $(`#${tab} #pagination-container-all`).find('#next').attr('indx', next_page);
   
       return {
           page: page,
@@ -844,6 +832,9 @@
                               </div>
                         <div class="tab-content">
                            <div id="tab-all" class="tab-pane fade active in">
+                           <div class="result-found">
+                                 <h5>Results found: <span class="text-theme" id="count-all"></span></h5>
+                           </div>
                            <div class="scroll-table-container">
                               <table class="table table-freelancer scroll-table">
                                  <thead>
@@ -867,8 +858,14 @@
                               </table>
          
                            </div>
-
+                           <div class="pagination-flex">
                            <div class="pagination-center"><nav class="text-center" id="pagination-container-all" aria-label="Page navigation"><div class="paginationjs"><div class="paginationjs-pages"><ul><li class="paginationjs-prev disabled" id="previous"><a>«</a></li><li class="paginationjs-next J-paginationjs-next" data-num="2" title="Next page" id="next"><a href="">»</a></li></ul></div></div></nav></div>
+                           
+                           <div class="navtab-filter">
+                            <label>Results per Page:</label><select class="form-control" id="page-all"><option value=10>10</option><option value=20>20</option><option value=30>30</option><option value=40>40</option></select>
+                            </div>
+                         </div>
+                           
                            </div>
 
                            
@@ -964,6 +961,9 @@
 
 
                          <div id="tab-cancelled" class="tab-pane fade active in">
+                         <div class="result-found">
+                        <h5>Results found: <span class="text-theme">200</span></h5>
+                         </div>
                            <div class="scroll-table-container">
                               <table class="table table-freelancer scroll-table">
                               <thead>
@@ -982,7 +982,15 @@
                               </tbody>
                            </table>
                         </div>
+                        <div class="pagination-flex">
                         <div class="pagination-center"><nav class="text-center" id="pagination-container-cancelled" aria-label="Page navigation"><div class="paginationjs"><div class="paginationjs-pages"><ul><li class="paginationjs-prev disabled"><a>«</a></li>   <li class="paginationjs-next J-paginationjs-next" data-num="2" title="Next page"><a href="">»</a></li></ul></div></div></nav></div>
+                        <div class="navtab-filter">
+                            <label>Results per Page:</label><select class="form-control"><option>10</option><option>20</option><option>30</option><option>40</option></select>
+                         </div>
+                         </div>
+
+
+
                         </div>
 
 
@@ -1126,478 +1134,623 @@
 
   
    var jobData = (function () {
-       var instance;
+      var instance;
+     
+
        
         function init()
         {
-           
-           async function getChargeDetails(charge_name)
-           {
-              var data = [{ 'Name': 'charge_name', 'Operator': "in", "Value": charge_name }]
-              
-              $.ajax({
-                 method: "POST",
-                 url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/charges_configuration/`,
-                 headers: {
-                    "Content-Type": "application/json"
-                 },
+
+           //pagination special methods
+
+         function pageNavigate(p, NumPages, tab)
+         {
+               vm = this;
+         // els1["p"].className = els2["p"].className = els1["p"].value = els2["p"].value = "";
+         if (p < 1) p = 1;
+         else if (p > NumPages) p = NumPages;
+         //els1["p1"].disabled = els2["p1"].disabled = els1["pprev"].disabled = els2["pprev"].disabled = (p === 1);
+         //els1["pnext"].disabled = els2["pnext"].disabled = els1["plast"].disabled = els2["plast"].disabled = (p ===
+         ///    NumPages);
+         // els1["pcurr"].value = els2["pcurr"].value = p;
+         // if the server is handling this, insert NON-logarithmic page links here (can be just first, current, and last page).
+         //plinks1 = document.getElementById("plinks1"),
+            //       plinks1.innerHTML = plinks2.innerHTML = this.logarithmicPaginationLinks(NumPages, p, link);
+            /// console.log(this.logarithmicPaginationLinks(NumPages, p, link))
+            //$('.paginationjs-next').before(this.logarithmicPaginationLinks(NumPages, p, tab))
+            $(`#${tab} #pagination-container-all #next`).before(logarithmicPaginationLinks(NumPages, p, tab));
+
+
+            waitForElement(`.paging`, function ()
+            {
+               $(`#pagination-container-all .paging`).removeClass('active');
+               $(`#pagination-container-all .paginationjs-pages #${p}`).addClass('active');
             
-                 data: JSON.stringify(data),
+            })
+             
+                 
+               //vm.fetchDataJobs(p, this.perPage);
+         }
+           
+
+         function logarithmicPaginationLinks(lastPage, matchPage, tab)
+         { 
+                  $(`#${tab} #pagination-container-all`).find('.J-paginationjs-page').remove();
+                  //$('.paging').remove();
+                  function pageLink(p, page) {
+                     return ((p === page) ? `<li class="paging paginationjs-page J-paginationjs-page active list" id=${p} value=${p}
+                                             ><a  href="javascript:void(0);">${p}</a>
+                                          </li>` : `<li class="paging paginationjs-page J-paginationjs-page list" id=${p} value=${p}
+                                             ><a  href="javascript:void(0);">${p}</a>
+                                          </li>`);
+                  }
          
-                 success: function (response)
-                 {
-                    const charge = response.Records[0];
-                    viewBidBuyerEnabled = charge['status'];
-                    buyerViewBidCharge = charge['value'];
-                    console.log({ viewBidBuyerEnabled });
+                  function pageGap(x) {
+                     if (x === 0) return "";
+                     if (x === 1) return " ";
+                     if (x <= 10) return "<li class='paging paginationjs-page J-paginationjs-page  list'> <a href='javascript:void(0);'>.</a></li>"; 
+                     if (x <= 100) return "<li class='paging paginationjs-page J-paginationjs-page list'> <a href='javascript:void(0);'>..</a></li>";
+                     return "<li class='paging paginationjs-page J-paginationjs-page  list'> <a href='javascript:void(0);'>...</a></li>";
+                  }
+
+                  var page = (matchPage ? matchPage : 1),
+                     LINKS_PER_STEP = 5,
+                     lastp1 = 1,
+                     lastp2 = page,
+                     p1 = 1,
+                     p2 = page,
+                     c1 = LINKS_PER_STEP + 1,
+                     c2 = LINKS_PER_STEP + 1,
+                     s1 = "",
+                     s2 = "",
+                     step = 1,
+                     linkHTML = "";
+
+                  while (true) {
+                     if (c1 >= c2) {
+                        s1 += pageGap(p1 - lastp1) + pageLink(p1, matchPage);
+                        lastp1 = p1;
+                        p1 += step;
+                        c1--;
+                     } else {
+                        s2 = pageLink(p2, matchPage) + pageGap(lastp2 - p2) + s2;
+                        lastp2 = p2;
+                        p2 -= step;
+                        c2--;
+                     }
+                     if (c2 === 0) {
+                        step *= 10;
+                        p1 += step - 1; // Round UP to nearest multiple of step
+                        p1 -= (p1 % step);
+                        p2 -= (p2 % step); // Round DOWN to nearest multiple of step
+                        c1 = LINKS_PER_STEP;
+                        c2 = LINKS_PER_STEP;
+                     }
+                     if (p1 > p2) {
+                        linkHTML += s1 + pageGap(lastp2 - lastp1) + s2;
+                        if ((lastp2 > page) || (page >= lastPage)) break;
+                        lastp1 = page;
+                        lastp2 = lastPage;
+                        p1 = page + 1;
+                        p2 = lastPage;
+                        c1 = LINKS_PER_STEP;
+                        c2 = LINKS_PER_STEP + 1;
+                        s1 = '';
+                        s2 = '';
+                        step = 1;
+                     }
+                  }
+                  return linkHTML;
+         }
+           
+
+         function pageClick(e, el, pageCount)
+         {
+            
+               vm = this
+               
+               e = e || window.event;
+               var s = e.target || e.srcElement,n, p, el;
+               console.log({ s })
+               n = el.attr('value');
+               console.log({n})
+            // pageNavigate(p.substring(n) >>> 0);
+               // if (s.tagName === "A") {
+               //     n = (p = s.href).lastIndexOf("=") + 1;
+               //     console.log(`n ${n}`)
+               //      console.log(`s ${s.name}`)
+            pageNavigate(n, (totalFilteredJobs / pageCount));
+            paginator(job_list, n, pageCount, 'tab-all');
+            return false;
+               // }
+               //else if ((s.tagName !== "INPUT") || (s.type !== "submit")) return;
+
+
+               // if (!(n = s.name)) {
+               //     p = ((el = this.elements["p"]).value >>> 0);
+               //     if ((p <= 0) || (p > vm.paginationcountAll)) {
+               //         el.className = "err";
+               //         return false;
+               //     }
+               // }
+               
+               //  if (n === "p1") p = 1;
+               // else if (n === "pprev") p = (this.elements["pcurr"].value >>> 0) - 1;
+               // else if (n === "pnext") p = (this.elements["pcurr"].value >>> 0) + 1;
+               // else if (n === "plast") p = (this.elements["pcount"].value >>> 0);
+               // pageNavigate(p);
+               // return false;
+         }
 
 
 
-                    if (charge_name == 'job_accepted_buyer') {
-                       buyerAcceptBidCharge = charge['value'];
-                        buyerAcceptBidChargeEnabled = charge['status'];
-                       
-                       console.log({ buyerAcceptBidChargeEnabled });
+         async function getChargeDetails(charge_name)
+         {
+            var data = [{ 'Name': 'charge_name', 'Operator': "in", "Value": charge_name }]
+            
+            $.ajax({
+               method: "POST",
+               url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/charges_configuration/`,
+               headers: {
+                  "Content-Type": "application/json"
+               },
+         
+               data: JSON.stringify(data),
+      
+               success: function (response)
+               {
+                  const charge = response.Records[0];
+                  viewBidBuyerEnabled = charge['status'];
+                  buyerViewBidCharge = charge['value'];
+                  console.log({ viewBidBuyerEnabled });
 
-                     $('#paymentModal #charge-amount').text(parseFloat(buyerAcceptBidCharge).toFixed(2))
-                      
-                    }
-
-                     if (charge_name == 'job_accepted_seller') {
-                       sellerViewAcceptedCharge = charge['value'];
-                       sellerViewAcceptedEnabled = charge['status'];
-                       
-                       console.log({  sellerViewAcceptedEnabled });
-
-                     $('#paymentModalFreelancer #charge-amount').text(parseFloat(sellerViewAcceptedCharge).toFixed(2))
-                      
-                    }
 
 
-                    if (charge_name == 'job_paid_buyer') {
-                       
-                       buyerCompletedCharge = charge['value'];
-                       buyerCompletedChargeEnabled = charge['status'];
+                  if (charge_name == 'job_accepted_buyer') {
+                     buyerAcceptBidCharge = charge['value'];
+                     buyerAcceptBidChargeEnabled = charge['status'];
+                     
+                     console.log({ buyerAcceptBidChargeEnabled });
 
-                       $('#paymentModalComplete #charge-amount-complete').text(parseFloat(buyerCompletedCharge).toFixed(2))
+                  $('#paymentModal #charge-amount').text(parseFloat(buyerAcceptBidCharge).toFixed(2))
+                     
+                  }
+
+                  if (charge_name == 'job_accepted_seller') {
+                     sellerViewAcceptedCharge = charge['value'];
+                     sellerViewAcceptedEnabled = charge['status'];
+                     
+                     console.log({  sellerViewAcceptedEnabled });
+
+                  $('#paymentModalFreelancer #charge-amount').text(parseFloat(sellerViewAcceptedCharge).toFixed(2))
+                     
+                  }
+
+
+                  if (charge_name == 'job_paid_buyer') {
+                     
+                     buyerCompletedCharge = charge['value'];
+                     buyerCompletedChargeEnabled = charge['status'];
+
+                     $('#paymentModalComplete #charge-amount-complete').text(parseFloat(buyerCompletedCharge).toFixed(2))
+               
+                  }
+
                   
-                    }
-
-                    
-
-                  
-
 
                
 
-                 }
-               })
+
+            
+
+               }
+            })
+      
+         }
+
+
+         function getJobDetail(jobId,el,page,date,isPaid,quoteId){
+            var data = [{ 'Name': 'Id', 'Operator': "in", "Value": jobId }]
+            
+            $.ajax({
+               method: "POST",
+               url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_list/`,
+               headers: {
+               "Content-Type": "application/json"
+               },
+            
+               data: JSON.stringify(data),
          
-           }
+               success: function (response)
+               {
+               console.log({ response })
+               
+               const jobs = response
+               const job = jobs.Records[0]
+               //if existing user, verify the status
+                  if (job) {
+                     let allJobs = ''
+                     var status;
+                  
+                     if (job['status'] == 'Available') {
+                        status = ` <td><select class="form-control"id ="status">
+                        <option selected="" disabled="" value="Available">Available</option>
+                        <option value="Interested">Interested</option>
+                        </select></td>`
+                     } else if (job['status'] == 'Interested') {
+                        status = ` <td><select class="form-control">
+                        <option selected="" disabled="" value="Available">Available</option>
+                        <option selected="" value="Interested">Interested</option>
+                        </select></td>`
+                     } else if (job['status'] == 'Quoted') {
+                        status =`<td>Quoted</td>`
+
+                        }else if (job['status'] == 'Accepted') {
+                        status =`<td>Accepted</td>`
+
+                        }else if (job['status'] == 'Completed') {
+                        status =`<td>Completed</td>`
+
+                     }else if (job['status'] == 'Cancelled') {
+                        status =`<td>Cancelled</td>`
+
+                     }
+                     
+                     else {
+                        status =`<td>--</td>`
+                     }
+                     switch (el) {
 
 
-           function getJobDetail(jobId,el,page,date,isPaid,quoteId){
-              var data = [{ 'Name': 'Id', 'Operator': "in", "Value": jobId }]
-              
-              $.ajax({
-                method: "POST",
-                url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_list/`,
-                headers: {
-                  "Content-Type": "application/json"
-                },
-              
-                data: JSON.stringify(data),
-           
-                success: function (response)
-                {
-                  console.log({ response })
-                
-                  const jobs = response
-                  const job = jobs.Records[0]
-                  //if existing user, verify the status
-                   if (job) {
-                      let allJobs = ''
-                        var status;
-                    
-                        if (job['status'] == 'Available') {
-                           status = ` <td><select class="form-control"id ="status">
-                           <option selected="" disabled="" value="Available">Available</option>
-                           <option value="Interested">Interested</option>
-                           </select></td>`
-                        } else if (job['status'] == 'Interested') {
-                           status = ` <td><select class="form-control">
-                           <option selected="" disabled="" value="Available">Available</option>
-                           <option selected="" value="Interested">Interested</option>
-                           </select></td>`
-                        } else if (job['status'] == 'Quoted') {
-                           status =`<td>Quoted</td>`
-
-                           }else if (job['status'] == 'Accepted') {
-                           status =`<td>Accepted</td>`
-
-                           }else if (job['status'] == 'Completed') {
-                           status =`<td>Completed</td>`
-
-                        }else if (job['status'] == 'Cancelled') {
-                           status =`<td>Cancelled</td>`
-
-                        }
+                        case '#tab-all':
                         
-                        else {
-                           status =`<td>--</td>`
-                        }
-                      switch (el) {
+                           allJobs = `<tr data-id="${job['Id']}">
+
+                           ${status}
+                           <td>${job['Id']}</td>
+                           <td>${job['job_validity']}</td>
+                           <td>${job['buyer_email']}</td>
+                           <td>${job['buyer_contact']}</td>
+                           <td class="width-location">${job['in_person_work_address']}</td>
+                           <td>${job['is_accepted'] == 1 ? 'Yes' : 'No'} </td>
+                           <td>-</td>
+                        </tr>`;
 
 
-                         case '#tab-all':
-                          
-                            allJobs = `<tr data-id="${job['Id']}">
-
-                              ${status}
-                              <td>${job['Id']}</td>
-                              <td>${job['job_validity']}</td>
-                              <td>${job['buyer_email']}</td>
-                              <td>${job['buyer_contact']}</td>
-                              <td class="width-location">${job['in_person_work_address']}</td>
-                              <td>${job['is_accepted'] == 1 ? 'Yes' : 'No'} </td>
-                              <td>-</td>
-                           </tr>`;
+                           break;
 
 
-                            break;
+                        case '#tab-interested' || '#tab-quoted' || '#tab-completed' || '#tab-cancelled':
+                           allJobs = `<tr data-id="${job['Id']}" user-id="${userId}"> </td>
+                        <td>${job['Id']} </td>
+                        <td> <a href="${protocol}//${baseURL}/user/plugins/${packageId}/${page}.php?jobId=${job['Id']}&userId=${userId}">${job['job_validity']}</a></td>
+                        <td>${job['buyer_email']}</td>
+                     
+                        <td>${job['buyer_contact']}</td>
+                        <td class="width-location">${job['in_person_work_address']}</td>
 
+                        <td>${job['is_accepted'] == 1 ? 'Yes' : 'No'} </td>
 
-                         case '#tab-interested' || '#tab-quoted' || '#tab-completed' || '#tab-cancelled':
-                            allJobs = `<tr data-id="${job['Id']}" user-id="${userId}"> </td>
+                        
+                        <td>${new Date(date * 1000).format("dd/mm/yyyy")}</td>
+                        </tr>`;
+                           break;
+                        case '#tab-quoted':
+                           allJobs = `<tr data-id="${job['Id']}" user-id="${userId}"> </td>
                            <td>${job['Id']} </td>
-                           <td> <a href="${protocol}//${baseURL}/user/plugins/${packageId}/${page}.php?jobId=${job['Id']}&userId=${userId}">${job['job_validity']}</a></td>
-                           <td>${job['buyer_email']}</td>
+                        <td> <a href="${protocol}//${baseURL}/user/plugins/${packageId}/${page}.php?jobId=${job['Id']}&userId=${userId}">${job['job_validity']}</a></td>
+                        <td>${job['buyer_email']}</td>
+                     
+                        <td>${job['buyer_contact']}</td>
+                        <td class="width-location">${job['in_person_work_address']}</td>
+
+                        <td>${job['is_accepted'] == 1 ? 'Yes' : 'No'} </td>
+
                         
-                           <td>${job['buyer_contact']}</td>
-                           <td class="width-location">${job['in_person_work_address']}</td>
+                        <td>${new Date(date * 1000).format("dd/mm/yyyy")}</td>
+                        </tr>`;
 
-                           <td>${job['is_accepted'] == 1 ? 'Yes' : 'No'} </td>
-
-                         
-                           <td>${new Date(date * 1000).format("dd/mm/yyyy")}</td>
-                          </tr>`;
-                            break;
-                         case '#tab-quoted':
-                            allJobs = `<tr data-id="${job['Id']}" user-id="${userId}"> </td>
-                            <td>${job['Id']} </td>
-                           <td> <a href="${protocol}//${baseURL}/user/plugins/${packageId}/${page}.php?jobId=${job['Id']}&userId=${userId}">${job['job_validity']}</a></td>
-                           <td>${job['buyer_email']}</td>
+                           break;
                         
-                           <td>${job['buyer_contact']}</td>
-                           <td class="width-location">${job['in_person_work_address']}</td>
+                        case '#tab-accepted':
+                           var viewButtonTd = "";
+                           console.log({ sellerViewAcceptedEnabled });
+                           if (sellerViewAcceptedEnabled == 'True' && isPaid != 'TRUE') {
+                              viewButtonTd = `<td class="text-right"><a href="javascript:void(0);" class="btn btn-jobform-outline" id="charge-modal" onclick="lockViewFreelancer(this)" data-id="${quoteId}" return-url="user/plugins/${packageId}/${page}.php?jobId=${job['Id']}&userId=${userId}"><i class="icon lock-icon"></i>View</a></td>`
+                              var paymentModal = `
+                                    <div class="modal fade payment-modal" id="paymentModalFreelancer" role="dialog">
+                                    <input type ="hidden" id ="quoted-id-fl"/ >
+                                    <input type ="hidden" id="access-url-fl" />
 
-                           <td>${job['is_accepted'] == 1 ? 'Yes' : 'No'} </td>
-
-                         
-                           <td>${new Date(date * 1000).format("dd/mm/yyyy")}</td>
-                          </tr>`;
-
-                            break;
-                         
-                         case '#tab-accepted':
-                            var viewButtonTd = "";
-                            console.log({ sellerViewAcceptedEnabled });
-                            if (sellerViewAcceptedEnabled == 'True' && isPaid != 'TRUE') {
-                               viewButtonTd = `<td class="text-right"><a href="javascript:void(0);" class="btn btn-jobform-outline" id="charge-modal" onclick="lockViewFreelancer(this)" data-id="${quoteId}" return-url="user/plugins/${packageId}/${page}.php?jobId=${job['Id']}&userId=${userId}"><i class="icon lock-icon"></i>View</a></td>`
-                               var paymentModal = `
-                                       <div class="modal fade payment-modal" id="paymentModalFreelancer" role="dialog">
-                                       <input type ="hidden" id ="quoted-id-fl"/ >
-                                       <input type ="hidden" id="access-url-fl" />
-
-                                          <div class="modal-dialog">
-                                             <!-- Modal content-->
-                                             <div class="modal-content">
-                                                <div class="modal-body">
-                                                   
-                                                   <div id="payment" class="payment-con clearfix">
-                                          
-                                                      <h3>Payment</h3>
-                                                      <div class="payment-middle-con ">
-                                             
-                                                            <div class="form-group">
-                                                               <label for="paymentMethod">Payment Method</label>
-                                                               <select class="form-control required" name="payment" id="paymentScheme">
-                                                                  <option value="stripe">Stripe</option>
-                                                                  <option selected value="cod">Cash on Delivery</option>
-                                                               </select>
-                                                            </div>
-                                          
-                                                            <div class="common-text">
-                                                               <p>You will be charged $<span id="charge-amount">${parseFloat(buyerViewBidCharge).toFixed(2)}</span> to view an accepted quote.</p>
-                                                               <p>Upon clicking the Pay button, you will be re-directed to the Payment Gateway to continue with your transaction</p>
-                                                            
-                                                            </div>
-
-                                                            <div id="card-element" style="display:none"> </div>
-                                                            <!-- Used to display Element errors. -->
-                                                            <div id="card-errors" role="alert"></div>
-                                                            <p id="card-errors"
-                                                               style="margin-bottom: 10px; line-height: inherit; color: #eb1c26; font-weight: bold;">
-                                                            </p>
-
-
-
-                                                      <hr>
-
-
-
-                                                         
-                                                         
-                                                      </div>
-                                                      
-                                                      <div class="payment-bottom-con clearfix">
-                                                         <div class="next-tab-area pull-right">
-                                                            <span class="seller-btn"> <a  class="my-btn btn-clear" data-dismiss="modal" href="javascript:void(0);">Cancel</a> </span>
-                                                            <span class="seller-btn"> <a  class="my-btn btn-red" href="javascript:void(0);" id="paynowPackageFl">Pay Now</a> </span>
-                                                         </div>
-                                                      </div>
-                                                </div>
-                                                   
-                                                </div>
-                                             </div>
-                                          </div>
-                                       </div>
-                                       <div class="modal-overlay"></div>
-                                    `
-                               
-                               var paymentSuccessModal = `  <div class="modal fade payment-modal" id="paymentSuccessfulModal" role="dialog">
-                                 <div class="modal-dialog">
-                                    <!-- Modal content-->
-                                    <div class="modal-content">
-                                       <div class="modal-body">
-                                          
-                                       <div id="paymentSuccessful" class="payment-con clearfix">
-                                          <h3>Payment</h3>
-                                          <div class="payment-middle-con ">
-                                             <div class="common-text">
-                                                   <p><strong>Thank you for your purchase</strong></p>
-                                                   <p>We have successfully received your payment.<br>You can continue on with the process.</p>
-                                             </div>
-                                          </div>
-                                             <div class="payment-bottom-con clearfix">
-                                                <div class="next-tab-area pull-right">
-                                                   <span class="seller-btn"> <a data-dismiss="modal" class="my-btn btn-red" href="javascript:void(0);">Close</a> </span>
-                                                </div>
-                                             </div>
-                                       </div>
-                                          
-                                          
-
+                                       <div class="modal-dialog">
+                                          <!-- Modal content-->
+                                          <div class="modal-content">
+                                             <div class="modal-body">
+                                                
+                                                <div id="payment" class="payment-con clearfix">
                                        
+                                                   <h3>Payment</h3>
+                                                   <div class="payment-middle-con ">
+                                          
+                                                         <div class="form-group">
+                                                            <label for="paymentMethod">Payment Method</label>
+                                                            <select class="form-control required" name="payment" id="paymentScheme">
+                                                               <option value="stripe">Stripe</option>
+                                                               <option selected value="cod">Cash on Delivery</option>
+                                                            </select>
+                                                         </div>
+                                       
+                                                         <div class="common-text">
+                                                            <p>You will be charged $<span id="charge-amount">${parseFloat(buyerViewBidCharge).toFixed(2)}</span> to view an accepted quote.</p>
+                                                            <p>Upon clicking the Pay button, you will be re-directed to the Payment Gateway to continue with your transaction</p>
+                                                         
+                                                         </div>
+
+                                                         <div id="card-element" style="display:none"> </div>
+                                                         <!-- Used to display Element errors. -->
+                                                         <div id="card-errors" role="alert"></div>
+                                                         <p id="card-errors"
+                                                            style="margin-bottom: 10px; line-height: inherit; color: #eb1c26; font-weight: bold;">
+                                                         </p>
+
+
+
+                                                   <hr>
+
+
+
+                                                      
+                                                      
+                                                   </div>
+                                                   
+                                                   <div class="payment-bottom-con clearfix">
+                                                      <div class="next-tab-area pull-right">
+                                                         <span class="seller-btn"> <a  class="my-btn btn-clear" data-dismiss="modal" href="javascript:void(0);">Cancel</a> </span>
+                                                         <span class="seller-btn"> <a  class="my-btn btn-red" href="javascript:void(0);" id="paynowPackageFl">Pay Now</a> </span>
+                                                      </div>
+                                                   </div>
+                                             </div>
+                                                
+                                             </div>
+                                          </div>
                                        </div>
                                     </div>
-                                 </div>
-                              </div>`;
-                               
-
-                               var lockFunction = `<script> function lockViewFreelancer(x){
-                                       $('#paymentModalFreelancer').modal('show');
-                                       $('#quoted-id-fl').val($(x).attr('data-id')); 
-                                       $('#access-url-fl').val($(x).attr('return-url'))
-
-                                       console.log($(x).attr('data-id'))
-                                    }  </script>`
-                               $('.footer').append(paymentModal);
-                               $('.footer').append(paymentSuccessModal);
-                               $('body').append(lockFunction);
+                                    <div class="modal-overlay"></div>
+                                 `
                               
-                            } else {
-                               viewButtonTd = `<td class="text-right"><a href="${protocol}//${baseURL}/user/plugins/${packageId}/${page}.php?jobId=${job['Id']}&userId=${userId}" class="btn btn-jobform-outline">View</a></td>`;
-                            }
-                            allJobs = `<tr data-id="${job['Id']}" user-id="${userId}"> </td>
-                              <td>${job['Id']} </td>
-                              <td> <a href="#">${job['job_validity']}</a></td>
-                              <td>${job['buyer_email']}</td>
-                           
-                              <td>${job['buyer_contact']}</td>
-                              
-                              <td class="width-location">${job['in_person_work_address']}</td>
-                              <td>${new Date(date * 1000).format("dd/mm/yyyy")}</td>
-                              
-                              ${viewButtonTd}
-
-                           </tr>`;
-                            break;
-                         default:
-                            console.log( page + 'in default');
-                            allJobs = `<tr data-id="${job['Id']}" user-id="${userId}"> </td>
-                                     <td>${job['Id']} </td>
-                                    <td> <a href="${protocol}//${baseURL}/user/plugins/${packageId}/${page}.php?jobId=${job['Id'] }&userId=${userId}">${job['job_validity']}</a></td>
-                                    <td>${job['buyer_email']}</td>
-                                 
-                                    <td>${job['buyer_contact']}</td>
-                                    
-                                    <td class="width-location">${job['in_person_work_address']}</td>
-                                    <td>${new Date(date * 1000).format("dd/mm/yyyy")}</td>
-                                    
-                                 </tr>`;
-                  
-                      }
-            
-                        waitForElement(`${el}`, function ()
-                        {
-                           $(`${el} table tbody`).append(allJobs);
-                       
-                        })
-                    
-                    
-                  }
-              
-                
-            
-                }
-          
-          
-              })
-           }
-           
-
-           async function getQuotedJobDetails(jobId, el, page)
-           {
-            var data = [{ 'Name': 'job_id', 'Operator': "in", "Value": jobId }]
-              
-            $.ajax({
-              method: "POST",
-              url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_quotes?sort=-CreatedDateTime/`,
-              headers: {
-                "Content-Type": "application/json"
-              },
-            
-              data: JSON.stringify(data),
-         
-              success: function (response)
-              {
-                console.log({ response })
-              
-                const jobs = response
-                const job = jobs.Records
-                //if existing user, verify the status
-                 if (job) {
-
-                 
-                  
-
-                    job.forEach(function (quote, i)
-                    {
-
-                    var viewButtonTd = "";
-                    if (viewBidBuyerEnabled == 'True' && quote['buyer_view_paid'] != 'TRUE') {
-                        viewButtonTd =   `<td class="text-right"><a href="javascript:void(0);" class="btn btn-jobform-outline" id="charge-modal" onclick="lockView(this)" data-id="${quote['Id']}" return-url="${protocol}//${baseURL}/user/plugins/${packageId}/${page}.php?jobId=${quote['job_id']}&userId=${quote['freelancer_id']}"><i class="icon lock-icon"></i>View</a></td>`
-                         var paymentModal = `
-                           <div class="modal fade payment-modal" id="paymentModal" role="dialog">
-                           <input type ="hidden" id ="quoted-id"/ >
-                           <input type ="hidden" id="access-url" />
-
+                              var paymentSuccessModal = `  <div class="modal fade payment-modal" id="paymentSuccessfulModal" role="dialog">
                               <div class="modal-dialog">
                                  <!-- Modal content-->
                                  <div class="modal-content">
                                     <div class="modal-body">
                                        
-                                       <div id="payment" class="payment-con clearfix">
-                              
-                                          <h3>Payment</h3>
-                                          <div class="payment-middle-con ">
-                                 
-                                                <div class="form-group">
-                                                   <label for="paymentMethod">Payment Method</label>
-                                                   <select class="form-control required" name="payment" id="paymentScheme">
-                                                      <option value="stripe">Stripe</option>
-                                                       <option selected value="cod">Cash on Delivery</option>
-                                                   </select>
-                                                </div>
-                              
-                                                <div class="common-text">
-                                                   <p>You will be charged $<span id="charge-amount">${parseFloat(buyerViewBidCharge).toFixed(2)}</span> to View a Quote</p>
-                                                   <p>Upon clicking the Pay button, you will be re-directed to the Payment Gateway to continue with your transaction</p>
-                                                
-                                                </div>
-
-                                                <div id="card-element" style="display:none"> </div>
-                                                <!-- Used to display Element errors. -->
-                                                <div id="card-errors" role="alert"></div>
-                                                <p id="card-errors"
-                                                   style="margin-bottom: 10px; line-height: inherit; color: #eb1c26; font-weight: bold;">
-                                                </p>
-
-
-
-                                          <hr>
-
-
-
-                                             
-                                             
+                                    <div id="paymentSuccessful" class="payment-con clearfix">
+                                       <h3>Payment</h3>
+                                       <div class="payment-middle-con ">
+                                          <div class="common-text">
+                                                <p><strong>Thank you for your purchase</strong></p>
+                                                <p>We have successfully received your payment.<br>You can continue on with the process.</p>
                                           </div>
-                                          
+                                       </div>
                                           <div class="payment-bottom-con clearfix">
                                              <div class="next-tab-area pull-right">
-                                                <span class="seller-btn"> <a  class="my-btn btn-clear" data-dismiss="modal" href="javascript:void(0);">Cancel</a> </span>
-                                                <span class="seller-btn"> <a onclick="successfulView(this)" class="my-btn btn-red" href="javascript:void(0);" id="paynowPackage">Pay Now</a> </span>
+                                                <span class="seller-btn"> <a data-dismiss="modal" class="my-btn btn-red" href="javascript:void(0);">Close</a> </span>
                                              </div>
                                           </div>
                                     </div>
                                        
+                                       
+
+                                    
                                     </div>
                                  </div>
                               </div>
-                           </div>
-                           <div class="modal-overlay"></div>
-                        `
-                        var lockFunction = `<script> function lockView(x){
-                           $('#paymentModal').modal('show');
-                           $('#quoted-id').val($(x).attr('data-id')); 
-                           $('#access-url').val($(x).attr('return-url'))
+                           </div>`;
+                              
 
-                           console.log($(x).attr('data-id'))
-                        }  </script>`
-                       
-                       var successModal = `<script>  function successfulView(x){
-                        jQuery('#paymentModal').modal('hide');
-                        jQuery('#paymentSuccessfulModal').modal('show');
-                     }  </script>`
-                        $('.footer').append(paymentModal);
-                       $('body').append(lockFunction);
-                       $('body').append(successModal);
-                   
-                    } else {
-                        viewButtonTd =  `<td class="text-right"><a href="${protocol}//${baseURL}/user/plugins/${packageId}/${page}.php?jobId=${quote['job_id']}&userId=${quote['freelancer_id']}" class="btn btn-jobform-outline">View</a></td>`;
-                    }
-                       let allJobs = `<tr>
-                       <td><div class="job-quotedtitle"><span class="qtitle">Quoted by</span><span class="qdesc">${quote['quote_by']}</span></div></td>
-                       <td><div class="job-quotedtitle"><span class="qtitle">Date</span><span class="qdesc">${new Date( quote['CreatedDateTime']* 1000).format("dd/mm/yyyy")}</span></div></td>
-                       <td><div class="job-quotedtitle"><span class="qtitle">Amount</span><span class="qdesc">$AUD${quote['all_total']}</span></div></td>
-                       <td><div class="job-quotedtitle"><span class="qtitle">Availability</span><span class="qdesc">${quote['availability_date']}</span></div></td>
-                       <td><div class="job-quotedtitle"><span class="qtitle">Status</span><span class="qdesc">Valid to ${quote['validity_date']} </span></div></td>
-                      
-                         ${ viewButtonTd }
-                    </tr>`;
-                       
-                       
-                       waitForElement(`${el}`, function ()
-                       {
-                          $(`${el} tbody`).append(allJobs);
+                              var lockFunction = `<script> function lockViewFreelancer(x){
+                                    $('#paymentModalFreelancer').modal('show');
+                                    $('#quoted-id-fl').val($(x).attr('data-id')); 
+                                    $('#access-url-fl').val($(x).attr('return-url'))
+
+                                    console.log($(x).attr('data-id'))
+                                 }  </script>`
+                              $('.footer').append(paymentModal);
+                              $('.footer').append(paymentSuccessModal);
+                              $('body').append(lockFunction);
+                           
+                           } else {
+                              viewButtonTd = `<td class="text-right"><a href="${protocol}//${baseURL}/user/plugins/${packageId}/${page}.php?jobId=${job['Id']}&userId=${userId}" class="btn btn-jobform-outline">View</a></td>`;
+                           }
+                           allJobs = `<tr data-id="${job['Id']}" user-id="${userId}"> </td>
+                           <td>${job['Id']} </td>
+                           <td> <a href="#">${job['job_validity']}</a></td>
+                           <td>${job['buyer_email']}</td>
+                        
+                           <td>${job['buyer_contact']}</td>
+                           
+                           <td class="width-location">${job['in_person_work_address']}</td>
+                           <td>${new Date(date * 1000).format("dd/mm/yyyy")}</td>
+                           
+                           ${viewButtonTd}
+
+                        </tr>`;
+                           break;
+                        default:
+                           console.log( page + 'in default');
+                           allJobs = `<tr data-id="${job['Id']}" user-id="${userId}"> </td>
+                                    <td>${job['Id']} </td>
+                                 <td> <a href="${protocol}//${baseURL}/user/plugins/${packageId}/${page}.php?jobId=${job['Id'] }&userId=${userId}">${job['job_validity']}</a></td>
+                                 <td>${job['buyer_email']}</td>
+                              
+                                 <td>${job['buyer_contact']}</td>
+                                 
+                                 <td class="width-location">${job['in_person_work_address']}</td>
+                                 <td>${new Date(date * 1000).format("dd/mm/yyyy")}</td>
+                                 
+                              </tr>`;
+               
+                     }
+         
+                     waitForElement(`${el}`, function ()
+                     {
+                        $(`${el} table tbody`).append(allJobs);
                      
-                       })
+                     })
                   
-                    })
                   
-                }
+               }
             
-              
-          
-              }
-        
-        
+               
+         
+               }
+         
+         
             })
-              
-              
-              
-           }
+         }
+           
+
+         async function getQuotedJobDetails(jobId, el, page)
+         {
+         var data = [{ 'Name': 'job_id', 'Operator': "in", "Value": jobId }]
+            
+         $.ajax({
+            method: "POST",
+            url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_quotes?sort=-CreatedDateTime/`,
+            headers: {
+               "Content-Type": "application/json"
+            },
+         
+            data: JSON.stringify(data),
+      
+            success: function (response)
+            {
+               console.log({ response })
+            
+               const jobs = response
+               const job = jobs.Records
+               //if existing user, verify the status
+               if (job) {
+
+               
+               
+
+                  job.forEach(function (quote, i)
+                  {
+
+                  var viewButtonTd = "";
+                  if (viewBidBuyerEnabled == 'True' && quote['buyer_view_paid'] != 'TRUE') {
+                     viewButtonTd =   `<td class="text-right"><a href="javascript:void(0);" class="btn btn-jobform-outline" id="charge-modal" onclick="lockView(this)" data-id="${quote['Id']}" return-url="${protocol}//${baseURL}/user/plugins/${packageId}/${page}.php?jobId=${quote['job_id']}&userId=${quote['freelancer_id']}"><i class="icon lock-icon"></i>View</a></td>`
+                        var paymentModal = `
+                        <div class="modal fade payment-modal" id="paymentModal" role="dialog">
+                        <input type ="hidden" id ="quoted-id"/ >
+                        <input type ="hidden" id="access-url" />
+
+                           <div class="modal-dialog">
+                              <!-- Modal content-->
+                              <div class="modal-content">
+                                 <div class="modal-body">
+                                    
+                                    <div id="payment" class="payment-con clearfix">
+                           
+                                       <h3>Payment</h3>
+                                       <div class="payment-middle-con ">
+                              
+                                             <div class="form-group">
+                                                <label for="paymentMethod">Payment Method</label>
+                                                <select class="form-control required" name="payment" id="paymentScheme">
+                                                   <option value="stripe">Stripe</option>
+                                                      <option selected value="cod">Cash on Delivery</option>
+                                                </select>
+                                             </div>
+                           
+                                             <div class="common-text">
+                                                <p>You will be charged $<span id="charge-amount">${parseFloat(buyerViewBidCharge).toFixed(2)}</span> to View a Quote</p>
+                                                <p>Upon clicking the Pay button, you will be re-directed to the Payment Gateway to continue with your transaction</p>
+                                             
+                                             </div>
+
+                                             <div id="card-element" style="display:none"> </div>
+                                             <!-- Used to display Element errors. -->
+                                             <div id="card-errors" role="alert"></div>
+                                             <p id="card-errors"
+                                                style="margin-bottom: 10px; line-height: inherit; color: #eb1c26; font-weight: bold;">
+                                             </p>
+
+
+
+                                       <hr>
+
+
+
+                                          
+                                          
+                                       </div>
+                                       
+                                       <div class="payment-bottom-con clearfix">
+                                          <div class="next-tab-area pull-right">
+                                             <span class="seller-btn"> <a  class="my-btn btn-clear" data-dismiss="modal" href="javascript:void(0);">Cancel</a> </span>
+                                             <span class="seller-btn"> <a onclick="successfulView(this)" class="my-btn btn-red" href="javascript:void(0);" id="paynowPackage">Pay Now</a> </span>
+                                          </div>
+                                       </div>
+                                 </div>
+                                    
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="modal-overlay"></div>
+                     `
+                     var lockFunction = `<script> function lockView(x){
+                        $('#paymentModal').modal('show');
+                        $('#quoted-id').val($(x).attr('data-id')); 
+                        $('#access-url').val($(x).attr('return-url'))
+
+                        console.log($(x).attr('data-id'))
+                     }  </script>`
+                     
+                     var successModal = `<script>  function successfulView(x){
+                     jQuery('#paymentModal').modal('hide');
+                     jQuery('#paymentSuccessfulModal').modal('show');
+                  }  </script>`
+                     $('.footer').append(paymentModal);
+                     $('body').append(lockFunction);
+                     $('body').append(successModal);
+                  
+                  } else {
+                     viewButtonTd =  `<td class="text-right"><a href="${protocol}//${baseURL}/user/plugins/${packageId}/${page}.php?jobId=${quote['job_id']}&userId=${quote['freelancer_id']}" class="btn btn-jobform-outline">View</a></td>`;
+                  }
+                     let allJobs = `<tr>
+                     <td><div class="job-quotedtitle"><span class="qtitle">Quoted by</span><span class="qdesc">${quote['quote_by']}</span></div></td>
+                     <td><div class="job-quotedtitle"><span class="qtitle">Date</span><span class="qdesc">${new Date( quote['CreatedDateTime']* 1000).format("dd/mm/yyyy")}</span></div></td>
+                     <td><div class="job-quotedtitle"><span class="qtitle">Amount</span><span class="qdesc">$AUD${quote['all_total']}</span></div></td>
+                     <td><div class="job-quotedtitle"><span class="qtitle">Availability</span><span class="qdesc">${quote['availability_date']}</span></div></td>
+                     <td><div class="job-quotedtitle"><span class="qtitle">Status</span><span class="qdesc">Valid to ${quote['validity_date']} </span></div></td>
+                     
+                        ${ viewButtonTd }
+                  </tr>`;
+                     
+                     
+                     waitForElement(`${el}`, function ()
+                     {
+                        $(`${el} tbody`).append(allJobs);
+                  
+                     })
+               
+                  })
+               
+               }
+         
+            
+         
+            }
+      
+      
+         })
+            
+            
+            
+         }
           
            async function getAllJobs() //with nearest locations.
            {
@@ -1628,7 +1781,7 @@
                               
                              
                               
-                     }
+                  }
                    
                         // $.each(location_list, function (index, loc)
                         // {
@@ -1663,9 +1816,16 @@
 
                   //pagination
                
-                  console.log({job_list});
+                  console.log({ job_list });
+                  var pageCount =  $('#page-all :selected').val();
+                  
+                  var totalPages = Math.ceil(job_list.length / pageCount)  //change to dynamic value on select option 10,20.30
+                  totalFilteredJobs = totalPages;
+                  $('#count-all').text(job_list.length - 1);
 
-                  paginator(job_list, 1, 20, 'tab-all');
+                  pageNavigate(1, totalPages, `tab-all`)
+                    
+                  paginator(job_list, 1, pageCount, 'tab-all');
 
 
                  }
@@ -2380,7 +2540,10 @@
              getRejectedJobs: getRejectedJobs,
              getChargeDetails: getChargeDetails,
              getCompletedJobs: getCompletedJobs,
-             getCancelledJobs : getCancelledJobs
+             getCancelledJobs: getCancelledJobs,
+             pageClick: pageClick,
+             pageNavigate: pageNavigate,
+             logarithmicPaginationLinks : logarithmicPaginationLinks
             
           }
           
@@ -3494,22 +3657,47 @@
        
    
       //pagination
-      $(document).on("click", "#pagination-container-all .list", function() {
-         console.log('paginate please');
+      // $(document).on("click", "#pagination-container-all .list", function() {
+      //    console.log('paginate please');
 
         
 
-         paginator(job_list, parseInt($(this).attr('indx')), 20, 'tab-all');
+      //    paginator(job_list, parseInt($(this).attr('indx')), 20, 'tab-all');
 
-         waitForElement('#pagination-container-all', function ()
-         {
+      //    waitForElement('#pagination-container-all', function ()
+      //    {
 
-         $(this).siblings().removeClass('active');
-         $(this).addClass('active');
+      //    $(this).siblings().removeClass('active');
+      //    $(this).addClass('active');
 
-         })
+      //    })
 
+      // })
+
+      jQuery('body').on('click', '.paging', function (e)
+      {
+         var jobs = jobData.getInstance();
+         jobs.pageClick(e, $(this), $('#page-all :selected').val());
+         //paginator(job_list, parseInt($(this).attr('indx')), 20, 'tab-all');
       })
+        
+      jQuery('body').on('change', '#page-all', function (e)
+      {
+
+        var jobs = jobData.getInstance();
+        var pageCount =  $('#page-all :selected').val();
+                  
+                  var totalPages = Math.ceil(job_list.length / pageCount)  //change to dynamic value on select option 10,20.30
+                  totalFilteredJobs = totalPages;
+                  $('#count-all').text(job_list.length - 1);
+                  
+                  jobs.pageNavigate(1, totalPages, `tab-all`)
+                    
+                  paginator(job_list, 1, pageCount, 'tab-all');
+  
+      });
+
+      
    
      
    });

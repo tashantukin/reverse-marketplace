@@ -1303,7 +1303,7 @@
                   viewBidBuyerEnabled = charge['status'];
                   buyerViewBidCharge = charge['value'];
                   console.log({ viewBidBuyerEnabled });
-
+                    
 
 
                   if (charge_name == 'job_accepted_buyer') {
@@ -1311,19 +1311,24 @@
                      buyerAcceptBidChargeEnabled = charge['status'];
                      
                      console.log({ buyerAcceptBidChargeEnabled });
+                     waitForElement(`#paymentModal #charge-amount`, function ()
+                     {
 
-                  $('#paymentModal #charge-amount').text(parseFloat(buyerAcceptBidCharge).toFixed(2))
-                     
+                        $('#paymentModal #charge-amount').text( (buyerAcceptBidCharge != null || buyerAcceptBidCharge != "") ? parseFloat(buyerAcceptBidCharge).toFixed(2) : "0.00")
+                     })
                   }
 
                   if (charge_name == 'job_accepted_seller') {
                      sellerViewAcceptedCharge = charge['value'];
                      sellerViewAcceptedEnabled = charge['status'];
                      
-                     console.log({  sellerViewAcceptedEnabled });
-
-                  $('#paymentModalFreelancer #charge-amount').text(parseFloat(sellerViewAcceptedCharge).toFixed(2))
-                     
+                     console.log({ sellerViewAcceptedEnabled });
+                    sellerViewAcceptedCharge = (sellerViewAcceptedCharge != null && sellerViewAcceptedCharge != "") ? parseFloat(sellerViewAcceptedCharge).toFixed(2) : "0"
+                     waitForElement(`#payment #charge-amount`, function ()
+                     {
+                        $('#payment #charge-amount').text(sellerViewAcceptedCharge)
+                       console.log({  sellerViewAcceptedCharge });
+                     })
                   }
 
 
@@ -1332,8 +1337,10 @@
                      buyerCompletedCharge = charge['value'];
                      buyerCompletedChargeEnabled = charge['status'];
 
-                     $('#paymentModalComplete #charge-amount-complete').text(parseFloat(buyerCompletedCharge).toFixed(2))
-               
+                     waitForElement(`#paymentModalComplete #charge-amount-complete`, function ()
+                     {
+                        $('#paymentModalComplete #charge-amount-complete').text( (buyerCompletedCharge != null || buyerCompletedCharge != "") ? parseFloat(buyerCompletedCharge).toFixed(2) : "0.00")
+                     })
                   }
 
                   
@@ -1481,7 +1488,7 @@
                                                          </div>
                                        
                                                          <div class="common-text">
-                                                            <p>You will be charged $<span id="charge-amount">${parseFloat(buyerViewBidCharge).toFixed(2)}</span> to view an accepted quote.</p>
+                                                            <p>You will be charged $<span id="charge-amount">${parseFloat(sellerViewAcceptedCharge).toFixed(2)}</span> to view an accepted quote.</p>
                                                             <p>Upon clicking the Pay button, you will be re-directed to the Payment Gateway to continue with your transaction</p>
                                                          
                                                          </div>
@@ -2728,7 +2735,7 @@
                      var jobCharge = jobCharges.Records.filter((data) => data.charge_name === 'job_bid_seller')
                      console.log({ jobCharge });
 
-                     vm.jobListCharge = parseInt(jobCharge[0].value);
+                     vm.jobListCharge = jobCharge[0].value != null || jobCharge[0].value != "" ? parseInt(jobCharge[0].value) : 0.00;
                      console.log(parseInt(jobCharge[0].value));
                   
                      //vm.jobListCharge = vm.jobListCharge;

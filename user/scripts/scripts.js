@@ -3590,28 +3590,49 @@
                {
                   event.preventDefault();
                   $("#paymentModalFreelancer #paynowPackageFl").attr("disabled", "disabled");
-                  stripe.createToken(card).then(function (result)
-                  {
-                     if (result.error) {
-                        // Inform the user if there was an error
-                        var errorElement = document.getElementById('card-errors');
-                        errorElement.textContent = result.error.message;
-    
-                        // $("#payNowButton").removeAttr("disabled");
-                     } else {
 
-                        console.log({ result })
-                        chargeFreelancerView(result.token, $('#paymentModalFreelancer #charge-amount').text(), $('#quoted-id-fl').val(), $('#access-url-fl').val());
-                        $("#paymentModalFreelancer #paynowPackageFl").prop("disabled", true);
-                                 
-                                  
-                        //subscribe(card, stripe)
-                                  
-    
-                        // Send the result.token.id to a php file and use the token to create the subscription
-                        // SubscriptionManager.PayNowSubmit(result.token.id, e);
-                     }
-                  });
+                  //cod
+                   if ($('option:selected', $('#paymentModalFreelancer #paymentScheme')).text() == 'Cash on Delivery') {
+                     console.log('cod');
+                     chargeViewCod($('#quoted-id').val(), $('#access-url-fl').val());
+         
+                   } else {
+
+                      stripe.createToken(card).then(function (result)
+                     {
+                        if (result.error) {
+                           // Inform the user if there was an error
+                           var errorElement = document.getElementById('card-errors');
+                           errorElement.textContent = result.error.message;
+      
+                           // $("#payNowButton").removeAttr("disabled");
+                        } else {
+
+                           console.log({ result })
+                           chargeFreelancerView(result.token, $('#paymentModalFreelancer #charge-amount').text(), $('#quoted-id-fl').val(), $('#access-url-fl').val());
+                           $("#paymentModalFreelancer #paynowPackageFl").prop("disabled", true);
+                                    
+                                    
+                           //subscribe(card, stripe)
+                                    
+      
+                           // Send the result.token.id to a php file and use the token to create the subscription
+                           // SubscriptionManager.PayNowSubmit(result.token.id, e);
+                        }
+                     });
+
+
+
+                      
+                  }
+
+
+
+
+
+
+
+                  
     
                });
          }

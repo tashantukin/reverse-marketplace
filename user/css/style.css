@@ -510,6 +510,10 @@
     color: #888;
 }
 
+.text-theme {
+    color: var(--user-color);
+}
+
 .pagination-center{display: flex;align-items: center;justify-content: center;padding-bottom: 0px;}
 
 .blue-tabdesign .paginationjs .paginationjs-pages li.active>a {

@@ -310,7 +310,7 @@
                     {
                         console.log({ response })
                         if (table == 'tabs') {
-                            vm.getAllTabs("list","");
+                            vm.getAllTabs("list","new");
                         }
                        
                     }
@@ -460,7 +460,7 @@
                     success: function (response)
                     {
                         console.log({ response })
-                        vm.getAllTabs("list","");
+                        vm.getAllTabs("list","new");
                     }
                 
                 
@@ -495,7 +495,7 @@
                             e.parents("li").find(".row-action .blue-btn").addClass("hide");
 
                         vm.getAllTabs("modal",""); 
-                        vm.getAllTabs("list","");
+                        vm.getAllTabs("list","new");
                     
 
                     }

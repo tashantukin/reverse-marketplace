@@ -870,6 +870,9 @@
 
                            
                            <div id="tab-interested" class="tab-pane fade">
+                            <div class="result-found">
+                                 <h5>Results found: <span class="text-theme" id="count-interested"></span></h5>
+                           </div>
                               <div class="scroll-table-container">
                                  <table class="table table-freelancer scroll-table">
                                     <thead>
@@ -891,6 +894,9 @@
                               <div class="pagination-center"><nav class="text-center" id="pagination-container-interested" aria-label="Page navigation"><div class="paginationjs"><div class="paginationjs-pages"><ul><li class="paginationjs-prev disabled"><a>«</a></li>   <li class="paginationjs-next J-paginationjs-next" data-num="2" title="Next page"><a href="">»</a></li></ul></div></div></nav></div>
                            </div>
                            <div id="tab-quoted" class="tab-pane fade">
+                            <div class="result-found">
+                                 <h5>Results found: <span class="text-theme" id="count-quoted"></span></h5>
+                           </div>
                               <div class="scroll-table-container">
                                  <table class="table table-freelancer scroll-table">
                                  <thead>
@@ -913,6 +919,9 @@
                            </div>
          
                            <div id="tab-accepted" class="tab-pane fade">
+                            <div class="result-found">
+                                 <h5>Results found: <span class="text-theme" id="count-accepted"></span></h5>
+                           </div>
                               <div class="scroll-table-container">
                                  <table class="table table-freelancer scroll-table">
                                  <thead>
@@ -937,6 +946,9 @@
 
 
                            <div id="tab-rejected" class="tab-pane fade active in">
+                            <div class="result-found">
+                                 <h5>Results found: <span class="text-theme" id="count-rejected"></span></h5>
+                           </div>
                            <div class="scroll-table-container">
                               <table class="table table-freelancer scroll-table">
                               <thead>
@@ -961,9 +973,10 @@
 
 
                          <div id="tab-cancelled" class="tab-pane fade active in">
-                         <div class="result-found">
-                        <h5>Results found: <span class="text-theme">200</span></h5>
-                         </div>
+                          <div class="result-found">
+                                 <h5>Results found: <span class="text-theme" id="count-cancelled"></span></h5>
+                           </div>
+                        
                            <div class="scroll-table-container">
                               <table class="table table-freelancer scroll-table">
                               <thead>
@@ -995,6 +1008,9 @@
 
 
                            <div id="tab-completed" class="tab-pane fade">
+                            <div class="result-found">
+                                 <h5>Results found: <span class="text-theme" id="count-completed"></span></h5>
+                           </div>
                               <div class="scroll-table-container">
                                  <table class="table table-freelancer scroll-table">
                                  <thead>
@@ -1145,6 +1161,8 @@
 
          function pageNavigate(p, NumPages, tab)
          {
+            console.log({ p });
+            console.log({NumPages})
                vm = this;
          // els1["p"].className = els2["p"].className = els1["p"].value = els2["p"].value = "";
          if (p < 1) p = 1;
@@ -1158,15 +1176,27 @@
             //       plinks1.innerHTML = plinks2.innerHTML = this.logarithmicPaginationLinks(NumPages, p, link);
             /// console.log(this.logarithmicPaginationLinks(NumPages, p, link))
             //$('.paginationjs-next').before(this.logarithmicPaginationLinks(NumPages, p, tab))
-            $(`#${tab} #pagination-container-all #next`).before(logarithmicPaginationLinks(NumPages, p, tab));
+            if (tab == "jobListTwo") {
+               $(`#${tab} #pagination-buyer #next`).before(logarithmicPaginationLinks(NumPages, p, tab));
+                 waitForElement(`.paging`, function ()
+               {
+                  $(`#pagination-buyer .paging`).removeClass('active');
+                  $(`#pagination-buyer .paginationjs-pages #${p}`).addClass('active');
+               
+               })
+            } else {
+               $(`#${tab} #pagination-container-all #next`).before(logarithmicPaginationLinks(NumPages, p, tab));
+               waitForElement(`.paging`, function ()
+               {
+                 // $(`#pagination-container-all .paging`).removeClass('active');
+                 // $(`#pagination-container-all .paginationjs-pages #${p}`).addClass('active');
+               
+               })
+            }
+         
 
 
-            waitForElement(`.paging`, function ()
-            {
-               $(`#pagination-container-all .paging`).removeClass('active');
-               $(`#pagination-container-all .paginationjs-pages #${p}`).addClass('active');
             
-            })
              
                  
                //vm.fetchDataJobs(p, this.perPage);
@@ -1175,7 +1205,12 @@
 
          function logarithmicPaginationLinks(lastPage, matchPage, tab)
          { 
-                  $(`#${tab} #pagination-container-all`).find('.J-paginationjs-page').remove();
+                   if (tab == "jobListTwo") {
+                     $(`#${tab} #pagination-buyer`).find('.J-paginationjs-page').remove();
+                   } else {
+                       $(`#${tab} #pagination-container-all`).find('.J-paginationjs-page').remove();
+                  }
+                 
                   //$('.paging').remove();
                   function pageLink(p, page) {
                      return ((p === page) ? `<li class="paging paginationjs-page J-paginationjs-page active list" id=${p} value=${p}
@@ -1247,8 +1282,9 @@
          function pageClick(e, el, pageCount)
          {
             
-               vm = this
-               
+             vm = this
+             $(`#pagination-container-all .paging`).removeClass('active');
+              el.addClass('active');
                e = e || window.event;
                var s = e.target || e.srcElement,n, p, el;
                console.log({ s })
@@ -1280,10 +1316,47 @@
                // else if (n === "plast") p = (this.elements["pcount"].value >>> 0);
                // pageNavigate(p);
                // return false;
-         }
+           }
 
 
+         function pageClickBuyer(e, el, pageCount)
+         {
+            
+               vm = this
+               
+               e = e || window.event;
+               var s = e.target || e.srcElement,n, p, el;
+               console.log({ s })
+               n = el.attr('value');
+               console.log({n})
+            var pages = Math.ceil($('#count-all-buyer').text() / pageCount)
+            console.log({ pages });
+              pageNavigate(n, pages);
+           // paginator(job_list, n, pageCount, 'tab-all');
+              fetchPaginatedJobs(n,pages)
+            return false;
+               // }
+               //else if ((s.tagName !== "INPUT") || (s.type !== "submit")) return;
 
+
+               // if (!(n = s.name)) {
+               //     p = ((el = this.elements["p"]).value >>> 0);
+               //     if ((p <= 0) || (p > vm.paginationcountAll)) {
+               //         el.className = "err";
+               //         return false;
+               //     }
+               // }
+               
+               //  if (n === "p1") p = 1;
+               // else if (n === "pprev") p = (this.elements["pcurr"].value >>> 0) - 1;
+               // else if (n === "pnext") p = (this.elements["pcurr"].value >>> 0) + 1;
+               // else if (n === "plast") p = (this.elements["pcount"].value >>> 0);
+               // pageNavigate(p);
+               // return false;
+           }
+           
+
+   
          async function getChargeDetails(charge_name)
          {
             var data = [{ 'Name': 'charge_name', 'Operator': "in", "Value": charge_name }]
@@ -1301,9 +1374,24 @@
                {
                   const charge = response.Records[0];
                   viewBidBuyerEnabled = charge['status'];
-                  buyerViewBidCharge = charge['value'];
+                
                   console.log({ viewBidBuyerEnabled });
                     
+                  
+
+                  if (charge_name == 'job_bid_buyer') {
+
+                     buyerViewBidCharge = charge['value'];
+
+                       waitForElement(`#paymentModal #charge-amount-view-bid`, function ()
+                     {
+
+                        $('#paymentModal #charge-amount-view-bid').text( (buyerViewBidCharge != null || buyerViewBidCharge != "") ? parseFloat(buyerViewBidCharge).toFixed(2) : "0.00")
+                     })
+
+                  }
+                  
+
 
 
                   if (charge_name == 'job_accepted_buyer') {
@@ -1644,6 +1732,7 @@
 
                   job.forEach(function (quote, i)
                   {
+                     var validity = quote['status'] != null ? quote['status'] : `Valid to ${quote['validity_date']}`;
 
                   var viewButtonTd = "";
                   if (viewBidBuyerEnabled == 'True' && quote['buyer_view_paid'] != 'TRUE') {
@@ -1672,7 +1761,7 @@
                                              </div>
                            
                                              <div class="common-text">
-                                                <p>You will be charged $<span id="charge-amount">${parseFloat(buyerViewBidCharge).toFixed(2)}</span> to View a Quote</p>
+                                                <p>You will be charged $<span id="charge-amount-view-bid"></span> to View a Quote</p>
                                                 <p>Upon clicking the Pay button, you will be re-directed to the Payment Gateway to continue with your transaction</p>
                                              
                                              </div>
@@ -1732,7 +1821,7 @@
                      <td><div class="job-quotedtitle"><span class="qtitle">Date</span><span class="qdesc">${new Date( quote['CreatedDateTime']* 1000).format("dd/mm/yyyy")}</span></div></td>
                      <td><div class="job-quotedtitle"><span class="qtitle">Amount</span><span class="qdesc">$AUD${quote['all_total']}</span></div></td>
                      <td><div class="job-quotedtitle"><span class="qtitle">Availability</span><span class="qdesc">${quote['availability_date']}</span></div></td>
-                     <td><div class="job-quotedtitle"><span class="qtitle">Status</span><span class="qdesc">Valid to ${quote['validity_date']} </span></div></td>
+                     <td><div class="job-quotedtitle"><span class="qtitle">Status</span><span class="qdesc">${validity} </span></div></td>
                      
                         ${ viewButtonTd }
                   </tr>`;
@@ -1930,7 +2019,8 @@
                 console.log({ response })
               
                 const jobs = response
-                const jobDetails = jobs.Records
+                 const jobDetails = jobs.Records
+                
                 //if existing user, verify the status
                 if (jobDetails.length != 0) {
 
@@ -1966,8 +2056,11 @@
                  
                   
                 }
-               
-        
+                 waitForElement('#count-interested', function ()
+                 {
+                    $('#count-interested').text(jobs.TotalRecords);
+                   
+                 })
               }
             })
            }
@@ -1989,7 +2082,8 @@
                 console.log({ response })
               
                 const jobs = response
-                const jobDetails = jobs.Records
+                 const jobDetails = jobs.Records
+                //  $('#count-quoted').text(jobs.TotalRecords);
                 //if existing user, verify the status
                 if (jobDetails.length != 0) {
 
@@ -2027,7 +2121,11 @@
                  
                   
                 }
-               
+               waitForElement('#count-quoted', function ()
+                 {
+                    $('#count-quoted').text(jobs.TotalRecords);
+                   
+                 })
         
               }
             })
@@ -2050,7 +2148,8 @@
                 console.log({ response })
               
                 const jobs = response
-                const jobDetails = jobs.Records
+                 const jobDetails = jobs.Records
+                //  $('#count-accepted').text(jobs.TotalRecords);
                 //if existing user, verify the status
                 if (jobDetails.length != 0) {
 
@@ -2088,7 +2187,11 @@
                  
                   
                 }
-               
+                  waitForElement('#count-accepted', function ()
+                 {
+                    $('#count-accepted').text(jobs.TotalRecords);
+                   
+                 })
         
               }
             })
@@ -2111,7 +2214,8 @@
                 console.log({ response })
               
                 const jobs = response
-                const jobDetails = jobs.Records
+                 const jobDetails = jobs.Records
+                //  $('#count-completed').text(jobs.TotalRecords);
                 //if existing user, verify the status
                 if (jobDetails.length != 0) {
 
@@ -2149,7 +2253,11 @@
                  
                   
                 }
-               
+               waitForElement('#count-completed', function ()
+                 {
+                    $('#count-completed').text(jobs.TotalRecords);
+                   
+                 })
         
               }
             })
@@ -2176,7 +2284,8 @@
                 console.log({ response })
               
                 const jobs = response
-                const jobDetails = jobs.Records
+                 const jobDetails = jobs.Records
+               // $('#count-cancelled').text(jobs.TotalRecords);
                 //if existing user, verify the status
                 if (jobDetails.length != 0) {
 
@@ -2213,7 +2322,11 @@
                  
                   
                 }
-               
+               waitForElement('#count-rejected', function ()
+                 {
+                    $('#count-rejected').text(jobs.TotalRecords);
+                   
+                 })
         
               }
             })
@@ -2239,7 +2352,8 @@
                 console.log({ response })
               
                 const jobs = response
-                const jobDetails = jobs.Records
+                 const jobDetails = jobs.Records
+                //  $('#count-cancelled').text(jobs.TotalRecords);
                 //if existing user, verify the status
                 if (jobDetails.length != 0) {
                   var perPage = 20;
@@ -2275,11 +2389,14 @@
                   
                 }
                
-        
-              }
+                waitForElement('#count-cancelled', function ()
+                 {
+                    $('#count-cancelled').text(jobs.TotalRecords);
+                   
+                 })
+                }
             })
            }
-
 
 
            function getJobLodges()
@@ -2418,18 +2535,30 @@
                                    <div class="blue-tabdesign">
                                      <div class="navtab-flex">
                                         <div class="navtab-filter">
-                                           <label>View:</label><select class="form-control"><option>2019</option><option>2020</option><option selected="">2021</option></select>
+                                            <div class="result-found">
+                                     <h5>Results found: <span class="text-theme" id="count-all-buyer"></span></h5>
+                                     </div>
                                         </div>
                                          <div class="navtab-filter">
-                                            <label>Results per Page:</label><select class="form-control"><option>10</option><option>20</option><option>30</option><option>40</option></select>
                                             <div class="lodgejob-menu"><a href="/user/plugins/${packageId}/lodge_job.php">Lodge a Job</a></div>
                                          </div>
                                     </div>
+
+                                  
                                   <div class="table-quoted-container">
                                     
    
-                                  <div class="pagination-center"><nav class="text-center" id="pagination-container" aria-label="Page navigation"></nav></div>
+                                
                                   </div>
+
+
+                           <div class="pagination-flex">
+                           <div class="pagination-center"><nav class="text-center" id="pagination-buyer" aria-label="Page navigation"><div class="paginationjs"><div class="paginationjs-pages"><ul><li class="paginationjs-prev disabled" id="previous"><a>«</a></li><li class="paginationjs-next J-paginationjs-next" data-num="2" title="Next page" id="next"><a href="">»</a></li></ul></div></div></nav></div>
+                           
+                           <div class="navtab-filter">
+                            <label>Results per Page:</label><select class="form-control" id="page-all-buyer"><option value=10>10</option><option value=20>20</option><option value=30>30</option><option value=40>40</option></select>
+                            </div>
+                         </div>
                                </div>
                                </div>
                            </div>
@@ -2457,7 +2586,7 @@
             
                  $.ajax({
                     method: "POST",
-                    url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_list?pageSize=1000`,
+                    url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_list?pageSize=1000&sort=-CreatedDateTime`,
                     headers: {
                        "Content-Type": "application/json"
                     },
@@ -2470,6 +2599,12 @@
               
                        const jobs = response
                        const jobDetails = jobs.Records
+                       const totalJob = jobs.TotalRecords;
+                       waitForElement('#count-all-buyer', function ()
+                       {
+                          $('#count-all-buyer').text(totalJob);
+                          
+                       })
                        //if existing user, verify the status
                        if (jobDetails.length != 0) {
 
@@ -2509,6 +2644,107 @@
 
                              waitForElement('.table-quoted-container', function ()
                              {
+                               // $('.table-quoted-container').append(jobTable);
+
+                                
+                    
+                             })
+                             waitForElement(`#${job['Id']}`, function ()
+                             {
+                             //getQuotedJobDetails(job['Id'], `#${job['Id']}`, 'applicant-quote')
+                             })
+                            
+                          })
+                  
+                 
+                  
+                       }
+
+                      var perPageCount = 10;
+                       var totalPages = Math.ceil(totalJob / perPageCount)
+                       console.log({ totalPages });
+                       waitForElement(`#jobListTwo`, function ()
+                       {
+                          pageNavigate(1, totalPages, `jobListTwo`)
+                          fetchPaginatedJobs(1, perPageCount)
+
+                       })
+                    }
+                 })
+
+
+              })
+
+           }
+
+           async function fetchPaginatedJobs(value, page)
+           {
+
+              $('.table-quoted-container .custom-content').remove();
+               var data = [{ 'Name': 'buyerID', 'Operator': "in", "Value": $('#userGuid').val() }
+                         
+                 ]
+            
+                 $.ajax({
+                    method: "POST",
+                    url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_list?pageSize=${page}&pageNumber=${value}&&sort=-CreatedDateTime`,
+                    headers: {
+                       "Content-Type": "application/json"
+                    },
+            
+                    data: JSON.stringify(data),
+         
+                    success: function (response)
+                    {
+                       console.log({ response })
+              
+                       const jobs = response
+                       const jobDetails = jobs.Records
+                       const totalJob = jobs.TotalRecords;
+                       waitForElement('#count-all-buyer', function ()
+                       {
+                          $('#count-all-buyer').text(totalJob);
+                          
+                       })
+                       //if existing user, verify the status
+                       if (jobDetails.length != 0) {
+
+                          jobDetails.forEach(function (job, i)
+                          {
+
+                             let jobTable = '';
+                             if (job['no_of_quotes'] == 0) {
+                                jobTable = `<table class="table table-freelancer custom-content">
+                             <thead>
+                           <tr data-id="${job['Id']}">
+                              <th colspan="5">Job #${job['Id']}</th>
+                              <th class="text-right"><a href="${protocol}//${baseURL}/user/plugins/${packageId}/job-details.php?jobId=${job['Id']}">Details &gt;&gt;</a></th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                           <td colspan="6"><div class="quoted-notfound">No one has quoted on this job yet.</div></td>
+                        </tr>
+                     </tbody>
+                     </table>`
+                             } else {
+                              jobTable = `<table class="table table-freelancer custom-content" id=${job['Id']}>
+                              <thead>
+                                 <tr>
+                                    <th colspan="5">Job #${job['Id']}</th>
+                                    <th class="text-right"><a href="user/plugins/${packageId}/job-details.php?jobId=${job['Id']}"">Details &gt;&gt;</a></th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                
+                              </tbody>
+                           </table> `
+                                
+                              
+                             }
+
+                             waitForElement('.table-quoted-container', function ()
+                             {
                                 $('.table-quoted-container').append(jobTable);
 
                                 
@@ -2524,13 +2760,16 @@
                  
                   
                        }
-               
-        
+
+                     //  var perPageCount = 10 //$('#page-all-buyer :selected').val();
+                     //   var totalPages = Math.ceil(totalJob / perPageCount)
+                     //   console.log({ totalPages });
+                     //   waitForElement(`#jobListTwo`, function ()
+                     //   {
+                     //      pageNavigate(1, totalPages, `jobListTwo`)
+                     //   })
                     }
                  })
-
-
-              })
 
            }
 
@@ -2550,7 +2789,8 @@
              getCancelledJobs: getCancelledJobs,
              pageClick: pageClick,
              pageNavigate: pageNavigate,
-             logarithmicPaginationLinks : logarithmicPaginationLinks
+             logarithmicPaginationLinks: logarithmicPaginationLinks,
+             pageClickBuyer:pageClickBuyer
             
           }
           
@@ -3398,6 +3638,7 @@
          jobs.getUserJobList()
          jobs.getCompletedJobs()
          jobs.getCancelledJobs()
+        
          
       
          
@@ -3702,12 +3943,23 @@
 
       // })
 
-      jQuery('body').on('click', '.paging', function (e)
+      jQuery('body').on('click', '#pagination-container-all .paging', function (e)
       {
          var jobs = jobData.getInstance();
          jobs.pageClick(e, $(this), $('#page-all :selected').val());
          //paginator(job_list, parseInt($(this).attr('indx')), 20, 'tab-all');
       })
+
+
+       jQuery('body').on('click', '#pagination-buyer .paging', function (e)
+      {
+         var jobs = jobData.getInstance();
+         jobs.pageClickBuyer(e, $(this), $('#page-all-buyer :selected').val());
+         //paginator(job_list, parseInt($(this).attr('indx')), 20, 'tab-all');
+      })
+
+
+
         
       jQuery('body').on('change', '#page-all', function (e)
       {
@@ -3722,6 +3974,26 @@
                   jobs.pageNavigate(1, totalPages, `tab-all`)
                     
                   paginator(job_list, 1, pageCount, 'tab-all');
+  
+      });
+
+
+        
+      jQuery('body').on('change', '#page-all-buyer', function (e)
+      {
+
+        var jobs = jobData.getInstance();
+        var pageCount =  $('#page-all-buyer :selected').val();
+                  
+                  var totalPages = Math.ceil($('#count-all-buyer').text() / pageCount)  //change to dynamic value on select option 10,20.30
+                  console.log({totalPages})
+                  //totalFilteredJobs = totalPages;
+                  //$('#count-all').text(job_list.length - 1);
+                  
+         jobs.pageNavigate(1, totalPages, `jobListTwo`)
+         jobs.fetchPaginatedJobs(n, pageCount)
+                    
+                  //paginator(job_list, 1, pageCount, 'tab-all');
   
       });
 

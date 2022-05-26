@@ -77,7 +77,7 @@
                         console.log({ response })
 
                         vm.getAllTabs("modal");
-                        vm.getAllTabs("list");
+                        vm.getAllTabs("list", "new");
                     
 
                     }
@@ -90,7 +90,7 @@
             }
             },
 
-            async getAllTabs(page)
+            async getAllTabs(page, cond)
             {
                
                 try {
@@ -162,8 +162,10 @@
                             }
                        
                         $('[role="tablist"]').append(`<li role="presentation" class="${classHeader}"><a href="#${tab.Id}" data-id="${tab.Id}"  aria-controls= ${tab.Id} role="tab" data-toggle="tab"> ${tab.tab_name} </a></li>`);
-                        
-                         $(".tab-content").append(`
+                            if (cond == "new") {
+                                //do nothing
+                            } else {
+                                $(".tab-content").append(`
                              <div role="tabpanel" class="${classes}" id="${tab.Id}">
                                     <div class="panel-box tabular">
                                         <div class="custom-list-box-heading-onbrd white">
@@ -212,10 +214,10 @@
                                 </div>
                                 </div>`);
                             
-                            console.log(` 1 ${tab.sort_order} - ${vm.allOnboardTabs.length  - 1}`)
-                            if (tab.sort_order == vm.allOnboardTabs.length  - 1) {
-                                console.log(` 2 ${tab.sort_order} - ${vm.allOnboardTabs.length  - 1}`)
-                                 var saveSettingsContainer = `<div class="custom_list_
+                                console.log(` 1 ${tab.sort_order} - ${vm.allOnboardTabs.length - 1}`)
+                                if (tab.sort_order == vm.allOnboardTabs.length - 1) {
+                                    console.log(` 2 ${tab.sort_order} - ${vm.allOnboardTabs.length - 1}`)
+                                    var saveSettingsContainer = `<div class="custom_list_
                                  wrapper">
 
                                                 <ul class="custom-listing-table-onbrd custom row-height-50">
@@ -277,10 +279,10 @@
 
                                             <div class="clearfix"> </div>
 
-                                    </div>`        
-                                $(`#${tab.Id} .custom_list_wrapper`).last().after(saveSettingsContainer);
+                                    </div>`
+                                    $(`#${tab.Id} .custom_list_wrapper`).last().after(saveSettingsContainer);
+                                }
                             }
-                        
                     
                            // vm.getAllFields(tab.Id);
                              waitForElement('.custom-listing-table-onbrd', function ()
@@ -319,7 +321,7 @@
                     {
                         console.log({ response })
                         if (table == 'tabs') {
-                            vm.getAllTabs("list");
+                            vm.getAllTabs("list", "new");
                              
                         }
                     }
@@ -468,7 +470,7 @@
                     success: function (response)
                     {
                         console.log({ response })
-                        vm.getAllTabs("list");
+                        vm.getAllTabs("list", "new");
                     }
                 
                 
@@ -503,7 +505,7 @@
                             e.parents("li").find(".row-action .blue-btn").addClass("hide");
 
                         vm.getAllTabs("modal");
-                        vm.getAllTabs("list");
+                        vm.getAllTabs("list", "new");
                     
 
                     }

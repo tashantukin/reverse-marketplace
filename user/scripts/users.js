@@ -1079,7 +1079,8 @@ sellerFields = new Vue({
                 localStorage.removeItem("userID");
                 localStorage.removeItem("stripe-onboarded");
                 localStorage.removeItem("fieldValues");
-                $('#verification-details .btn-jobform-outline').hide();
+                $('#verification .btn-jobform-outline').hide();
+
 
                 
                 if (vm.isEdit == 1) {

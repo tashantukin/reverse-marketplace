@@ -30,15 +30,17 @@
                 emailFields: "",
                 chargesListBuyer: [],
                 chargesListSeller: [],
-                perPage: 20,
+                perPage: 10,
                 page: 0,
                 paginationcountJobs: 0,
                 currentPageJobs: 1,
                 totalItemsJobs: 0,
+                paginationcountAll: 0,
 
                 paginationcountApproval: 0,
                 currentPageApproval: 1,
                 totalItemsApproval: 0,
+                paginationcountAllApproval: 0
              
             }
         },
@@ -66,14 +68,16 @@
                     vm.allFreelancers = users.data.Records
 
                     console.log(vm.allFreelancers);
-                    
+                     $('#approval-count').text(users.data.TotalRecords);
+                    vm.paginationcountAllApproval= Math.ceil(users.data.TotalRecords / this.perPage)
+                    this.pageNavigate(1, vm.paginationcountAllApproval, `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_list?sort=-CreatedDateTime&pageSize=20&pageNumber=`,"approvals")
 
                     vm.emailFields = vm.allFreelancers[0].custom_fields;
                     console.log( vm.emailFields);
                     var addressfield = JSON.parse(vm.emailFields).filter((field) => field.code === 'Address')
                     console.log( addressfield );
 
-
+                    
                 
                     // return templates
 
@@ -81,6 +85,221 @@
                     console.log("error", error);
                 }
             },
+
+
+            setupServerPage(table, totalRecords, perPage)
+            {
+                console.log('setupserverpage');
+                console.log(totalRecords);
+                //var totRecs = NumPages * RecsPerPage,s
+                tbdy = document.getElementById(table).tBodies[0],
+                l = tbdy.rows.length;
+            // document.getElementById("plength1").innerHTML = document.getElementById("plength2").innerHTML = totalRecords +
+            //     " record" + ((totRecs === 1) ? "" : "s") + "<br>" + totalRecords + " page" + ((totalRecords === 1) ? "" : "s");
+            // els1["pcount"].value = els2["pcount"].value = totalRecords
+                let jobData = `<tr v-for="job in allJobs" class="border-hover">
+                                            <td data-th="Job ID"><a
+                                                    :href="'job-details.php?jobId=' + job.Id">{{ job.Id }}</a></td>
+                                            <td data-th="Lodged by"><a
+                                                    :href="'job-details.php?jobId=' + job.Id">{{job.buyer_email}}</a>
+                                            </td>
+                                            <td data-th="Job Location"><a
+                                                    :href="'job-details.php?jobId=' + job.Id">{{job.in_person_work_address}}</a>
+                                            </td>
+
+                                            <td data-th="Job Type"
+                                                v-if="job.is_job_type_contract=='True' &&  job.is_job_type_fulltime=='True'">
+                                                <a href="">Contract,Full Time</a>
+                                            </td>
+                                            <td data-th="Job Type" v-else-if="job.is_job_type_contract=='True'"><a
+                                                    href="">Contract</a></td>
+                                            <td data-th="Job Type" v-else-if="job.is_job_type_fulltime=='True'"><a
+                                                    href="">Full Time</a></td>
+                                            <td data-th="Job Type"
+                                                v-else="job.is_job_type_fulltime=='False' && job.is_job_type_contract=='False' ">
+                                                <a href="">--</a>
+                                            </td>
+
+                                            <td data-th="Payment Type" v-if="job.payment_hourly=='True' && job.payment_fixed=='True" ><a href="freelancer.html">Fixed,Hourly</a></td> -->
+                                        <!-- <td data-th="Payment Type" v-if="job.is_payment_fixed=='True'"><a
+                                                href="">Fixed</a></td>
+                                        <td data-th="Payment Type" v-if="job.is_payment_hourly=='True'"><a
+                                                href="">Hourly</a></td>
+
+                                        <td data-th="Job to be completed by" v-if="job.time_frame_date != 'False'">
+                                            <a href=""><span class="text-danger">{{ job.completion_date }}</span></a>
+                                        </td>
+                                        <td data-th="Job to be completed by"
+                                            v-if="job.time_frame_urgent =='True' && job.time_frame_date == 'False'">
+                                            <a href=""><span class="text-danger">Urgent</span></a>
+                                        </td>
+                                        <td data-th="Job to be completed by"
+                                            v-if="job.time_frame_nohurry =='True' && job.time_frame_date == 'False' ">
+                                            <a href=""><span class="text-danger">No hurry</span></a>
+                                        </td>
+
+                                        <td data-th="Availability"><a href=""><span
+                                                    class="text-danger">{{ job.job_validity}}</span></a></td>
+                                        <td data-th="No.of Quote"><a
+                                                :href="'quote-details.php?jobId=' + job.Id">{{ job.no_of_quotes}}</a>
+                                        </td>
+                                        <td data-th="Status"><a href="">{{ job.status}}</a></td>
+                                        </tr>`;
+            while (l > perPage) tbdy.deleteRow(--l);
+            while (l < perPage) tbdy.insertRow(l++).insertCell(0).innerHTML = "Some data...";
+            //pageNavigate(1);
+            },
+
+
+            pageNavigate(p, NumPages, link, tab)
+            {
+                vm = this;
+           // els1["p"].className = els2["p"].className = els1["p"].value = els2["p"].value = "";
+            if (p < 1) p = 1;
+                else if (p > NumPages) p = NumPages;
+                if (p == 1) {
+                    $('.paginationjs-prev').addClass('disabled')
+                } else {
+                     $('.paginationjs-prev').removeClass('disabled')
+                }
+            //els1["p1"].disabled = els2["p1"].disabled = els1["pprev"].disabled = els2["pprev"].disabled = (p === 1);
+            //els1["pnext"].disabled = els2["pnext"].disabled = els1["plast"].disabled = els2["plast"].disabled = (p ===
+            ///    NumPages);
+           // els1["pcurr"].value = els2["pcurr"].value = p;
+            // if the server is handling this, insert NON-logarithmic page links here (can be just first, current, and last page).
+           //plinks1 = document.getElementById("plinks1"),
+             //       plinks1.innerHTML = plinks2.innerHTML = this.logarithmicPaginationLinks(NumPages, p, link);
+              /// console.log(this.logarithmicPaginationLinks(NumPages, p, link))
+                $(`#${tab} .paginationjs-next`).before(this.logarithmicPaginationLinks(NumPages, p, tab))
+
+                if (tab == "jobs")
+                {
+                    vm.fetchDataJobs(p, this.perPage);
+                    $('#jobs  .paging').removeClass('active');
+                    $(`#${tab}`).find(`[value='${p}']`).addClass('active');
+                } else {
+
+                    vm.fetchDataApprovals(p, this.perPage);
+                    $('#approvals  .paging').removeClass('active');
+                    $(`#${tab}`).find(`[value='${p}']`).addClass('active');
+                }             
+            },
+
+
+            logarithmicPaginationLinks(lastPage, matchPage, tab)
+            { 
+                $(`#${tab} .paging`).remove();
+                function pageLink(p, page) {
+                    return ((p === page) ? `<li class="paging" value=${p}
+                                            ><a  href="javascript:void(0);">${p}</a>
+                                          </li>` : `<li class="paging" value=${p}
+                                            ><a  href="javascript:void(0);">${p}</a>
+                                          </li>`);
+                }
+        
+                function pageGap(x) {
+                    if (x === 0) return "";
+                    if (x === 1) return " ";
+                    if (x <= 10) return "<li class='paging'> <a href='javascript:void(0);'>.</a></li>"; 
+                    if (x <= 100) return "<li class='paging'> <a href='javascript:void(0);'>..</a></li>";
+                    return "<li class='paging'> <a href='javascript:void(0);'>...</a></li>";
+                }
+
+                var page = (matchPage ? matchPage : 1),
+                    LINKS_PER_STEP = 5,
+                    lastp1 = 1,
+                    lastp2 = page,
+                    p1 = 1,
+                    p2 = page,
+                    c1 = LINKS_PER_STEP + 1,
+                    c2 = LINKS_PER_STEP + 1,
+                    s1 = "",
+                    s2 = "",
+                    step = 1,
+                    linkHTML = "";
+
+                while (true) {
+                    if (c1 >= c2) {
+                        s1 += pageGap(p1 - lastp1) + pageLink(p1, matchPage);
+                        lastp1 = p1;
+                        p1 += step;
+                        c1--;
+                    } else {
+                        s2 = pageLink(p2, matchPage) + pageGap(lastp2 - p2) + s2;
+                        lastp2 = p2;
+                        p2 -= step;
+                        c2--;
+                    }
+                    if (c2 === 0) {
+                        step *= 10;
+                        p1 += step - 1; // Round UP to nearest multiple of step
+                        p1 -= (p1 % step);
+                        p2 -= (p2 % step); // Round DOWN to nearest multiple of step
+                        c1 = LINKS_PER_STEP;
+                        c2 = LINKS_PER_STEP;
+                    }
+                    if (p1 > p2) {
+                        linkHTML += s1 + pageGap(lastp2 - lastp1) + s2;
+                        if ((lastp2 > page) || (page >= lastPage)) break;
+                        lastp1 = page;
+                        lastp2 = lastPage;
+                        p1 = page + 1;
+                        p2 = lastPage;
+                        c1 = LINKS_PER_STEP;
+                        c2 = LINKS_PER_STEP + 1;
+                        s1 = '';
+                        s2 = '';
+                        step = 1;
+                    }
+                }
+                return linkHTML;
+            },
+
+
+            pageClick(e, el, tab)
+            {
+               // return false;
+               // e.preventDefault();
+                vm = this
+                
+                e = e || window.event;
+                var s = e.target || e.srcElement,n, p, el;
+                console.log({ s })
+                n = el.attr('value');
+                console.log({n})
+               // pageNavigate(p.substring(n) >>> 0);
+                // if (s.tagName === "A") {
+                //     n = (p = s.href).lastIndexOf("=") + 1;
+                //     console.log(`n ${n}`)
+                //      console.log(`s ${s.name}`)
+                if (tab == "jobs") {
+                vm.pageNavigate(n, vm.paginationcountAll,"", tab);
+                    return false;
+                } else {
+                vm.pageNavigate(n, vm.paginationcountAllApproval, "", tab);
+                return false;
+                }
+                 
+                // }
+                //else if ((s.tagName !== "INPUT") || (s.type !== "submit")) return;
+
+
+                // if (!(n = s.name)) {
+                //     p = ((el = this.elements["p"]).value >>> 0);
+                //     if ((p <= 0) || (p > vm.paginationcountAll)) {
+                //         el.className = "err";
+                //         return false;
+                //     }
+                // }
+                
+                //  if (n === "p1") p = 1;
+                // else if (n === "pprev") p = (this.elements["pcurr"].value >>> 0) - 1;
+                // else if (n === "pnext") p = (this.elements["pcurr"].value >>> 0) + 1;
+                // else if (n === "plast") p = (this.elements["pcount"].value >>> 0);
+                // pageNavigate(p);
+                // return false;
+            },
+
 
             async getAllJobs(action) {
                 try {
@@ -95,8 +314,16 @@
                     })
                     const jobs = await response
                     vm.allJobs = jobs.data.Records
+                    vm.totalItemsJobs = jobs.data.TotalRecords
+                    vm.paginationcountAll = Math.ceil(jobs.data.TotalRecords / this.perPage)
+                    $('#job-count').text(vm.totalItemsJobs);
 
-                    console.log( vm.allJobs);
+
+                     //vm.setupServerPage('job-table', jobs.data.TotalRecords, 20) 
+
+                    console.log(vm.allJobs);
+                    
+                    this.pageNavigate(1, vm.paginationcountAll, `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_list?sort=-CreatedDateTime&pageSize=20&pageNumber=`,"jobs")
                     
                     // return templates
 
@@ -318,6 +545,7 @@
             this.getAllJobs('GET');
             this.getAllCharges('buyer');
             this.getAllCharges('seller');
+            //this.setupServerPage
         },
 
 
@@ -460,7 +688,58 @@
 
     
 
-    $(document).ready(function() {
+    $(document).ready(function ()
+    {
+        
+       // document.getElementsByClassName("paging").onclick = manageFields.pageClick();
+
+        jQuery('body').on('click', '#jobs  .paging', function (e)
+        {
+            
+            manageFields.pageClick(e, $(this), "jobs");
+        })
+
+        
+        jQuery('body').on('click', '#approvals  .paging', function (e)
+        {
+            $('#approvals  .paging').removeClass('active');
+            $(this).addClass('active');
+            manageFields.pageClick(e, $(this), "approvals");
+        })
+
+         jQuery('body').on('click', '#approvals  .paginationjs-next', function (e)
+        {
+             $('#approvals  .page-list').find('.active').next('li').click();
+           // $(this).addClass('active');
+           // manageFields.pageClick(e, $(this), "approvals");
+        })
+
+         jQuery('body').on('click', '#jobs  .paginationjs-next', function (e)
+        {
+             $('#jobs  .page-list').find('.active').next('li').click();
+           // $(this).addClass('active');
+           // manageFields.pageClick(e, $(this), "approvals");
+         })
+        
+         jQuery('body').on('click', '#jobs  .paginationjs-prev', function (e)
+        {
+             $('#jobs  .page-list').find('.active').prev('li').click();
+           // $(this).addClass('active');
+           // manageFields.pageClick(e, $(this), "approvals");
+         })
+        
+
+          jQuery('body').on('click', '#approvals  .paginationjs-prev', function (e)
+        {
+             $('#approvals  .page-list').find('.active').prev('li').click();
+           // $(this).addClass('active');
+           // manageFields.pageClick(e, $(this), "approvals");
+        })
+
+        
+
+
+
 
         $('.paging').css('margin', 'auto');
 

@@ -65,12 +65,12 @@ $action = $_GET['action'];
                 <div class="top-search-menu">
 
                     <div class="row">
-                    <div class="col-md-1">
-                        <div class="tab-title-container">
-                            <h3>Steps:</h3>
+                        <div class="col-md-1">
+                            <div class="tab-title-container">
+                                <h3>Steps:</h3>
+                            </div>
+
                         </div>
-                        
-                    </div>
 
                         <div class="col-md-11">
 
@@ -173,7 +173,7 @@ $action = $_GET['action'];
 
                 <div class="form-group">
                     <label>Field Description*</label>
-                    <input :value="fieldDescription" type="text" class="form-control required" name="onbrd_field_text"
+                    <input :value="description" type="text" class="form-control required" name="onbrd_field_text"
                         id="onbrd_field_text">
                 </div>
 

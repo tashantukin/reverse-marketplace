@@ -1777,10 +1777,6 @@
 
                                        <hr>
 
-
-
-                                          
-                                          
                                        </div>
                                        
                                        <div class="payment-bottom-con clearfix">

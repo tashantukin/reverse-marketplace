@@ -45,7 +45,8 @@
                 fieldSteps: '',
                 values: '',
                 fieldId: '',
-                placeholder: ''
+                placeholder: '',
+                description :''
          
                 
             }
@@ -533,7 +534,8 @@
                     vm.fieldSteps = fieldDetails.classification,
                     vm.values =  JSON.parse(fieldDetails.values),   
                     vm.fieldType = fieldDetails.type_of_field,
-                    vm.fieldId =  fieldDetails.Id
+                    vm.fieldId = fieldDetails.Id
+                    vm.description = fieldDetails.text
                     
                     if (vm.fieldType == "checkbox" || vm.fieldType == "dropdown" || vm.fieldType ==  'radiobutton' ) {
                         $('.cstm-fieldpop-optarea').show();

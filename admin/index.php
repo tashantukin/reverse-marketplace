@@ -50,6 +50,7 @@
     <link href="css/landing.css" rel="stylesheet" type="text/css">
 
     <link href="css/style.css" rel="stylesheet" type="text/css">
+    <link href="css/pager.css" rel="stylesheet" type="text/css">
     </meta>
 </head>
 <!-- end header -->
@@ -209,6 +210,19 @@ $baseUrl = getMarketplaceBaseUrl();
             <!-- tab description -->
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="jobs">
+                    <div class="page-topnav secondnary-topnav">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="tiny-list-wrap">
+                                    <div class="total-item tiny-list">
+                                        <div class="bold-item-title" id="job-count"></div>
+                                        <div class="light-item-txt">Results Found</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
                     <div class="panel-box tabular">
 
                         <div class="job-tab-table">
@@ -252,7 +266,9 @@ $baseUrl = getMarketplaceBaseUrl();
                                                 <a href="">--</a>
                                             </td>
 
-                                            <!-- <td data-th="Payment Type" v-if="job.payment_hourly=='True' && job.payment_fixed=='True" ><a href="freelancer.html">Fixed,Hourly</a></td> -->
+                                            <!-- <td data-th="Payment Type"
+                                                v-if="job.payment_hourly=='True' && job.payment_fixed=='True"><a
+                                                    href="freelancer.html">Fixed,Hourly</a></td> -->
                                             <td data-th="Payment Type" v-if="job.is_payment_fixed=='True'"><a
                                                     href="">Fixed</a></td>
                                             <td data-th="Payment Type" v-if="job.is_payment_hourly=='True'"><a
@@ -288,23 +304,49 @@ $baseUrl = getMarketplaceBaseUrl();
                         <nav class="text-center" id="pagination-container-job" aria-label="Page navigation">
                             <div class="paginationjs">
                                 <div class="paginationjs-pages">
-                                    <ul>
-                                        <li class="paginationjs-prev disabled"><a>«</a></li>
+                                    <ul class="page-list">
+                                        <li class="paginationjs-prev disabled" href="javascript:void(0);"><a>«</a></li>
 
-                                        <li v-for="i in paginationcountJobs" v-on:click="fetchDataJobs(i)" :value="i"
+                                        <!-- <div id="plinks1" class="plinks">
+                                        </div> -->
+
+                                        <!-- <li v-for="i in paginationcountJobs" v-on:click="fetchDataJobs(i)" :value="i"
                                             :class="{active: i === currentPageJobs}"><a href="#">{{ i }}</a>
+                                        </li> -->
+                                        <!-- <li class="paginationjs-page J-paginationjs-page active" data-num="1"><a>1</a>
                                         </li>
-                                        <!-- <li class="paginationjs-page J-paginationjs-page active" data-num="1"><a>1</a></li><li class="paginationjs-page J-paginationjs-page" data-num="2"><a href="">2</a></li><li class="paginationjs-page J-paginationjs-page" data-num="3"><a href="">3</a></li><li class="paginationjs-page J-paginationjs-page" data-num="4"><a href="">4</a></li><li class="paginationjs-page J-paginationjs-page" data-num="5"><a href="">5</a></li> -->
+                                        <li class="paginationjs-page J-paginationjs-page" data-num="2"><a href="">2</a>
+                                        </li>
+                                        <li class="paginationjs-page J-paginationjs-page" data-num="3"><a href="">3</a>
+                                        </li>
+                                        <li class="paginationjs-page J-paginationjs-page" data-num="4"><a href="">4</a>
+                                        </li>
+                                        <li class="paginationjs-page J-paginationjs-page" data-num="5"><a href="">5</a>
+                                        </li> -->
 
                                         <li class="paginationjs-next J-paginationjs-next" data-num="2"
-                                            title="Next page"><a href="">»</a></li>
+                                            title="Next page"><a href="javascript:void(0);">»</a></li>
                                     </ul>
                                 </div>
                             </div>
                         </nav>
                     </div>
+
                 </div>
                 <div role="tabpanel" class="tab-pane" id="approvals">
+                    <div class="page-topnav secondnary-topnav">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="tiny-list-wrap">
+                                    <div class="total-item tiny-list">
+                                        <div class="bold-item-title" id="approval-count"></div>
+                                        <div class="light-item-txt">Results Found</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
                     <div class="panel-box tabular">
                         <div class="job-tab-table">
                             <div class="scroll-table-container">
@@ -389,16 +431,16 @@ $baseUrl = getMarketplaceBaseUrl();
                             <div class="paginationjs">
                                 <div class="paginationjs-pages">
                                     <ul>
-                                        <li class="paginationjs-prev disabled"><a>«</a></li>
+                                        <li class="paginationjs-prev disabled" href="javascript:void(0);"><a>«</a></li>
 
-                                        <li v-for="i in paginationcountApproval" v-on:click="fetchDataApprovals(i)"
+                                        <!-- <li v-for="i in paginationcountApproval" v-on:click="fetchDataApprovals(i)"
                                             :value="i" :class="{active: i === currentPageApproval}"><a
                                                 href="#">{{ i }}</a>
-                                        </li>
+                                        </li> -->
                                         <!-- <li class="paginationjs-page J-paginationjs-page active" data-num="1"><a>1</a></li><li class="paginationjs-page J-paginationjs-page" data-num="2"><a href="">2</a></li><li class="paginationjs-page J-paginationjs-page" data-num="3"><a href="">3</a></li><li class="paginationjs-page J-paginationjs-page" data-num="4"><a href="">4</a></li><li class="paginationjs-page J-paginationjs-page" data-num="5"><a href="">5</a></li> -->
 
                                         <li class="paginationjs-next J-paginationjs-next" data-num="2"
-                                            title="Next page"><a href="">»</a></li>
+                                            title="Next page"><a href="javascript:void(0);">»</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -962,6 +1004,164 @@ function clearTableSearch(x) {
     $('[onclick="tableSearch(this)"]').click();
 
 }
+
+
+// var NumPages, RecsPerPage, els1 = document.getElementById("pager1").elements,
+//     els2 = document.getElementById("pager2").elements,
+//     plinks1 = document.getElementById("plinks1"),
+//     plinks2 = document.getElementById("plinks2");
+
+
+// function setupClick() {
+//     var el, n, r;
+//     el = document.getElementById("NumPages");
+//     el.className = ((n = (el.value >>> 0)) ? "" : "err");
+//     el = document.getElementById("RecsPerPage");
+//     el.className = ((r = (el.value >>> 0)) ? "" : "err");
+//     if (n && r) {
+//         NumPages = n;
+//         RecsPerPage = r;
+//         setupServerPage();
+//     }
+// }
+
+
+// This function sets up what would normally be part of the server's HTML output.
+// function setupServerPage() {
+//     var totRecs = NumPages * RecsPerPage,
+//         tbdy = document.getElementById("job-table").tBodies[0],
+//         l = tbdy.rows.length;
+//     document.getElementById("plength1").innerHTML = document.getElementById("plength2").innerHTML = totRecs +
+//         " record" + ((totRecs === 1) ? "" : "s") + "<br>" + NumPages + " page" + ((NumPages === 1) ? "" : "s");
+//     els1["pcount"].value = els2["pcount"].value = NumPages;
+//     while (l > RecsPerPage) tbdy.deleteRow(--l);
+//     while (l < RecsPerPage) tbdy.insertRow(l++).insertCell(0).innerHTML = "Some data...";
+//     pageNavigate(1);
+// }
+
+
+// // This would be handled by a return trip to the server, if not using AJAX.
+// function pageClick(e) {
+//     e = e || window.event;
+//     var s = e.target || e.srcElement,
+//         n, p, el;
+//     if (s.tagName === "A") {
+//         n = (p = s.href).lastIndexOf("=") + 1;
+//         pageNavigate(p.substring(n) >>> 0);
+//         return false;
+//     } else if ((s.tagName !== "INPUT") || (s.type !== "submit")) return;
+//     if (!(n = s.name)) {
+//         p = ((el = this.elements["p"]).value >>> 0);
+//         if ((p <= 0) || (p > NumPages)) {
+//             el.className = "err";
+//             return false;
+//         }
+//     } else if (n === "p1") p = 1;
+//     else if (n === "pprev") p = (this.elements["pcurr"].value >>> 0) - 1;
+//     else if (n === "pnext") p = (this.elements["pcurr"].value >>> 0) + 1;
+//     else if (n === "plast") p = (this.elements["pcount"].value >>> 0);
+//     pageNavigate(p);
+//     return false;
+// }
+
+
+// // This would also be handled by a return trip to the server, or else data records could be retrieved via AJAX.
+// function pageNavigate(p) {
+//     els1["p"].className = els2["p"].className = els1["p"].value = els2["p"].value = "";
+//     if (p < 1) p = 1;
+//     else if (p > NumPages) p = NumPages;
+//     els1["p1"].disabled = els2["p1"].disabled = els1["pprev"].disabled = els2["pprev"].disabled = (p === 1);
+//     els1["pnext"].disabled = els2["pnext"].disabled = els1["plast"].disabled = els2["plast"].disabled = (p ===
+//         NumPages);
+//     els1["pcurr"].value = els2["pcurr"].value = p;
+//     // if the server is handling this, insert NON-logarithmic page links here (can be just first, current, and last page).
+//     plinks1.innerHTML = plinks2.innerHTML = logarithmicPaginationLinks(NumPages, p, "?p=");
+// }
+
+
+// // This function produces the logarithmic pagination links.
+// function logarithmicPaginationLinks(lastPage, matchPage, linkURL) {
+//     function pageLink(p, page) {
+//         return ((p === page) ? "<b>" + p + "</b>" : '<a href="' + linkURL + p + '">' + p + "</a>");
+//     }
+
+//     function pageGap(x) {
+//         if (x === 0) return "";
+//         if (x === 1) return " ";
+//         if (x <= 10) return " . ";
+//         if (x <= 100) return " .. ";
+//         return " ... ";
+//     }
+
+//     var page = (matchPage ? matchPage : 1),
+//         LINKS_PER_STEP = 5,
+//         lastp1 = 1,
+//         lastp2 = page,
+//         p1 = 1,
+//         p2 = page,
+//         c1 = LINKS_PER_STEP + 1,
+//         c2 = LINKS_PER_STEP + 1,
+//         s1 = "",
+//         s2 = "",
+//         step = 1,
+//         linkHTML = "";
+
+//     while (true) {
+//         if (c1 >= c2) {
+//             s1 += pageGap(p1 - lastp1) + pageLink(p1, matchPage);
+//             lastp1 = p1;
+//             p1 += step;
+//             c1--;
+//         } else {
+//             s2 = pageLink(p2, matchPage) + pageGap(lastp2 - p2) + s2;
+//             lastp2 = p2;
+//             p2 -= step;
+//             c2--;
+//         }
+//         if (c2 === 0) {
+//             step *= 10;
+//             p1 += step - 1; // Round UP to nearest multiple of step
+//             p1 -= (p1 % step);
+//             p2 -= (p2 % step); // Round DOWN to nearest multiple of step
+//             c1 = LINKS_PER_STEP;
+//             c2 = LINKS_PER_STEP;
+//         }
+//         if (p1 > p2) {
+//             linkHTML += s1 + pageGap(lastp2 - lastp1) + s2;
+//             if ((lastp2 > page) || (page >= lastPage)) break;
+//             lastp1 = page;
+//             lastp2 = lastPage;
+//             p1 = page + 1;
+//             p2 = lastPage;
+//             c1 = LINKS_PER_STEP;
+//             c2 = LINKS_PER_STEP + 1;
+//             s1 = '';
+//             s2 = '';
+//             step = 1;
+//         }
+//     }
+//     return linkHTML;
+// }
+
+
+// document.getElementById("pager1").onclick = document.getElementById("pager2").onclick = pageClick;
+// (document.getElementById("setupDiv").lastChild.onclick = setupClick)();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 $(document).ready(function() {
 

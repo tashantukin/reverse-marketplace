@@ -27,8 +27,7 @@
     <!-- html5upload js -->
     <script src="https://bootstrap.arcadier.com/adminportal_pre/js/html5imageupload.min.js" type="text/javascript">
     </script>
-    <!-- Pagination js -->
-    <script src="https://bootstrap.arcadier.com/adminportal/js/pagination.min.js" type="text/javascript">
+
     </script>
     <!-- custom js -->
     <script src="https://bootstrap.arcadier.com/adminportal_pre/js/custom.js" type="text/javascript">
@@ -47,6 +46,10 @@
     <link href="https://bootstrap.arcadier.com/adminportal/css/style.css" rel="stylesheet" type="text/css">
     <!-- responsive style-->
     <link href="https://bootstrap.arcadier.com/adminportal/css/responsive.css" rel="stylesheet" type="text/css">
+
+    <!-- Pagination js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.5/pagination.js" type="text/javascript">
+    </script>
     <link href="css/landing.css" rel="stylesheet" type="text/css">
 
     <link href="css/style.css" rel="stylesheet" type="text/css">
@@ -302,37 +305,13 @@ $baseUrl = getMarketplaceBaseUrl();
                     </div>
                     <div class="pagination-center pb-20">
                         <nav class="text-center" id="pagination-container-job" aria-label="Page navigation">
-                            <div class="paginationjs">
-                                <div class="paginationjs-pages">
-                                    <ul class="page-list">
-                                        <li class="paginationjs-prev" value="prev">
-                                            <a href="javascript:void(0);">«</a>
-                                        </li>
 
-                                        <!-- <div id="plinks1" class="plinks">
-                                        </div> -->
-
-                                        <!-- <li v-for="i in paginationcountJobs" v-on:click="fetchDataJobs(i)" :value="i"
-                                            :class="{active: i === currentPageJobs}"><a href="#">{{ i }}</a>
-                                        </li> -->
-                                        <!-- <li class="paginationjs-page J-paginationjs-page active" data-num="1"><a>1</a>
-                                        </li>
-                                        <li class="paginationjs-page J-paginationjs-page" data-num="2"><a href="">2</a>
-                                        </li>
-                                        <li class="paginationjs-page J-paginationjs-page" data-num="3"><a href="">3</a>
-                                        </li>
-                                        <li class="paginationjs-page J-paginationjs-page" data-num="4"><a href="">4</a>
-                                        </li>
-                                        <li class="paginationjs-page J-paginationjs-page" data-num="5"><a href="">5</a>
-                                        </li> -->
-
-                                        <li class="paginationjs-next J-paginationjs-next" data-num="2" title="Next page"
-                                            value="next"><a href="javascript:void(0);">»</a></li>
-                                    </ul>
-                                </div>
-                            </div>
                         </nav>
                     </div>
+
+                    <div id="pagination-demo"></div>
+
+
 
                 </div>
                 <div role="tabpanel" class="tab-pane" id="approvals">
@@ -938,6 +917,8 @@ $baseUrl = getMarketplaceBaseUrl();
 
 <div id="cover"></div>
 <!-- begin footer -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.5/pagination.js" type="text/javascript"> </script>
 <script type="text/javascript">
 function openComment(x) {
     jQuery("#onboardingComment").modal('show');
@@ -1170,6 +1151,7 @@ function clearTableSearch(x) {
 $(document).ready(function() {
 
 
+
     $("#myInput").on("keyup", function() {
         var value = $(this).val().toLowerCase();
         $("#myTable tr").filter(function() {
@@ -1283,13 +1265,15 @@ $(document).ready(function() {
 
 });
 </script>
+
+
 <script src="https://bootstrap.arcadier.com/adminportal_pre/js/custom-nicescroll.js" type="text/javascript">
 </script>
 
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
-<script type="text/javascript" src="scripts/manage.js"></script>
+<script type="text/javascript" src="scripts/manage_test.js"></script>
 <script type="text/javascript" src="scripts/scripts3.js"></script>
 <script type="text/javascript" src="scripts/payments.js"></script>
 

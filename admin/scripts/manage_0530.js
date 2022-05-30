@@ -338,7 +338,7 @@
                     vm = this;
                     const response = await axios({
                         method: action,
-                        url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_list?sort=-CreatedDateTime`,
+                        url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_list?sort=-CreatedDateTime&pageSize=100`,
                         // data: data,
                         headers: {
                             'Authorization': `Bearer ${token}`
@@ -350,65 +350,12 @@
                     vm.paginationcountAll = Math.ceil(jobs.data.TotalRecords / this.perPage)
                     $('#job-count').text(vm.totalItemsJobs);
 
-                        $('#pagination-container-job').pagination({
-                            dataSource: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_list?sort=-CreatedDateTime`,
-                             locator: "data.Records",
-                            totalNumberLocator: function (response)
-                            {
-                                console.log({ response })
-                                vm.allJobs = response.Records;
-                                            // you can return totalNumber by analyzing response content
-                                            return response.TotalRecords;
-                            },
-                                       pageSize: 10,
-                                      
-                                callback: function(data, pagination) {
-                                    // template method of yourself
-                                    var html = template(data);
-                                    dataContainer.html(html);
-                                }
-                        //     afterPageOnClick: function ()
-                        //     {
-                        //         var container = $('#pagination-container-job');
-                        //     var page = container.pagination('getSelectedPageNum');
-                        //     console.log(page);
-                        // // $('#approvals  .paging').removeClass('active');
-                        //     //$(this).addClass('active');
-                        // // manageFields.pageClick(e, $(this), "approvals");
-                        //     manageFields.fetchDataJobs(page);
-                        //     // function body
-                        //     },
-                        //     afterNextOnClick: function ()
-                        //     {
-                        //         var container = $('#pagination-container-job');
-                        //     var page = container.pagination('getSelectedPageNum');
-                        //     console.log(page);
-                        // // $('#approvals  .paging').removeClass('active');
-                        //     //$(this).addClass('active');
-                        // // manageFields.pageClick(e, $(this), "approvals");
-                        //     manageFields.fetchDataJobs(page);
-                        //     // function body
-                        //     },
-                        //     afterPreviousOnClick: function ()
-                        //     {
-                        //     var container = $('#pagination-container-job');
-                        //     var page = container.pagination('getSelectedPageNum');
-                        //     console.log(page);
-                        // // $('#approvals  .paging').removeClass('active');
-                        //     //$(this).addClass('active');
-                        // // manageFields.pageClick(e, $(this), "approvals");
-                        //     manageFields.fetchDataJobs(page);
-                        //     // function body
-                        //     },
 
-
-
-                        });
                      //vm.setupServerPage('job-table', jobs.data.TotalRecords, 20) 
 
                     console.log(vm.allJobs);
                     
-                    //this.pageNavigate(1, vm.paginationcountAll, `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_list?sort=-CreatedDateTime&pageSize=20&pageNumber=`,"jobs")
+                    this.pageNavigate(1, vm.paginationcountAll, `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_list?sort=-CreatedDateTime&pageSize=20&pageNumber=`,"jobs")
                     
                     // return templates
 
@@ -558,30 +505,7 @@
                 
                 console.log( vm.allJobs);
                 vm.totalItemsJobs = jobs.data.TotalRecords
-                  vm.paginationcountJobs = Math.ceil(jobs.data.TotalRecords / jobs.data.PageSize)
-                  
-
-                 $('#pagination-container-job').pagination({
-                            dataSource: actualUrl,
-                             locator: "data.Records",
-                            totalNumberLocator: function (response)
-                            {
-                                           console.log({response})
-                                            // you can return totalNumber by analyzing response content
-                                            return response.TotalRecords;
-                            },
-                                       pageSize: 10,
-                                      
-                           
-                          
-
-
-
-                        });
-
-
-
-
+                vm.paginationcountJobs = Math.ceil(jobs.data.TotalRecords / jobs.data.PageSize)
 
                 console.log(vm.paginationcountJobs);
                 // return templates
@@ -637,13 +561,13 @@
         mounted: function ()
          {
       //  
-        // this.fetchDataJobs().catch(error => {
-        // console.error(error)
-        // }),
+        this.fetchDataJobs().catch(error => {
+        console.error(error)
+        }),
 
-        // this.fetchDataApprovals().catch(error => {
-        //     console.error(error)
-        //     })
+        this.fetchDataApprovals().catch(error => {
+            console.error(error)
+            })
       },
 
  
@@ -808,47 +732,41 @@
         })
 
         
-        // jQuery('body').on('click', '#jobs  .J-paginationjs-page a', function (e)
-        // {
+        jQuery('body').on('click', '#approvals  .paging', function (e)
+        {
+            $('#approvals  .paging').removeClass('active');
+            $(this).addClass('active');
+            manageFields.pageClick(e, $(this), "approvals");
+        })
 
-        //     var container = $('#pagination-demo');
-        //     var page = container.pagination('getSelectedPageNum');
-        //     console.log(page);
-        //    // $('#approvals  .paging').removeClass('active');
-        //     //$(this).addClass('active');
-        //    // manageFields.pageClick(e, $(this), "approvals");
-        //     manageFields.fetchDataJobs(page);
+         jQuery('body').on('click', '#approvals  .paginationjs-next', function (e)
+        {
+            //$('#approvals  .page-list').find('.active').next('li').click();
+           //$(this).addClass('active');
+           manageFields.pageClick(e, $(this), "approvals");
+        })
 
-        // })
-
-        //  jQuery('body').on('click', '#approvals  .paginationjs-next', function (e)
-        // {
-        //     //$('#approvals  .page-list').find('.active').next('li').click();
-        //    //$(this).addClass('active');
-        //    manageFields.pageClick(e, $(this), "approvals");
-        // })
-
-        //  jQuery('body').on('click', '#jobs  .paginationjs-next', function (e)
-        // {
-        //     // $('#jobs  .page-list').find('.active').next('li').click();
-        //    // $(this).addClass('active');
-        //    manageFields.pageClick(e, $(this), "jobs");
-        //  })
+         jQuery('body').on('click', '#jobs  .paginationjs-next', function (e)
+        {
+            // $('#jobs  .page-list').find('.active').next('li').click();
+           // $(this).addClass('active');
+           manageFields.pageClick(e, $(this), "jobs");
+         })
         
-        //  jQuery('body').on('click', '#jobs  .paginationjs-prev', function (e)
-        // {
-        //     // $('#jobs  .page-list').find('.active').prev('li').click();
-        //    // $(this).addClass('active');
-        //    manageFields.pageClick(e, $(this), "jobs");
-        //  })
+         jQuery('body').on('click', '#jobs  .paginationjs-prev', function (e)
+        {
+            // $('#jobs  .page-list').find('.active').prev('li').click();
+           // $(this).addClass('active');
+           manageFields.pageClick(e, $(this), "jobs");
+         })
         
 
-        //   jQuery('body').on('click', '#approvals  .paginationjs-prev', function (e)
-        // {
-        //     // $('#approvals  .page-list').find('.active').prev('li').click();
-        //    // $(this).addClass('active');
-        //    manageFields.pageClick(e, $(this), "approvals");
-        // })
+          jQuery('body').on('click', '#approvals  .paginationjs-prev', function (e)
+        {
+            // $('#approvals  .page-list').find('.active').prev('li').click();
+           // $(this).addClass('active');
+           manageFields.pageClick(e, $(this), "approvals");
+        })
 
         
 
@@ -935,9 +853,8 @@
         });
 
 
-          
-      
-         
+
+       
 
 
         

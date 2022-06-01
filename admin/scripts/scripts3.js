@@ -27,6 +27,7 @@
             
             if (result.some(item => item.Name === 'is_installed')) {
                 console.log('saved already')
+                registerCustomfields();
                
             } else {
                 console.log('not saved already')
@@ -81,26 +82,6 @@
             });   
          });   
         
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         $('#onbrd_field_type').on('change', function ()
         {
@@ -555,6 +536,31 @@
             }
         });
     }
+
+
+    //register the custom fields
+
+    function registerCustomfields()
+    {
+           var apiUrl = packagePath + '/reg_def_customfields.php';
+       $.ajax({
+           url: apiUrl,          
+           headers: {
+               'Authorization':  accessToken,
+           },
+           method: 'POST',
+           contentType: 'application/json',
+         //  data: JSON.stringify(data),
+           success: function(response) {
+               console.log({ response })
+             
+           },
+           error: function (jqXHR, status, err) {
+               //  toastr.error('---');
+           }
+       });
+    }
+
 
 
       function saveButtonText() {

@@ -1,4 +1,4 @@
-
+(function () {
 const scriptSrc = document.currentScript.src;
 var re = /([a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12})/i;
  const protocol = window.location.protocol;
@@ -19,7 +19,6 @@ var locationList = new Array();
 
 const formatter = new Intl.NumberFormat("en-US", {
       minimumFractionDigits: 2,
-      
 });
     
  function displayError(event) {
@@ -1477,3 +1476,5 @@ $(document).ready(function ()
            
 
 })
+
+  })();

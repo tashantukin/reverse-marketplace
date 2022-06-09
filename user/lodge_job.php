@@ -41,7 +41,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
     <!-- <script src="https://unpkg.com/vue/dist/vue.min.js"></script> -->
-    <link href="/user/plugins/8e94739d-b260-41ec-9496-dfa98bb8cdc0/css/style.css" rel="stylesheet" type="text/css">
+    <link href="/user/plugins/a0621076-86c3-4cdd-9c0c-5cb2d95f8be6/css/style.css" rel="stylesheet" type="text/css">
 
     <!-- map js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"
@@ -126,7 +126,7 @@ foreach ($marketplaceInfo['CustomFields'] as $cf) {
         <div class="freelancer-content-main">
             <input type="hidden" id="address-lat">
             <input type="hidden" id="address-long">
-            <input type="hidden" id="button-text"value="<?php echo $save_button_text ?>">
+            <input type="hidden" id="button-text" value="<?php echo $save_button_text ?>">
             <input type="hidden" id="stripe-id" value=<?php echo $stripe_payment_id ?>>
             <div class="lodge-tab-design">
                 <div class="jobform-tab">
@@ -295,18 +295,18 @@ function waitForElement(elementPath, callBack) {
 
 function j_nextTab() {
 
- var tab = jQuery(".jobform-tab li.active a").attr('href');
-        console.log(tab);
-        if (validateTab(tab) == 0 || jQuery(".jobform-tab").hasClass('prevTab')) {
-            jQuery(".jobform-tab li.active").next('li').children('a').trigger('click');
-            jQuery(".jobform-tab").removeClass('prevTab');
-            $(this).parent().addClass('check');
-            $(this).parent().prevAll().addClass('check');
-            $(this).parent().nextAll().removeClass('check');
-            return true;
-        } else {
-            return false
-        }
+    var tab = jQuery(".jobform-tab li.active a").attr('href');
+    console.log(tab);
+    if (validateTab(tab) == 0 || jQuery(".jobform-tab").hasClass('prevTab')) {
+        jQuery(".jobform-tab li.active").next('li').children('a').trigger('click');
+        jQuery(".jobform-tab").removeClass('prevTab');
+        $(this).parent().addClass('check');
+        $(this).parent().prevAll().addClass('check');
+        $(this).parent().nextAll().removeClass('check');
+        return true;
+    } else {
+        return false
+    }
 }
 
 function j_finishedTab() {
@@ -339,44 +339,46 @@ function j_disAllTab(target) {
 function validateTab(tab) {
     var validate = 0;
     var target = jQuery(".lodge-tab-design .tab-content " + tab + " ").find('.jobform-form');
-     target.find('.required').each(function() {
-                var val = jQuery(this).val();
-                var isChecked = $(this).is(":checked");
+    target.find('.required').each(function() {
+        var val = jQuery(this).val();
+        var isChecked = $(this).is(":checked");
 
-                if (!jQuery.trim(val)) {
-                    validate = 1;
-                    jQuery(this).addClass('error-con');
-                }
-                if ($(this).is(':checkbox')){
-                    if (!isChecked) {
-                        validate = 1;
-                        jQuery(this).addClass('error-con');
-                    }
-                }
-                
+        if (!jQuery.trim(val)) {
+            validate = 1;
+            jQuery(this).addClass('error-con');
+        }
+        if ($(this).is(':checkbox')) {
+            if (!isChecked) {
+                validate = 1;
+                jQuery(this).addClass('error-con');
+            }
+        }
 
-               
-            });
 
-         target.find('.req-chkbx').each(function() {
-             
-                 var checked = $(this).find("input:checked").length > 0;
-                if (!checked){
-                    $(this).find('input:first').addClass('error-con');
-                   // alert("Please check at least one checkbox");
-                    validate = 1;
-                    //return false;
-                    
-                }
-            });
-           
 
-        
-        console.log({validate});
+    });
+
+    target.find('.req-chkbx').each(function() {
+
+        var checked = $(this).find("input:checked").length > 0;
+        if (!checked) {
+            $(this).find('input:first').addClass('error-con');
+            // alert("Please check at least one checkbox");
+            validate = 1;
+            //return false;
+
+        }
+    });
+
+
+
+    console.log({
+        validate
+    });
 
     // switch (tab) {
     //     case '#select_location':
-          
+
     //         break;
     //     case '#get_quote':
     //         target.find('.required').each(function() {
@@ -489,129 +491,129 @@ function codeAddress() {
     });
 }
 
-   var lat;
-  var long;
+var lat;
+var long;
 var accuracy;
- function getPosition(position)
-            {
-                // console.log(position)
-                lat = position.coords.latitude
-                long = position.coords.longitude
-                accuracy = position.coords.accuracy
 
-                // if (marker) {
-                //     map.removeLayer(marker)
-                // }
+function getPosition(position) {
+    // console.log(position)
+    lat = position.coords.latitude
+    long = position.coords.longitude
+    accuracy = position.coords.accuracy
 
-                // if (circle) {
-                //     map.removeLayer(circle)
-                // }
+    // if (marker) {
+    //     map.removeLayer(marker)
+    // }
 
-                // marker = L.marker([lat, long])
-                // circle = L.circle([lat, long], {
-                //     radius: accuracy
-                // })
+    // if (circle) {
+    //     map.removeLayer(circle)
+    // }
 
-                // var featureGroup = L.featureGroup([marker, circle]).addTo(map)
+    // marker = L.marker([lat, long])
+    // circle = L.circle([lat, long], {
+    //     radius: accuracy
+    // })
 
-                // map.fitBounds(featureGroup.getBounds())
+    // var featureGroup = L.featureGroup([marker, circle]).addTo(map)
 
-                console.log("Your coordinate is: Lat: " + lat + " Long: " + long + " Accuracy: " + accuracy)
+    // map.fitBounds(featureGroup.getBounds())
 
-
-                
-
-            }
+    console.log("Your coordinate is: Lat: " + lat + " Long: " + long + " Accuracy: " + accuracy)
 
 
 
+
+}
 
 function initAutocomplete() {
 
-      if (!navigator.geolocation) {
-                console.log("Your browser doesn't support geolocation feature!")
-            } else {
-                //setInterval(() => {
-                navigator.geolocation.getCurrentPosition(getPosition)
+    if (!navigator.geolocation) {
+        console.log("Your browser doesn't support geolocation feature!")
+    } else {
+        //setInterval(() => {
+        navigator.geolocation.getCurrentPosition(getPosition)
 
 
-                             waitForElement('#map', function (){
-  const map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: lat, lng: long },
-    zoom: 13,
-    mapTypeId: "roadmap",
-  });
-  // Create the search box and link it to the UI element.
+        waitForElement('#map', function() {
+            const map = new google.maps.Map(document.getElementById("map"), {
+                center: {
+                    lat: lat,
+                    lng: long
+                },
+                zoom: 13,
+                mapTypeId: "roadmap",
+            });
+            // Create the search box and link it to the UI element.
 
-                
-    const input = document.getElementById("location_details");
-    const searchBox = new google.maps.places.SearchBox(input);
- //})
- // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-  // Bias the SearchBox results towards current map's viewport.
-  map.addListener("bounds_changed", () => {
-    searchBox.setBounds(map.getBounds());
-  });
 
-  let markers = [];
+            const input = document.getElementById("location_details");
+            const searchBox = new google.maps.places.SearchBox(input);
+            //})
+            // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+            // Bias the SearchBox results towards current map's viewport.
+            map.addListener("bounds_changed", () => {
+                searchBox.setBounds(map.getBounds());
+            });
 
-  // Listen for the event fired when the user selects a prediction and retrieve
-  // more details for that place.
-  searchBox.addListener("places_changed", () => {
-    const places = searchBox.getPlaces();
+            let markers = [];
 
-    if (places.length == 0) {
-      return;
+            // Listen for the event fired when the user selects a prediction and retrieve
+            // more details for that place.
+            searchBox.addListener("places_changed", () => {
+                const places = searchBox.getPlaces();
+
+                if (places.length == 0) {
+                    return;
+                }
+
+                // Clear out the old markers.
+                markers.forEach((marker) => {
+                    marker.setMap(null);
+                });
+                markers = [];
+
+                // For each place, get the icon, name and location.
+                const bounds = new google.maps.LatLngBounds();
+
+                places.forEach((place) => {
+                    if (!place.geometry || !place.geometry.location) {
+                        console.log("Returned place contains no geometry");
+                        return;
+                    }
+
+                    const icon = {
+                        url: place.icon,
+                        size: new google.maps.Size(71, 71),
+                        origin: new google.maps.Point(0, 0),
+                        anchor: new google.maps.Point(17, 34),
+                        scaledSize: new google.maps.Size(25, 25),
+                    };
+
+                    // Create a marker for each place.
+                    markers.push(
+                        new google.maps.Marker({
+                            map,
+                            icon,
+                            title: place.name,
+                            position: place.geometry.location,
+                        })
+                    );
+                    if (place.geometry.viewport) {
+                        // Only geocodes have viewport.
+                        bounds.union(place.geometry.viewport);
+                    } else {
+                        bounds.extend(place.geometry.location);
+                    }
+                });
+                map.fitBounds(bounds);
+            });
+
+        })
+
+
+        //}, 5000);
     }
 
-    // Clear out the old markers.
-    markers.forEach((marker) => {
-      marker.setMap(null);
-    });
-    markers = [];
-
-    // For each place, get the icon, name and location.
-    const bounds = new google.maps.LatLngBounds();
-
-    places.forEach((place) => {
-      if (!place.geometry || !place.geometry.location) {
-        console.log("Returned place contains no geometry");
-        return;
-      }
-
-      const icon = {
-        url: place.icon,
-        size: new google.maps.Size(71, 71),
-        origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(17, 34),
-        scaledSize: new google.maps.Size(25, 25),
-      };
-
-      // Create a marker for each place.
-      markers.push(
-        new google.maps.Marker({
-          map,
-          icon,
-          title: place.name,
-          position: place.geometry.location,
-        })
-      );
-      if (place.geometry.viewport) {
-        // Only geocodes have viewport.
-        bounds.union(place.geometry.viewport);
-      } else {
-        bounds.extend(place.geometry.location);
-      }
-    });
-    map.fitBounds(bounds);
-  });
-
-})
-
-                
-                //}, 5000);
-            }
- 
 }
 
 
@@ -877,10 +879,9 @@ jQuery(document).ready(function() {
 <!-- <script type="text/javascript"
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbYXf7DUOc-j2QwGgtXcFp4fpGMD4Q59o&libraries=places">
 </script> -->
- <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbYXf7DUOc-j2QwGgtXcFp4fpGMD4Q59o&callback=initAutocomplete&libraries=places&v=weekly&channel=2"
-      async
-    ></script>
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbYXf7DUOc-j2QwGgtXcFp4fpGMD4Q59o&callback=initAutocomplete&libraries=places&v=weekly&channel=2"
+    async></script>
 
 
 

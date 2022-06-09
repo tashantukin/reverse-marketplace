@@ -27,10 +27,11 @@
             
             if (result.some(item => item.Name === 'is_installed')) {
                 console.log('saved already')
-                registerCustomfields();
+                
                
             } else {
                 console.log('not saved already')
+                registerCustomfields();
                 updatePluginStatus()
                 saveURL();
                 savePluginId(packageId);

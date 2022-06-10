@@ -117,16 +117,14 @@
 
 
 
-    $tempoId = 'ed0f2131-3ef2-4ef1-9fb8-e20224eb1887';
-    $templates = array(array('Name' => 'Id', "Operator" => "in",'Value' => '267348f3-9a39-4f36-9091-0854179cb682'));
+    $tempoId = $packageId;
+    $templates = array(array('Name' => 'title', "Operator" => "in",'Value' => 'New Job Lodged'));
     $url =  $baseUrl . '/api/v2/plugins/'. $tempoId .'/custom-tables/Templates';
   
 
     $templateDetails =  callAPI("POST", $admin_token, $url, $templates);
 
-
     $content = $templateDetails['Records'][0]['contents'];
-
 
      foreach( $merchantDetails['Records'] as $merchant) {
 

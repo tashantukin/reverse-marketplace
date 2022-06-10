@@ -611,7 +611,7 @@ $email_templates_obj = [
 
         [
 
-            "category" => "Buyer / Seller",
+            "category" => "Orders",
             "subject" => "Your Registration has been approved",
             "contents" => "<div style=\"max-width:700px; width:100%; margin:0 auto; border:1px solid #ddd; color:#999; font-size:16px; font-family:sans-serif; line-height:25px;\">\n<div style=\"padding:15px;\">\n<div style=\"text-align:center; margin-bottom:50px;\"><img src=\"{{ Logo }}\" style=\"max-width:200px;\" /></div>\n\n<div>\n<p style=\"color:#000; font-weight:bold; margin-bottom:50px;\">Dear {{ SellerName }},</p>\n\n<p>Your registration application has been approved.</p>\n\n<p>Please log in to your account to complete the onboarding.</p>\n</div>\n\n<div style=\"margin-bottom:30px;\">&nbsp;</div>\n\n<p>Regards,<br />\nMarketplaceName</p>\n\n<div style=\"margin-bottom:30px;\">\n<p><a href=\"{{ MarketplaceUrl }}\" style=\"color:#000; font-size:17px; font-weight:bold; text-decoration:none;\">{{ MarketplaceUrl }}</a></p>\n</div>\n</div>\n</div>\n",
             "title" => "Freelancer / Applicant Registration approved",
@@ -625,7 +625,7 @@ $email_templates_obj = [
             "title" => "Quotation Accepted",
             "description" => "Sent to seller once the buyer accepted the quotation.",
             "contents" => "<div style=\"max-width:700px; width:100%; margin:0 auto; border:1px solid #ddd; color:#999; font-size:16px; font-family:sans-serif; line-height:25px;\">\n<div style=\"padding:15px;\">\n<div style=\"text-align:center; margin-bottom:50px;\"><img src=\"{{ Logo }}\" style=\"max-width:200px;\" /></div>\n\n<div>\n<p style=\"color:#000; font-weight:bold; margin-bottom:50px;\">Dear {{ SellerName }},</p>\n\n<p>Your job application has been accepted.</p>\n\n<p>Please wait for your marketplace owner to contact you for more details regarding the tasks ahead.</p>\n</div>\n\n<div style=\"margin-bottom:30px;\">&nbsp;</div>\n\n<p>Regards,<br />\nMarketplaceName</p>\n\n<div style=\"margin-bottom:30px;\">\n<p><a href=\"{{ MarketplaceUrl }}\" style=\"color:#000; font-size:17px; font-weight:bold; text-decoration:none;\">{{ MarketplaceUrl }}</a></p>\n</div>\n</div>\n</div>\n",
-            "category" => "Booking"
+            "category" => "Orders"
 
         ],
 
@@ -635,7 +635,7 @@ $email_templates_obj = [
             "title" => "Freelancer / Applicant Registration rejected",
             "contents" => "<div style=\"max-width:700px; width:100%; margin:0 auto; border:1px solid #ddd; color:#999; font-size:16px; font-family:sans-serif; line-height:25px;\">\n<div style=\"padding:15px;\">\n<div style=\"text-align:center; margin-bottom:50px;\"><img src=\"{{ Logo }}\" style=\"max-width:200px;\" /></div>\n\n<div>\n<p style=\"color:#000; font-weight:bold; margin-bottom:50px;\">Dear {{ SellerName }},</p>\n\n<p>Your registration application has been rejected.</p>\n\n<p>Please log in to your account to see details.</p>\n</div>\n\n<div style=\"margin-bottom:30px;\">&nbsp;</div>\n\n<p>Regards,<br />\nMarketplaceName</p>\n\n<div style=\"margin-bottom:30px;\">\n<p><a href=\"{{ MarketplaceUrl }}\" style=\"color:#000; font-size:17px; font-weight:bold; text-decoration:none;\">{{ MarketplaceUrl }}</a></p>\n</div>\n</div>\n</div>\n",
             "subject" => "Your Registration has been rejected",
-            "category" => "Buyer / Seller",
+            "category" => "Orders",
             "description" => "Sent to applicants once their application has been rejected."
         ]
 

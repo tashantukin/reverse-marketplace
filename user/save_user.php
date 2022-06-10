@@ -91,10 +91,10 @@
     $admin_name = $marketplaceInfo['Owner']['FirstName'];
 
 
-    $tempoId = 'ed0f2131-3ef2-4ef1-9fb8-e20224eb1887';
+    $tempoId = $packageId;
 
 
-    $templates = array(array('Name' => 'Id', "Operator" => "in",'Value' => '9a733374-1e37-47e1-9d96-128eb4bfb15f'));
+    $templates = array(array('Name' => 'title', "Operator" => "in",'Value' => 'New Freelancer Registration'));
     $url =  $baseUrl . '/api/v2/plugins/'. $tempoId .'/custom-tables/Templates';
   
 

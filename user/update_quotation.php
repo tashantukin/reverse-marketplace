@@ -50,10 +50,7 @@ $mpname =   $marketplaceInfo['Name'];
 $mpEmail =  $marketplaceInfo['Owner']['Email'];
 $admin_name = $marketplaceInfo['Owner']['FirstName'];
 
-
-$tempoId = 'ed0f2131-3ef2-4ef1-9fb8-e20224eb1887';
-
-
+$tempoId = $packageId;
 
 //update the freelancer_quotes table
 
@@ -94,12 +91,10 @@ $quote_details = [
 $response = $API->editRowEntry($packageId, 'job_quotes', $content['quoteId'], $quote_details);
 
 
-
-
 //send EDM
 if ($content['status'] == 'Accepted') {
 
-     $templates = array(array('Name' => 'Id', "Operator" => "in",'Value' => '4bcfd5ae-712f-434d-83a3-377756e82f41'));
+     $templates = array(array('Name' => 'title', "Operator" => "in",'Value' => 'Quotation Accepted'));
     $url =  $baseUrl . '/api/v2/plugins/'. $tempoId .'/custom-tables/Templates';
   
     $templateDetails =  callAPI("POST", $admin_token, $url, $templates);
@@ -146,7 +141,7 @@ if ($content['status'] == 'Accepted') {
 }else {
 
 
-    $templates = array(array('Name' => 'Id', "Operator" => "in",'Value' => 'ac8c6077-2078-4045-ad71-4ea95c3ca4db'));
+    $templates = array(array('Name' => 'title', "Operator" => "in",'Value' => 'Quotation Rejected'));
     $url =  $baseUrl . '/api/v2/plugins/'. $tempoId .'/custom-tables/Templates';
   
     $templateDetails =  callAPI("POST", $admin_token, $url, $templates);
@@ -161,7 +156,6 @@ if ($content['status'] == 'Accepted') {
       'SellerName' => $user_name,
       'AdminName' => $admin_name,
       'CompanyName' => 'Company Name',
-
 
     );
 

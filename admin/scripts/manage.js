@@ -16,7 +16,7 @@
 
     const baseURL = window.location.hostname;
     const protocol = window.location.protocol;
-
+    var indexPath = scriptSrc.replace('/scripts/manage.js', '/email-template.php').trim();
   
 
     //run on creation page only
@@ -26,10 +26,13 @@
             return {
                 allJobs: [],
                 allFreelancers: [],
+
                 uploadCustomFields: [],
                 emailFields: "",
                 chargesListBuyer: [],
                 chargesListSeller: [],
+                emailTemplates: [],
+                templates: [],
                 perPage: 10,
                 page: 0,
                 paginationcountJobs: 0,
@@ -52,7 +55,36 @@
 
         },
 
-        methods: {
+       methods: {
+            
+           
+            async getAllTemplates(action) {
+            try {
+                vm = this;
+                const response = await axios({
+                    method: action,
+                    url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/Templates`,
+                    // data: data,
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                const templates = await response
+                vm.templates = templates.data
+
+                vm.emailTemplates = vm.templates.Records.filter((template) => template.category === 'Orders')
+
+                console.log(vm.templates);
+                console.log(vm.orderTemplates);
+                // return templates
+
+            } catch (error) {
+                console.log("error", error);
+            }
+            },
+
+
+
             async getAllFreelancers(action) {
                 try {
                     vm = this;
@@ -633,6 +665,7 @@
             this.getAllJobs('GET');
             this.getAllCharges('buyer');
             this.getAllCharges('seller');
+            this.getAllTemplates('GET')
             //this.setupServerPage
         },
 
@@ -883,11 +916,13 @@
         $('#popup_btnconfirm_cancel').click(function ()
         {
             
-            if ($(this).attr('redirect') == 'admin') {
-                window.location.href = emailTemplatePath;
-            } else {
+           // if ($(this).attr('redirect') == 'admin') {
+              //  window.location.href = emailTemplatePath;
+           // } else {
+            console.info('cancel clicked')
+            
                 window.location.href = indexPath;
-            }
+           // }
 
             
         });

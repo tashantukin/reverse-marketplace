@@ -50,7 +50,7 @@
     $admin_name = $marketplaceInfo['Owner']['FirstName'];
 
 
-    $tempoId = 'ed0f2131-3ef2-4ef1-9fb8-e20224eb1887';
+    $tempoId = $packageId;
 
 
     $templates = array(array('Name' => 'Id', "Operator" => "equal",'Value' => $content['Id']) );
@@ -62,7 +62,7 @@
    
     if ($content['status'] == 'Approved') {
 
-     $templates = array(array('Name' => 'Id', "Operator" => "in",'Value' => 'bd61f087-b718-4396-b947-534ab382f3c0'));
+     $templates = array(array('Name' => 'title', "Operator" => "in",'Value' => 'Freelancer / Applicant Registration approved'));
     $url =  $baseUrl . '/api/v2/plugins/'. $tempoId .'/custom-tables/Templates';
   
     $templateDetails =  callAPI("POST", $admin_token, $url, $templates);
@@ -109,7 +109,7 @@
 }else {
 
   error_log('company name ' . $name);
-    $templates = array(array('Name' => 'Id', "Operator" => "in",'Value' => 'ac8c6077-2078-4045-ad71-4ea95c3ca4db'));
+    $templates = array(array('Name' => 'title', "Operator" => "in",'Value' => 'Freelancer / Applicant Registration rejected'));
     $url =  $baseUrl . '/api/v2/plugins/'. $tempoId .'/custom-tables/Templates';
   
     $templateDetails =  callAPI("POST", $admin_token, $url, $templates);

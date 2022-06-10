@@ -66,6 +66,20 @@ $admin_token = $API->AdminToken();
     }
 
 
+    //email templates
+
+ //charges configuration
+    $url = $baseUrl . '/api/v2/plugins/'. getPackageID() .'/custom-tables/Templates';
+    $couponDetails = callAPI("GET", null, $url, false);
+    echo json_encode(['result' => $couponDetails]);
+
+    foreach($couponDetails['Records'] as $record) {
+        $url = $baseUrl . '/api/v2/plugins/'. getPackageID() .'/custom-tables/Templates/rows/'. $record['Id'];
+        echo json_encode(['url' => $url]);
+        $result = callAPI("DELETE", null, $url);
+    }
+
+
 //declare default tabs object
 $tab_obj_jobs = [
     'tabList' => [
@@ -541,7 +555,6 @@ $charge_obj_list = [
         
 
     ]
-
 
 
 ];

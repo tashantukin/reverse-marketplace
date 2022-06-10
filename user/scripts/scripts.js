@@ -3636,7 +3636,11 @@
          }      
       })
 
+      // if (urls.indexOf('/subscribe') >= 0) {
 
+      //    $('.main').append(`<script type="text/javascript" src="subscribe/${packageId}/scripts/users.js"></script>`)
+          
+      // }
 
 
       //reject modal

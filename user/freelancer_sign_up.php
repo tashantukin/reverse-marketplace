@@ -9,6 +9,7 @@ $content = json_decode($contentBodyJson, true);
 $userId = $content['userId'];
 $plugin_id = $content['id'];
 $baseUrl = getMarketplaceBaseUrl();
+$pluginId =  getPackageID();
 $admin_token = getAdminToken();
 $customFieldPrefix = getCustomFieldPrefix();
 // Query to get marketplace id
@@ -70,7 +71,8 @@ foreach ($marketplaceInfo['CustomFields'] as $cf) {
 
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
-    <script type="text/javascript" src="subscribe/8e94739d-b260-41ec-9496-dfa98bb8cdc0/scripts/users.js"></script>
+    <?php echo "<script type=\"text/javascript\" src=\"subscribe/$pluginId/scripts/users.js\"></script>"; ?>
+
 
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />

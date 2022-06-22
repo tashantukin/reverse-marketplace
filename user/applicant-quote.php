@@ -287,7 +287,7 @@ if ($quotedDetails['Records'][0]['status'] != 'Quoted') {
                                         </div>
                                         <div class="qq-title"><span class="dash"></span><span class="title">Credit
                                                 Card</span></div>
-                                       
+
                                     </div>
                                 </div>
                             </div>
@@ -303,7 +303,7 @@ if ($quotedDetails['Records'][0]['status'] != 'Quoted') {
                                                 presented.</span></label>
                                     </div>
 
-                                   
+
                                 </div>
                             </div>
                             <div class="navtab-filter">

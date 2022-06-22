@@ -407,3 +407,11 @@
     display: flex !important;
     align-items: center;
 }
+
+.sidebar {
+z-index: 4;
+}
+
+.main-content .page-header {
+z-index: 2;
+}                                                                                                                                                                     

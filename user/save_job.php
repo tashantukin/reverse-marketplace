@@ -16,7 +16,7 @@
         'is_remote_work' => $content['is_remote_work'],
         'is_in_person_work' => $content['is_inperson_work'],
         'in_person_work_address' => $content['in_person_work_address'],
-        'in_person_work_coords' => $content['in_person_work_coords'],
+        'in_person_work_coords' => $content['in_person_work_coords'], 
 
 
         //job type
@@ -68,9 +68,11 @@
         // 'status' => 'Available',
         // 'no_of_quotes' => 0
     ];
-
+    
     $response = $API->createRowEntry($packageId, 'job_list', $cf_details);
-
+     
+             
+    error_log('jobs ' . json_encode($response));
     echo json_encode($response);
 
     //save in job location ct 
@@ -229,7 +231,7 @@
      }
 
 
-            function getDistance($latitude1, $longitude1, $latitude2, $longitude2) {  
+    function getDistance($latitude1, $longitude1, $latitude2, $longitude2) {  
             $earth_radius = 6371;
 
             $dLat = deg2rad($latitude2 - $latitude1);  

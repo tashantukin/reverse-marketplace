@@ -2839,6 +2839,31 @@
 
            }
 
+
+           async function updateJobStatus(jobId, status)
+           {
+            var job_details = {
+            jobId,
+            status
+
+           };
+   
+           console.log({ job_details });
+         
+      
+            var settings = {
+                  "url": packagePath + "/update_job_toggle.php",
+                  "method": "POST",
+                  "data": JSON.stringify(job_details )
+            }
+            $.ajax(settings).done(function (response)
+            {
+         
+              // toastr.success(`Successfully ${status} job status`);
+      
+            });
+           }
+
           return {
             getAllJobs :getAllJobs,
             getJobDetail: getJobDetail,
@@ -2857,7 +2882,8 @@
              pageNavigate: pageNavigate,
              logarithmicPaginationLinks: logarithmicPaginationLinks,
              pageClickBuyer: pageClickBuyer,
-             getQuotedJobDetails : getQuotedJobDetails
+             getQuotedJobDetails: getQuotedJobDetails,
+             updateJobStatus: updateJobStatus 
             
           }
           
@@ -3626,6 +3652,55 @@
 
          }
 
+      
+
+      //pause / delete job
+
+      if (urls.indexOf('/job-details.php')) {
+
+          var jobs = jobData.getInstance();
+
+         //pause
+         $('.active').on('click', function (event)
+
+         {   
+            $(this).addClass('hidden');
+            $('.paused').removeClass('hidden');
+            console.log('paused');
+            jobs.updateJobStatus($('#job-id').val(), 'Paused');
+           // $(this).toggleClass('paused');
+           // $(this).removeClass('btn-quote-active');
+         })
+
+         $('.paused').on('click', function (event)
+         {
+             console.log('unpaused');
+            jobs.updateJobStatus($('#job-id').val(), 'Available');
+            $(this).addClass('hidden');
+            $('.active').removeClass('hidden');
+              //$(this).toggleClass('btn-quote-active');
+            //$(this).removeClass('paused');
+         })
+
+          $('#delete-job').on('click', function (event)
+         {
+             console.log('delete');
+             jobs.updateJobStatus($('#job-id').val(), 'Deleted');
+         })
+
+
+
+      
+      }
+
+
+
+
+
+       
+      
+
+
       $('#accept').on('click', function (event)
       {
          if (buyerAcceptBidChargeEnabled == "True") {
@@ -3644,7 +3719,6 @@
 
 
       //reject modal
-
        $('#reject').on('click', function (event)
       {
         /// if (buyerAcceptBidChargeEnabled == "True") {

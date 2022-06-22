@@ -17,6 +17,8 @@
     <script type="text/javascript" src="https://bootstrap.arcadier.com/spacetime/js/bootbox.min.js"></script>
     <link href="https://bootstrap.arcadier.com/spacetime/css/importFonts.css" rel="stylesheet" type="text/css">
     <link href="https://bootstrap.arcadier.com/spacetime/css/style.css" rel="stylesheet" type="text/css">
+    <link href="css/custom.css" rel="stylesheet" type="text/css">
+
 
     <?php 
 include 'jobs.php';
@@ -106,10 +108,11 @@ else {
                     </div>
                     <div class="blue-tabdesign">
                         <div class="navtab-flex">
-
+                            <div class="quote-title-design">Accounting Firm Name</div>
                             <div class="navtab-filter">
-                                <!-- <a class="btn btn-quote-submit">Edit</a> -->
-
+                                <a href="javascript:void(0);" class="btn btn-quote-cancel btn-quote-active active"></a>
+                                <a href="javascript:void(0);"
+                                    class="btn btn-quote-cancel btn-quote-active paused hidden"></a>
                             </div>
                         </div>
                         <div class="quote-question-main">
@@ -119,7 +122,7 @@ else {
                                         <div class="qq-total-sum">
                                             <h4>1. Job Summary</h4>
                                             <?php
-                               foreach(json_decode($jobDetails['Records'][0]['task_type_list'],true) as $task) {
+                                    foreach(json_decode($jobDetails['Records'][0]['task_type_list'],true) as $task) {
                                      echo "<div class='qq-title'><span class='dash'></span><span class='title'>$task</span></div>";
                                 
                                  }
@@ -264,7 +267,9 @@ else {
                         <div class="navtab-flex flex-justify-content-center">
                             <!-- <div class="question-requester-design">Have a question? Ask requester a question <a href="#">here</a></div> -->
                             <div class="navtab-filter">
-                                <a href="/" class="btn btn-quote-cancel">Back</a>
+
+                                <a data-toggle="modal" data-target="#deleteModal"
+                                    class="btn btn-quote-cancel">Delete</a>
                             </div>
                         </div>
 
@@ -283,6 +288,83 @@ else {
 
     <!-- footer -->
     <!--modal register-->
+
+
+    <div class="modal fade modal-align-center" id="deleteModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="modal-job-popup">
+                        <div class="modal-title">
+                            <h4>Are you sure you want to delete this job? it will be deleted forever.</h4>
+                        </div>
+
+                        <!--                     <div class="text-center">
+                        <p>You may revisit the quote sent in by the applicant<br>at a later time if you wish to do so.</p>
+                     </div>-->
+                        <div class="btn-hbox">
+                            <a class="btn btn-block btn-jobform-fill" id="delete-job" href="#">Yes</a>
+                            <button type="button" class="btn btn-block btn-jobform-outline" data-dismiss="modal">Cancel
+                                Delete</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="modal fade modal-align-center" id="pauseModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="modal-job-popup">
+                        <div class="modal-title">
+                            <h4>Would you like to proceed?</h4>
+                        </div>
+
+                        <div class="text-center">
+                            <p>After submission of choice, no changes can be<br>made after choosing to proceed.</p>
+                        </div>
+                        <div class="btn-hbox">
+                            <a class="btn btn-block btn-jobform-fill" href="/" id="pause-confirm"
+                                job-id="<?php echo $job_id ?>" user-id="<?php echo $user_id ?>">Yes</a>
+                            <button type="button" class="btn btn-block btn-jobform-outline"
+                                data-dismiss="modal">No</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <div class="modal-frame model-register">
         <div class="mymodal">
             <div class="modal-inset">
@@ -335,6 +417,18 @@ else {
     });
 
     jQuery(document).ready(function() {
+
+
+        // jQuery('body').on('click', '.active', function() {
+
+        // });
+
+        // jQuery('body').on('click', '.paused', function() {
+        //     // $(this).toggleClass('paused');
+        //     $(this).toggleClass('btn-quote-active');
+        //     $(this).removeClass('paused');
+        // });
+
 
         jQuery('.datepicker').datetimepicker({
             viewMode: 'days',

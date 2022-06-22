@@ -8,6 +8,7 @@ var packageId = re.exec(scriptSrc.toLowerCase())[1];
 var userId = $("#userGuid").val();
 var packagePath = scriptSrc.replace("/scripts/lodge_job.js", "").trim();
 var payment_enabled;
+var pub_key;
 
 // Add an instance of the card Element into the `card-element` <div>.
 //document upload vars
@@ -151,10 +152,10 @@ function cache_save_job()
         
         if ( !$('#userGuid').length ) {
              setTimeout(function(){ 
-              window.location.href = "lodged.html";
+             // window.location.href = "lodged.html";
         },1000);
         } else {
-            window.location.href = '/'
+          //  window.location.href = '/'
         }
        
        // document.cookie = "jobID: " + response.Id 
@@ -180,11 +181,39 @@ const jobData = new Vue({
             allJobCustomDetails: {},
             url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_form/`,
             jobListCharge: 0,
-            jobChargeEnabled: ''
+            jobChargeEnabled: '',
+            stripe_api_key: '',
+            stripe_pub_key: '',
+            stripe_client_id: ''
 
         }
     },
     methods: {
+
+
+        async getStripeDetails()
+        {
+            vm = this;
+            
+            var apiUrl = packagePath + '/get_stripe_details.php';
+            
+            $.ajax({
+                url: apiUrl,
+                method: 'POST',
+                contentType: 'application/json',
+                success: function (result)
+                {
+                    var results = JSON.parse(result);
+                    console.table(`result ${results.result.api_key}`);
+                    this.stripe_api_key = results.result.api_key;
+                    this.stripe_pub_key = results.result.pub_key;
+                    pub_key = this.stripe_pub_key;
+                    this.stripe_client_id = results.result.client_id;
+                   
+                 }
+            })
+
+        },
 
         async getAllJobData()
         {
@@ -209,7 +238,7 @@ const jobData = new Vue({
             
         },
 
-         async getChargeRate()
+        async getChargeRate()
         {
             try {
                 vm = this;
@@ -926,6 +955,7 @@ const jobData = new Vue({
     beforeMount() {
        
         this.getChargeRate()
+        this.getStripeDetails()
         
      
     }
@@ -1359,17 +1389,11 @@ $(document).ready(function ()
     var script = document.createElement('script');
     script.onload = function ()
     {
-        // getMarketplaceCustomFields(function(result) {
-        //   $.each(result, function(index, cf) {
-            
-        //       if (cf.Name == 'stripe_pub_key' && cf.Code.startsWith(customFieldPrefix)) {
-        //        stripePubKey = cf.Values[0];
-        //       }
-        //   })
+       
 
         //if (stripePubKey) {
         //do stuff with the script
-        var stripe = Stripe('pk_test_51IDN6ALQSWMKUO5eXiY7nrd6P3dE6oLh42AQpfpUxz64OgHjaSiME8LLPmyWuaPOlUIAT0H0sLjfMkPWd4eBUbxC00gi2lcEOX');
+        var stripe = Stripe(pub_key);
         var elements = stripe.elements();
         var card = elements.create('card', { hidePostalCode: true, style: style });
         var style = {

@@ -688,5 +688,5 @@ function email_parameter_opt(object) {
 </script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
-<script type="text/javascript" src="scripts/package.js"></script>
+<script type="text/javascript" src="scripts/manage.js"></script>
 <!-- end footer -->

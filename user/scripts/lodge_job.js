@@ -950,7 +950,6 @@ const jobData = new Vue({
         }
         
 
-
     },
     beforeMount() {
        

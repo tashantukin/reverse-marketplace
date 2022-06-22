@@ -2552,31 +2552,141 @@
                                <div class="panel-body">
                                    <div class="blue-tabdesign">
                                      <div class="navtab-flex">
-                                        <div class="navtab-filter">
-                                            <div class="result-found">
-                                     <h5>Results found: <span class="text-theme" id="count-all-buyer"></span></h5>
-                                     </div>
-                                        </div>
+                                     <div class="navtab-design">
+                                       <ul class="nav nav-tabs">
+                                          <li class="active"><a data-toggle="tab" href="#tab-job-all" aria-expanded="true">All</a></li>
+                                          <li class=""><a data-toggle="tab" href="#tab-job-active" aria-expanded="false">Active</a></li>
+                                          <li class=""><a data-toggle="tab" href="#tab-job-paused" aria-expanded="false">Paused</a></li>
+                                          <li class=""><a data-toggle="tab" href="#tab-job-done" aria-expanded="false">Done</a></li>
+                                       </ul>
+                                    </div>
+                                      
                                          <div class="navtab-filter">
                                             <div class="lodgejob-menu"><a href="/user/plugins/${packageId}/lodge_job.php">Lodge a Job</a></div>
                                          </div>
                                     </div>
 
-                                  
+                                  <div class="tab-content">
+                                  <div id="tab-job-all" class="tab-pane fade active in">
+                                  <div class="cmn-table-freelancer">
+                                    <div class="navtab-filter">
+                                            <div class="result-found">
+                                     <h5>Results found: <span class="text-theme" id="count-all-buyer"></span></h5>
+                                     </div>
+                                        </div>
+
                                   <div class="table-quoted-container">
-                                    
-   
-                                
                                   </div>
+                                    <div class="pagination-flex">
+                                    <div class="pagination-center"><nav class="text-center" id="pagination-buyer" aria-label="Page navigation"></nav></div>
+                                    
+                                    <div class="navtab-filter">
+                                    <label>Results per Page:</label><select class="form-control" id="page-all-buyer"><option value=10>10</option><option value=20>20</option><option value=30>30</option><option value=40>40</option></select>
+                                    </div>
+                                    </div>
+                                             
+                                       
+                                    </div>
+                                 </div>
 
 
-                           <div class="pagination-flex">
-                           <div class="pagination-center"><nav class="text-center" id="pagination-buyer" aria-label="Page navigation"></nav></div>
+
+                                 <div id="tab-job-active" class="tab-pane fade active">
+                                  <div class="cmn-table-freelancer">
+                                    <div class="navtab-filter">
+                                            <div class="result-found">
+                                     <h5>Results found: <span class="text-theme" id="count-all-active"></span></h5>
+                                     </div>
+                                        </div>
+
+                                  <div class="table-active-container">
+                                  </div>
+                                    <div class="pagination-flex">
+                                    <div class="pagination-center"><nav class="text-center" id="pagination-active" aria-label="Page navigation"></nav></div>
+                                    
+                                    <div class="navtab-filter">
+                                    <label>Results per Page:</label><select class="form-control" id="page-active-buyer"><option value=10>10</option><option value=20>20</option><option value=30>30</option><option value=40>40</option></select>
+                                    </div>
+                                    </div>
+                                             
+                                       
+                                    </div>
+                                 </div>
+
+
+
+                                  <div id="tab-job-paused" class="tab-pane fade active">
+                                  <div class="cmn-table-freelancer">
+                                    <div class="navtab-filter">
+                                            <div class="result-found">
+                                     <h5>Results found: <span class="text-theme" id="count-all-paused"></span></h5>
+                                     </div>
+                                        </div>
+
+                                  <div class="table-paused-container">
+                                  </div>
+                                    <div class="pagination-flex">
+                                    <div class="pagination-center"><nav class="text-center" id="pagination-paused" aria-label="Page navigation"></nav></div>
+                                    
+                                    <div class="navtab-filter">
+                                    <label>Results per Page:</label><select class="form-control" id="page-all-paused"><option value=10>10</option><option value=20>20</option><option value=30>30</option><option value=40>40</option></select>
+                                    </div>
+                                    </div>
+                                             
+                                       
+                                    </div>
+                                 </div>
+
+
+
+
+                                 <div id="tab-job-done" class="tab-pane fade active">
+                                  <div class="cmn-table-freelancer">
+                                    <div class="navtab-filter">
+                                            <div class="result-found">
+                                     <h5>Results found: <span class="text-theme" id="count-all-buyer"></span></h5>
+                                     </div>
+                                        </div>
+
+                                  <div class="table-done-container">
+                                  </div>
+                                    <div class="pagination-flex">
+                                    <div class="pagination-center"><nav class="text-center" id="pagination-buyer" aria-label="Page navigation"></nav></div>
+                                    
+                                    <div class="navtab-filter">
+                                    <label>Results per Page:</label><select class="form-control" id="page-all-buyer"><option value=10>10</option><option value=20>20</option><option value=30>30</option><option value=40>40</option></select>
+                                    </div>
+                                    </div>
+                                             
+                                       
+                                    </div>
+                                 </div>
+
+
+
+
+                               
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                            
-                           <div class="navtab-filter">
-                            <label>Results per Page:</label><select class="form-control" id="page-all-buyer"><option value=10>10</option><option value=20>20</option><option value=30>30</option><option value=40>40</option></select>
-                            </div>
-                         </div>
+
+                           </div>
+
+                           
                                </div>
                                </div>
                            </div>
@@ -2601,7 +2711,7 @@
                  var data = [{ 'Name': 'buyerID', 'Operator': "in", "Value": $('#userGuid').val() }
                          
                  ]
-            
+                  //all jobs
                  $.ajax({
                     method: "POST",
                     url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_list?pageSize=1000&sort=-CreatedDateTime`,
@@ -2625,14 +2735,87 @@
                        })
                        //if existing user, verify the status
                       
-
                        var perPageCount = 10;
                        var totalPages = Math.ceil(totalJob / perPageCount)
                        console.log({ totalPages });
 
                     }
                  })
+
+
+                  //active
+                 var dataActive = [{ 'Name': 'buyerID', 'Operator': "in", "Value": $('#userGuid').val() },
+                  { 'Name': 'status', 'Operator': "equal", "Value": 'Available' },
+                    
+                         
+                 ]
+                  $.ajax({
+                    method: "POST",
+                    url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_list?pageSize=1000&sort=-CreatedDateTime`,
+                    headers: {
+                       "Content-Type": "application/json"
+                    },
+            
+                    data: JSON.stringify(dataActive),
+         
+                    success: function (response)
+                    {
+                       console.log({ response })
+              
+                       const jobs = response
+                       const jobDetails = jobs.Records
+                       const totalActiveJob = jobs.TotalRecords;
+                       waitForElement('#count-all-active', function ()
+                       {
+                          $('#count-all-active').text(totalActiveJob);
+                          
+                       })
+                       //if existing user, verify the status
+                      
+                       var perPageCount = 10;
+                       var totalPages = Math.ceil(totalActiveJob / perPageCount)
+                       console.log({ totalPages });
+
+                    }
+                  })
                  
+                 //paused
+
+                 
+                 var dataPaused = [{ 'Name': 'buyerID', 'Operator': "in", "Value": $('#userGuid').val() },
+                  { 'Name': 'status', 'Operator': "equal", "Value": 'Paused' },
+                    
+                         
+                 ]
+                  $.ajax({
+                    method: "POST",
+                    url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_list?pageSize=1000&sort=-CreatedDateTime`,
+                    headers: {
+                       "Content-Type": "application/json"
+                    },
+            
+                    data: JSON.stringify(dataPaused),
+         
+                    success: function (response)
+                    {
+                       console.log({ response })
+              
+                       const jobs = response
+                       const jobDetails = jobs.Records
+                       const totalPausedJob = jobs.TotalRecords;
+                       waitForElement('#count-all-paused', function ()
+                       {
+                          $('#count-all-paused').text(totalPausedJob);
+                          
+                       })
+                       //if existing user, verify the status
+                      
+                       var perPageCount = 10;
+                       var totalPages = Math.ceil(totalPausedJob / perPageCount)
+                       console.log({ totalPages });
+
+                    }
+                  })
 
 
                       waitForElement(`#jobListTwo`, function ()
@@ -2730,13 +2913,196 @@
                                       
 
                         });
+                         
+
+                        //active
+                         
+                          $('#pagination-active').pagination({
+                            dataSource: function(done) {
+                              $.ajax({
+                                 method: "POST",
+                                 url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_list?sort=-CreatedDateTime`,
+                                 headers: {
+                                    "Content-Type": "application/json"
+                                 },
+                           
+                                 data: JSON.stringify(dataActive),
+                                 success: function(response) {
+                                       done(response.Records);
+                                 }
+                              });
+                           },
+                             locator: "data.Records",
+                            totalNumberLocator: function (response)
+                            {
+                                console.log({ response })
+                               // vm.allFreelancers = response.Records;
+                                            // you can return totalNumber by analyzing response content
+                                            return response.TotalRecords;
+                            },
+                           pageSize: 10,
+                            
+                           callback: function (data, pagination)
+                           {
+                               // 
+                              if (data.length != 0) {
+                                 $('.table-active-container table').remove();
+
+                          data.forEach(function (job, i)
+                          {
+
+                             let jobTable = '';
+                             if (job['no_of_quotes'] == 0) {
+                                jobTable = `<table class="table table-freelancer">
+                             <thead>
+                           <tr data-id="${job['Id']}">
+                              <th colspan="5">Job #${job['Id']}</th>
+                              <th class="text-right"><a href="${protocol}//${baseURL}/user/plugins/${packageId}/job-details.php?jobId=${job['Id']}">Details &gt;&gt;</a></th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                           <td colspan="6"><div class="quoted-notfound">No one has quoted on this job yet.</div></td>
+                        </tr>
+                     </tbody>
+                     </table>`
+                             } else {
+                              jobTable = `<table class="table table-freelancer" id=${job['Id']}>
+                              <thead>
+                                 <tr>
+                                    <th colspan="5">Job #${job['Id']}</th>
+                                    <th class="text-right"><a href="user/plugins/${packageId}/job-details.php?jobId=${job['Id']}"">Details &gt;&gt;</a></th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                
+                              </tbody>
+                           </table> `
+                                
+                              
+                             }
+                         
+                             waitForElement('.table-active-container', function ()
+                             {
+                                
+                               $('.table-active-container').append(jobTable);
+
+                                
+                             })
+                             waitForElement(`#${job['Id']}`, function ()
+                             {
+                              getQuotedJobDetails(job['Id'], `#${job['Id']}`, 'applicant-quote')
+                             })
+                            
+                          })
+                  
+                 
+                  
+                       }
+
+                        }
+                                      
+
+                        });
                           
+                         
+                         //paused
+
+                         //active
+                         
+                          $('#pagination-paused').pagination({
+                            dataSource: function(done) {
+                              $.ajax({
+                                 method: "POST",
+                                 url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_list?sort=-CreatedDateTime`,
+                                 headers: {
+                                    "Content-Type": "application/json"
+                                 },
+                           
+                                 data: JSON.stringify(dataActive),
+                                 success: function(response) {
+                                       done(response.Records);
+                                 }
+                              });
+                           },
+                             locator: "data.Records",
+                            totalNumberLocator: function (response)
+                            {
+                                console.log({ response })
+                               // vm.allFreelancers = response.Records;
+                                            // you can return totalNumber by analyzing response content
+                                            return response.TotalRecords;
+                            },
+                           pageSize: 10,
+                            
+                           callback: function (data, pagination)
+                           {
+                               // 
+                              if (data.length != 0) {
+                                 $('.table-paused-container table').remove();
+
+                          data.forEach(function (job, i)
+                          {
+
+                             let jobTable = '';
+                             if (job['no_of_quotes'] == 0) {
+                                jobTable = `<table class="table table-freelancer">
+                             <thead>
+                           <tr data-id="${job['Id']}">
+                              <th colspan="5">Job #${job['Id']}</th>
+                              <th class="text-right"><a href="${protocol}//${baseURL}/user/plugins/${packageId}/job-details.php?jobId=${job['Id']}">Details &gt;&gt;</a></th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                           <td colspan="6"><div class="quoted-notfound">No one has quoted on this job yet.</div></td>
+                        </tr>
+                     </tbody>
+                     </table>`
+                             } else {
+                              jobTable = `<table class="table table-freelancer" id=${job['Id']}>
+                              <thead>
+                                 <tr>
+                                    <th colspan="5">Job #${job['Id']}</th>
+                                    <th class="text-right"><a href="user/plugins/${packageId}/job-details.php?jobId=${job['Id']}"">Details &gt;&gt;</a></th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                
+                              </tbody>
+                           </table> `
+                                
+                              
+                             }
+                         
+                             waitForElement('.table-paused-container', function ()
+                             {
+                                
+                               $('.table-paused-container').append(jobTable);
+
+                                
+                             })
+                             waitForElement(`#${job['Id']}`, function ()
+                             {
+                              getQuotedJobDetails(job['Id'], `#${job['Id']}`, 'applicant-quote')
+                             })
+                            
+                          })
+                  
+                 
+                  
+                       }
+
+                        }
+                                      
+
+                        });
                      
 
 
 
                     
-                })
+                    })
 
 
               })
@@ -3661,7 +4027,7 @@
           var jobs = jobData.getInstance();
 
          //pause
-         $('.active').on('click', function (event)
+         $('.activebutton').on('click', function (event)
 
          {   
             $(this).addClass('hidden');
@@ -3677,7 +4043,7 @@
              console.log('unpaused');
             jobs.updateJobStatus($('#job-id').val(), 'Available');
             $(this).addClass('hidden');
-            $('.active').removeClass('hidden');
+            $('.activebutton').removeClass('hidden');
               //$(this).toggleClass('btn-quote-active');
             //$(this).removeClass('paused');
          })

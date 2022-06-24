@@ -178,8 +178,10 @@ class API
 
     public function createRowEntry($packageId, $tableName, $data)
     {
-        $protocol = stripos($_SERVER['SERVER_PROTOCOL'],'https') === 0 ? 'https://' : 'http://';
-        $url = $protocol . $this->baseUrl . '/api/v2/plugins/' . $packageId . '/custom-tables/' . $tableName . '/rows';
+        //$protocol = stripos($_SERVER['SERVER_PROTOCOL'],'http') === 0 ? 'https://' : 'https://';
+        $protocol = $_COOKIE["protocol"];
+        $url = $protocol . '://' . $this->baseUrl . '/api/v2/plugins/' . $packageId . '/custom-tables/' . $tableName . '/rows';
+        error_log($url);
         $response = $this->callAPI("POST", null, $url, $data);
         return $response;
     }

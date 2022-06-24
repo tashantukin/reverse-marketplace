@@ -1847,13 +1847,19 @@
           
            async function getAllJobs() //with nearest locations.
            {
+              
+
+                var data = [{ 'Name': 'status', 'Operator': "equal", "Value": 'Available' }]
+            
+         
               $.ajax({
 
-                  method: "GET",
+                  method: "POST",
                   url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/job_list?pageSize=1000`,
                   headers: {
                   "Content-Type": "application/json"
                  },
+                   data: JSON.stringify(data),
                   
                  success: function (response)
                  { 
@@ -1872,7 +1878,7 @@
                               range_list.push([parseFloat(location_list[0]), parseFloat(location_list[1]),coords['Id'],coords['CreatedDateTime'], distance ]);
                               
                                   
-                  }
+                      }
                    
                         // $.each(location_list, function (index, loc)
                         // {
@@ -3008,7 +3014,6 @@
                          
                          //paused
 
-                         //active
                          
                           $('#pagination-paused').pagination({
                             dataSource: function(done) {
@@ -3098,10 +3103,6 @@
 
                         });
                      
-
-
-
-                    
                     })
 
 

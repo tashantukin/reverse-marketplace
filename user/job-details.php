@@ -110,7 +110,8 @@ else {
                         <div class="navtab-flex">
                             <div class="quote-title-design">Accounting Firm Name</div>
                             <div class="navtab-filter">
-                                <a href="javascript:void(0);" class="btn btn-quote-cancel btn-quote-active active"></a>
+                                <a href="javascript:void(0);"
+                                    class="btn btn-quote-cancel btn-quote-active activebutton"></a>
                                 <a href="javascript:void(0);"
                                     class="btn btn-quote-cancel btn-quote-active paused hidden"></a>
                             </div>

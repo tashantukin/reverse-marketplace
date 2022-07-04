@@ -188,9 +188,9 @@ class API
 
     public function editRowEntry($packageId, $tableName, $rowId, $data)
     {
-        $protocol = stripos($_SERVER['SERVER_PROTOCOL'],'https') === 0 ? 'https://' : 'http://';
-        
-        $url = $protocol .   $this->baseUrl . '/api/v2/plugins/' . $packageId . '/custom-tables/' . $tableName . '/rows/' . $rowId;
+       // $protocol = stripos($_SERVER['SERVER_PROTOCOL'],'https') === 0 ? 'https://' : 'http://';
+        $protocol = $_COOKIE["protocol"];
+        $url = $protocol . '://' .  $this->baseUrl . '/api/v2/plugins/' . $packageId . '/custom-tables/' . $tableName . '/rows/' . $rowId;
         $response = $this->callAPI("PUT", null, $url, $data);
         return $response;
     }
@@ -198,8 +198,9 @@ class API
     public function deleteRowEntry($packageId, $tableName, $rowId)
     
     {
-         $protocol = stripos($_SERVER['SERVER_PROTOCOL'],'https') === 0 ? 'https://' : 'http://';
-        $url=  $protocol . $this->baseUrl . '/api/v2/plugins/' . $packageId . '/custom-tables/' . $tableName . '/rows/' . $rowId;
+         //$protocol = stripos($_SERVER['SERVER_PROTOCOL'],'https') === 0 ? 'https://' : 'http://';
+          $protocol = $_COOKIE["protocol"];
+        $url=   $protocol . '://' . $this->baseUrl . '/api/v2/plugins/' . $packageId . '/custom-tables/' . $tableName . '/rows/' . $rowId;
         $response = $this->callAPI("DELETE", null, $url, null);
         return $response;
     }

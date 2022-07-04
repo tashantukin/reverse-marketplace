@@ -2714,7 +2714,8 @@
  
                  }
                  
-                 var data = [{ 'Name': 'buyerID', 'Operator': "in", "Value": $('#userGuid').val() }
+                 var data = [{ 'Name': 'buyerID', 'Operator': "in", "Value": $('#userGuid').val() },
+                    { 'Name': 'status', 'Operator': "equal", "Value": 'Available' },
                          
                  ]
                   //all jobs
@@ -3226,7 +3227,7 @@
             $.ajax(settings).done(function (response)
             {
          
-              // toastr.success(`Successfully ${status} job status`);
+              toastr.success(`Successfully ${status} job status`);
       
             });
            }
@@ -4053,6 +4054,8 @@
          {
              console.log('delete');
              jobs.updateJobStatus($('#job-id').val(), 'Deleted');
+             window.location.href = '/';
+
          })
 
 

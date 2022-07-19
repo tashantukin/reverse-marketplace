@@ -14,7 +14,7 @@ var sellerFields;
 var packagePath = scriptSrc.replace("/scripts/users.js", "").trim();
 var locationList = new Array();
 var search_group = new L.LayerGroup();
-var country;
+var country = getCountry();
 
 
 var isoCountries = {

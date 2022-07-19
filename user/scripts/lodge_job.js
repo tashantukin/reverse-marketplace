@@ -8,7 +8,7 @@ var packageId = re.exec(scriptSrc.toLowerCase())[1];
 var userId = $("#userGuid").val();
 var packagePath = scriptSrc.replace("/scripts/lodge_job.js", "").trim();
 var payment_enabled;
-var pub_key;
+var pub_key  = ''
 
 // Add an instance of the card Element into the `card-element` <div>.
 //document upload vars
@@ -206,8 +206,8 @@ const jobData = new Vue({
                     var results = JSON.parse(result);
                     console.table(`result ${results.result.api_key}`);
                     this.stripe_api_key = results.result.api_key;
-                    this.stripe_pub_key = results.result.pub_key;
-                    pub_key = this.stripe_pub_key;
+                    this.stripe_pub_key = results.result.pub_key != null ? results.result.pub_key : 'pk_test_51IDN6ALQSWMKUO5eXiY7nrd6P3dE6oLh42AQpfpUxz64OgHjaSiME8LLPmyWuaPOlUIAT0H0sLjfMkPWd4eBUbxC00gi2lcEOX';
+                    pub_key = this.stripe_pub_key  ;
                     this.stripe_client_id = results.result.client_id;
                    
                  }

@@ -1499,18 +1499,86 @@
 
 
                         case '#tab-all':
-                        
-                           allJobs = `<tr data-id="${job['Id']}">
 
-                           ${status}
-                           <td>${job['Id']}</td>
-                           <td>${job['job_validity']}</td>
-                           <td>${job['buyer_email']}</td>
-                           <td>${job['buyer_contact']}</td>
-                           <td class="width-location">${job['in_person_work_address']}</td>
-                           <td>${job['is_accepted'] == 1 ? 'Yes' : 'No'} </td>
-                           <td>-</td>
-                        </tr>`;
+                              var freelancerStatus;                                            
+                            var data = [{ 'Name': 'job_id', 'Operator': "equal", "Value": jobId}, { 'Name': 'freelancer_id', 'Operator': "equal", "Value": $('#userGuid').val() }]
+            
+                              $.ajax({
+                              method: "POST",
+                              url: `${protocol}//${baseURL}/api/v2/plugins/${packageId}/custom-tables/freelancer_quotes/`,
+                              headers: {
+                                 "Content-Type": "application/json"
+                              },
+                              
+                              data: JSON.stringify(data),
+                           
+                              success: function (response)
+                              {
+                                 console.log({ response })
+                              
+                                 const jobs = response
+                                 const jobDetails = jobs.Records[0];
+                                 if (jobDetails) {
+                                        const jobStatus = jobDetails['status'];
+
+                                    if (jobStatus == 'Available') {
+                                     freelancerStatus = ` <td><select class="form-control"id ="status">
+                                    <option selected="" disabled="" value="Available">Available</option>
+                                    <option value="Interested">Interested</option>
+                                    </select></td>`
+                                    } else if (jobStatus == 'Interested') {
+                                    freelancerStatus = ` <td><select class="form-control">
+                                       <option selected="" disabled="" value="Available">Interested</option>
+                                       <option selected="" value="Available">Interested</option>
+                                       </select></td>`
+                                    } else if (jobStatus== 'Quoted') {
+                                       freelancerStatus =`<td>Quoted</td>`
+
+                                       }else if (jobStatus == 'Accepted') {
+                                       freelancerStatus =`<td>Accepted</td>`
+
+                                       }else if (jobStatus == 'Completed') {
+                                    freelancerStatus=`<td>Completed</td>`
+
+                                    }else if (jobStatus == 'Cancelled') {
+                                       freelancerStatus =`<td>Cancelled</td>`
+
+                                    }
+                                    
+                                    else {
+                                       freelancerStatus =`<td>--</td>`
+                                    }
+
+                                 } else {
+                                      freelancerStatus = ` <td><select class="form-control"id ="status">
+                                    <option selected="" disabled="" value="Available">Available</option>
+                                    <option value="Interested">Interested</option>
+                                    </select></td>`
+                                 }
+                                
+                               allJobs = `<tr data-id="${job['Id']}">
+
+                                 ${freelancerStatus}
+                                 <td>${job['Id']}</td>
+                                 <td>${job['job_validity']}</td>
+                                 <td>${job['buyer_email']}</td>
+                                 <td>${job['buyer_contact']}</td>
+                                 <td class="width-location">${job['in_person_work_address']}</td>
+                                 <td>${job['is_accepted'] == 1 ? 'Yes' : 'No'} </td>
+                                 <td>-</td>
+                              </tr>`;
+
+
+
+                              }
+
+                              })      
+
+
+
+
+                        
+                          
 
 
                            break;

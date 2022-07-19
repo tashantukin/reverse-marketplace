@@ -809,7 +809,8 @@ sellerFields = new Vue({
                             fieldName = field.name,
                                 fieldType = field.type_of_field,
                                 fieldId = field.Id
-                              fieldRequired = field.is_required;
+                            fieldRequired = field.is_required;
+                            fieldPlaceholder = field.placeholder;
 
                             var isrequired = fieldRequired == 'True' ? 'required' : "";
                             var customFieldInput = '';
@@ -829,7 +830,7 @@ sellerFields = new Vue({
                                 
                                 case 'textfield':
                             
-                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label>  <input type="text" class="form-control ${isrequired}" name="${fieldName}"id="${fieldName}" placeholder=""></div>`
+                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label>  <input type="text" class="form-control ${isrequired}" name="${fieldName}"id="${fieldName}" placeholder="${fieldPlaceholder}"></div>`
                                     break;
                                
                                 case 'dropdown':
@@ -878,7 +879,7 @@ sellerFields = new Vue({
                                 
                                 case 'number':
                             
-                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label>  <input type="number" class="form-control ${isrequired}" name="${fieldName}"id="${fieldName}" placeholder=""></div>`
+                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label>  <input type="number" class="form-control ${isrequired}" name="${fieldName}"id="${fieldName}" placeholder="${fieldPlaceholder}"></div>`
                                     break;
                                
                                 case 'datepicker':
@@ -894,7 +895,7 @@ sellerFields = new Vue({
                                     
                                     customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}">
                                    <label for=${fieldId}>${fieldName}</label>
-                                    <textarea class="form-control ${isrequired}" name="${fieldName}" id="${fieldName}" rows="5" placeholder=""></textarea>
+                                    <textarea class="form-control ${isrequired}" name="${fieldName}" id="${fieldName}" rows="5" placeholder="${fieldPlaceholder}"></textarea>
                                     </div>`
                                     break;
                                

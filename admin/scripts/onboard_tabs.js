@@ -37,7 +37,8 @@
             fieldType: '',
             placeholder: '',
             values: '',
-            classification: ''
+            classification: '',
+            isRequired: ''
          
                 
             }
@@ -358,7 +359,8 @@
                         {
                             fieldName = field.name,
                             fieldType = field.type_of_field,
-                            fieldId = field.Id 
+                                fieldId = field.Id,
+                               
                             
                             $(`.tab-content #${tabId} .custom-listing-table-onbrd:not(.custom)`).append(`
             
@@ -539,8 +541,9 @@
                         vm.fieldDescription = fieldDetails.text,
                         vm.fieldType = fieldDetails.type_of_field,
                         vm.placeholder = fieldDetails.placeholder,
-                            vm.values = JSON.parse(fieldDetails.values)   
+                        vm.values = JSON.parse(fieldDetails.values)   
                         vm.classification = fieldDetails.classification
+                         vm.isRequired = fieldDetails.is_required
                         
                         if (vm.fieldType == "checkbox" || vm.fieldType == "dropdown") {
                             $('.cstm-fieldpop-optarea').show();
@@ -551,7 +554,10 @@
                             })
                             
                         }
-                        
+
+                        //is required checkbox
+
+                          vm.isRequired == 'True' ? $("#is-required").prop("checked", true) : $("#is-required").prop("checked", false);
                     
                     }
                 

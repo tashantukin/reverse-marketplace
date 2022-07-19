@@ -46,8 +46,8 @@
                 values: '',
                 fieldId: '',
                 placeholder: '',
-                description :''
-         
+                description :'',
+                isRequired : ''
                 
             }
         },
@@ -536,6 +536,8 @@
                     vm.fieldType = fieldDetails.type_of_field,
                     vm.fieldId = fieldDetails.Id
                     vm.description = fieldDetails.text
+                    vm.isRequired = fieldDetails.is_required
+                    vm.placeholder =  fieldDetails.placeholder
                     
                     if (vm.fieldType == "checkbox" || vm.fieldType == "dropdown" || vm.fieldType ==  'radiobutton' ) {
                         $('.cstm-fieldpop-optarea').show();
@@ -546,6 +548,8 @@
                         })
                         
                     }
+                    vm.isRequired == 'True' ? $("#is-required").prop("checked", true) : $("#is-required").prop("checked", false);
+
                     
 
                 }

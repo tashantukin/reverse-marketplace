@@ -152,10 +152,10 @@ function cache_save_job()
         
         if ( !$('#userGuid').length ) {
              setTimeout(function(){ 
-             // window.location.href = "lodged.html";
+             window.location.href = "lodged.html";
         },1000);
         } else {
-          //  window.location.href = '/'
+           window.location.href = '/'
         }
        
        // document.cookie = "jobID: " + response.Id 
@@ -525,6 +525,7 @@ const jobData = new Vue({
                             fieldType = field.type_of_field,
                             fieldId = field.Id 
                             fieldRequired = field.is_required;
+                            fieldPlaceholder = field.placeholder;
                             var customFieldInput = '';
                             var isrequired = fieldRequired == 'True' ? 'required' : "";
                             switch (fieldType) {
@@ -543,7 +544,7 @@ const jobData = new Vue({
                                 
                                 case 'textfield':
                             
-                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label>  <input type="text" class="form-control ${isrequired}" name="${fieldName}"id="${fieldName.replace(" ","_").toLowerCase()}" placeholder=""></div>`
+                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label>  <input type="text" class="form-control ${isrequired}" name="${fieldName}"id="${fieldName.replace(" ","_").toLowerCase()}" placeholder="${fieldPlaceholder}"></div>`
                                     break;
                                
                                 case 'dropdown':
@@ -592,7 +593,7 @@ const jobData = new Vue({
                                 
                                 case 'number': 
                             
-                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label>  <input type="number" class="form-control ${isrequired}" name="${fieldName}"id="${fieldName}" placeholder=""></div>`
+                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label>  <input type="number" class="form-control ${isrequired}" name="${fieldName}"id="${fieldName}" placeholder="${fieldPlaceholder}"></div>`
                                     break;
                                
                                 case 'datepicker':
@@ -608,7 +609,7 @@ const jobData = new Vue({
                                     
                                     customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}">
                                    <label for=${fieldId}>${fieldName}</label>
-                                    <textarea class="form-control ${isrequired}" name="${fieldName}" id="${fieldName.replace(" ","_").toLowerCase()}" rows="5" placeholder=""></textarea>
+                                    <textarea class="form-control ${isrequired}" name="${fieldName}" id="${fieldName.replace(" ","_").toLowerCase()}" rows="5" placeholder="${fieldPlaceholder}"></textarea>
                                     </div>`
                                     break;
                                
@@ -1264,14 +1265,14 @@ $(document).ready(function ()
                 //     map.removeLayer(circle)
                 // }
 
-                // marker = L.marker([lat, long])
-                // circle = L.circle([lat, long], {
-                //     radius: accuracy
-                // })
+                marker = L.marker([lat, long])
+                circle = L.circle([lat, long], {
+                    radius: accuracy
+                })
 
-                // var featureGroup = L.featureGroup([marker, circle]).addTo(map)
+                var featureGroup = L.featureGroup([marker, circle]).addTo(map)
 
-                // map.fitBounds(featureGroup.getBounds())
+                map.fitBounds(featureGroup.getBounds())
 
                 console.log("Your coordinate is: Lat: " + lat + " Long: " + long + " Accuracy: " + accuracy)
 
@@ -1388,7 +1389,7 @@ $(document).ready(function ()
     var script = document.createElement('script');
     script.onload = function ()
     {
-       
+    
 
         //if (stripePubKey) {
         //do stuff with the script
@@ -1416,17 +1417,17 @@ $(document).ready(function ()
                     event.preventDefault();
                     $("#paynowPackage").attr("disabled", "disabled");
 
-                     if ($('option:selected', $('#paymentScheme')).text() == 'Cash on Delivery'){
+                    if ($('option:selected', $('#paymentScheme')).text() == 'Cash on Delivery'){
                         console.log('cod');
-                           cache_save_job();  
-                     } else {
+                        cache_save_job();  
+                    } else {
 
-                         if ($('#stripe-id').val() != null && $('#stripe-id').val() != '') {
+                        if ($('#stripe-id').val() != null && $('#stripe-id').val() != '') {
                             console.log('you will be charge on your default payment method')
-                             jobData.chargeCustomer($('#stripe-id').val(), $('#charge-amount').text());
-                             $("#paynowPackageChargeQuote").prop("disabled", true);
-                         } else {
-                             jobData.createStripeMember(card, stripe)
+                            jobData.chargeCustomer($('#stripe-id').val(), $('#charge-amount').text());
+                            $("#paynowPackageChargeQuote").prop("disabled", true);
+                        } else {
+                            jobData.createStripeMember(card, stripe)
                             stripe.createToken(card).then(function (result)
                             {
                                 if (result.error) {
@@ -1447,29 +1448,29 @@ $(document).ready(function ()
                                     // SubscriptionManager.PayNowSubmit(result.token.id, e);
                                 }
                             });
-                             
-                         }
+                            
+                        }
                         
-                     }
+                    }
 
 
-                 
+                
     
                 });
         }
-              
+            
         card.on('change', function (event)
         {
             displayError(event);
         });
         //  }
         //});
-     }
-      script.src = "https://js.stripe.com/v3/";
+    }
+    script.src = "https://js.stripe.com/v3/";
 
             document.head.appendChild(script); //or something of the likes
 
-                  // Create an instance of the card Element
+                // Create an instance of the card Element
             $('#card-element').css("width", "30em");
     })
     

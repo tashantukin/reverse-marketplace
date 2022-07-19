@@ -3025,7 +3025,7 @@
                                     "Content-Type": "application/json"
                                  },
                            
-                                 data: JSON.stringify(dataActive),
+                                 data: JSON.stringify(dataPaused),
                                  success: function(response) {
                                        done(response.Records);
                                  }

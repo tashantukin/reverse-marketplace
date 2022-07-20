@@ -104,7 +104,7 @@
             console.log('del option');
             var xc = jQuery('.cstm-fieldpop-optarea .maindiv').eq(0).clone(true);
             jQuery('input[type="text"]', xc).val('');
-            jQuery('.cstm-fieldpop-optarea #dropdown-opt-draggble').append(xc);
+            jQuery('.cstm-fieldpop-optarea #dropdown-opt-draggble').last().append(xc);
             $(this).parents('.cstm-fieldpop-optarea').find('#dropdown-opt-draggble li:last').addClass('newOption');
             $(this).parents('.cstm-fieldpop-optarea').find('#dropdown-opt-draggble li .delete-opt:last').addClass('newDelete');
 

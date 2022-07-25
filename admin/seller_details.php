@@ -33,7 +33,7 @@ $action = $_GET['action'];
                 <div class="row">
                     <div class="col-sm-8">
                         <h4>
-                           Merchant onboarding fields
+                            Merchant onboarding fields
                         </h4>
                         <h5>
                             View and add the field for merchant to fill in.
@@ -142,7 +142,7 @@ $action = $_GET['action'];
             <div class="popup-header">
                 <h4>Add/edit field</h4>
             </div>
-            <div class="popup-demo-content ">
+            <div class="popup-demo-content for-field">
                 <div class="form-group">
                     <label>Field Name*</label>
                     <input :value="fieldName" type="text" class="form-control required" name="onbrd_field_name"
@@ -184,14 +184,19 @@ $action = $_GET['action'];
                                             class="icon icon-draggble"></i></a></div>
                                 <div class="virtual-table-cell"><input type="text" value="" name="checkbox-opt[]"
                                         id="optionName" class="required" class="txt"></div>
-                                <div class="virtual-table-cell"><a href="#" class="delete-opt"
-                                        onclick="delete_opt(this)"><i class="icon icon-delete"></i></a></div>
+                                <div class="virtual-table-cell"><a href="#" class="delete-opt"><i
+                                            class="icon icon-delete"></i></a></div>
                             </div>
                         </li>
 
                     </ul>
 
-                    <span class="addOpt"><i class="fa fa-plus"></i>Add Option</span>
+                    <!-- <span class="addOpt"><i class="fa fa-plus"></i>Add Option</span> -->
+
+                    <div class="add-option-area">
+                        <a class="addOpt" href="javascript:void(0);"><i class="icon icon-addopt"></i> ADD
+                            OPTION</a>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -465,6 +470,16 @@ $action = $_GET['action'];
 
             $('#OnboardingFields .popup-header h4').text('Edit Field')
             jQuery('#OnboardingFields').modal('show');
+            $('.popup-demo-content.for-field').niceScroll({
+                cursorcolor: "#ADADAD",
+                cursorwidth: "6px",
+                cursorborderradius: "5px",
+                cursorborder: "1px solid #ADADAD;",
+                touchbehavior: true,
+                "zindex": "99999",
+                "autohidemode": false,
+                touchbehavior: true
+            }).resize();
 
         });
 

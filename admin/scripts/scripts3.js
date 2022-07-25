@@ -101,10 +101,22 @@
         //add options
         $('.cstm-fieldpop-optarea .addOpt').on('click', function ()
         {
+            $('.popup-demo-content.for-field').niceScroll({cursorcolor:"#ADADAD",cursorwidth: "6px",cursorborderradius: "5px",cursorborder: "1px solid #ADADAD;",touchbehavior: true,"zindex":"99999","autohidemode":false,touchbehavior: true}).resize();
             console.log('del option');
             var xc = jQuery('.cstm-fieldpop-optarea .maindiv').eq(0).clone(true);
             jQuery('input[type="text"]', xc).val('');
-            jQuery('.cstm-fieldpop-optarea #dropdown-opt-draggble').last().append(xc);
+
+            //condition if there is an existing option,
+
+            if (jQuery('.cstm-fieldpop-optarea .maindiv').length > 0) {
+                console.log('1');
+                 jQuery('.cstm-fieldpop-optarea #dropdown-opt-draggble').last().append(xc);
+            } else {
+                console.log('2');
+
+                 jQuery('.cstm-fieldpop-optarea #dropdown-opt-draggble').append(xc);
+            }
+           
             $(this).parents('.cstm-fieldpop-optarea').find('#dropdown-opt-draggble li:last').addClass('newOption');
             $(this).parents('.cstm-fieldpop-optarea').find('#dropdown-opt-draggble li .delete-opt:last').addClass('newDelete');
 
@@ -324,6 +336,7 @@
         //edit custom field
         $("#customfieldslist").on('click', '#edit', function ()
         {
+           
             let custom_id = $(this).attr('dir');
             $('.custom_id').val(custom_id);
             $('.custom_id').attr('dir', 'update');
@@ -438,7 +451,7 @@
                         $('#dropdown-opt-draggble').append(options);
 
                     });
-
+                     
 
                 }
             },

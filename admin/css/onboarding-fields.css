@@ -810,3 +810,38 @@
 
 .tab-title-container {display: flex;align-items: center; height: 100%; min-height: 50px;}
 .tab-title-container h3 {font-size: 16px;font-weight: 600;}
+
+
+.popup-demo-content.for-field {
+    max-height: 500px;
+}
+
+.popup-onbrd-fields .nicescroll-cursors {
+    right: -29px;
+    width: 11px !important;
+}
+
+.footer-save-flex{display: flex;justify-content: space-between;width: 100%;align-items: center;}
+.footer-save-flex h5{font-weight: 600;}
+.footer-save-flex .btn-customize-layoutsave{line-height: normal;border-radius: 0px;}
+
+
+.add-option-area>a {
+    color: #5C5862;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.icon-addopt {
+    background-image: url('../images/add.svg');
+}
+
+.icon {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    vertical-align: middle;
+    background-repeat: no-repeat;
+    background-position: center center;
+    margin-right: 15px;
+}

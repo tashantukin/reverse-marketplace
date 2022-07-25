@@ -164,7 +164,7 @@ $action = $_GET['action'];
             <div class="popup-header">
                 <h4>Add/edit field</h4>
             </div>
-            <div class="popup-demo-content job-fields-modal">
+            <div class="popup-demo-content job-fields-modal for-field">
                 <div class="form-group">
                     <label>Field Name*</label>
                     <input type="text" :value="fieldName" class="form-control required" name="onbrd_field_name"
@@ -218,7 +218,13 @@ $action = $_GET['action'];
 
                     </ul>
 
-                    <span class="addOpt"><i class="fa fa-plus"></i>Add Option</span>
+                    <!-- <span class="addOpt"><i class="fa fa-plus"></i>Add Option</span> -->
+
+
+                    <div class="add-option-area">
+                        <a class="addOpt" href="javascript:void(0);"><i class="icon icon-addopt"></i> ADD
+                            OPTION</a>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -487,11 +493,22 @@ $action = $_GET['action'];
         jQuery('body').on('click', '#btn-add-new-field', function() {
 
             $('#OnboardingFields.popup-header h4').text('Add Field')
-            $('.cstm-fieldpop-optarea ul').remove();
+            // $('.cstm-fieldpop-optarea ul').remove();
             jQuery('#onbrd_field_name').val('');
             jQuery('#onbrd_field_type').val('Textfield');
             jQuery('#onbrd_steps').val('1. Registration');
             jQuery('#OnboardingFields').modal('show');
+
+            $('.popup-demo-content.for-field').niceScroll({
+                cursorcolor: "#ADADAD",
+                cursorwidth: "6px",
+                cursorborderradius: "5px",
+                cursorborder: "1px solid #ADADAD;",
+                touchbehavior: true,
+                "zindex": "99999",
+                "autohidemode": false,
+                touchbehavior: true
+            }).resize();
         });
 
         jQuery('body').on('click', '.btn-edit-onbrdfields', function() {
@@ -499,6 +516,16 @@ $action = $_GET['action'];
 
             $('#OnboardingFields .popup-header h4').text('Edit Field')
             jQuery('#OnboardingFields').modal('show');
+            $('.popup-demo-content.for-field').niceScroll({
+                cursorcolor: "#ADADAD",
+                cursorwidth: "6px",
+                cursorborderradius: "5px",
+                cursorborder: "1px solid #ADADAD;",
+                touchbehavior: true,
+                "zindex": "99999",
+                "autohidemode": false,
+                touchbehavior: true
+            }).resize();
 
             // tr_row_update = jQuery(this).closest('.added-description');
 

@@ -267,12 +267,14 @@
 
                             $(`#${tab.Id} .custom_list_wrapper`).last().after(saveSettingsContainer);
                             }
-                        }
+                             }
                             waitForElement('.custom-listing-table-onbrd', function ()
                             {
                                // if (cond == "new") {
                                     //do nothing
                                // }else {
+                                   // $(`#${tab.Id}.custom-listing-table-onbrd li`).remove()
+                                 $(`.tab-content #${tab.Id} .custom-listing-table-onbrd`).empty();
                                     vm.getAllFields(tab.Id);
                                 //}
                                 
@@ -349,7 +351,7 @@
                             fieldName = field.name,
                             fieldType = field.type_of_field,
                             fieldId = field.Id 
-                            
+                           // $(`.tab-content #${tabId} .custom-listing-table-onbrd`).empty();
                             $(`.tab-content #${tabId} .custom-listing-table-onbrd:not(.custom)`).append(`
 
                                             

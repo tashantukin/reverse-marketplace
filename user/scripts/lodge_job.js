@@ -522,6 +522,7 @@ const jobData = new Vue({
                         $.each(fieldDetails, function (index, field)
                         {
                             fieldName = field.name,
+                            fieldText = field.text,
                             fieldType = field.type_of_field,
                             fieldId = field.Id 
                             fieldRequired = field.is_required;
@@ -544,7 +545,7 @@ const jobData = new Vue({
                                 
                                 case 'textfield':
                             
-                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label>  <input type="text" class="form-control ${isrequired}" name="${fieldName}"id="${fieldName.replace(" ","_").toLowerCase()}" placeholder="${fieldPlaceholder}"></div>`
+                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${ fieldText}</label>  <input type="text" class="form-control ${isrequired}" name="${fieldName}"id="${fieldName.replace(" ","_").toLowerCase()}" placeholder="${fieldPlaceholder}"></div>`
                                     break;
                                
                                 case 'dropdown':
@@ -554,7 +555,7 @@ const jobData = new Vue({
                                     {
                                         options += `<option name='${option}' value="${option}">${option}</option>`
                                     });
-                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label> <select id="${fieldId}" class="form-control ${isrequired}"  name="${fieldName}" id="${fieldName}" type="dropdown">
+                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${ fieldText}</label> <select id="${fieldId}" class="form-control ${isrequired}"  name="${fieldName}" id="${fieldName}" type="dropdown">
                                       ${options}
                                     </select> </div>`;
                                     break;    
@@ -570,7 +571,7 @@ const jobData = new Vue({
                                         </label>  </div>`
                                     });
                                     customFieldInput = `<div class="form-group custom-fancyjb custom-details ${isrequired}" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> 
-                                    <label for=${fieldId}>${fieldName}</label>    
+                                    <label for=${fieldId}>${ fieldText}</label>    
                                     ${chkoptions}
                                     </div>`;
                                     break;
@@ -585,7 +586,7 @@ const jobData = new Vue({
                                         </label>  </div>`
                                     });
                                     customFieldInput = `<div class="custom-fancyjb custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> 
-                                    <label for=${fieldId}>${fieldName}</label>    
+                                    <label for=${fieldId}>${ fieldText}</label>    
                                     ${radioOptions}
                                     </div>`;
 
@@ -593,12 +594,12 @@ const jobData = new Vue({
                                 
                                 case 'number': 
                             
-                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label>  <input type="number" class="form-control ${isrequired}" name="${fieldName}"id="${fieldName}" placeholder="${fieldPlaceholder}"></div>`
+                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${ fieldText}</label>  <input type="number" class="form-control ${isrequired}" name="${fieldName}"id="${fieldName}" placeholder="${fieldPlaceholder}"></div>`
                                     break;
                                
                                 case 'datepicker':
 
-                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}"  custom-type="${fieldType}"><label for=${fieldId}>${fieldName}</label><input type="text" class="form-control datepicker ${isrequired}" name="${fieldName}" id="${fieldName.replace(" ","_").toLowerCase()}" placeholder="DD/MM/YYYY"> </div>`
+                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}"  custom-type="${fieldType}"><label for=${fieldId}>${ fieldText}</label><input type="text" class="form-control datepicker ${isrequired}" name="${fieldName}" id="${fieldName.replace(" ","_").toLowerCase()}" placeholder="DD/MM/YYYY"> </div>`
                                     jQuery('.datepicker').datetimepicker({
                                     viewMode: 'days',
                                     format: 'DD/MM/YYYY'
@@ -608,7 +609,7 @@ const jobData = new Vue({
                                 case 'textarea':
                                     
                                     customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}">
-                                   <label for=${fieldId}>${fieldName}</label>
+                                   <label for=${fieldId}>${ fieldText}</label>
                                     <textarea class="form-control ${isrequired}" name="${fieldName}" id="${fieldName.replace(" ","_").toLowerCase()}" rows="5" placeholder="${fieldPlaceholder}"></textarea>
                                     </div>`
                                     break;
@@ -618,7 +619,7 @@ const jobData = new Vue({
                                     customFieldInput = `<div class="form-group custom-fancyjb" id="" custom-name="${fieldName}" custom-type="${fieldType}">
                                     <div class="fancy-checkbox checkbox-sm">
                                         <input type="checkbox" name="${fieldId}" id="${fieldId}" class="acknowledge ${isrequired}">
-                                         <label for="${fieldId}"><span>${fieldName}</span></label>
+                                         <label for="${fieldId}"><span>${ fieldText}</span></label>
                                     </div>
                                     </div>`
                                     break;
@@ -630,7 +631,7 @@ const jobData = new Vue({
                                             <div class="fancy-checkbox checkbox-sm">
                                                 <input type="checkbox" checked="checked" name="${fieldName}"
                                                     data-id="${fieldId}" >
-                                                <label for="${fieldId}"><span> ${fieldName}
+                                                <label for="${fieldId}"><span> ${ fieldText}
                                                     </span></label>
                                             </div>
                                         </div>
@@ -666,7 +667,7 @@ const jobData = new Vue({
 
                                     customFieldInput = `<div class="jobform-note">
                                     <p><u>Note</u></p>
-                                    <p>${fieldName}</p> 
+                                    <p>${ fieldText}</p> 
                                     <p></p>
                                 </div>`
                                     break;

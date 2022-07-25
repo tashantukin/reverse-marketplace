@@ -807,6 +807,7 @@ sellerFields = new Vue({
                         $.each(fieldDetails, function (index, field)
                         {
                             fieldName = field.name,
+                            fieldText =  field.text,
                                 fieldType = field.type_of_field,
                                 fieldId = field.Id
                             fieldRequired = field.is_required;
@@ -830,7 +831,7 @@ sellerFields = new Vue({
                                 
                                 case 'textfield':
                             
-                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label>  <input type="text" class="form-control ${isrequired}" name="${fieldName}"id="${fieldName}" placeholder="${fieldPlaceholder}"></div>`
+                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldText}</label>  <input type="text" class="form-control ${isrequired}" name="${fieldName}"id="${fieldName}" placeholder="${fieldPlaceholder}"></div>`
                                     break;
                                
                                 case 'dropdown':
@@ -840,23 +841,23 @@ sellerFields = new Vue({
                                     {
                                         options += `<option name='${option}' value="${option}">${option}</option>`
                                     });
-                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label> <select id="${fieldId}" class="form-control ${isrequired}"  name="${fieldName}" id="${fieldName}" type="dropdown">
+                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldText}</label> <select id="${fieldId}" class="form-control ${isrequired}"  name="${fieldName}" id="${fieldName}" type="dropdown">
                                       ${options}
                                     </select> </div>`;
                                     break;
                                        
                                 case 'checkbox':
-
+                                    isrequired  = isrequired == 'required' ? 'req-chkbx' : '';
                                     let chkoptions = '';
                                     $.each(JSON.parse(field.values), function (index, option)
                                     {
-                                        chkoptions += `<div class="fancy-checkbox checkbox-sm ${isrequired}">
+                                        chkoptions += `<div class="fancy-checkbox checkbox-sm ">
                                         <input type="checkbox" id="${option}" name="${fieldId}">
                                         <label for="${option}"><span>${option}</span>
                                         </label>  </div>`
                                     });
-                                    customFieldInput = `<div class="form-group custom-fancyjb custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> 
-                                    <label for=${fieldId}>${fieldName}</label>    
+                                    customFieldInput = `<div class="form-group custom-fancyjb custom-details ${isrequired}" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> 
+                                    <label for=${fieldId}>${fieldText}</label>    
                                     ${chkoptions}
                                     </div>`;
                                     break;
@@ -871,7 +872,7 @@ sellerFields = new Vue({
                                         </label>  </div>`
                                     });
                                     customFieldInput = `<div class="custom-fancyjb custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> 
-                                    <label for=${fieldId}>${fieldName}</label>    
+                                    <label for=${fieldId}>${fieldText}</label>    
                                     ${radioOptions}
                                     </div>`;
 
@@ -879,12 +880,12 @@ sellerFields = new Vue({
                                 
                                 case 'number':
                             
-                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldName}</label>  <input type="number" class="form-control ${isrequired}" name="${fieldName}"id="${fieldName}" placeholder="${fieldPlaceholder}"></div>`
+                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}"> <label for=${fieldId}>${fieldText}</label>  <input type="number" class="form-control ${isrequired}" name="${fieldName}"id="${fieldName}" placeholder="${fieldPlaceholder}"></div>`
                                     break;
                                
                                 case 'datepicker':
 
-                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}"  custom-type="${fieldType}"><label for=${fieldId}>${fieldName}</label><input type="text" class="form-control datepicker ${isrequired}" name="${fieldName}" id="${fieldName}" placeholder="DD/MM/YYYY"> </div>`
+                                    customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}"  custom-type="${fieldType}"><label for=${fieldId}>${fieldText}</label><input type="text" class="form-control datepicker ${isrequired}" name="${fieldName}" id="${fieldName}" placeholder="DD/MM/YYYY"> </div>`
                                     jQuery('.datepicker').datetimepicker({
                                         viewMode: 'days',
                                         format: 'DD/MM/YYYY'
@@ -894,7 +895,7 @@ sellerFields = new Vue({
                                 case 'textarea':
                                     
                                     customFieldInput = `<div class="form-group custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}">
-                                   <label for=${fieldId}>${fieldName}</label>
+                                   <label for=${fieldId}>${fieldText}</label>
                                     <textarea class="form-control ${isrequired}" name="${fieldName}" id="${fieldName}" rows="5" placeholder="${fieldPlaceholder}"></textarea>
                                     </div>`
                                     break;
@@ -904,7 +905,7 @@ sellerFields = new Vue({
                                     customFieldInput = `<div class="form-group custom-fancyjb custom-details" id="${fieldId}" custom-name="${fieldName}" custom-type="${fieldType}">
                                     <div class="fancy-checkbox checkbox-sm">
                                         <input type="checkbox" name="${fieldId}" id="${fieldName}" class="${isrequired}">
-                                         <label for=${fieldId}>${fieldName}</label>
+                                         <label for=${fieldId}>${fieldText}</label>
                                     </div>
                                     </div>`
                                     break;
@@ -916,7 +917,7 @@ sellerFields = new Vue({
                                             <div class="fancy-checkbox checkbox-sm">
                                                 <input type="checkbox" checked="checked" name="${fieldName}"
                                                     id="${fieldId}">
-                                                <label for="${fieldId}"><span> ${fieldName}
+                                                <label for="${fieldId}"><span> ${fieldText}
                                                     </span></label>
                                             </div>
                                         </div>
@@ -952,7 +953,7 @@ sellerFields = new Vue({
 
                                     customFieldInput = `<div class="jobform-note">
                                     <p><u>Note</u></p>
-                                    <p>${fieldName}</p> 
+                                    <p>${fieldText}</p> 
                                     <p></p>
                                 </div>`
                                     break;
@@ -2101,7 +2102,29 @@ $(document).ready(function ()
                     validate = 1;
                     jQuery(this).addClass('error-con');
                 }
+
+                 if ($(this).is(':checkbox')) {
+            if (!isChecked) {
+                validate = 1;
+                jQuery(this).addClass('error-con');
+            }
+        }
             });
+        
+
+
+        
+    target.find('.req-chkbx').each(function() {
+
+        var checked = $(this).find("input:checked").length > 0;
+        if (!checked) {
+            $(this).find('input:first').addClass('error-con');
+            // alert("Please check at least one checkbox");
+            validate = 1;
+            //return false;
+
+        }
+    });
         
     //   if (validate == 1) {
     //       console.log('we dont do that here')
